@@ -1,28 +1,26 @@
 {
   "name": "quizforge-backend",
   "module": "src/app.ts",
-
   "scripts": {
     "start": "bun run src/app.ts",
     "dev": "bun --watch run src/app.ts"
   },
-
   "type": "module",
   "private": true,
-
   "author": "MohamadAbdulwahid",
   "contributors": [
     "Nishan277",
     "Jimmy0rban",
     "BehrangEl11"
   ],
-
   "license": "AGPL-3.0",
-
   "devDependencies": {
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "expressjs": "^1.0.1"
   }
 }
