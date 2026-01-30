@@ -21,6 +21,7 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "expressjs": "^1.0.1"
+    "expressjs": "^1.0.1",
+    "http-status-codes": "^2.3.0"
   }
 }
