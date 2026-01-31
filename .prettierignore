@@ -1,0 +1,15 @@
+# Artifacts
+dist/
+tmp/
+out/
+build/
+
+# Dependencies
+node_modules/
+
+# Lockfiles
+package-lock.json
+bun.lockb
+
+# Database
+supabase/.temp/
