@@ -1,0 +1,7 @@
+#!/bin/sh
+echo "🚀 Running pre-push checks on affected projects..."
+
+# Build affected projects before push
+bunx nx affected -t build --uncommitted
+
+echo "✅ Pre-push checks passed!"
