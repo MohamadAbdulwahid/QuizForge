@@ -4,6 +4,9 @@
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "useDaemonProcess": false,
+  "tui": {
+    "autoExit": true
+  },
   "plugins": [
     {
       "plugin": "@nx/eslint/plugin",
