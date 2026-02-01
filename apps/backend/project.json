@@ -5,58 +5,40 @@
   "projectType": "application",
   "tags": [],
   "targets": {
-    "prune-lockfile": {
-      "dependsOn": [
-        "build"
-      ],
-      "cache": true,
-      "executor": "@nx/js:prune-lockfile",
-      "outputs": [
-        "{workspaceRoot}/dist/apps/backend/package.json",
-        "{workspaceRoot}/dist/apps/backend/bun.lock"
-      ],
+    "dev": {
+      "executor": "nx:run-commands",
       "options": {
-        "buildTarget": "build"
+        "command": "bun --watch run src/main.ts",
+        "cwd": "apps/backend"
       }
     },
-    "copy-workspace-modules": {
-      "dependsOn": [
-        "build"
-      ],
-      "cache": true,
-      "outputs": [
-        "{workspaceRoot}/dist/apps/backend/workspace_modules"
-      ],
-      "executor": "@nx/js:copy-workspace-modules",
+    "start": {
+      "executor": "nx:run-commands",
       "options": {
-        "buildTarget": "build"
+        "command": "bun run src/main.ts",
+        "cwd": "apps/backend"
       }
     },
-    "prune": {
-      "dependsOn": [
-        "prune-lockfile",
-        "copy-workspace-modules"
-      ],
-      "executor": "nx:noop"
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/apps/backend"],
+      "options": {
+        "command": "bun build src/main.ts --outdir ../../dist/apps/backend --target bun",
+        "cwd": "apps/backend"
+      }
     },
     "serve": {
-      "continuous": true,
-      "executor": "@nx/js:node",
-      "defaultConfiguration": "development",
-      "dependsOn": [
-        "build"
-      ],
+      "executor": "nx:run-commands",
       "options": {
-        "buildTarget": "backend:build",
-        "runBuildTargetDependencies": false
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "backend:build:development"
-        },
-        "production": {
-          "buildTarget": "backend:build:production"
-        }
+        "command": "bun --watch run src/main.ts",
+        "cwd": "apps/backend"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/backend/**/*.ts"]
       }
     }
   }
