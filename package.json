@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@nx/express": "22.4.4",
+    "nx": "^22.4.4"
+  }
+}
