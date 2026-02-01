@@ -7,16 +7,15 @@
   ],
   "targets": {
     "e2e": {
-      "executor": "@nx/jest:jest",
+      "executor": "nx:run-commands",
       "outputs": [
-        "{workspaceRoot}/coverage/{e2eProjectRoot}"
+        "{workspaceRoot}/coverage/{projectRoot}"
       ],
       "options": {
-        "jestConfig": "apps/backend-e2e/jest.config.cts",
-        "passWithNoTests": true
+        "command": "bun test",
+        "cwd": "apps/backend-e2e"
       },
       "dependsOn": [
-        "backend:build",
         "backend:serve"
       ]
     }
