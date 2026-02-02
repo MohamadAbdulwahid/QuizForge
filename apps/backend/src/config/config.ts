@@ -7,6 +7,11 @@ interface Config {
   POSTGRES_URL: string;
 }
 
+/**
+ * Get an environment variable or throw an error if it's missing
+ * @param name - The name of the environment variable
+ * @returns The value of the environment variable
+ */
 function getEnvVar(name: string): string {
   const value = process.env[name];
   if (!value || value.trim() === '') {
