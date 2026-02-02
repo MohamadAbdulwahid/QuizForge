@@ -8,6 +8,10 @@
   "bracketSpacing": true,
   "arrowParens": "always",
   "endOfLine": "lf",
+  "singleAttributePerLine": true,
+  "embeddedLanguageFormatting": "auto",
+  "htmlWhitespaceSensitivity": "ignore",
+  "quoteProps": "as-needed",
   "overrides": [
     {
       "files": "*.html",
@@ -15,5 +19,6 @@
         "parser": "angular"
       }
     }
-  ]
+  ],
+  "plugins": ["prettier-plugin-tailwindcss"]
 }

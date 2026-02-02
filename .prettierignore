@@ -1,0 +1,41 @@
+# Artifacts
+dist/
+tmp/
+out/
+build/
+
+# Dependencies
+node_modules/
+
+# Lockfiles
+package-lock.json
+bun.lockb
+
+# Database
+supabase/.temp/
+
+# Configuration files
+*.config.js
+*.config.mjs
+*.config.ts
+*.config.cts
+*.config.cjs
+nx.json
+tsconfig*.json
+package.json
+.editorconfig
+.prettierrc
+.eslintrc*
+project.json
+
+# IDE & Tools
+.vscode/
+.idea/
+.nx/
+
+# Git hooks
+.husky/
+
+# Documentation (optional - remove if you want these formatted)
+*.md
+project-planning/
