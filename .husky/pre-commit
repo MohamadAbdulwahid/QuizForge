@@ -1,0 +1,11 @@
+#!/bin/sh
+echo "🔍 Running pre-commit checks on affected projects..."
+
+# Only lint projects affected by current changes
+bunx nx affected -t lint --uncommitted
+bunx nx format:check
+
+# Uncomment when you add tests:
+# bunx nx affected -t test --uncommitted
+
+echo "✅ Pre-commit checks passed!"
