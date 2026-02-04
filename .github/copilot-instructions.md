@@ -300,11 +300,171 @@ The design should feel like a **"Professional Playground."** Organized and clear
 ### Implementation in Frontend
 See `frontend.instructions.md` for detailed Tailwind/DaisyUI implementation.
 
+## Game Modes (MVP)
+
+QuizForge features three competitive game modes that transform static quizzing into dynamic, social gameplay. Each mode has distinct mechanics, scoring systems, and UI requirements.
+
+### Mode A: Forge Classic (The Standard)
+
+**Vibe**: High energy, focus on speed and precision.
+
+**Game Loop**:
+1. Question presented to all players simultaneously
+2. Players tap answer bubbles as quickly as possible
+3. **Scoring Formula**: `Points = (Correctness) × (Speed Factor)`
+   - Correct answer: Base points (e.g., 100)
+   - Speed bonus: Up to 2x multiplier based on response time
+   - Formula: `basePoints * (1 + (timeRemaining / timeLimit))`
+
+**Bubbly UI Elements**:
+- Answer buttons are large, floating bubbles that "squish" when pressed (`scale-95` on active)
+- Leaderboard features "Bubbly Rise" animation where avatars float upward as they gain ranks
+- Real-time score updates with bounce animation
+
+**Technical Implementation**:
+- **Frontend**: Angular Signals for score state, CSS transform animations for bubble squish
+- **Backend**: Calculate `timeRemaining` from `Date.now() - questionStartTime`, validate answer correctness
+- **WebSocket Events**: `question`, `answer-submitted`, `score-update`, `leaderboard-update`
+
+### Mode B: Treasure Forge (The Chaotic)
+
+**Vibe**: Strategic, high-stakes, and competitive with risk/reward mechanics.
+
+**Game Loop**:
+1. Users answer a question
+2. **If correct**: Player is presented with **3 Bubbly Chests** to choose from
+3. **Chest Contents** (randomized per player):
+   - **Gold**: Fixed amounts (+10, +50, +100 gold)
+   - **Multipliers**: Double or Triple current gold
+   - **The "Pop"**: Special actions
+     - Steal 10% from the leader
+     - Swap gold with a random player
+4. Winner determined by total gold at end of quiz
+
+**Bubbly UI Elements**:
+- Chests wobble and "shiver" when hovered (`animate-pulse` variant)
+- When opened, chests release a burst of golden bubble particles (CSS keyframe animation)
+- Gold counter animates upward with "ping" effect on changes
+
+**Technical Implementation**:
+- **State Management**: Each player has `{ gold: number, chestHistory: ChestPick[] }`
+- **Server-Side Validation**: 
+  - Generate 3 random chest contents server-side when player answers correctly
+  - Validate chest selection, apply gold changes, broadcast to all players
+  - **CRITICAL**: Never trust client-reported gold values
+- **Database**: Store `chest_picks` table for game replay/analytics
+- **WebSocket Events**: `correct-answer`, `chests-revealed`, `chest-selected`, `gold-update`, `steal-occurred`, `swap-occurred`
+
+**Chest Generation Algorithm** (Backend):
+```typescript
+// Example chest contents distribution
+const chestPool = [
+  { type: 'gold', value: 10, weight: 40 },
+  { type: 'gold', value: 50, weight: 30 },
+  { type: 'gold', value: 100, weight: 15 },
+  { type: 'multiplier', value: 2, weight: 10 },
+  { type: 'multiplier', value: 3, weight: 3 },
+  { type: 'steal', value: 0.1, weight: 1 },
+  { type: 'swap', value: null, weight: 1 },
+];
+// Pick 3 weighted-random items
+```
+
+### Mode C: Bubbly Royale (The Survival)
+
+**Vibe**: Intense 1v1 "Face-offs" with elimination mechanics.
+
+**Game Loop**:
+1. System pairs players for a 1v1 "Duel" (best effort pairing, odd player sits out round)
+2. Both players see the same question simultaneously
+3. **Loss Condition**: 
+   - Answer **incorrectly** OR
+   - Answer **slower** than opponent
+   - → Lose 1 **Life Bubble**
+4. Each player starts with **3 Life Bubbles**
+5. When all 3 lives are lost, player is **eliminated** (spectator mode)
+6. Last player standing wins
+
+**Bubbly UI Elements**:
+- Screen split-flashes blue (you) and red (opponent) during duel
+- Life Bubbles displayed as heart-shaped bubbles (3 total)
+- When a life is lost, the bubble literally "pops" with satisfying haptic/visual effect
+- Eliminated players see grayscale "spectator" UI with live duel feed
+
+**Technical Implementation**:
+- **Matchmaking**: 
+  - Pair players randomly or by similar skill (ELO-based if time permits)
+  - Handle odd-number players (1 sits out, rotates each round)
+- **Duel State**: Track `{ player1Id, player2Id, questionId, answers: { p1: null, p2: null }, startTime }`
+- **Server-Side Logic**:
+  - Wait for both answers (or timeout)
+  - Determine winner: Correct + faster wins
+  - Deduct life from loser
+  - Check for elimination
+  - Pair next round
+- **Frontend**: 
+  - `lives = signal(3)` - updates trigger bubble pop animation
+  - Split-screen UI during active duel
+  - Show opponent's answer status (not content) in real-time
+- **WebSocket Events**: `duel-paired`, `duel-question`, `opponent-answered` (boolean only), `duel-result`, `life-lost`, `player-eliminated`, `royale-winner`
+
+**Edge Cases**:
+- Both answer incorrectly: Both lose a life
+- Both answer correctly with same speed (<50ms difference): No lives lost
+- Player disconnects mid-duel: Auto-forfeit, opponent wins
+
+---
+
+### Technical Implementation Notes (All Modes)
+
+**State Synchronization**:
+- Use **Supabase Realtime (WebSockets via Socket.IO)** to broadcast:
+  - Score updates (Forge Classic)
+  - Chest picks and gold changes (Treasure Forge)
+  - Life pops and eliminations (Bubbly Royale)
+- **Broadcast Pattern**: Server emits to room (game PIN), clients update local Signals
+
+**Server-Side Validation** (CRITICAL):
+- **All scoring, gold calculations, and life subtractions MUST happen on Bun server**
+- **Never trust client data** for game-altering actions
+- Validate every answer submission:
+  - Check answer correctness against database
+  - Verify timestamp is within question time window
+  - Prevent duplicate submissions for same question
+- Store game state in PostgreSQL for persistence/recovery
+
+**Client-Side Signals** (Angular):
+```typescript
+// Example: Treasure Forge gold tracking
+const playerGold = signal(0);
+const leaderGold = computed(() => Math.max(...players().map(p => p.gold)));
+
+// WebSocket event handler
+wsService.goldUpdate$.subscribe(({ playerId, gold, action }) => {
+  if (playerId === currentUser.id) {
+    playerGold.set(gold);
+    // Trigger animation
+  }
+});
+```
+
+**Performance Optimization**:
+- Throttle WebSocket broadcasts (max 10/second per room)
+- Use binary frames for large payloads (leaderboard updates)
+- Cleanup inactive game sessions after 2 hours
+- Target: Support 50 concurrent games (200 players) on 2GB RAM
+
+**Database Schema Additions**:
+- `game_sessions` table: `{ id, mode, status, players[], startTime }`
+- `game_events` table: `{ sessionId, type, playerId, data, timestamp }` (for replays)
+- `player_stats` table: `{ userId, mode, wins, totalGold, livesLost }`
+
 ## TODO: Global Unknowns (IF YOU'RE AN AI AGENT: IGNORE THIS LIST)
 - [x] State management: Angular Signals (resource/rxResource) ✅
 - [x] Frontend testing: Vitest + Playwright ✅
 - [x] Rendering: Hybrid (SSG for marketing, SSR for public pages, CSR for game) ✅
-- [ ] Specific competitive modes for MVP (select 3 from list)
+- [x] Competitive modes for MVP: Forge Classic, Treasure Forge, Bubbly Royale ✅
+- [ ] Additional game modes (future iterations - not MVP)
 - [ ] Internationalization strategy (Angular i18n vs Transloco)
 - [ ] Docker deployment configuration (multi-stage builds for frontend/backend)
 - [ ] CI/CD pipeline configuration (GitHub Actions)
