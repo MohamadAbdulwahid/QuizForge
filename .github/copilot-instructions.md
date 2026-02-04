@@ -100,6 +100,7 @@ Format: `<type>(<scope>): <description>`
 
 ## Development Environment
 - **Node Manager**: Use `bun` for all scripts and package management
+- **Database / ORM**: Use Supabase Postgres as the primary database with Drizzle ORM for type-safe queries; use the Supabase CLI for managing migrations and local DB emulation.
 - **Environment Variables**: 
   - Frontend: `apps/frontend/.env` (never commit)
   - Backend: `apps/backend/.env` (never commit)
