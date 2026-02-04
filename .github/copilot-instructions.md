@@ -267,6 +267,14 @@ echo "✅ Pre-push checks passed!"
 - [ ] XSS prevention via Angular sanitization
 - [ ] Zod validation for ALL WebSocket messages and API request bodies
 
+## API Versioning Strategy
+- **Method**: Header-based versioning (NOT path-based)
+- **Header**: `API-Version: 1.0` (required on all API requests)
+- **Default**: If header missing, defaults to latest stable version
+- **Routes**: Use `/api/*` (NO version in path)
+- **Example**: `GET /api/quizzes` with header `API-Version: 1.0`
+- **Rationale**: Cleaner URLs, easier client-side version management, better for mobile apps
+
 ## Documentation Standards
 - **Functions**: JSDoc for all public methods
 - **API**: Tspec definitions for all endpoints (see backend instructions)
