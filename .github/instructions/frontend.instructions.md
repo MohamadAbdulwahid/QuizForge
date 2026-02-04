@@ -655,21 +655,22 @@ export class ApiService {
   
   // Quiz-specific methods
   async getPublicQuizzes(): Promise<IQuiz[]> {
-    return this.get<IQuiz[]>('/api/v1/quizzes/public');
+    return this.get<IQuiz[]>('/api/quizzes/public');
   }
   
   async createQuiz(data: CreateQuizRequest): Promise<CreateQuizResponse> {
-    return this.post<CreateQuizResponse>('/api/v1/quizzes', data);
+    return this.post<CreateQuizResponse>('/api/quizzes', data);
   }
   
   async getQuizByShareCode(shareCode: string): Promise<IQuiz> {
-    return this.get<IQuiz>(`/api/v1/quizzes/share/${shareCode}`);
+    return this.get<IQuiz>(`/api/quizzes/share/${shareCode}`);
   }
   
   private async getAuthHeaders(): Promise<HttpHeaders> {
     const token = localStorage.getItem('supabase_token');
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
+      'API-Version': '1.0',
     });
     
     if (token) {

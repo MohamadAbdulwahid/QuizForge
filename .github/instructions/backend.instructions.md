@@ -480,8 +480,9 @@ export class QuizController {
   /**
    * @tag quiz
    * @summary Create a new quiz
-   * @post /api/v1/quizzes
+   * @post /api/quizzes
    * @security BearerAuth
+   * @header API-Version 1.0
    */
   async create(req: AuthenticatedRequest, res: Response): Promise<void> {
     const userId = req.user!.id; // Guaranteed by authMiddleware
@@ -522,9 +523,10 @@ const { data: { session } } = await supabase.auth.signInWithPassword({
 });
 
 // Use session token for API calls
-const response = await fetch('/api/v1/quizzes', {
+const response = await fetch('/api/quizzes', {
   headers: {
     'Authorization': `Bearer ${session.access_token}`,
+    'API-Version': '1.0',
     'Content-Type': 'application/json',
   },
   method: 'POST',
@@ -535,6 +537,46 @@ const response = await fetch('/api/v1/quizzes', {
 const socket = io('http://localhost:3000', {
   auth: { token: session.access_token },
 });
+```
+
+## API Versioning Strategy
+
+**QuizForge uses HEADER-BASED versioning, NOT path-based versioning.**
+
+### Version Middleware
+```typescript
+// apps/backend/src/api/middleware/api-version.ts
+import { Request, Response, NextFunction } from 'express';
+import { logger } from '../../config/logger';
+
+const SUPPORTED_VERSIONS = ['1.0'];
+const DEFAULT_VERSION = '1.0';
+
+export function apiVersionMiddleware(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  const requestedVersion = req.headers['api-version'] as string || DEFAULT_VERSION;
+
+  if (!SUPPORTED_VERSIONS.includes(requestedVersion)) {
+    logger.warn('Unsupported API version requested', { requestedVersion });
+    res.status(400).json({
+      error: 'Unsupported API version',
+      code: 'INVALID_API_VERSION',
+      supportedVersions: SUPPORTED_VERSIONS,
+    });
+    return;
+  }
+
+  // Attach version to request for downstream use
+  (req as any).apiVersion = requestedVersion;
+  
+  // Set response header to indicate version used
+  res.setHeader('API-Version', requestedVersion);
+  
+  next();
+}
 ```
 
 ## Express App Configuration
@@ -550,6 +592,7 @@ import { config } from './config/environment';
 import { errorHandler } from './api/middleware/error-handler';
 import { requestLogger } from './api/middleware/request-logger';
 import { rateLimiter } from './api/middleware/rate-limiter';
+import { apiVersionMiddleware } from './api/middleware/api-version';
 import { authMiddleware } from './api/middleware/auth';
 import { registerRoutes } from './api/routes';
 import { registerSocketHandlers } from './websocket/handlers';
@@ -579,8 +622,8 @@ export function createApp(): { app: Application; server: Server; io: Server } {
   // Health check
   app.get('/health', (req, res) => res.json({ status: 'ok', timestamp: Date.now() }));
   
-  // Protected routes
-  app.use('/api/v1', authMiddleware, registerRoutes());
+  // API routes with versioning and authentication
+  app.use('/api', apiVersionMiddleware, authMiddleware, registerRoutes());
 
   // Global error handling (MUST be last)
   app.use(errorHandler);
@@ -639,8 +682,9 @@ export class QuizController {
   /**
    * @tag quiz
    * @summary Create a new quiz
-   * @post /api/v1/quizzes
+   * @post /api/quizzes
    * @security BearerAuth
+   * @header API-Version 1.0
    * @example body {
    *   "title": "Science Quiz",
    *   "description": "Basic science questions",
