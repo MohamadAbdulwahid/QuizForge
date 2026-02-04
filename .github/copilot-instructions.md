@@ -15,7 +15,7 @@ quizforge/
 │   └── copilot-instructions.md
 ├── apps/
 │   ├── frontend/                  # Angular Frontend
-│   │   ├── tests/                 # Jest unit & integration tests
+│   │   ├── tests/                 # Vitest unit tests & Playwright E2E
 │   │   ├── src/
 │   │   │   ├── app/
 │   │   │   │   ├── core/          # Singleton services & guards
@@ -34,7 +34,7 @@ quizforge/
 │       │   │   └── dtos/          # Zod validation schemas
 │       │   ├── database/
 │       │   │   ├── repositories/  # Type-safe data access
-│       │   │   └── unit.ts        # Transaction management
+│       │   │   └── schema/        # Drizzle schema definitions
 │       │   ├── config/
 │       │   │   ├── environment.ts # Env validation
 │       │   │   └── logger.ts      # Structured logging
@@ -100,14 +100,19 @@ Format: `<type>(<scope>): <description>`
 
 ## Development Environment
 - **Node Manager**: Use `bun` for all scripts and package management
-- **Database / ORM**: Use Supabase Postgres as the primary database with Drizzle ORM for type-safe queries; use the Supabase CLI for managing migrations and local DB emulation.
+- **Database / ORM**: Use Supabase Postgres as the primary database with Drizzle ORM (`postgres-js` driver) for type-safe queries; use the Supabase CLI for managing migrations and local DB emulation.
+- **Authentication**: Supabase Auth for user authentication and session management (stateless JWT pattern)
+- **Logging**: Pino for high-performance structured JSON logging (both frontend and backend)
+- **Connection Pooling**: Supabase Supavisor in Transaction mode (port 6543) with `prepare: false`
 - **Environment Variables**: 
   - Frontend: `apps/frontend/.env` (never commit)
   - Backend: `apps/backend/.env` (never commit)
   - Template: `.env.example` in each directory with required variables
-- **Required env vars**:
-  - `POSTGRES_URL`: PostgreSQL connection string (e.g., `postgres://user:pass@localhost:5432/quizforge`)
-  - `JWT_SECRET`: Secret for JWT signing (min 32 chars)
+- **Required env vars (Backend)**:
+  - `SUPABASE_URL`: Supabase project URL
+  - `SUPABASE_ANON_KEY`: Supabase anonymous/public key
+  - `SUPABASE_SERVICE_ROLE_KEY`: Supabase service role key (server-only, keep secret!)
+  - `DATABASE_URL`: Supabase connection pooler URL (Transaction mode)
   - `PORT`: Backend server port (default: 3000)
   - `FRONTEND_URL`: CORS origin (e.g., `http://localhost:4200`)
 
@@ -234,9 +239,10 @@ echo "✅ Pre-push checks passed!"
 ### Coverage Targets
 - **Unit tests**: Minimum 80% coverage for:
   - Critical paths: answer submission, score calculation, state transitions
-  - Unit of Work transaction patterns
+  - Drizzle repository methods and transaction handling
+  - Supabase Auth middleware and JWT validation
 - **E2E tests**: Cover entire user flows:
-  - Host creates quiz → starts session → players join → complete game
+  - User signup/login → Host creates quiz → starts session → players join → complete game
   - Edge cases: late join, disconnect/reconnect, invalid answers, transaction rollback
 
 ### Test Naming
@@ -250,14 +256,16 @@ echo "✅ Pre-push checks passed!"
 - **WebSocket**: <50ms message latency within same region
 
 ## Security Checklist
-- [ ] All API endpoints validate JWT tokens (header-based)
-- [ ] WebSocket connections authenticate before accepting data
-- [ ] SQL queries use prepared statements (Unit.prepare) - NO string concatenation
-- [ ] Rate limiting on all endpoints (60 req/min IP, 5 req/sec user)
+- [ ] All API endpoints validate Supabase Auth JWTs via `authMiddleware`
+- [ ] WebSocket connections authenticate using Supabase JWT before accepting data
+- [ ] Database queries use Drizzle ORM query builders (type-safe, SQL injection prevention)
+- [ ] Row Level Security (RLS) policies enabled on all Supabase tables
+- [ ] Rate limiting on all endpoints (60 req/min IP, throttle WebSocket events)
 - [ ] CORS configured to specific origins only (FRONTEND_URL env)
-- [ ] No sensitive data in client-side logs
+- [ ] `SUPABASE_SERVICE_ROLE_KEY` never exposed to client-side code
+- [ ] No sensitive data in client-side logs or WebSocket handshakes
 - [ ] XSS prevention via Angular sanitization
-- [ ] Zod validation for ALL WebSocket messages
+- [ ] Zod validation for ALL WebSocket messages and API request bodies
 
 ## Documentation Standards
 - **Functions**: JSDoc for all public methods
@@ -293,9 +301,11 @@ The design should feel like a **"Professional Playground."** Organized and clear
 See `frontend.instructions.md` for detailed Tailwind/DaisyUI implementation.
 
 ## TODO: Global Unknowns (IF YOU'RE AN AI AGENT: IGNORE THIS LIST)
-- [ ] State management approach for Angular frontend (Signals vs NgRx vs RxJS)
+- [x] State management: Angular Signals (resource/rxResource) ✅
+- [x] Frontend testing: Vitest + Playwright ✅
+- [x] Rendering: Hybrid (SSG for marketing, SSR for public pages, CSR for game) ✅
 - [ ] Specific competitive modes for MVP (select 3 from list)
-- [ ] Internationalization strategy (i18n libraries and implementation)
+- [ ] Internationalization strategy (Angular i18n vs Transloco)
 - [ ] Docker deployment configuration (multi-stage builds for frontend/backend)
 - [ ] CI/CD pipeline configuration (GitHub Actions)
 - [ ] Staging/Production environment separation
