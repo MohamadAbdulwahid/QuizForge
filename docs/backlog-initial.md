@@ -3,26 +3,15 @@
 **Story Point Scale:** 1 SP ≈ 2 hours of work  
 **Target Sprint Velocity:** 20-25 Story Points per sprint
 
----
-
-## Sprint 0 - COMPLETED ✅
-
-| ID | User Story | Story Points | Status |
-|----|-----------|--------------|--------|
-| PB-00 | As a **Team**, we want a Git repository with branching and CI basics so development can start in a controlled way. | 2 | ✅ Done |
-| PB-01 | As a **Developer**, I want an Nx monorepo with Bun backend scaffold so backend development can begin. | 2 | ✅ Done |
-| PB-02 | As a **Developer**, I want research and selection of tech stack (Bun, Supabase, Drizzle, Angular Signals) documented. | 2 | ✅ Done |
-
-**Sprint 0 Total:** 6 SP (Research & Setup)
-
----
-
 ## Sprint 1 - Database & Authentication Foundation (Backend)
 
 **Goal:** Establish Supabase database schema, Drizzle ORM integration, and Supabase Auth for secure user management.
 
 | ID | User Story | Story Points | Priority |
 |----|-----------|--------------|----------|
+| PB-00 | As a **Team**, we want a Git repository with branching and CI basics so development can start in a controlled way. | 2 | High |
+| PB-01 | As a **Developer**, I want an Nx monorepo with Bun backend scaffold so backend development can begin. | 2 | High |
+| PB-02 | As a **Developer**, I want research and selection of tech stack (Bun, Supabase, Drizzle, Angular Signals) documented. | 2 | High |
 | PB-03 | As a **Developer**, I want an Entity-Relationship Diagram (ERD) for quizzes, users, sessions, and game events so the database structure is clear. | 2 | High |
 | PB-04 | As a **Developer**, I want Supabase project setup with PostgreSQL database so data can be persisted. | 2 | High |
 | PB-05 | As a **Developer**, I want Drizzle ORM configured with postgres-js driver so type-safe queries are possible. | 3 | High |
@@ -278,11 +267,6 @@
 ## Backlog Summary
 
 **Total Estimated Story Points:** ~350 SP
-
-**Sprint Breakdown:**
-- Sprint 0 (DONE): 6 SP
-- Sprints 1-10: 25 SP each = 250 SP
-- Future Backlog: ~94 SP
 
 **Notes:**
 - Frontend development starts Sprint 3
