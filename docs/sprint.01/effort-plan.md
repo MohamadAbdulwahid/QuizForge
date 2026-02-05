@@ -117,6 +117,27 @@
 
 **Milestone:** Full auth flow working, endpoints functional, database seeded, all tests passing
 
+---
+
+## Daily Effort Breakdown
+
+| Day | Total SP | Focus Area | Deliverables |
+|-----|----------|------------|--------------|
+| 1 | 6 | Setup & Planning | Git/CI, Nx, ERD draft, tech research |
+| 2 | 4 | Infrastructure | ERD final, Supabase project live |
+| 3 | 4 | ORM Foundation | Env config, Drizzle connection |
+| 4 | 3 | Schema Definition | Database schema, tables defined |
+| 5 | 5 | Services & Logging | Auth service, migrations, logger |
+| 6 | 4 | Auth Middleware | JWT validation, service completion |
+| 7 | 4 | Endpoints Start | Seed data, signup endpoint |
+| 8 | 4 | Endpoints Finish | Login endpoint, auth middleware complete |
+| 9 | 2 | Error Handling | Error middleware, testing |
+| 10 | 1 | Finalization | Final tests, demo ready |
+
+**Total: 37 SP** (includes buffer for reviews and testing)
+
+---
+
 ## Risk Mitigation
 
 ### Identified Risks
