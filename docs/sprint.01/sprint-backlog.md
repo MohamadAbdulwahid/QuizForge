@@ -4,19 +4,61 @@
 
 **Duration:** 2 weeks  
 **Total Story Points:** 25 SP (≈50 hours)  
-**Team:** Mohamad (Backend Lead), Nishan, David, Behrang
+**Team:** Mohamad, Nishan, David, Behrang
 
 ---
 
 ## Sprint Backlog Items
 
-### PB-03: Entity-Relationship Diagram (ERD) Design
+### PB-00: Git repository & CI basics (Mohamad)
+**User Story:** As a **Team**, we want a Git repository with branching and CI basics so development can start in a controlled way.
+
+**Story Points:** 2
+
+**Priority:** High
+
+**Definition of Done (DoD):**
+- [x] Repository initialized with `README`, `LICENSE`, and `.gitignore`
+- [x] Branching strategy documented (GitHub Flow) and branch naming convention added
+- [x] ESLint and Prettier configured with base rules
+- [x] Pre-commit hooks set up with Husky to run lint and format on
+- [x] Basic CI pipeline configured to run lint and tests on push
+- [x] Protected `main` branch and required checks configured
+
+### PB-01: Nx monorepo with Bun backend scaffold (Mohamad)
+**User Story:** As a **Developer**, I want an Nx monorepo with Bun backend scaffold so backend development can begin.
+
+**Story Points:** 2
+
+**Priority:** High
+
+**Definition of Done (DoD):**
+- [x] Nx workspace initialized
+- [x] `apps/backend` scaffolded with Bun + Express (TypeScript) and basic `project.json`
+- [~] Start/build scripts added (`bun` scripts) and README setup notes
+- [x] Linting and formatting configured for the workspace
+
+### PB-02: Tech stack research & selection (Mohamad)
+**User Story:** As a **Developer**, I want research and selection of tech stack (Bun, Supabase, Drizzle, Angular Signals) documented.
+
+**Story Points:** 2
+
+**Priority:** High
+
+**Definition of Done (DoD):**
+- [ ] Research document created summarizing tradeoffs and recommendations
+- [ ] Chosen stack (Bun, Supabase, Drizzle, Angular Signals) documented with rationale
+- [ ] Installation and onboarding notes added (`/docs/tech-stack.md`)
+- [ ] Team review and sign-off recorded
+
+
+### PB-03: Entity-Relationship Diagram (ERD) Design (Behrang)
 **User Story:** As a **Developer**, I want an Entity-Relationship Diagram (ERD) for quizzes, users, sessions, and game events so the database structure is clear.
 
 **Story Points:** 2
 
 **Definition of Done (DoD):**
-- [ ] ERD created using draw.io or dbdiagram.io showing:
+- [ ] ERD created using Mermaid.live showing:
   - `users` table (id, email, username, created_at)
   - `quizzes` table (id, title, description, creator_id FK, share_code, created_at)
   - `questions` table (id, quiz_id FK, text, type, options JSON, correct_answer, time_limit, points, order)
@@ -24,12 +66,12 @@
   - `session_players` table (id, session_id FK, username, score, lives, status)
   - `game_events` table (id, session_id FK, player_id FK, event_type, data JSON, timestamp)
 - [ ] Relationships documented (1:many, many:many with junction tables)
-- [ ] ERD committed to `/docs/erd.png` in repo
+- [ ] ERD committed to `/docs/erd.png` and `/docs/erd.mmd` in repo
 - [ ] Team review and approval
 
 ---
 
-### PB-04: Supabase Project Setup
+### PB-04: Supabase Project Setup (Mohamad)
 **User Story:** As a **Developer**, I want Supabase project setup with PostgreSQL database so data can be persisted.
 
 **Story Points:** 2
@@ -45,7 +87,7 @@
 
 ---
 
-### PB-05: Drizzle ORM Configuration
+### PB-05: Drizzle ORM Configuration (David)
 **User Story:** As a **Developer**, I want Drizzle ORM configured with postgres-js driver so type-safe queries are possible.
 
 **Story Points:** 3
@@ -63,7 +105,7 @@
 
 ---
 
-### PB-06: Drizzle Database Schema Definition
+### PB-06: Drizzle Database Schema Definition (David)
 **User Story:** As a **Developer**, I want database schema defined in Drizzle (users, quizzes, questions, sessions tables) so entities can be stored.
 
 **Story Points:** 3
@@ -84,10 +126,35 @@
 - [ ] All foreign keys defined with onDelete cascade
 - [ ] Enums created (question_type, session_status, player_status)
 - [ ] Schema files export table definitions
+- [ ] `apps/backend/src/database/repositories/user.repository.ts` created with:
+  - `findUserById(id)` - query user by id
+  - `findUserByEmail(email)` - query user by email
+  - `createUser(data)` - insert new user
+  - Type-safe return types using Drizzle InferModel
 
 ---
 
-### PB-07: Initial Supabase Migrations
+### PB-06.5: Auth Service Layer (David)
+**User Story:** As a **Developer**, I want an auth service layer between routes and database so business logic is centralized and testable.
+
+**Story Points:** 2
+
+**Definition of Done (DoD):**
+- [ ] `apps/backend/src/api/services/auth.service.ts` created with:
+  - `signUp({ email, password, username })` - creates user via Supabase Auth, syncs to DB via user repository
+  - `signIn({ email, password })` - authenticates user via Supabase Auth
+  - `verifyToken(token)` - validates JWT and returns user
+  - Handles Supabase Auth errors and returns normalized error responses
+  - Uses user.repository.ts for database operations
+  - Uses Supabase client for auth operations
+- [ ] Service exports typed interfaces for request/response objects
+- [ ] Error cases handled (duplicate email → 409, invalid credentials → 401)
+- [ ] No compilation errors
+- [ ] Service ready to be consumed by route handlers
+
+---
+
+### PB-07: Initial Supabase Migrations (Mohamad)
 **User Story:** As a **Developer**, I want initial Supabase migrations created so database schema is version-controlled.
 
 **Story Points:** 2
@@ -106,7 +173,7 @@
 
 ---
 
-### PB-08: Seed Data Scripts
+### PB-08: Seed Data Scripts (Nishan)
 **User Story:** As a **Developer**, I want seed data scripts for test users and quizzes so development can proceed with sample data.
 
 **Story Points:** 2
@@ -124,7 +191,7 @@
 
 ---
 
-### PB-09: Supabase Auth Integration
+### PB-09: Supabase Auth Integration (Mohamad)
 **User Story:** As a **Developer**, I want Supabase Auth integrated with JWT validation middleware so API endpoints are secured.
 
 **Story Points:** 4
@@ -144,43 +211,47 @@
 
 ---
 
-### PB-10: User Signup Endpoint
+### PB-10: User Signup Endpoint (Nishan)
 **User Story:** As a **User**, I want to sign up with email/password via Supabase Auth so I can create an account.
 
 **Story Points:** 2
 
+**Prerequisites:** PB-06.5 (Auth Service Layer) must be completed
+
 **Definition of Done (DoD):**
-- [ ] `POST /api/auth/signup` endpoint created
+- [ ] `POST /api/auth/signup` endpoint created in `apps/backend/src/api/routes/auth.routes.ts`
 - [ ] Accepts `API-Version: 1.0` header (validated by apiVersionMiddleware)
-- [ ] Zod validation schema for { email, password, username }
-- [ ] Endpoint calls `supabase.auth.signUp({ email, password, options: { data: { username } } })`
+- [ ] Zod validation schema for { email, password, username } in `apps/backend/src/api/dtos/auth.dto.ts`
+- [ ] Route handler calls `authService.signUp({ email, password, username })` (no direct Supabase calls)
 - [ ] Returns 201 with { user, session } on success
 - [ ] Returns 400 on validation errors
-- [ ] Returns 409 if email already exists
+- [ ] Returns 409 if email already exists (handled by service)
 - [ ] Tested with Postman/curl
 - [ ] Tspec annotations added
 
 ---
 
-### PB-11: User Login Endpoint
+### PB-11: User Login Endpoint (Nishan)
 **User Story:** As a **User**, I want to log in with email/password so I can access my quizzes.
 
 **Story Points:** 2
 
+**Prerequisites:** PB-06.5 (Auth Service Layer) must be completed
+
 **Definition of Done (DoD):**
-- [ ] `POST /api/auth/login` endpoint created
+- [ ] `POST /api/auth/login` endpoint created in `apps/backend/src/api/routes/auth.routes.ts`
 - [ ] Accepts `API-Version: 1.0` header (validated by apiVersionMiddleware)
-- [ ] Zod validation schema for { email, password }
-- [ ] Endpoint calls `supabase.auth.signInWithPassword({ email, password })`
+- [ ] Zod validation schema for { email, password } in `apps/backend/src/api/dtos/auth.dto.ts`
+- [ ] Route handler calls `authService.signIn({ email, password })` (no direct Supabase calls)
 - [ ] Returns 200 with { user, session } on success
 - [ ] Returns 400 on validation errors
-- [ ] Returns 401 on invalid credentials
+- [ ] Returns 401 on invalid credentials (handled by service)
 - [ ] Tested with Postman/curl
 - [ ] Tspec annotations added
 
 ---
 
-### PB-12: Environment Variables Setup
+### PB-12: Environment Variables Setup (David)
 **User Story:** As a **Developer**, I want environment variables configured (.env.example, validation with Zod) so secrets are managed safely.
 
 **Story Points:** 1
@@ -198,7 +269,7 @@
 
 ---
 
-### PB-13: Pino Logger Configuration
+### PB-13: Pino Logger Configuration (Behrang)
 **User Story:** As a **Developer**, I want Pino logger configured for structured JSON logging so errors and requests are tracked.
 
 **Story Points:** 1
@@ -217,7 +288,7 @@
 
 ---
 
-### PB-14: Global Error Handling Middleware
+### PB-14: Global Error Handling Middleware (Behrang)
 **User Story:** As a **Developer**, I want global error handling middleware so all errors return consistent JSON responses.
 
 **Story Points:** 1
@@ -225,7 +296,7 @@
 **Definition of Done (DoD):**
 - [ ] `apps/backend/src/api/middleware/error-handler.ts` created with:
   - Express error middleware (4 params)
-  - Logs error with Pino
+  - Logs error with Pino logger
   - Returns JSON: { error: string, code: string, statusCode: number }
   - Maps known errors (Zod validation, Supabase auth) to appropriate status codes
   - Returns 500 for unknown errors

@@ -1,7 +1,7 @@
 # Sprint 1 Effort Plan
 
 **Sprint Duration:** 2 weeks (10 working days)  
-**Target Velocity:** 25 Story Points  
+**Target Velocity:** 33 Story Points  
 **Team Size:** 4 developers
 
 ---
@@ -10,24 +10,28 @@
 
 | Name | Role | Primary Focus | Availability |
 |------|------|---------------|--------------|
-| **Mohamad** | Product Owner, Developer | Database, Auth, Architecture | Full-time |
-| **Nishan** | Stakeholder, Developer | API Development, Testing | Part-time |
-| **David** | Scrum Master, Developer | WebSocket prep, Middleware | Part-time |
-| **Behrang** | Stakeholder, Developer | Documentation, Testing | Part-time |
+| **Mohamad** | Product Owner, Developer | Infrastructure, Auth, Migrations | Full-time |
+| **David** | Scrum Master, Developer | ORM, Schema, Service Layer | Part-time |
+| **Nishan** | Stakeholder, Developer | API Endpoints, Seed Data | Part-time |
+| **Behrang** | Stakeholder, Developer | ERD Design, Logging, Error Handling | Part-time |
 
 ---
 
 ## Effort Distribution by Developer
 
-### Mohamad - 12 SP
-- **PB-03**: ERD Design (2 SP) - Days 1-2
-- **PB-04**: Supabase Setup (2 SP) - Day 2
-- **PB-05**: Drizzle Configuration (3 SP) - Days 3-4
-- **PB-06**: Database Schema (3 SP) - Days 4-5
-- **PB-09**: Supabase Auth Integration (2 SP of 4 SP) - Days 6-7
+### Mohamad - 14 SP
+- **PB-00**: Git repository & CI basics (2 SP) - Day 1
+- **PB-01**: Nx monorepo with Bun backend scaffold (2 SP) - Day 1
+- **PB-02**: Tech stack research & selection (2 SP) - Days 1-2
+- **PB-04**: Supabase Project Setup (2 SP) - Day 2
+- **PB-07**: Initial Supabase Migrations (2 SP) - Days 5-6
+- **PB-09**: Supabase Auth Integration (4 SP) - Days 6-8
 
 **Responsibilities:**
 - Lead architecture decisions
+- Infrastructure setup (Supabase, Nx, CI/CD)
+- Auth middleware and JWT validation
+- Database migrations and RLS policies
 - Code reviews for all PRs
 - Pair programming sessions with team
 - Unblock team members
@@ -35,36 +39,45 @@
 
 ---
 
-### Nishan - 5 SP
-- **PB-10**: User Signup Endpoint (2 SP) - Days 6-7
-- **PB-11**: User Login Endpoint (2 SP) - Days 7-8
-- **PB-13**: Pino Logger (1 SP) - Day 5
+### David - 9 SP
+- **PB-05**: Drizzle ORM Configuration (3 SP) - Days 3-4
+- **PB-06**: Drizzle Database Schema Definition (3 SP) - Days 4-5
+- **PB-06.5**: Auth Service Layer (2 SP) - Days 5-6
+- **PB-12**: Environment Variables Setup (1 SP) - Day 3
 
 **Responsibilities:**
-- API endpoint development
-- Integration testing for auth endpoints
-- API documentation with Tspec
+- Drizzle ORM configuration and client setup
+- Database schema design and implementation
+- Repository layer for type-safe queries
+- Auth service layer (business logic)
+- Environment variable validation with Zod
+- Service patterns and architecture guidance
 
 ---
 
-### David - 5 SP
-- **PB-07**: Supabase Migrations (2 SP) - Days 5-6
-- **PB-14**: Error Handling Middleware (1 SP) - Day 8
-- **PB-09**: Supabase Auth Middleware (2 SP of 4 SP) - Days 8-9
-
-**Responsibilities:**
-- Database migration scripts
-- Middleware development
-- Error handling patterns
-
----
-
-### Behrang - 3 SP
+### Nishan - 6 SP
 - **PB-08**: Seed Data Scripts (2 SP) - Days 7-8
-- **PB-12**: Environment Variables (1 SP) - Day 9
+- **PB-10**: User Signup Endpoint (2 SP) - Days 7-8
+- **PB-11**: User Login Endpoint (2 SP) - Days 8-9
 
 **Responsibilities:**
-- Test data creation
+- API endpoint development (signup/login routes)
+- Integration testing for auth endpoints
+- Seed data creation with realistic test data
+- Zod DTO validation schemas
+- API documentation with Tspec annotations
+
+---
+
+### Behrang - 4 SP
+- **PB-03**: Entity-Relationship Diagram (ERD) Design (2 SP) - Days 1-2
+- **PB-13**: Pino Logger Configuration (1 SP) - Day 5
+- **PB-14**: Global Error Handling Middleware (1 SP) - Day 9
+
+**Responsibilities:**
+- ERD design and documentation
+- Structured logging setup with Pino
+- Error handling middleware
 - Unit test coverage
 - Documentation updates
 - QA and manual testing
@@ -75,41 +88,34 @@
 
 ### Week 1 (Days 1-5)
 
-**Days 1-2: Foundation**
-- ERD design and team review
-- Supabase project setup
-- Environment configuration skeleton
+**Days 1-2: Foundation & Design**
+- Mohamad: Git/CI setup (PB-00), Nx scaffold (PB-01), tech stack research (PB-02), Supabase setup (PB-04)
+- Behrang: ERD design (PB-03)
+- Team review of ERD and tech stack decisions
 
 **Days 3-5: Database Layer**
-- Drizzle ORM configuration
-- Schema definition
-- Initial migrations
-- Logger setup
+- David: Environment config (PB-12), Drizzle ORM setup (PB-05), schema definition (PB-06), auth service start (PB-06.5)
+- Mohamad: Migration scripts (PB-07), auth integration start (PB-09)
+- Behrang: Pino logger setup (PB-13)
 
-**Milestone:** Database accessible, schema deployed, can run queries
+**Milestone:** Drizzle configured, schema defined, database migrations applied, service layer ready
 
 ---
 
 ### Week 2 (Days 6-10)
 
-**Days 6-7: Authentication**
-- Supabase Auth integration
-- Signup/Login endpoints
-- Seed data creation
+**Days 6-8: Authentication & Endpoints**
+- Mohamad: Complete auth middleware (PB-09)
+- David: Finish auth service (PB-06.5)
+- Nishan: Seed data (PB-08), signup endpoint (PB-10), login endpoint (PB-11)
+- Dependencies: PB-10 and PB-11 depend on PB-06.5 completion
 
-**Days 8-9: Middleware & Testing**
-- Auth middleware completion
-- Error handling
-- Integration tests
-- Code reviews
+**Days 9-10: Testing & Finalization**
+- Behrang: Error handling middleware (PB-14), manual testing
+- All: Integration tests, code reviews, bug fixes
+- Team: Sprint demo preparation, retrospective
 
-**Day 10: Sprint Wrap-up**
-- Final testing
-- Documentation updates
-- Sprint demo preparation
-- Sprint retrospective
-
-**Milestone:** Full auth flow working, database seeded, all tests passing
+**Milestone:** Full auth flow working, endpoints functional, database seeded, all tests passing
 
 ---
 
@@ -117,16 +123,18 @@
 
 | Day | Total SP | Focus Area | Deliverables |
 |-----|----------|------------|--------------|
-| 1 | 2 | Planning & Design | ERD draft |
-| 2 | 4 | Setup | ERD final, Supabase live |
-| 3 | 3 | ORM Config | Drizzle connected |
-| 4 | 3 | Schema | Tables defined |
-| 5 | 4 | Migrations & Logging | Schema deployed, logger working |
-| 6 | 4 | Auth Start | Middleware + Signup |
-| 7 | 4 | Auth Endpoints | Login + Seed data |
-| 8 | 3 | Middleware | Error handler + Tests |
-| 9 | 2 | Testing | Integration tests passing |
-| 10 | 1 | Finalization | Demo ready |
+| 1 | 6 | Setup & Planning | Git/CI, Nx, ERD draft, tech research |
+| 2 | 4 | Infrastructure | ERD final, Supabase project live |
+| 3 | 4 | ORM Foundation | Env config, Drizzle connection |
+| 4 | 3 | Schema Definition | Database schema, tables defined |
+| 5 | 5 | Services & Logging | Auth service, migrations, logger |
+| 6 | 4 | Auth Middleware | JWT validation, service completion |
+| 7 | 4 | Endpoints Start | Seed data, signup endpoint |
+| 8 | 4 | Endpoints Finish | Login endpoint, auth middleware complete |
+| 9 | 2 | Error Handling | Error middleware, testing |
+| 10 | 1 | Finalization | Final tests, demo ready |
+
+**Total: 37 SP** (includes buffer for reviews and testing)
 
 ---
 
@@ -136,13 +144,16 @@
 
 | Risk | Probability | Impact | Mitigation Strategy |
 |------|-------------|--------|---------------------|
-| Supabase learning curve | Medium | Medium | Mohamad to lead with docs, pair programming sessions |
+| Drizzle ORM learning curve | Medium | High | David leads with docs, Mohamad pair programs on complex queries |
+| Service layer complexity | Medium | Medium | Follow backend.instructions.md, clear separation of concerns |
+| PB-10/PB-11 blocked by PB-06.5 | Low | High | David prioritizes PB-06.5 completion by Day 6 |
+| Supabase Auth integration issues | Medium | Medium | Mohamad allocates 4 SP, early testing with tokens |
 | Team member unavailability | Low | High | Cross-training, pair programming, async communication |
-| Drizzle ORM complexity | Medium | Medium | Follow backend.instructions.md closely, use examples |
 | Scope creep | Low | Medium | Strict adherence to Sprint 1 backlog, defer new features |
 
 ### Contingency Plan
-- If behind by >5 SP by Day 7: Defer PB-08 (Seed Data) to Sprint 2
+- If behind by >6 SP by Day 7: Defer PB-08 (Seed Data) to Sprint 2
+- If PB-06.5 delayed: Nishan switches to integration tests for existing code
 - If critical blocker: Daily standup to reallocate tasks
 - Buffer tasks available (documentation, additional tests) if ahead
 
@@ -177,7 +188,7 @@
 
 ## Definition of Done (Sprint Level)
 
-- [ ] All 14 user stories completed with individual DoD met
+- [ ] All 15 user stories completed with individual DoD met (including new PB-06.5)
 - [ ] Code coverage ≥80% for new code
 - [ ] All unit and integration tests passing
 - [ ] No critical/high severity ESLint errors
@@ -190,9 +201,14 @@
 
 ## Notes
 
-- **Pair Programming:** Encouraged for complex tasks (Drizzle setup, Auth middleware)
+- **Service Layer Pattern:** All routes must use services (not direct DB/Supabase calls)
+- **Dependency Chain:** PB-10 & PB-11 require PB-06.5 completion - coordinate closely
+- **Pair Programming:** Encouraged for:
+  - Drizzle setup (Mohamad + David)
+  - Auth service (David + Nishan)
+  - Repository patterns (David + Nishan)
 - **Code Reviews:** Mandatory for all PRs, max 24h turnaround
-- **Documentation:** Update backend.instructions.md with any new patterns discovered
+- **Documentation:** Update backend.instructions.md with new patterns discovered
 - **Testing:** Write tests alongside feature code, not at the end
 - **Focus:** Backend only - frontend starts Sprint 3
 
@@ -201,13 +217,16 @@
 ## Success Criteria
 
 ✅ **Sprint is successful if:**
-- 25 SP completed (100% velocity)
-- Database schema deployed and seeded
-- Auth endpoints functional with Supabase
+- 33 SP completed (100% velocity)
+- Service layer architecture established and documented
+- Database schema deployed with migrations and seeded
+- Auth endpoints functional with Supabase (signup/login working)
+- Repository pattern implemented and tested
 - All tests passing
 - Team happy and unblocked for Sprint 2
 
 ✅ **Bonus achievements:**
-- >80% code coverage
+- >85% code coverage
 - Zero production bugs in Sprint 2
 - Team velocity confidence increased
+- Reusable service/repository patterns documented
