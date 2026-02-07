@@ -33,22 +33,21 @@
     "nx": "22.4.4",
     "prettier": "~3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
+    "supabase": "^2.76.3",
     "tslib": "^2.8.1",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.54.0"
   },
   "scripts": {
     "prepare": "husky",
-
-    "//": "==================== GENERAL ====================",
+    "_comment:general": "==================== GENERAL ====================",
     "lint": "nx run-many -t lint",
     "lint:affected": "nx affected -t lint --uncommitted",
     "test": "nx run-many -t test",
     "test:affected": "nx affected -t test --uncommitted",
     "format": "nx format:write",
     "format:check": "nx format:check",
-
-    "//": "==================== BACKEND ====================",
+    "_comment:backend": "==================== BACKEND ====================",
     "lint:backend": "nx lint backend",
     "test:backend": "nx test backend",
     "start:backend": "nx serve backend",
