@@ -58,16 +58,16 @@
 **Story Points:** 2
 
 **Definition of Done (DoD):**
-- [ ] ERD created using Mermaid.live showing:
-  - `users` table (id, email, username, created_at)
-  - `quizzes` table (id, title, description, creator_id FK, share_code, created_at)
-  - `questions` table (id, quiz_id FK, text, type, options JSON, correct_answer, time_limit, points, order)
-  - `sessions` table (id, quiz_id FK, pin, status enum, host_id FK, started_at)
-  - `session_players` table (id, session_id FK, username, score, lives, status)
-  - `game_events` table (id, session_id FK, player_id FK, event_type, data JSON, timestamp)
-- [ ] Relationships documented (1:many, many:many with junction tables)
-- [ ] ERD committed to `/docs/erd.png` and `/docs/erd.mmd` in repo
-- [ ] Team review and approval
+- [x] ERD created using Mermaid.live showing:
+  - `user` table (id, email, username, created_at)
+  - `quizze` table (id, title, description, creator_id FK, share_code, created_at)
+  - `question` table (id, quiz_id FK, text, type, options JSON, correct_answer, time_limit, points, order)
+  - `session` table (id, quiz_id FK, pin, status enum, host_id FK, started_at)
+  - `session_player` table (id, session_id FK, username, score, lives, status)
+  - `game_event` table (id, session_id FK, player_id FK, event_type, data JSON, timestamp)
+- [x] Relationships documented (1:many, many:many with junction tables)
+- [x] ERD committed to `/docs/erd.png` and `/docs/erd.mmd` in repo
+- [x] Team review and approval
 
 ---
 
