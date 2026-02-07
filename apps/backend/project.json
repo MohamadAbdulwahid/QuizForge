@@ -64,6 +64,48 @@
         "command": "bun test --watch",
         "cwd": "apps/backend"
       }
+    },
+    "db:init": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "bunx supabase init",
+        "cwd": "apps/backend"
+      }
+    },
+    "db:reset": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "bunx supabase db reset",
+        "cwd": "apps/backend"
+      }
+    },
+    "db:push": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "bunx supabase db push",
+        "cwd": "apps/backend"
+      }
+    },
+    "db:pull": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "bunx supabase db pull",
+        "cwd": "apps/backend"
+      }
+    },
+    "db:types": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "bunx supabase gen types typescript --linked > ../../libs/shared/models/src/database.types.ts",
+        "cwd": "apps/backend"
+      }
+    },
+    "db:link": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "bunx supabase link --project-ref lutjmdlzdmzglgqjgvuj ",
+        "cwd": "apps/backend"
+      }
     }
   }
 }

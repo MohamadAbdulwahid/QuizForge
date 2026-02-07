@@ -51,6 +51,13 @@
     "lint:backend": "nx lint backend",
     "test:backend": "nx test backend",
     "start:backend": "nx serve backend",
-    "dev:backend": "nx serve backend --watch"
+    "dev:backend": "nx serve backend --watch",
+    "db:init": "nx run backend:db:init",
+    "db:reset": "nx run backend:db:reset",
+    "db:push": "nx run backend:db:push",
+    "db:pull": "nx run backend:db:pull",
+    "db:types": "nx run backend:db:types",
+    "db:types:local": "nx run backend:db:types:local",
+    "db:link": "nx run backend:db:link"
   }
 }
