@@ -1,7 +1,7 @@
 # Sprint 1 Effort Plan
 
 **Sprint Duration:** 2 weeks (10 working days)  
-**Target Velocity:** 33 Story Points  
+**Target Velocity:** 34 Story Points  
 **Team Size:** 4 developers
 
 ---
@@ -69,7 +69,7 @@
 
 ---
 
-### Behrang - 4 SP
+### Behrang - 5 SP
 - **PB-03**: Entity-Relationship Diagram (ERD) Design (2 SP) - Days 1-2
 - **PB-13**: Pino Logger Configuration (1 SP) - Day 5
 - **PB-14**: Global Error Handling Middleware (1 SP) - Day 9

@@ -3,7 +3,7 @@
 **Sprint Goal:** Establish Supabase database schema, Drizzle ORM integration, and Supabase Auth for secure user management.
 
 **Duration:** 2 weeks  
-**Total Story Points:** 25 SP (≈50 hours)  
+**Total Story Points:** 34 SP (≈50 hours)  
 **Team:** Mohamad, Nishan, David, Behrang
 
 ---
@@ -276,21 +276,50 @@
 ---
 
 ### PB-13: Pino Logger Configuration (Behrang)
-**User Story:** As a **Developer**, I want Pino logger configured for structured JSON logging so errors and requests are tracked.
+**User Story:** As a **Developer**, I want Pino logger configured with readable dev output and raw JSON in production so errors and requests are tracked reliably and are easy to debug locally.
 
-**Story Points:** 1
+**Story Points:** 2
 
 **Definition of Done (DoD):**
-- [ ] Dependencies installed: `pino`, `pino-pretty` (dev)
-- [ ] `apps/backend/src/config/logger.ts` created with:
-  - Pino instance configured
-  - Pretty-print enabled in development
-  - JSON format in production
-  - Log level from env (default: info)
-  - Base context includes env and timestamp
-- [ ] Logger used in at least 2 places (server start, auth middleware)
-- [ ] Logs visible in terminal with correct format
-- [ ] No `console.log` statements in code
+- [ ] Install dependencies (from `apps/backend`):
+  - `bun add pino`
+  - `bun add -d pino-pretty` (dev)
+  - `bun add -d @types/pino` (dev)
+- [ ] Add `LOG_LEVEL` to `apps/backend/.env.example` with default `info`, and add validation in `apps/backend/src/config/environment.ts` (use Zod)
+- [ ] Create `apps/backend/src/config/logger.ts` (TypeScript) with:
+  - `export const logger = pino({ level: config.LOG_LEVEL, base: { service: 'backend', env: config.NODE_ENV }, serializers: { err: pino.stdSerializers.err } })`
+  - **Development behavior**: when `NODE_ENV === 'development'`, use programmatic transport targeting `pino-pretty` with dev-friendly options (`colorize`, `levelFirst`, `translateTime: 'HH:MM:ss'`) so `bun run dev:backend` prints pretty logs without extra piping
+  - **Production behavior**: emit raw JSON (no pretty transport)
+  - Expose `createChildLogger(component: string)` helper to create `logger.child({ component })`
+- [ ] Add examples of where to log:
+  - Server start (e.g., `logger.info({ port }, 'Server listening')`)
+  - Auth middleware (log auth failures and successes via `logger.child({ component: 'auth' })`)
+  - Database client (use `logger.child({ component: 'database' })` to log connection errors, slow queries, transaction failures)
+- [ ] Add optional DB-based logging support (recommended):
+  - Create `supabase/migrations/*` migration to add `logs` table: `(id uuid primary key, level text, message text, meta jsonb, created_at timestamp default now())`
+  - Add `apps/backend/src/database/repositories/log.repository.ts` with `insertLog({ level, message, meta })`
+  - Provide an example helper `logToDatabase(level, message, meta)` that can be used for persistent audit/debug logs (use sparingly in production)
+- [ ] Add scripts and docs:
+  - Document commands in `apps/backend/README.md`:
+    - How to install dev deps: `cd apps/backend && bun install`
+    - How to run dev server with pretty logs (no extra piping required if using programmatic transport). If using CLI piping instead: `bun run dev:backend | bunx pino-pretty --colorize --levelFirst --translateTime "HH:MM:ss"`
+- [ ] Add verification & tests:
+  - Unit test `apps/backend/tests/unit/config/logger.spec.ts` to verify:
+    - `transport` uses `pino-pretty` only when `NODE_ENV === 'development'`
+    - `logger.level` reflects `LOG_LEVEL` env var
+  - Manual test checklist: start dev server and confirm pretty output; start with `NODE_ENV=production` and confirm JSON logs
+- [ ] Linting & code hygiene:
+  - Ensure no `console.log` calls (ESLint rule). Use `logger` instead.
+- [ ] Add a short README note in `apps/backend/README.md` documenting the configuration, commands, and recommended best practices (pino-pretty dev-only, how to log DB events, serializers), explain that `pino-pretty` is for development only and should NOT be enabled in production
+
+**Notes & Implementation tips:**
+- Prefer programmatic transport (transport target `pino-pretty`) for a cleaner dev experience in Bun + TypeScript instead of requiring piping
+- Keep pretty printing out of CI and production—use raw JSON for log aggregation tools
+- Use `logger.child({ component })` liberally to add structured context. For sensitive data, avoid logging PII. Consider rate-limiting high-frequency logs such as per-request debug prints
+- For DB logs, prefer logging errors and slow queries only (don't log every query leading to noisy logs)
+
+---
+
 
 ---
 
