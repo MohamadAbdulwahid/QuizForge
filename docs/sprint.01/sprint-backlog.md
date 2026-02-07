@@ -174,20 +174,26 @@
 ---
 
 ### PB-08: Seed Data Scripts (Nishan)
-**User Story:** As a **Developer**, I want seed data scripts for test users and quizzes so development can proceed with sample data.
+**User Story:** As a **Developer**, I want seed data scripts that use Drizzle to seed Supabase so development and tests can run with predictable sample data.
 
 **Story Points:** 2
 
 **Definition of Done (DoD):**
-- [ ] `apps/backend/src/database/seed.ts` created with:
-  - 3 test users (test1@example.com, test2@example.com, test3@example.com)
-  - 2 sample quizzes per user with 5 questions each
-  - Questions with multiple-choice and true-false types
-  - Realistic data (science quiz, history quiz)
-- [ ] Seed script uses Drizzle insert queries
-- [ ] Script can be run: `bun run apps/backend/src/database/seed.ts`
-- [ ] Seed data visible in Supabase dashboard
-- [ ] Script is idempotent (can run multiple times without errors)
+- [ ] Create `apps/backend/src/database/seeds/` with the following files:
+  - `users.seed.ts` — seeds 3 test users (`test1@example.com`, `test2@example.com`, `test3@example.com`)
+  - `quizzes.seed.ts` — seeds 2 quizzes per user with 5 questions each (multiple-choice and true/false)
+  - `seed.ts` — aggregator that runs independent seeds in parallel and dependent seeds in order
+- [ ] Seed scripts use the Drizzle `db` client for inserts and verify existing rows to ensure **idempotency** (check by email/shareCode or skip/upsert)
+- [ ] Use `faker` (dev dependency, `bun add -d faker`) where helpful for realistic question text/options
+- [ ] Add script in `apps/backend/project.json`:
+  - `"db:seed": "bun run src/database/seeds/seed.ts"` that runs the seed script
+- [ ] Add package script in `/package.json`:
+  - `"seed": "nx run backend:seed"` that runs the seed script
+- [ ] Run the seed script and verify (`bun seed`) that:
+   - Data is visible in Supabase dashboard
+   - No duplicate data is created on subsequent runs (idempotency)
+   - Logs indicate which seeds were run and how many records were inserted/updated
+- [ ] Add a short README note at `apps/backend/README.md` with the exact commands and a brief explanation of idempotency
 
 ---
 
