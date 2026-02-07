@@ -35,7 +35,7 @@
 **Definition of Done (DoD):**
 - [x] Nx workspace initialized
 - [x] `apps/backend` scaffolded with Bun + Express (TypeScript) and basic `project.json`
-- [~] Start/build scripts added (`bun` scripts) and README setup notes
+- [x] Start/build scripts added (`bun` scripts) and README setup notes
 - [x] Linting and formatting configured for the workspace
 
 ### PB-02: Tech stack research & selection (Mohamad)
@@ -46,10 +46,10 @@
 **Priority:** High
 
 **Definition of Done (DoD):**
-- [ ] Research document created summarizing tradeoffs and recommendations
-- [ ] Chosen stack (Bun, Supabase, Drizzle, Angular Signals) documented with rationale
-- [ ] Installation and onboarding notes added (`/docs/tech-stack.md`)
-- [ ] Team review and sign-off recorded
+- [x] Research document created summarizing tradeoffs and recommendations
+- [x] Chosen stack (Bun, Supabase, Drizzle, Angular Signals) documented with rationale
+- [x] Installation and onboarding notes added (`/docs/tech-stack.md`)
+- [x] Team review and sign-off recorded
 
 
 ### PB-03: Entity-Relationship Diagram (ERD) Design (Behrang)
@@ -77,9 +77,9 @@
 **Story Points:** 2
 
 **Definition of Done (DoD):**
-- [ ] Supabase project created at supabase.com
-- [ ] Database credentials noted (SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY)
-- [ ] Supabase CLI installed locally (`bun add -D @supabase/supabase-js`)
+- [x] Supabase project created at supabase.com
+- [x] Database credentials noted (SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY)
+- [x] Supabase CLI installed locally (`bun add -D @supabase/supabase-js`)
 - [ ] Local Supabase environment initialized (`supabase init`)
 - [ ] `.env.example` created with required variables
 - [ ] `.env` added to `.gitignore`
