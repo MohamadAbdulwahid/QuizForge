@@ -98,6 +98,32 @@ Format: `<type>(<scope>): <description>`
 - **Pull requests**: Require 1 reviewer, must pass CI checks (when implemented)
 - **Main branch**: Always deployable, protected branch
 
+## Available Scripts
+
+All scripts use `bun` as the package manager and Nx for task orchestration.
+
+### General Scripts (Workspace-wide)
+- **`bun run lint`**: Lint all projects in the workspace
+- **`bun run lint:affected`**: Lint only projects affected by uncommitted changes
+- **`bun run test`**: Run tests for all projects
+- **`bun run test:affected`**: Run tests only for affected projects (uncommitted changes)
+- **`bun run format`**: Format all files with Prettier
+- **`bun run format:check`**: Check formatting without writing changes
+
+### Backend Scripts
+- **`bun run lint:backend`**: Lint the backend application only
+- **`bun run test:backend`**: Run backend tests only
+- **`bun run start:backend`**: Start the backend server (production mode)
+- **`bun run dev:backend`**: Start the backend server in watch mode (auto-restart on changes)
+
+### Frontend Scripts (Coming Soon)
+Frontend-specific scripts will follow the same pattern (e.g., `lint:frontend`, `test:frontend`, `dev:frontend`).
+
+### Usage Notes
+- Always prefer Nx commands (`nx run`, `nx affected`) over direct tool invocation for consistency
+- Use `affected` scripts during development to run tasks only on changed code for faster feedback
+- Use workspace-wide scripts (`lint`, `test`) before committing or in CI pipelines
+
 ## Development Environment
 - **Node Manager**: Use `bun` for all scripts and package management
 - **Database / ORM**: Use Supabase Postgres as the primary database with Drizzle ORM (`postgres-js` driver) for type-safe queries; use the Supabase CLI for managing migrations and local DB emulation.
