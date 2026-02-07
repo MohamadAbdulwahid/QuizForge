@@ -40,22 +40,18 @@
   "scripts": {
     "prepare": "husky",
 
+    "//": "==================== GENERAL ====================",
     "lint": "nx run-many -t lint",
-    "lint:affected": "nx affected -t lint",
+    "lint:affected": "nx affected -t lint --uncommitted",
     "test": "nx run-many -t test",
-    "test:affected": "nx affected -t test",
+    "test:affected": "nx affected -t test --uncommitted",
     "format": "nx format:write",
     "format:check": "nx format:check",
 
-    "backend:dev": "nx serve backend",
-    "backend:start": "nx start backend",
-    "backend:build": "nx build backend",
-    "backend:lint": "nx lint backend",
-    "backend:lint:fix": "nx lint backend --fix",
-    "backend:test": "nx test backend",
-
-    "backend-e2e:test": "nx e2e backend-e2e",
-    "backend-e2e:lint": "nx lint backend-e2e",
-    "backend-e2e:lint:fix": "nx lint backend-e2e --fix"
+    "//": "==================== BACKEND ====================",
+    "lint:backend": "nx lint backend",
+    "test:backend": "nx test backend",
+    "start:backend": "nx serve backend",
+    "dev:backend": "nx serve backend --watch"
   }
 }
