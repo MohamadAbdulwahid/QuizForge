@@ -1,3 +1,5 @@
+
+
 <!-- nx configuration start-->
 <!-- Leave the start & end comments to automatically receive updates. -->
 
@@ -12,3 +14,19 @@
 - For Nx plugin best practices, check `node_modules/@nx/<plugin>/PLUGIN.md`. Not all plugins have this file - proceed without it if unavailable.
 
 <!-- nx configuration end-->
+
+# Project-Specific Instructions
+
+## Required Reading
+
+**ALWAYS** read and follow the guidelines in `.github/copilot-instructions.md` before working on any task in this repository. This file contains essential conventions, architecture decisions, and code quality standards for the entire QuizForge project.
+
+## Context-Specific Instructions
+
+When working on specific parts of the codebase, also consult the relevant instruction files:
+
+- **Backend tasks** (anything in `apps/backend/**`): Read `.github/instructions/backend.instructions.md` for backend-specific conventions, API patterns, database schema, authentication flows, and Bun/Express guidelines.
+
+- **Frontend tasks** (anything in `apps/frontend/**`): Read `.github/instructions/frontend.instructions.md` for frontend-specific conventions, Angular patterns, component structure, state management, and UI/UX guidelines.
+
+These instruction files are mandatory reading before making code changes to ensure consistency with the project's architecture and design patterns.
