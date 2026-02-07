@@ -1,5 +1,6 @@
 import nx from "@nx/eslint-plugin";
 import tseslint from "typescript-eslint";
+import checkFilePlugin from "eslint-plugin-check-file";
 
 export default [
     ...nx.configs["flat/base"],
@@ -45,5 +46,28 @@ export default [
             ],
             "no-console": ["warn", { allow: ["warn", "error"] }]
         }
-    }
+    },
+    {
+        files: ["**/*"],
+        plugins: {
+            "check-file": checkFilePlugin,
+        },
+        rules: {
+            "check-file/folder-naming-convention": [
+                "error",
+                {
+                    "**/*": "KEBAB_CASE",
+                },
+            ],
+            "check-file/filename-naming-convention": [
+                "error",
+                {
+                    "**/*": "KEBAB_CASE",
+                },
+                {
+                    ignoreMiddleExtensions: true,
+                },
+            ],
+        },
+    },
 ];
