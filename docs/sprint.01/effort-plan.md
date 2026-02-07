@@ -117,27 +117,6 @@
 
 **Milestone:** Full auth flow working, endpoints functional, database seeded, all tests passing
 
----
-
-## Daily Effort Breakdown
-
-| Day | Total SP | Focus Area | Deliverables |
-|-----|----------|------------|--------------|
-| 1 | 6 | Setup & Planning | Git/CI, Nx, ERD draft, tech research |
-| 2 | 4 | Infrastructure | ERD final, Supabase project live |
-| 3 | 4 | ORM Foundation | Env config, Drizzle connection |
-| 4 | 3 | Schema Definition | Database schema, tables defined |
-| 5 | 5 | Services & Logging | Auth service, migrations, logger |
-| 6 | 4 | Auth Middleware | JWT validation, service completion |
-| 7 | 4 | Endpoints Start | Seed data, signup endpoint |
-| 8 | 4 | Endpoints Finish | Login endpoint, auth middleware complete |
-| 9 | 2 | Error Handling | Error middleware, testing |
-| 10 | 1 | Finalization | Final tests, demo ready |
-
-**Total: 37 SP** (includes buffer for reviews and testing)
-
----
-
 ## Risk Mitigation
 
 ### Identified Risks
@@ -156,33 +135,6 @@
 - If PB-06.5 delayed: Nishan switches to integration tests for existing code
 - If critical blocker: Daily standup to reallocate tasks
 - Buffer tasks available (documentation, additional tests) if ahead
-
----
-
-## Communication Plan
-
-### Daily Standup (15 min)
-- Time: 9:00 AM
-- Format: Async (Discord/Slack) or Sync (Google Meet)
-- Questions:
-  - What did you complete yesterday?
-  - What are you working on today?
-  - Any blockers?
-
-### Mid-Sprint Sync (Day 5)
-- Review progress against burndown
-- Adjust task assignments if needed
-- Identify risks early
-
-### Sprint Review (Day 10)
-- Demo completed features
-- Walkthrough of auth flow
-- Database schema review
-
-### Sprint Retrospective (Day 10)
-- What went well?
-- What can improve?
-- Action items for Sprint 2
 
 ---
 
