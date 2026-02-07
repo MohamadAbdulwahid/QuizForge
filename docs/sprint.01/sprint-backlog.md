@@ -80,10 +80,10 @@
 - [x] Supabase project created at supabase.com
 - [x] Database credentials noted (SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY)
 - [x] Supabase CLI installed locally (`bun add -D @supabase/supabase-js`)
-- [ ] Local Supabase environment initialized (`supabase init`)
-- [ ] `.env.example` created with required variables
-- [ ] `.env` added to `.gitignore`
-- [ ] Database accessible via Supabase dashboard
+- [x] Local Supabase environment initialized (`supabase init`)
+- [x] `.env.example` created with required variables
+- [x] `.env` added to `.gitignore`
+- [x] Database accessible via Supabase dashboard
 
 ---
 
