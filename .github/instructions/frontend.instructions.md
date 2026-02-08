@@ -1,5 +1,5 @@
 ---
-applyTo: "apps/frontend/**/*.ts"
+applyTo: "apps/frontend/**/*"
 ---
 
 # QuizForge Frontend Instructions (Angular v21)

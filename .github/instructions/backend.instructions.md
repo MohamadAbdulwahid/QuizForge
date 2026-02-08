@@ -1,5 +1,5 @@
 ---
-applyTo: "apps/backend/**/*.ts"
+applyTo: "apps/backend/**/*,apps/backend-e2e/**/*"
 ---
 
 # QuizForge Backend Instructions (Bun + Express + PostgreSQL)
