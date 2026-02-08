@@ -136,8 +136,8 @@ Frontend-specific scripts will follow the same pattern (e.g., `lint:frontend`, `
   - Template: `.env.example` in each directory with required variables
 - **Required env vars (Backend)**:
   - `SUPABASE_URL`: Supabase project URL
-  - `SUPABASE_ANON_KEY`: Supabase anonymous/public key
-  - `SUPABASE_SERVICE_ROLE_KEY`: Supabase service role key (server-only, keep secret!)
+  - `SUPABASE_PUBLISHABLE_KEY`: Supabase public anon key (frontend safe)
+  - `SUPABASE_SECRET_KEY`: Supabase service role key (server-side only, never expose to frontend)
   - `DATABASE_URL`: Supabase connection pooler URL (Transaction mode)
   - `PORT`: Backend server port (default: 3000)
   - `FRONTEND_URL`: CORS origin (e.g., `http://localhost:4200`)
@@ -288,7 +288,7 @@ echo "✅ Pre-push checks passed!"
 - [ ] Row Level Security (RLS) policies enabled on all Supabase tables
 - [ ] Rate limiting on all endpoints (60 req/min IP, throttle WebSocket events)
 - [ ] CORS configured to specific origins only (FRONTEND_URL env)
-- [ ] `SUPABASE_SERVICE_ROLE_KEY` never exposed to client-side code
+- [ ] `SUPABASE_SECRET_KEY` never exposed to client-side code
 - [ ] No sensitive data in client-side logs or WebSocket handshakes
 - [ ] XSS prevention via Angular sanitization
 - [ ] Zod validation for ALL WebSocket messages and API request bodies

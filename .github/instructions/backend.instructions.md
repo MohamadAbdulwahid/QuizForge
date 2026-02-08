@@ -310,13 +310,13 @@ export class QuizRepository {
 import { createClient } from '@supabase/supabase-js';
 import { logger } from './logger';
 
-if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
+if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SECRET_KEY) {
   throw new Error('Missing Supabase environment variables');
 }
 
 export const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY,
+  process.env.SUPABASE_SECRET_KEY,
   {
     auth: {
       autoRefreshToken: false, // Server-side doesn't need auto-refresh
@@ -1587,8 +1587,8 @@ const envSchema = z.object({
   
   // Supabase
   SUPABASE_URL: z.string().url(),
-  SUPABASE_ANON_KEY: z.string().min(20),
-  SUPABASE_SERVICE_ROLE_KEY: z.string().min(20),
+  SUPABASE_PUBLISHABLE_KEY: z.string().min(20),
+  SUPABASE_SECRET_KEY: z.string().min(20),
   
   // Database (Supabase connection string)
   DATABASE_URL: z.string().url(),
