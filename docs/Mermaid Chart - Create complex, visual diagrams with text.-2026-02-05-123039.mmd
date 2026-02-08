@@ -1,13 +1,13 @@
 erDiagram
 
-    USERS {
+    USER {
         int id PK
         string email
         string username
         datetime created_at
     }
 
-    QUIZZES {
+    QUIZ {
         int id PK
         string title
         string description
@@ -16,19 +16,19 @@ erDiagram
         datetime created_at
     }
 
-    QUESTIONS {
+    QUESTION {
         int id PK
         int quiz_id FK
         string text
         string type
-        json options
+        string options
         string correct_answer
         int time_limit
         int points
         int order
     }
 
-    SESSIONS {
+    SESSION {
         int id PK
         int quiz_id FK
         string pin
@@ -37,7 +37,7 @@ erDiagram
         datetime started_at
     }
 
-    SESSION_PLAYERS {
+    PLAYER_SESSION {
         int id PK
         int session_id FK
         string username
@@ -46,7 +46,7 @@ erDiagram
         string status
     }
 
-    GAME_EVENTS {
+    GAME_EVENT {
         int id PK
         int session_id FK
         int player_id FK
@@ -55,12 +55,12 @@ erDiagram
         datetime timestamp
     }
 
-    USERS ||--o{ QUIZZES : creates
-    QUIZZES ||--o{ QUESTIONS : contains
+    USER ||--o{ QUIZ : creates
+    QUIZ ||--o{ QUESTION : contains
 
-    USERS ||--o{ SESSIONS : hosts
-    QUIZZES ||--o{ SESSIONS : used_in
+    USER ||--o{ SESSION : hosts
+    QUIZ ||--o{ SESSION : used_in
 
-    SESSIONS ||--o{ SESSION_PLAYERS : has
-    SESSION_PLAYERS ||--o{ GAME_EVENTS : generates
-    SESSIONS ||--o{ GAME_EVENTS : logs
+    SESSION ||--o{ PLAYER_SESSION : has
+    PLAYER_SESSION ||--o{ GAME_EVENT : generates
+    SESSION ||--o{ GAME_EVENT : logs
