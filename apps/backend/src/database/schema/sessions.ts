@@ -1,46 +1,10 @@
 import { integer, jsonb, pgEnum, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
+import { user } from './users';
+import { quiz } from './quizzes';
 
-// Enums
-export const questionTypeEnum = pgEnum('question_type', ['multiple-choice', 'true-false', 'open']);
 export const sessionStatusEnum = pgEnum('session_status', ['waiting', 'in-progress', 'ended']);
 export const playerStatusEnum = pgEnum('player_status', ['active', 'disconnected', 'eliminated']);
 
-// USER
-export const user = pgTable('user', {
-  id: serial('id').primaryKey(),
-  email: text('email').notNull(),
-  username: text('username').notNull(),
-  created_at: timestamp('created_at').defaultNow().notNull(),
-});
-
-// QUIZ
-export const quiz = pgTable('quiz', {
-  id: serial('id').primaryKey(),
-  title: text('title').notNull(),
-  description: text('description'),
-  creator_id: integer('creator_id')
-    .notNull()
-    .references(() => user.id, { onDelete: 'cascade' }),
-  share_code: text('share_code').notNull().unique(),
-  created_at: timestamp('created_at').defaultNow().notNull(),
-});
-
-// QUESTION
-export const question = pgTable('question', {
-  id: serial('id').primaryKey(),
-  quiz_id: integer('quiz_id')
-    .notNull()
-    .references(() => quiz.id, { onDelete: 'cascade' }),
-  text: text('text').notNull(),
-  type: questionTypeEnum('type').notNull(),
-  options: jsonb('options'),
-  correct_answer: text('correct_answer').notNull(),
-  time_limit: integer('time_limit').default(30),
-  points: integer('points').default(100),
-  order: integer('order').notNull(),
-});
-
-// SESSION
 export const session = pgTable('session', {
   id: serial('id').primaryKey(),
   quiz_id: integer('quiz_id')
@@ -54,7 +18,6 @@ export const session = pgTable('session', {
   started_at: timestamp('started_at'),
 });
 
-// PLAYER_SESSION
 export const playerSession = pgTable('player_session', {
   id: serial('id').primaryKey(),
   session_id: integer('session_id')
@@ -66,7 +29,6 @@ export const playerSession = pgTable('player_session', {
   status: playerStatusEnum('status').notNull().default('active'),
 });
 
-// GAME_EVENT
 export const gameEvent = pgTable('game_event', {
   id: serial('id').primaryKey(),
   session_id: integer('session_id')

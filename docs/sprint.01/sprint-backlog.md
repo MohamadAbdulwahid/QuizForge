@@ -110,21 +110,21 @@
 **Story Points:** 3
 
 **Definition of Done (DoD):**
-- [ ] `apps/backend/src/database/schema/users.ts` created with:
+- [x] `apps/backend/src/database/schema/users.ts` created with:
   - id (uuid, primary key)
   - email (text, unique, not null)
   - username (text, not null)
   - created_at (timestamp, default now)
-- [ ] `apps/backend/src/database/schema/quizzes.ts` created with:
+- [x] `apps/backend/src/database/schema/quizzes.ts` created with:
   - quizzes table (id, title, description, creator_id FK, share_code unique, created/updated_at)
   - questions table (id, quiz_id FK, text, type enum, options jsonb, correct_answer, time_limit, points, order)
-- [ ] `apps/backend/src/database/schema/sessions.ts` created with:
+- [x] `apps/backend/src/database/schema/sessions.ts` created with:
   - sessions table (id, quiz_id FK, pin unique, status enum, host_id FK, timestamps)
   - session_players table (id, session_id FK, username, score, lives, status)
   - game_events table (id, session_id FK, player_id FK, event_type, data jsonb, timestamp)
-- [ ] All foreign keys defined with onDelete cascade
-- [ ] Enums created (question_type, session_status, player_status)
-- [ ] Schema files export table definitions
+- [x] All foreign keys defined with onDelete cascade
+- [x] Enums created (question_type, session_status, player_status)
+- [x] Schema files export table definitions
 - [ ] `apps/backend/src/database/repositories/user.repository.ts` created with:
   - `findUserById(id)` - query user by id
   - `findUserByEmail(email)` - query user by email
