@@ -5,6 +5,8 @@
 
 interface Config {
   DATABASE_URL: string;
+  SUPABASE_PUBLISHABLE_KEY: string;
+  SUPABASE_SECRET_KEY: string;
 }
 
 /**
@@ -22,4 +24,6 @@ function getEnvVar(name: string): string {
 
 export const config: Config = {
   DATABASE_URL: getEnvVar('DATABASE_URL'),
+  SUPABASE_PUBLISHABLE_KEY: getEnvVar('SUPABASE_PUBLISHABLE_KEY'),
+  SUPABASE_SECRET_KEY: getEnvVar('SUPABASE_SECRET_KEY'),
 };
