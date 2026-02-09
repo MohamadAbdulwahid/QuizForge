@@ -2,8 +2,6 @@ import express from 'express';
 import * as path from 'path';
 import cors from 'express';
 
-
-
 const app = express();
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));

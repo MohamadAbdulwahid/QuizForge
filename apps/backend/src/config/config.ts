@@ -23,6 +23,5 @@ function getEnvVar(name: string): string {
 
 export const config: Config = {
   POSTGRES_URL: getEnvVar('POSTGRES_URL'),
-  MAX_POOL_CONNECTIONS: 10
+  MAX_POOL_CONNECTIONS: 10,
 };
-
