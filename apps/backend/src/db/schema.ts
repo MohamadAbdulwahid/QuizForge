@@ -1,29 +1,9 @@
-import {
-  integer,
-  jsonb,
-  pgEnum,
-  pgTable,
-  serial,
-  text,
-  timestamp,
-} from 'drizzle-orm/pg-core';
+import { integer, jsonb, pgEnum, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
 
 // Enums
-export const questionTypeEnum = pgEnum('question_type', [
-  'multiple-choice',
-  'true-false',
-  'open',
-]);
-export const sessionStatusEnum = pgEnum('session_status', [
-  'waiting',
-  'in-progress',
-  'ended',
-]);
-export const playerStatusEnum = pgEnum('player_status', [
-  'active',
-  'disconnected',
-  'eliminated',
-]);
+export const questionTypeEnum = pgEnum('question_type', ['multiple-choice', 'true-false', 'open']);
+export const sessionStatusEnum = pgEnum('session_status', ['waiting', 'in-progress', 'ended']);
+export const playerStatusEnum = pgEnum('player_status', ['active', 'disconnected', 'eliminated']);
 
 // USER
 export const user = pgTable('user', {
@@ -75,7 +55,7 @@ export const session = pgTable('session', {
 });
 
 // PLAYER_SESSION
-export const player_session = pgTable('player_session', {
+export const playerSession = pgTable('player_session', {
   id: serial('id').primaryKey(),
   session_id: integer('session_id')
     .notNull()
@@ -87,14 +67,14 @@ export const player_session = pgTable('player_session', {
 });
 
 // GAME_EVENT
-export const game_event = pgTable('game_event', {
+export const gameEvent = pgTable('game_event', {
   id: serial('id').primaryKey(),
   session_id: integer('session_id')
     .notNull()
     .references(() => session.id, { onDelete: 'cascade' }),
   player_id: integer('player_id')
     .notNull()
-    .references(() => player_session.id, { onDelete: 'cascade' }),
+    .references(() => playerSession.id, { onDelete: 'cascade' }),
   event_type: text('event_type').notNull(),
   data: jsonb('data'),
   timestamp: timestamp('timestamp').defaultNow().notNull(),
