@@ -189,33 +189,22 @@
 ---
 
 ### PB-09: Supabase Auth Integration (Mohamad)
-**User Story:** As a **Developer**, I want Supabase Auth integrated using the new publishable/secret API keys and signing-keys so JWTs are validated securely and only our backend can mint/validate tokens.
+**User Story:** As a **Developer**, I want Supabase Auth integrated using the **publishable/secret API keys** and **JWT signing keys** so JWTs are validated securely and our backend can mint/verify tokens (no legacy JWT secret usage).
 
 **Story Points:** 4
 
 **Definition of Done (DoD):**
-- [ ] `apps/backend/src/config/supabase.ts` created with:
-  - Supabase client initialized with `SUPABASE_PUBLISHABLE_KEY` and `SUPABASE_SECRET_KEY` (do not use legacy `anon`/`service_role` keys)
-  - Configuration to support the Signing Keys system and JWT verification settings (env vars: `JWT_SIGNING_ALGORITHM`, and either `JWT_SHARED_SECRET` for HS256 or `JWT_JWKS_URL` for ES256)
-  - Documentation in `apps/backend/README.md` describing how to disable legacy `anon`/`service_role` keys in the Supabase dashboard and how to rotate signing keys safely
-- [ ] `apps/backend/src/api/middleware/auth.ts` created with:
-  - `authMiddleware` that extracts Bearer token from `Authorization` header and verifies signature + standard claims (`exp`, `sub`, `role`)
-  - Primary verification uses local verification (e.g., `jose` + shared secret for **HS256** or `jose` + cached JWKS for **ES256**).
-  - Provide a fallback option to call `supabase.auth.getClaims()` when necessary (handles key rotations automatically)
-  - On success, attach `req.user` derived from token claims (type-safe interface) and proceed
-  - On failure, return **401** and log details (use `logger.child({ component: 'auth' })`) without logging sensitive secrets
-- [ ] Security & environment:
-  - Add `apps/backend/.env.example` entries: `SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`, `JWT_SIGNING_ALGORITHM`, `JWT_SHARED_SECRET` (if using HS256), `JWT_JWKS_URL` (if using ES256)
-  - Add a clear **warning** in the DoD/docs that **HS256 (shared secret) is less secure and not recommended for production**; prefer **ES256 (asymmetric)** where possible. If HS256 is chosen, ensure `JWT_SHARED_SECRET` is only available to backend runtime and rotated regularly.
-- [ ] Tests and validation:
-  - Unit tests (`apps/backend/tests/unit/middleware/auth.spec.ts`) to verify valid/invalid tokens for the chosen algorithm (HS256 and a mock ES256 case if possible)
-  - Integration tests (`apps/backend/tests/integration/auth.spec.ts`) verifying protected routes return 401 without token and 200 with a valid token; include key-rotation behavior and acceptance of tokens signed with previous key during the grace period
-  - Manual test checklist for key rotation: rotate signing key in dashboard, confirm app accepts tokens signed with previous key for configured expiry window, then revoke previous key and confirm revoked tokens are rejected
-- [ ] Operational & docs:
-  - Add operational runbook steps to `apps/backend/README.md` for rotating and revoking signing keys, disabling legacy keys, and emergency revocation procedures
-  - Ensure middleware does not call `supabase.auth.getUser()` on every request (avoids Auth server hot-path) — use `getClaims()` or local verification where practical
-- [ ] Middleware manual tests performed (valid/invalid tokens, rotation scenarios)
-- [ ] No compilation errors
+- [ ] Add env vars to `apps/backend/.env.example`: `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`, and optional `SUPABASE_SIGNING_ALG=ES256`.
+- [ ] `apps/backend/src/config/supabase.ts`: export `supabaseClient` (publishable key) and `authAdminClient` (secret key; server-only, `autoRefreshToken=false`, `persistSession=false`).
+- [ ] `apps/backend/src/api/middleware/auth.ts`: implement `authMiddleware` that:
+  - Verifies `Authorization: Bearer <token>` with `supabase.auth.getClaims(token)` (preferred for asymmetric keys / ES256) and falls back to `supabase.auth.getUser(token)` when necessary (symmetric keys / WebCrypto missing);
+  - Validates `iss`, `aud`, `exp` and attaches `req.user`/`req.claims` on success;
+  - Returns 401 and logs via Pino on failure.
+- [ ] Tests:
+  - Unit: `apps/backend/tests/unit/middleware/auth.spec.ts` (valid ES256 via mocked JWKS, expired token, invalid token, fallback path).
+  - Integration: `apps/backend/tests/integration/auth.spec.ts` (signup/login → session, protected route accepts valid JWT, rejects invalid; test minted JWTs with `supabase gen bearer-jwt --algorithm ES256`).
+- [ ] Docs: add short `apps/backend/README.md` (Auth section) or `docs/AUTH.md` with steps: enable Signing Keys (ES256), rotate to new key, use `SUPABASE_PUBLISHABLE_KEY`/`SUPABASE_SECRET_KEY`, test `getClaims()` and JWKS URL `https://<project>.supabase.co/auth/v1/.well-known/jwks.json`, example `jose` snippet, and note to disable `anon`/`service_role` after safe wait period.
+- [ ] Manual checklist: verify `getClaims()` works locally, mint test JWT (`supabase gen bearer-jwt`), confirm protected routes, ensure no use of legacy JWT secret, and CI runs tests with no compilation errors.
 
 ---
 
