@@ -5,13 +5,11 @@
  * @throws May throw an error if the database query fails
  */
 
-
 /**
  * Finds a user by their email address.
  * @param {string} email - The email address of the user to find.
  * @returns {Promise<User[]>} A promise that resolves to an array of users matching the email.
  */
-
 
 /**
  * Creates a new user in the database.
@@ -19,4 +17,3 @@
  * @param username - The username for the user account
  * @returns A query that inserts the user and returns the created user record
  */
-
