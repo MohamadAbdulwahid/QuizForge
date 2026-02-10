@@ -1,4 +1,14 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "eslint.enable": true
+  "eslint.enable": true,
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "file":".github/copilot-instructions.md"
+    }
+  ],
+  "chat.instructionsFilesLocations": {
+    ".github/instructions/backend.instructions.md": true,
+    ".github/instructions/frontend.instructions.md": true
+  },
+  "chat.useNestedAgentsMdFiles": true
 }
