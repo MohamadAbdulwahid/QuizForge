@@ -1,64 +1,74 @@
 erDiagram
 	direction LR
-	USER {
-		int id PK ""  
-		string email  ""  
-		string username  ""  
-		datetime created_at  ""  
+	APP_USER {
+		int id PK ""
+		string email  ""
+		string username  ""
+		datetime created_at  ""
 	}
 
-	QUIZZE {
-		int id PK ""  
-		string title  ""  
-		string description  ""  
-		int creator_id FK ""  
-		string share_code  ""  
-		datetime created_at  ""  
+	QUIZ {
+		int id PK ""
+		string title  ""
+		string description  ""
+		int creator_id FK ""
+		string share_code  ""
+		datetime created_at  ""
 	}
 
 	QUESTION {
-		int id PK ""  
-		int quiz_id FK ""  
-		string text  ""  
-		string type  ""  
-		json options  ""  
-		string correct_answer  ""  
-		int time_limit  ""  
-		int points  ""  
-		int order  ""  
+		int id PK ""
+		int quiz_id FK ""
+		string text  ""
+		string type  ""
+		json options  ""
+		string correct_answer  ""
+		int time_limit  ""
+		int points  ""
+		int order_index  ""
 	}
 
 	SESSION {
-		int id PK ""  
-		int quiz_id FK ""  
-		string pin  ""  
-		string status  ""  
-		int host_id FK ""  
-		datetime started_at  ""  
+		int id PK ""
+		int quiz_id FK ""
+		string pin  ""
+		string status  ""
+		int host_id FK ""
+		datetime started_at  ""
 	}
 
 	SESSION_PLAYER {
-		int id PK ""  
-		int session_id FK ""  
-		string username  ""  
-		int score  ""  
-		int lives  ""  
-		string status  ""  
+		int id PK ""
+		int session_id FK ""
+		int user_id FK ""
+		string username  ""
+		int score  ""
+		int lives  ""
+		string status  ""
 	}
 
 	GAME_EVENT {
-		int id PK ""  
-		int session_id FK ""  
-		int player_id FK ""  
-		string event_type  ""  
-		json data  ""  
-		datetime timestamp  ""  
+		int id PK ""
+		int session_id FK ""
+		int session_player_id FK ""
+		string event_type  ""
+		json data  ""
+		datetime timestamp  ""
 	}
 
-	USER||--o{QUIZZE:"creates"
-	QUIZZE||--o{QUESTION:"contains"
-	USER||--o{SESSION:"hosts"
-	QUIZZE||--o{SESSION:"used_in"
+	PLAYER_STAT {
+		int user_id PK ""
+		string mode  ""
+		int wins  ""
+		int total_gold  ""
+		int lives_lost  ""
+	}
+
+	APP_USER||--o{QUIZ:"creates"
+	QUIZ||--o{QUESTION:"contains"
+	APP_USER||--o{SESSION:"hosts"
+	QUIZ||--o{SESSION:"used_in"
 	SESSION||--o{SESSION_PLAYER:"has"
 	SESSION_PLAYER||--o{GAME_EVENT:"generates"
 	SESSION||--o{GAME_EVENT:"logs"
+	APP_USER||--o{PLAYER_STAT:"has"
