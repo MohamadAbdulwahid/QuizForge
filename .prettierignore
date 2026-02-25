@@ -39,3 +39,7 @@ project.json
 # Documentation (optional - remove if you want these formatted)
 *.md
 project-planning/
+
+# Database
+supabase/*
+migrations/
