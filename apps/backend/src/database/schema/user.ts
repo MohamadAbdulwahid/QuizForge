@@ -10,4 +10,3 @@ export const USER = authSchema.table('users', {
 });
 
 export type User = typeof USER.$inferSelect;
-export type NewUser = typeof USER.$inferInsert;
