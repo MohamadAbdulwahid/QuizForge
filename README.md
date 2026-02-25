@@ -12,4 +12,4 @@ cp .env.example .env
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `POSTGRES_URL` | PostgreSQL database connection URL | `postgresql://user:password@localhost:5432/quizforge` |
+| `DATABASE_URL` | PostgreSQL database connection URL | `postgresql://user:password@localhost:5432/quizforge` |

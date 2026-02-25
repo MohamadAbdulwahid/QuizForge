@@ -2,10 +2,10 @@ import { config } from '../config/config';
 import { drizzle } from 'drizzle-orm/bun-sql';
 import { SQL } from 'bun';
 
-const CONNECTION_STRING = config.POSTGRES_URL;
+const CONNECTION_STRING = config.DATABASE_URL;
 
 if (!CONNECTION_STRING) {
-  throw new Error('POSTGRES_URL is not defined in the environment variables');
+  throw new Error('DATABASE_URL is not defined in the environment variables');
 }
 
 // Bun SQL client instance with prepared statements disabled (supabase pooling)
