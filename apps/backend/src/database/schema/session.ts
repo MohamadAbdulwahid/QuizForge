@@ -1,5 +1,5 @@
-import { bigint, jsonb, pgEnum, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
-import { USER } from './user';
+import { bigint, jsonb, pgEnum, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
+import { USER } from './auth/user';
 import { QUIZ } from './quiz';
 
 // Enums for session and player status
@@ -22,7 +22,7 @@ export const SESSION = pgTable('session', {
     .references(() => QUIZ.id, { onDelete: 'cascade' }),
   pin: text('pin').notNull(),
   status: text('status').notNull().default('pending'),
-  host_id: bigint('host_id', { mode: 'number' })
+  host_id: uuid('host_id')
     .notNull()
     .references(() => USER.id, { onDelete: 'cascade' }),
   started_at: timestamp('started_at', { withTimezone: true }).notNull().defaultNow(),
@@ -33,7 +33,7 @@ export const SESSION_PLAYER = pgTable('session_player', {
   session_id: bigint('session_id', { mode: 'number' })
     .notNull()
     .references(() => SESSION.id, { onDelete: 'cascade' }),
-  user_id: bigint('user_id', { mode: 'number' })
+  user_id: uuid('user_id')
     .notNull()
     .references(() => USER.id, { onDelete: 'cascade' }),
   username: text('username').notNull(),
