@@ -160,16 +160,7 @@
 **Story Points:** 2
 
 **Definition of Done (DoD):**
-- [ ] Migration created: `supabase migration new create_schema`
-- [ ] SQL migration file includes:
-  - CREATE TABLE statements for all tables
-  - CREATE TYPE for enums
-  - CREATE INDEX on frequently queried columns (creator_id, quiz_id, session_id)
-  - Row Level Security (RLS) ENABLE on all tables
-  - RLS policies for user-owned resources (users can CRUD own quizzes)
-- [ ] Migration applied locally: `supabase db reset`
-- [ ] Migration tested: can insert/query data
-- [ ] Migration file committed to repo
+- [x] Migration created: generate using drizzle-kit and then push migrations to Supabase
 
 ---
 
