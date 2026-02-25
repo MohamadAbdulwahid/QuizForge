@@ -2,7 +2,7 @@ import { config } from './src/config/config';
 import { Config, defineConfig } from 'drizzle-kit';
 
 export default defineConfig({
-  out: './drizzle',
+  out: './supabase/migrations',
   schemaFilter: ["public"],
   schema: './src/database/schema',
   dialect: 'postgresql',
