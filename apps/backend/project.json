@@ -93,17 +93,17 @@
         "cwd": "apps/backend"
       }
     },
-    "db:types": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "bunx supabase gen types typescript --linked > ../../libs/shared/models/src/database.types.ts",
-        "cwd": "apps/backend"
-      }
-    },
     "db:link": {
       "executor": "nx:run-commands",
       "options": {
         "command": "bunx supabase link --project-ref lutjmdlzdmzglgqjgvuj ",
+        "cwd": "apps/backend"
+      }
+    },
+    "db:generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "bunx drizzle-kit generate",
         "cwd": "apps/backend"
       }
     }
