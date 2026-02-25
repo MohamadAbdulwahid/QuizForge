@@ -11,7 +11,7 @@ erDiagram
 		int id PK ""
 		string title  ""
 		string description  ""
-		int creator_id FK ""
+		uuid creator_id FK ""
 		string share_code  ""
 		datetime created_at  ""
 	}
@@ -33,7 +33,7 @@ erDiagram
 		int quiz_id FK ""
 		string pin  ""
 		string status  ""
-		int host_id FK ""
+		uuid host_id FK ""
 		datetime started_at  ""
 	}
 
