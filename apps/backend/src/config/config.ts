@@ -4,7 +4,7 @@
  */
 
 interface Config {
-  POSTGRES_URL: string;
+  DATABASE_URL: string;
 }
 
 /**
@@ -21,5 +21,5 @@ function getEnvVar(name: string): string {
 }
 
 export const config: Config = {
-  POSTGRES_URL: getEnvVar('POSTGRES_URL'),
+  DATABASE_URL: getEnvVar('DATABASE_URL'),
 };
