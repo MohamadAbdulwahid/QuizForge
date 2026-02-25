@@ -1,5 +1,5 @@
 import { bigint, pgEnum, pgTable, text, timestamp, uuid, jsonb } from 'drizzle-orm/pg-core';
-import { USER } from './user';
+import { USER } from './auth/user';
 
 export const questionType = pgEnum('question_type', ['multiple-choice', 'true-false', 'open']);
 // Type exports from enum values
