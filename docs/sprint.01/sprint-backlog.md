@@ -93,15 +93,15 @@
 **Story Points:** 3
 
 **Definition of Done (DoD):**
-- [ ] Dependencies installed: `drizzle-orm`, `postgres`, `drizzle-kit` (dev)
-- [ ] `apps/backend/src/database/client.ts` created with:
+- [x] Dependencies installed: `drizzle-orm`, `postgres`, `drizzle-kit` (dev)
+- [x] `apps/backend/src/database/client.ts` created with:
   - postgres-js client configuration
   - Supavisor pooler connection (Transaction mode, port 6543)
   - `prepare: false` set for pooler compatibility
   - Graceful shutdown on SIGTERM
-- [ ] `apps/backend/drizzle.config.ts` created with schema path and migration output
-- [ ] Database client exports `db` instance
-- [ ] No compilation errors
+- [x] `apps/backend/drizzle.config.ts` created with schema path and migration output
+- [x] Database client exports `db` instance
+- [x] No compilation errors
 
 ---
 
