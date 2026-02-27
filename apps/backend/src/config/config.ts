@@ -35,10 +35,8 @@ const envSchema = z.object({
   SUPABASE_SECRET_KEY: z.string().min(1),
   DATABASE_URL: z.string().url(),
   FRONTEND_URL: z.string().url(),
-  //LOG_LEVEL validation 
-  LOG_LEVEL: z
-    .enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace'])
-    .default('info'),
+  //LOG_LEVEL validation
+  LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']).default('info'),
 });
 
 /**
@@ -52,14 +50,13 @@ const parsedEnv = envSchema.safeParse({
   SUPABASE_SECRET_KEY: getEnvVar('SUPABASE_SECRET_KEY'),
   DATABASE_URL: getEnvVar('DATABASE_URL'),
   FRONTEND_URL: getEnvVar('FRONTEND_URL'),
-  LOG_LEVEL: process.env.LOG_LEVEL || 'info', 
+  LOG_LEVEL: process.env.LOG_LEVEL || 'info',
 });
 
 if (!parsedEnv.success) {
   console.error('❌ Invalid environment variables:', parsedEnv.error.format());
   process.exit(1);
 }
-
 
 /**
  * Zod schema for LOG_LEVEL validation
@@ -76,5 +73,3 @@ export const config: Config = {
   LOG_LEVEL: logLevelSchema.parse(getEnvVar('LOG_LEVEL')),
   NODE_ENV: nodeEnvSchema.parse(getEnvVar('NODE_ENV')),
 };
-
-
