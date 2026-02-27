@@ -129,6 +129,7 @@
 - [x] `apps/backend/src/database/repositories/user.repository.ts` created with:
   - `findUserById(id)` - query user by id
   - `findUserByEmail(email)` - query user by email
+  - `createUser(email, username, password)` - creates user via Supabase Auth and returns boolean success (no direct DB insert)
   - Type-safe return types using Drizzle InferModel
 
 ---
@@ -140,7 +141,7 @@
 
 **Definition of Done (DoD):**
 - [ ] `apps/backend/src/api/services/auth.service.ts` created with:
-  - `signUp({ email, password, username })` - creates user via Supabase Auth, syncs to DB via user repository
+  - `signUp({ email, password, username })` - creates user via Supabase Auth
   - `signIn({ email, password })` - authenticates user via Supabase Auth
   - `verifyToken(token)` - validates JWT and returns user
   - Handles Supabase Auth errors and returns normalized error responses
@@ -193,8 +194,8 @@
 **Story Points:** 4
 
 **Definition of Done (DoD):**
-- [ ] Add env vars to `apps/backend/.env.example`: `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`, and optional `SUPABASE_SIGNING_ALG=ES256`.
-- [ ] `apps/backend/src/config/supabase.ts`: export `supabaseClient` (publishable key) and `authAdminClient` (secret key; server-only, `autoRefreshToken=false`, `persistSession=false`).
+- [x] Add env vars to `apps/backend/.env.example`: `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`, and optional `SUPABASE_SIGNING_ALG=ES256`.
+- [x] `apps/backend/src/config/supabase.ts`: export `supabaseClient` (publishable key) and `authAdminClient` (secret key; server-only, `autoRefreshToken=false`, `persistSession=false`).
 - [ ] `apps/backend/src/api/middleware/auth.ts`: implement `authMiddleware` that:
   - Verifies `Authorization: Bearer <token>` with `supabase.auth.getClaims(token)` (preferred for asymmetric keys / ES256) and falls back to `supabase.auth.getUser(token)` when necessary (symmetric keys / WebCrypto missing);
   - Validates `iss`, `aud`, `exp` and attaches `req.user`/`req.claims` on success;
