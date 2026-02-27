@@ -5,6 +5,16 @@
 
 import express from 'express';
 import * as path from 'path';
+import { db } from './database/client';
+
+db.execute('SELECT 1')
+  .then(() => {
+    console.log('Database connection test successful');
+  })
+  .catch((err) => {
+    console.error('Database connection test failed:', err);
+    process.exit(1);
+  });
 
 const app = express();
 
