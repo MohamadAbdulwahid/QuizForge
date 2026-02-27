@@ -39,9 +39,7 @@ const envSchema = z.object({
   DATABASE_URL: z.string().url(),
   FRONTEND_URL: z.string().url(),
   //LOG_LEVEL validation
-  LOG_LEVEL: z
-    .enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace'])
-    .default('info'),
+  LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']).default('info'),
 });
 
 /**
@@ -63,7 +61,6 @@ if (!parsedEnv.success) {
   process.exit(1);
 }
 
-
 /**
  * Zod schema for LOG_LEVEL validation
  */
@@ -82,5 +79,3 @@ export const config: Config = {
   LOG_LEVEL: logLevelSchema.parse(getEnvVar('LOG_LEVEL')),
   NODE_ENV: nodeEnvSchema.parse(getEnvVar('NODE_ENV')),
 };
-
-
