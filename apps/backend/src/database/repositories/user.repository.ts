@@ -1,6 +1,7 @@
 import { USER, User } from '../schema/auth/user';
 import { db } from '../client';
 import { eq } from 'drizzle-orm';
+import { authAdminClient } from '../../config/supabase';
 
 /**
  * Retrieves a user from the database by their unique identifier.
@@ -38,4 +39,18 @@ export async function getUserByEmail(email: string): Promise<User | 'not found'>
  * @param password - The password for the user account
  * @returns A query that inserts the user and returns the created user record
  */
-// TODO: Implement once auth is set up
+export async function createUser(
+  email: string,
+  username: string,
+  password: string
+): Promise<boolean> {
+  const user = await authAdminClient.auth.admin.createUser({
+    email,
+    password,
+    user_metadata: {
+      username,
+    },
+  });
+
+  return !!user.data.user; // Return true if user creation was successful, false otherwise
+}
