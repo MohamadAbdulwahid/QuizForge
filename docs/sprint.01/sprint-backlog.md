@@ -126,10 +126,9 @@
 - [x] All foreign keys defined with onDelete cascade
 - [x] Enums created (question_type, session_status, player_status)
 - [x] Schema files export table definitions
-- [ ] `apps/backend/src/database/repositories/user.repository.ts` created with:
+- [x] `apps/backend/src/database/repositories/user.repository.ts` created with:
   - `findUserById(id)` - query user by id
   - `findUserByEmail(email)` - query user by email
-  - `createUser(data)` - insert new user
   - Type-safe return types using Drizzle InferModel
 
 ---
