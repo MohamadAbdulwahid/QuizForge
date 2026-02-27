@@ -12,6 +12,7 @@ interface Config {
   SUPABASE_SECRET_KEY: string;
   LOG_LEVEL: string;
   NODE_ENV: string;
+  SUPABASE_URL: string;
   SUPABASE_PUBLISHABLE_KEY: string;
   SUPABASE_SECRET_KEY: string;
 }
@@ -80,6 +81,7 @@ export const config: Config = {
   SUPABASE_SECRET_KEY: getEnvVar('SUPABASE_SECRET_KEY'),
   LOG_LEVEL: logLevelSchema.parse(getEnvVar('LOG_LEVEL')),
   NODE_ENV: nodeEnvSchema.parse(getEnvVar('NODE_ENV')),
+  SUPABASE_URL: getEnvVar('SUPABASE_URL'),
   SUPABASE_PUBLISHABLE_KEY: getEnvVar('SUPABASE_PUBLISHABLE_KEY'),
   SUPABASE_SECRET_KEY: getEnvVar('SUPABASE_SECRET_KEY'),
 };
