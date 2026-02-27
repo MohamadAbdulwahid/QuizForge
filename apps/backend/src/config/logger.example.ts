@@ -1,7 +1,7 @@
 /**
  * Logger Usage Examples
  * Run with different NODE_ENV to see output differences
- * 
+ *
  * Development: NODE_ENV=development bun run src/config/logger.example.ts
  * Production:  NODE_ENV=production bun run src/config/logger.example.ts
  */
