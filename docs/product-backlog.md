@@ -29,80 +29,75 @@
 
 ---
 
-## Sprint 2 - Quiz Management API (Backend)
+## Sprint 2 - Quiz & Session Management API (Backend)
 
-**Goal:** Build CRUD operations for quiz creation, editing, and retrieval with Drizzle repositories.
+**Goal:** Build CRUD operations for quiz management with Drizzle repositories and establish session data layer.
 
 | ID | User Story | Story Points | Priority |
 |----|-----------|--------------|----------|
 | PB-15 | As a **Developer**, I want a QuizRepository with Drizzle queries (findById, findByCreator, create, update, delete) so quizzes can be managed. | 4 | High |
 | PB-16 | As a **Developer**, I want a QuestionRepository for managing quiz questions with ordering so questions are persisted correctly. | 3 | High |
-| PB-17 | As a **User**, I want to create a new quiz with title, description, and questions so I can host games. | 3 | High |
-| PB-18 | As a **User**, I want to edit my existing quizzes so I can update content. | 2 | High |
+| PB-17 | As a **User**, I want to create and edit quizzes with title, description, and questions so I can host and update games. *(merged PB-17 + PB-18)* | 3 | High |
 | PB-19 | As a **User**, I want to delete my quizzes so I can remove outdated content. | 1 | High |
 | PB-20 | As a **User**, I want to view all my created quizzes so I can select one to host. | 2 | High |
 | PB-21 | As a **Developer**, I want Zod validation schemas for CreateQuizRequest and UpdateQuizRequest so input is validated. | 2 | High |
-| PB-22 | As a **Developer**, I want Tspec annotations on quiz endpoints so API documentation is auto-generated. | 2 | High |
 | PB-23 | As a **Developer**, I want quiz endpoints to enforce authMiddleware so only authenticated users can create quizzes. | 1 | High |
 | PB-24 | As a **System**, I want quiz share code generation (8-char alphanumeric) so quizzes can be shared easily. | 2 | High |
-| PB-25 | As a **User**, I want to retrieve a quiz by share code so I can preview it before hosting. | 2 | High |
+| PB-26 | As a **Developer**, I want a SessionRepository with Drizzle queries (create, findByPin, updateStatus) so sessions are managed. | 3 | High |
+| PB-27 | As a **Host**, I want to create a game session with a unique 6-digit PIN (with uniqueness validation) so participants can join. *(merged PB-27 + PB-30)* | 3 | High |
 
 **Sprint 2 Total:** 24 SP
 
 ---
 
-## Sprint 3 - Game Session API & Angular Frontend Scaffold
+## Sprint 3 - Frontend Foundation & WebSocket Infrastructure
 
-**Goal:** Build backend session management with PIN generation. Start frontend with Angular v21, Signals, and hybrid rendering.
+**Goal:** Build Angular frontend scaffold with Bubbly Minimalism styling. Complete session management backend and set up Socket.IO WebSocket communication.
 
-### Backend (12 SP)
+### Backend (13 SP)
 
 | ID | User Story | Story Points | Priority |
 |----|-----------|--------------|----------|
-| PB-26 | As a **Developer**, I want a SessionRepository with Drizzle queries (create, findByPin, updateStatus) so sessions are managed. | 3 | High |
-| PB-27 | As a **Host**, I want to create a game session with a unique 6-digit PIN so participants can join. | 3 | High |
 | PB-28 | As a **System**, I want session state machine (waiting, playing, paused, ended) so game flow is controlled. | 3 | High |
 | PB-29 | As a **Developer**, I want session endpoints (POST /sessions, GET /sessions/:pin, PATCH /sessions/:pin/status) with Tspec docs. | 2 | High |
-| PB-30 | As a **Developer**, I want PIN uniqueness validation so duplicate PINs are prevented. | 1 | High |
+| PB-37 | As a **Developer**, I want Socket.IO server configured with Supabase JWT authentication so WebSocket connections are secured. | 4 | High |
+| PB-38 | As a **Developer**, I want WebSocket event handlers (join-game, leave-game, player-joined, player-left) with room management mapped to session PINs so players can join and events route correctly. *(merged PB-38 + PB-41)* | 4 | High |
 
-### Frontend (13 SP)
+### Frontend (12 SP)
 
 | ID | User Story | Story Points | Priority |
 |----|-----------|--------------|----------|
-| PB-31 | As a **Developer**, I want Angular v21 frontend app scaffolded with Nx so development can begin. | 2 | High |
-| PB-32 | As a **Developer**, I want Tailwind CSS v4 + DaisyUI v5 configured with Bubbly Minimalism theme so UI is styled. | 3 | High |
+| PB-31 | As a **Developer**, I want Angular v21 frontend scaffolded with Nx, Vitest + Angular Testing Library configured, and landing page component (SSG) so development and testing can begin. *(merged PB-31 + PB-34 + PB-36)* | 3 | High |
+| PB-32 | As a **Developer**, I want Tailwind CSS v4 + DaisyUI v5 + Heroicons configured with Bubbly Minimalism theme so UI is styled with rounded icons. *(merged PB-32 + PB-64)* | 3 | High |
 | PB-33 | As a **Developer**, I want zoneless change detection and hybrid rendering configured (SSG/SSR/CSR) so performance is optimized. | 3 | High |
-| PB-34 | As a **Developer**, I want Vitest + Angular Testing Library configured so unit tests can be written. | 2 | High |
-| PB-35 | As a **Developer**, I want Playwright E2E testing configured (single worker for 2GB RAM) so E2E tests are possible. | 2 | High |
-| PB-36 | As a **Developer**, I want landing page component (SSG) with Bubbly UI so users can access the app. | 1 | High |
+| PB-55 | As a **Developer**, I want Supabase client configured in Angular so auth and API calls are possible. | 2 | High |
+| PB-45 | As a **Developer**, I want Zod validation schemas for all WebSocket messages so malformed data is rejected. | 1 | High |
 
 **Sprint 3 Total:** 25 SP
 
 ---
 
-## Sprint 4 - Socket.IO Integration & Real-Time Lobby
+## Sprint 4 - Auth UI, Dashboard & Quiz Builder
 
-**Goal:** Implement WebSocket communication for live game sessions with player join/leave events.
+**Goal:** Build Angular authentication pages, user dashboard with quiz list, and full quiz builder with dynamic question management and edit mode.
 
 | ID | User Story | Story Points | Priority |
 |----|-----------|--------------|----------|
-| PB-37 | As a **Developer**, I want Socket.IO server configured with Supabase JWT authentication so WebSocket connections are secured. | 4 | High |
-| PB-38 | As a **Developer**, I want WebSocket event handlers (join-game, leave-game, player-joined, player-left) so players can join sessions. | 4 | High |
-| PB-39 | As a **Participant**, I want to join a session using PIN and username so I can play without an account. | 3 | High |
-| PB-40 | As a **System**, I want username uniqueness validation per session so duplicate usernames are prevented. | 2 | High |
-| PB-41 | As a **Developer**, I want WebSocket rooms mapped to session PINs so events are broadcast to correct players. | 2 | High |
-| PB-42 | As a **Developer**, I want player disconnect/reconnect handling so sessions remain stable. | 3 | High |
-| PB-43 | As a **Developer**, I want WebSocket rate limiting (100ms throttle) so server isn't overloaded. | 2 | High |
-| PB-44 | As a **Host**, I want to see real-time player list in lobby so I know who joined. | 3 | High |
-| PB-45 | As a **Developer**, I want Zod validation for all WebSocket messages so malformed data is rejected. | 2 | High |
+| PB-56 | As a **Developer**, I want AuthService with Signals (currentUser, isAuthenticated) so auth state is managed. | 3 | High |
+| PB-57 | As a **User**, I want login and signup pages (SSG) with email/password forms and validation so I can create an account and sign in. *(merged PB-57 + PB-58)* | 4 | High |
+| PB-59 | As a **Developer**, I want auth guard so protected routes require authentication. | 2 | High |
+| PB-60 | As a **Developer**, I want ApiService with resource() for data fetching so API calls are managed. | 3 | High |
+| PB-61 | As a **User**, I want dashboard component (SSR) with quiz list and Bubbly card styling using rxResource() so I can see and manage my quizzes. *(merged PB-61 + PB-62)* | 4 | High |
+| PB-65 | As a **User**, I want quiz builder page (CSR) with dynamic question management, form state with Signals, save (POST) and edit mode (PATCH) so I can create and update quizzes. *(merged PB-65 + PB-66 + PB-67 + PB-71 + PB-72)* | 5 | High |
+| PB-68 | As a **Developer**, I want question component with type selection (multiple-choice, true-false), answer options with correct marking, and form validation (min 1 question, all fields required) so questions are complete and valid. *(merged PB-68 + PB-69 + PB-70)* | 4 | High |
 
 **Sprint 4 Total:** 25 SP
 
 ---
 
-## Sprint 5 - Game Engine: Forge Classic Mode
+## Sprint 5 - Forge Classic Game Engine & Real-Time Scoring
 
-**Goal:** Implement first game mode (Forge Classic) with question broadcast, answer submission, and speed-based scoring.
+**Goal:** Implement Forge Classic mode with question broadcast, answer submission, speed-based scoring, game event logging, and frontend game services.
 
 | ID | User Story | Story Points | Priority |
 |----|-----------|--------------|----------|
@@ -112,77 +107,36 @@
 | PB-49 | As a **System**, I want server-side answer validation (correctness + timestamp) so cheating is prevented. | 4 | High |
 | PB-50 | As a **System**, I want Forge Classic scoring algorithm (Points = Correctness × Speed Factor) so scores are calculated. | 3 | High |
 | PB-51 | As a **System**, I want real-time score updates broadcast (score-update event) so leaderboard is updated. | 2 | High |
-| PB-52 | As a **Developer**, I want game_events table to log all answer submissions for analytics so games can be replayed. | 2 | High |
 | PB-53 | As a **Host**, I want to advance to next question manually (host controls flow) so pacing is controlled. | 2 | High |
-| PB-54 | As a **Participant**, I want to see live leaderboard after each question so I know my rank. | 3 | High |
+| PB-52 | As a **Developer**, I want game_events table to log all answer submissions for analytics so games can be replayed. | 2 | High |
+| PB-74 | As a **Developer**, I want WebSocketService and GameStateService with Signals (players, currentQuestion, leaderboard) so game state is managed on the frontend. *(merged PB-74 + PB-75)* | 3 | High |
 
 **Sprint 5 Total:** 25 SP
 
 ---
 
-## Sprint 6 - Frontend: Auth & Dashboard
+## Sprint 6 - Game Lobby, Question UI & End-to-End Flow
 
-**Goal:** Build Angular authentication UI, dashboard with quiz list, and API service integration.
+**Goal:** Build game lobby with player management, question display component, live leaderboard, and shared UI components to complete the end-to-end Forge Classic gameplay flow.
 
 | ID | User Story | Story Points | Priority |
 |----|-----------|--------------|----------|
-| PB-55 | As a **Developer**, I want Supabase client configured in Angular so auth and API calls are possible. | 2 | High |
-| PB-56 | As a **Developer**, I want AuthService with Signals (currentUser, isAuthenticated) so auth state is managed. | 3 | High |
-| PB-57 | As a **User**, I want login page (SSG) with email/password form so I can sign in. | 3 | High |
-| PB-58 | As a **User**, I want signup page (SSG) with validation so I can create an account. | 3 | High |
-| PB-59 | As a **Developer**, I want auth guard so protected routes require authentication. | 2 | High |
-| PB-60 | As a **Developer**, I want ApiService with resource() for data fetching so API calls are managed. | 3 | High |
-| PB-61 | As a **User**, I want dashboard component (SSR) with quiz list using rxResource() so I can see my quizzes. | 4 | High |
-| PB-62 | As a **Developer**, I want quiz card component with Bubbly styling so quizzes are displayed. | 2 | High |
-| PB-63 | As a **Developer**, I want shared button component with Bubbly animations so UI is consistent. | 2 | High |
-| PB-64 | As a **Developer**, I want Heroicons integrated so rounded icons are used. | 1 | High |
+| PB-39 | As a **Participant**, I want to join a session using PIN and username so I can play without an account. | 3 | High |
+| PB-40 | As a **System**, I want username uniqueness validation per session so duplicate usernames are prevented. | 2 | High |
+| PB-44 | As a **Host**, I want to see real-time player list in lobby so I know who joined. | 3 | High |
+| PB-76 | As a **Participant**, I want join game page with PIN input, lobby component (CSR) with real-time player updates, and start game button so I can enter and begin a session. *(merged PB-76 + PB-77 + PB-78)* | 5 | High |
+| PB-79 | As a **Participant**, I want question component with timer, answer bubbles, and submit button so I can answer. | 4 | High |
+| PB-80 | As a **Developer**, I want answer submission via WebSocket (submit-answer event) with visual feedback (button disable, loading state) so answers are sent and acknowledged. *(merged PB-80 + PB-81)* | 3 | High |
+| PB-54 | As a **Participant**, I want to see live leaderboard after each question so I know my rank. | 3 | High |
+| PB-63 | As a **Developer**, I want shared UI components (button, card) with Bubbly animations so the interface is polished and consistent. | 2 | High |
 
 **Sprint 6 Total:** 25 SP
 
 ---
 
-## Sprint 7 - Frontend: Quiz Builder
+## Future Sprints (Backlog)
 
-**Goal:** Build quiz creation/editing UI with dynamic question management.
-
-| ID | User Story | Story Points | Priority |
-|----|-----------|--------------|----------|
-| PB-65 | As a **User**, I want quiz builder page (CSR) so I can create quizzes. | 4 | High |
-| PB-66 | As a **Developer**, I want quiz form with Signals (title, description, questions array) so form state is managed. | 3 | High |
-| PB-67 | As a **User**, I want to add/remove questions dynamically so quiz structure is flexible. | 3 | High |
-| PB-68 | As a **Developer**, I want question component with type selection (multiple-choice, true-false) so questions are configured. | 3 | High |
-| PB-69 | As a **User**, I want to add answer options with correct answer marking so questions are complete. | 3 | High |
-| PB-70 | As a **Developer**, I want form validation (min 1 question, all fields required) so invalid quizzes are prevented. | 2 | High |
-| PB-71 | As a **User**, I want to save quiz (POST /api/v1/quizzes) so my quiz is stored. | 2 | High |
-| PB-72 | As a **User**, I want quiz edit mode (PATCH endpoint) so I can update existing quizzes. | 3 | High |
-| PB-73 | As a **Developer**, I want @defer blocks for quiz preview so performance is optimized. | 2 | High |
-
-**Sprint 7 Total:** 25 SP
-
----
-
-## Sprint 8 - Frontend: Game Lobby & Question UI
-
-**Goal:** Build real-time lobby with WebSocket integration and question display component.
-
-| ID | User Story | Story Points | Priority |
-|----|-----------|--------------|----------|
-| PB-74 | As a **Developer**, I want WebSocketService with RxJS observables (question$, scoreUpdate$) so WebSocket events are consumed. | 4 | High |
-| PB-75 | As a **Developer**, I want GameStateService with Signals (players, currentQuestion, leaderboard) so game state is managed. | 4 | High |
-| PB-76 | As a **Participant**, I want join game page with PIN input so I can enter a session. | 3 | High |
-| PB-77 | As a **Participant**, I want lobby component (CSR) showing player list with real-time updates so I see who joined. | 4 | High |
-| PB-78 | As a **Host**, I want start game button so I can begin the quiz. | 2 | High |
-| PB-79 | As a **Participant**, I want question component with timer, answer bubbles, and submit button so I can answer. | 4 | High |
-| PB-80 | As a **Developer**, I want answer submission via WebSocket (submit-answer event) so answers are sent to server. | 2 | High |
-| PB-81 | As a **Participant**, I want visual feedback on answer submission (button disable, loading state) so I know it's sent. | 2 | High |
-
-**Sprint 8 Total:** 25 SP
-
----
-
-## Sprint 9 - Game Engine: Treasure Forge Mode
-
-**Goal:** Implement Treasure Forge mode with chest selection and gold mechanics.
+### Game Modes - Treasure Forge
 
 | ID | User Story | Story Points | Priority |
 |----|-----------|--------------|----------|
@@ -196,13 +150,7 @@
 | PB-89 | As a **Participant**, I want to see gold counter with animations so my gold is visible. | 2 | High |
 | PB-90 | As a **Developer**, I want chest wobble/shiver hover animations with CSS so chests feel interactive. | 1 | High |
 
-**Sprint 9 Total:** 25 SP
-
----
-
-## Sprint 10 - Game Engine: Bubbly Royale Mode
-
-**Goal:** Implement Bubbly Royale 1v1 duel system with life bubbles and elimination.
+### Game Modes - Bubbly Royale
 
 | ID | User Story | Story Points | Priority |
 |----|-----------|--------------|----------|
@@ -216,11 +164,26 @@
 | PB-98 | As a **System**, I want edge case handling (both wrong, tie, disconnect) so all scenarios are covered. | 2 | High |
 | PB-99 | As a **Participant**, I want spectator UI for eliminated players so they can watch. | 1 | High |
 
-**Sprint 10 Total:** 25 SP
+### Testing & Quality
 
----
+| ID | User Story | Story Points | Priority |
+|----|-----------|--------------|----------|
+| PB-35 | As a **Developer**, I want Playwright E2E testing configured (single worker for 2GB RAM) so E2E tests are possible. | 2 | Medium |
 
-## Future Sprints (Backlog)
+### API Documentation & Polish
+
+| ID | User Story | Story Points | Priority |
+|----|-----------|--------------|----------|
+| PB-22 | As a **Developer**, I want Tspec annotations on quiz endpoints so API documentation is auto-generated. | 2 | Medium |
+| PB-25 | As a **User**, I want to retrieve a quiz by share code so I can preview it before hosting. | 2 | Medium |
+| PB-73 | As a **Developer**, I want @defer blocks for quiz preview so performance is optimized. | 2 | Medium |
+
+### Stability & Optimization
+
+| ID | User Story | Story Points | Priority |
+|----|-----------|--------------|----------|
+| PB-42 | As a **Developer**, I want player disconnect/reconnect handling so sessions remain stable. | 3 | Medium |
+| PB-43 | As a **Developer**, I want WebSocket rate limiting (100ms throttle) so server isn't overloaded. | 2 | Medium |
 
 ### Performance & Optimization
 
@@ -266,10 +229,26 @@
 
 ## Backlog Summary
 
-**Total Estimated Story Points:** ~350 SP
+**Planned Sprint Story Points:** 149 SP (Sprints 1-6)
+**Future Backlog Story Points:** ~161 SP
+**Total Estimated Story Points:** ~310 SP
 
-**Notes:**
-- Frontend development starts Sprint 3
-- Game modes implemented progressively (Sprints 5, 9, 10)
-- Additional modes and mobile support deferred to post-MVP
+### Sprint Velocity Overview
+
+| Sprint | Theme | Story Points |
+|--------|-------|-------------|
+| Sprint 1 (Done) | Database & Authentication Foundation | 25 SP |
+| Sprint 2 | Quiz & Session Management API | 24 SP |
+| Sprint 3 | Frontend Foundation & WebSocket Infrastructure | 25 SP |
+| Sprint 4 | Auth UI, Dashboard & Quiz Builder | 25 SP |
+| Sprint 5 | Forge Classic Game Engine & Real-Time Scoring | 25 SP |
+| Sprint 6 | Game Lobby, Question UI & End-to-End Flow | 25 SP |
+
+### Consolidation Notes
+- **Reduced from 10 sprints to 6** by merging related stories and combining backend/frontend work
+- **Forge Classic** is the MVP game mode delivered end-to-end by Sprint 6
+- **Treasure Forge** and **Bubbly Royale** game modes moved to Future Sprints (50 SP) as high-priority post-MVP work
+- **Merged stories** reduce overhead by combining related work that shares infrastructure (noted with *(merged)* tags)
+- Frontend development starts Sprint 3 (unchanged)
+- Complete playable game flow (auth → create quiz → host session → players join → play → leaderboard) achieved by Sprint 6
 - GDPR compliance handled via Supabase RLS policies and self-hosting option
