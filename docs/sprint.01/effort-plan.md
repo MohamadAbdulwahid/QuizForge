@@ -8,12 +8,12 @@
 
 ## Team Members & Roles
 
-| Name | Role | Primary Focus | Availability |
+| Name | Role | Primary Focus | Hour worked |
 |------|------|---------------|--------------|
-| **Mohamad** | Product Owner, Developer | Infrastructure, Auth, Migrations | Full-time |
-| **David** | Scrum Master, Developer | ORM, Schema, Service Layer | Part-time |
-| **Nishan** | Stakeholder, Developer | API Endpoints, Seed Data | Part-time |
-| **Behrang** | Stakeholder, Developer | ERD Design, Logging, Error Handling | Part-time |
+| **Mohamad** | Product Owner, Developer | Infrastructure, Auth, Migrations | 0h |
+| **David** | Scrum Master, Developer | ORM, Schema, Service Layer | 0h |
+| **Nishan** | Stakeholder, Developer | API Endpoints, Seed Data | 0h |
+| **Behrang** | Stakeholder, Developer | ERD Design, Logging, Error Handling | 0h |
 
 ---
 
