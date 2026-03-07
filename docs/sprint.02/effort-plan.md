@@ -174,27 +174,6 @@
 
 ```
 Week 1 (Foundations)                      Week 2 (Features)
-========================                  ========================
-
-PB-21 (Zod DTOs)  ──────────────────────► PB-17 (Create/Edit Endpoints)
-  Days 1-3                                  Days 6-8
-
-PB-15 (QuizRepository) ──┐
-  Days 1-4                │
-                          ├──► PB-17.5 (Quiz Service) ──► PB-17 (Endpoints)
-PB-16 (QuestionRepo)  ───┤      Days 5-6                   Days 6-8
-  Days 4-6                │                              ├──► PB-19 (Delete)
-                          │                              │      Day 9
-PB-24 (Share Code) ──────┘                               └──► PB-20 (View)
-  Days 2-3                                                    Days 7-8
-
-PB-26 (SessionRepo) ─────────────────────► PB-27 (Create Session)
-  Days 3-6                                   Days 7-9
-
-PB-23 (AuthMiddleware) ──────────────────► PB-17, PB-19, PB-20, PB-27
-  Day 5                                     (All endpoints require auth)
-```
-
 ---
 
 ## Risk Mitigation
