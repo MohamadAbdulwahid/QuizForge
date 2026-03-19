@@ -1,9 +1,9 @@
 erDiagram
 	direction LR
 	USER {
-		int id PK ""
+		uuid id PK "Supabase auth.users"
 		string email  ""
-		string username  ""
+		jsonb user_metadata  "contains username"
 		datetime created_at  ""
 	}
 
@@ -25,7 +25,7 @@ erDiagram
 		string correct_answer  ""
 		int time_limit  ""
 		int points  ""
-		int order  ""
+		int order_index  ""
 	}
 
 	SESSION {
@@ -40,6 +40,7 @@ erDiagram
 	SESSION_PLAYER {
 		int id PK ""
 		int session_id FK ""
+		uuid user_id FK ""
 		string username  ""
 		int score  ""
 		int lives  ""
@@ -49,10 +50,10 @@ erDiagram
 	GAME_EVENT {
 		int id PK ""
 		int session_id FK ""
-		int player_id FK ""
+		int session_player_id FK ""
 		string event_type  ""
 		json data  ""
-		datetime timestamp  ""
+		datetime created_at  ""
 	}
 
 	USER||--o{QUIZ:"creates"
@@ -60,5 +61,6 @@ erDiagram
 	USER||--o{SESSION:"hosts"
 	QUIZ||--o{SESSION:"used_in"
 	SESSION||--o{SESSION_PLAYER:"has"
+	USER||--o{SESSION_PLAYER:"plays_as"
 	SESSION_PLAYER||--o{GAME_EVENT:"generates"
 	SESSION||--o{GAME_EVENT:"logs"
