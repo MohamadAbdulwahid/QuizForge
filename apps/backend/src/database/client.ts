@@ -1,7 +1,9 @@
 import { config } from '../config/config';
+import { createChildLogger } from '../config/logger';
 import { drizzle } from 'drizzle-orm/bun-sql';
 import { SQL } from 'bun';
 
+const dbLogger = createChildLogger('database');
 const CONNECTION_STRING = config.DATABASE_URL;
 
 if (!CONNECTION_STRING) {
@@ -12,19 +14,17 @@ if (!CONNECTION_STRING) {
 const client = new SQL(CONNECTION_STRING, {
   prepare: false,
   onconnect(err) {
-    // TODO: Replace logs with pino logger once it's set up
     if (err) {
       throw err;
     } else {
-      console.log('Database connection established successfully');
+      dbLogger.info('Database connection established successfully');
     }
   },
   onclose(err) {
-    // TODO: Replace logs with pino logger once it's set up
     if (err) {
-      console.error('Database connection closed with error:', err);
+      dbLogger.error({ err }, 'Database connection closed with error');
     } else {
-      console.log('Database connection closed gracefully');
+      dbLogger.info('Database connection closed gracefully');
     }
   },
 });
@@ -35,11 +35,10 @@ export const db = drizzle({ client });
 // Handle graceful shutdown on SIGTERM
 process.on('SIGTERM', async () => {
   try {
-    // TODO: Replace logs with pino logger once it's set up
-    console.log('Closing database client on SIGTERM...');
+    dbLogger.info('Closing database client on SIGTERM...');
     await client.end();
   } catch (err) {
-    console.error('Error closing database client on SIGTERM:', err);
+    dbLogger.error({ err }, 'Error closing database client on SIGTERM');
   } finally {
     process.exit(0);
   }
