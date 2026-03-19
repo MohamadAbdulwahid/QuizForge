@@ -149,3 +149,12 @@ vite.config.ts.timestamp-*
 .nx/polygraph
 .claude/worktrees
 .claude/settings.local.json
+
+# Generated tooling artifacts (do not commit)
+.agents/
+.codex/
+.opencode/
+opencode.json
+.github/agents/
+.github/prompts/
+.github/skills/
