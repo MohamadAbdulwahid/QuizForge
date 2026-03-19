@@ -26,7 +26,7 @@ logger.warn('Warning message');
 logger.error('Error message');
 logger.fatal('Fatal error');
 
-console.log('\n--- Logger Test Complete ---');
-console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
-console.log('Development mode: Pretty-printed colored logs');
-console.log('Production mode: Raw JSON logs');
+logger.info('--- Logger Test Complete ---');
+logger.info({ nodeEnv: process.env.NODE_ENV }, 'Runtime environment');
+logger.info('Development mode: Pretty-printed colored logs');
+logger.info('Production mode: Raw JSON logs');
