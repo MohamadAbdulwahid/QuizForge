@@ -75,21 +75,21 @@
     "db:reset": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "bunx supabase db reset",
+        "command": "bunx supabase db reset --linked --yes",
         "cwd": "apps/backend"
       }
     },
     "db:push": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "bunx supabase db push",
+        "command": "bunx supabase db push --linked --yes",
         "cwd": "apps/backend"
       }
     },
     "db:pull": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "bunx supabase db pull",
+        "command": "bunx supabase db pull --linked --yes",
         "cwd": "apps/backend"
       }
     },
@@ -104,6 +104,13 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "bunx drizzle-kit generate",
+        "cwd": "apps/backend"
+      }
+    },
+    "db:seed": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "bun run src/database/seeds/seed.ts",
         "cwd": "apps/backend"
       }
     }
