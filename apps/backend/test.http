@@ -1,0 +1,24 @@
+@baseUrl = http://localhost:3333
+
+### Health Check
+GET {{baseUrl}}/health
+
+
+### Signup
+POST {{baseUrl}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "email": "sigmaboy@gmail.com",
+  "password": "password123",
+  "username": "SigmaBoy67"
+}
+
+### Login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "sigmaboy@gmail.com",
+  "password": "password123"
+}
