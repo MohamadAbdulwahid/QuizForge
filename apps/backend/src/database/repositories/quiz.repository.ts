@@ -1,9 +1,7 @@
 import { QUIZ } from "../schema/quiz";
 import { db } from "../client";
-import { desc, eq } from "drizzle-orm";
+import { eq, asc } from "drizzle-orm";
 import { QUESTION } from "../schema/quiz";
-import { asc } from "drizzle-orm";
-import { title } from "node:process";
 
 /**
  * Retrieves a single quiz by primary key.
