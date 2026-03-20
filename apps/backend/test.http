@@ -1,4 +1,8 @@
 @baseUrl = http://localhost:3333
+@apiVersion = 1.0
+@accessToken = REPLACE_WITH_JWT
+@quizId = 1
+@shareCode = REPLACE_WITH_SHARE_CODE
 
 ### Health Check
 GET {{baseUrl}}/health
@@ -6,6 +10,7 @@ GET {{baseUrl}}/health
 
 ### Signup
 POST {{baseUrl}}/api/auth/signup
+API-Version: {{apiVersion}}
 Content-Type: application/json
 
 {
@@ -16,9 +21,77 @@ Content-Type: application/json
 
 ### Login
 POST {{baseUrl}}/api/auth/login
+API-Version: {{apiVersion}}
 Content-Type: application/json
 
 {
   "email": "sigmaboy@gmail.com",
   "password": "password123"
 }
+
+### Create Quiz (Protected)
+POST {{baseUrl}}/api/quizzes
+API-Version: {{apiVersion}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "title": "Sprint 2 Demo Quiz",
+  "description": "Demo quiz for Sprint 2 presentation",
+  "questions": [
+    {
+      "text": "What is 2 + 2?",
+      "type": "multiple-choice",
+      "options": [
+        { "id": "A", "text": "3" },
+        { "id": "B", "text": "4" },
+        { "id": "C", "text": "5" }
+      ],
+      "correct_answer": "B",
+      "time_limit": 30,
+      "points": 100
+    }
+  ]
+}
+
+### Get My Quizzes (Protected)
+GET {{baseUrl}}/api/quizzes
+API-Version: {{apiVersion}}
+Authorization: Bearer {{accessToken}}
+
+### Get Quiz By Id (Protected)
+GET {{baseUrl}}/api/quizzes/{{quizId}}
+API-Version: {{apiVersion}}
+Authorization: Bearer {{accessToken}}
+
+### Update Quiz (Protected)
+PATCH {{baseUrl}}/api/quizzes/{{quizId}}
+API-Version: {{apiVersion}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "title": "Sprint 2 Demo Quiz Updated"
+}
+
+### Delete Quiz (Protected)
+DELETE {{baseUrl}}/api/quizzes/{{quizId}}
+API-Version: {{apiVersion}}
+Authorization: Bearer {{accessToken}}
+
+### Get Quiz By Share Code (Public)
+GET {{baseUrl}}/api/quizzes/share/{{shareCode}}
+API-Version: {{apiVersion}}
+
+### Create Session (Protected)
+POST {{baseUrl}}/api/sessions
+API-Version: {{apiVersion}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "quiz_id": {{quizId}}
+}
+
+### Swagger JSON
+GET {{baseUrl}}/api-docs.json
