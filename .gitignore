@@ -149,3 +149,7 @@ vite.config.ts.timestamp-*
 .nx/polygraph
 .claude/worktrees
 .claude/settings.local.json
+.agents/
+.codex/
+.opencode/
+.github/
