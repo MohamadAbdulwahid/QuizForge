@@ -1,156 +1,172 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { QUIZ } from "../schema/quiz";
-import { db } from "../client";
-import { eq, asc } from "drizzle-orm";
-import { QUESTION } from "../schema/quiz";
+import { and, desc, eq } from 'drizzle-orm';
+import { db } from '../client';
+import { QUESTION, QUIZ } from '../schema/quiz';
 
 /**
  * Retrieves a single quiz by primary key.
- * @param quizId - The ID of the quiz to retrieve
- * @returns A single quiz object if found, otherwise null
+ * @param quizId - The ID of the quiz to retrieve.
+ * @returns The quiz record if found, otherwise null.
  */
 export async function findById(quizId: number): Promise<QUIZ | null> {
-    const result = await db.select().from(QUIZ).where(eq(QUIZ.id, quizId));
-
-    return result.length > 0 ? result[0] : null;
+  const result = await db.select().from(QUIZ).where(eq(QUIZ.id, quizId)).limit(1);
+  return result[0] ?? null;
 }
 
 /**
- * Retrieves a quiz along with its associated questions ordered by order_index ASC.
- * @param quizId - The ID of the quiz to retrieve
- * @returns A quiz object with its questions if found, otherwise null
+ * Retrieves a quiz and all related questions ordered by order_index ASC.
+ * @param quizId - The quiz ID.
+ * @returns Quiz with its questions or null if not found.
  */
-export async function findByIdWithQuestions(quizId: number): Promise<(QUIZ & {questions:QUESTION[] })| null> {
-    const quizResult = await db.select().from(QUIZ).where(eq(QUIZ.id, quizId));
+export async function findByIdWithQuestions(
+  quizId: number
+): Promise<(QUIZ & { questions: QUESTION[] }) | null> {
+  const quiz = await findById(quizId);
 
-    if (quizResult.length === 0) {
-        return null;
-    }
+  if (!quiz) {
+    return null;
+  }
 
-    const quiz = quizResult[0];
+  const questions = await db
+    .select()
+    .from(QUESTION)
+    .where(eq(QUESTION.quiz_id, quizId))
+    .orderBy(QUESTION.order_index);
 
-    const questions = await db
-        .select()
-        .from(QUESTION)
-        .where(eq(QUESTION.quiz_id, quizId))
-        .orderBy(asc(QUESTION.order_index));
-
-    return{
-        ...quiz,
-        questions
-    }
+  return {
+    ...quiz,
+    questions,
+  };
 }
 
 /**
- * Finds quizzes created by a specific creator.
- * @param creatorId - The ID of the creator
- * @returns An array of quizzes created by the specified creator
+ * Finds quizzes for a creator ordered by newest first.
+ * @param creatorId - The quiz creator id.
+ * @returns Array of quizzes.
  */
-async function findByCreator(creatorId: string): Promise<QUIZ[]> {
-    const result = await db.select().from(QUIZ).orderBy(asc(QUIZ.created_at));
-
-    if(result.length === 0){
-        return null;
-    }
-
-    return result;
+export async function findByCreator(creatorId: string): Promise<QUIZ[]> {
+  return db
+    .select()
+    .from(QUIZ)
+    .where(eq(QUIZ.creator_id, creatorId))
+    .orderBy(desc(QUIZ.created_at));
 }
 
 /**
- * Finds a quiz by its share code.
- * @param shareCode - The share code of the quiz
- * @returns A quiz object with its questions if found, otherwise null
+ * Finds a quiz by share code and includes questions.
+ * @param shareCode - Share code.
+ * @returns Quiz with questions if found; otherwise null.
  */
-async function findByShareCode(shareCode: string): Promise<(QUIZ & { questions: QUESTION[] }) | null> {
-    const quizResult = await db.select().from(QUIZ).where(eq(QUIZ.share_code, shareCode));
+export async function findByShareCode(
+  shareCode: string
+): Promise<(QUIZ & { questions: QUESTION[] }) | null> {
+  const result = await db.select().from(QUIZ).where(eq(QUIZ.share_code, shareCode)).limit(1);
 
-    if (quizResult.length === 0) {
-        return null;
-    }
+  if (result.length === 0) {
+    return null;
+  }
 
-    const quiz = quizResult[0];
-    const questions = await db
-        .select()
-        .from(QUESTION)
-        .where(eq(QUESTION.quiz_id, quiz.id))
-        .orderBy(asc(QUESTION.order_index));
+  const quiz = result[0];
+  const questions = await db
+    .select()
+    .from(QUESTION)
+    .where(eq(QUESTION.quiz_id, quiz.id))
+    .orderBy(QUESTION.order_index);
 
-    return{
-        ...quiz,
-        questions
-    }
+  return {
+    ...quiz,
+    questions,
+  };
 }
 
 /**
- * Updates a quiz by its ID.
- * @param id - The ID of the quiz to update
- * @param data - The fields to update (title and/or description)
- * @param data.title
- * @param data.description
- * @returns The updated quiz object if successful, otherwise null
+ * Creates a quiz row.
+ * @param data - Create payload.
+ * @param data.title - Quiz title.
+ * @param data.description - Optional quiz description.
+ * @param data.creatorId - Creator user id.
+ * @param data.shareCode - Unique quiz share code.
+ * @returns Created quiz row.
  */
-async function update(id: number, data: { title?: string; description?: string }): Promise<QUIZ | null> {
-    const fieldsToUpdate: Partial<QUIZ> = {};
+export async function create(data: {
+  title: string;
+  description?: string;
+  creatorId: string;
+  shareCode: string;
+}): Promise<QUIZ> {
+  const result = await db
+    .insert(QUIZ)
+    .values({
+      title: data.title,
+      description: data.description,
+      creator_id: data.creatorId,
+      share_code: data.shareCode,
+    })
+    .returning();
 
-    if (data.title !== undefined) {
-        fieldsToUpdate.title = data.title;
-    }
-    if (data.description !== undefined) {
-        fieldsToUpdate.description = data.description;
-    }
-
-    const updatedQuiz = await db.update(QUIZ)
-        .set(fieldsToUpdate)
-        .where(eq(QUIZ.id, id))
-        .returning();
-
-    if (updatedQuiz.length === 0) {
-        return null;
-    }
-
-    return updatedQuiz[0];
+  return result[0];
 }
 
 /**
- * Creates a new quiz in the database.
- * @param data - An object containing the title, optional description, creator ID, and share code of the quiz
- * @param data.title
- * @param data.description
- * @param data.creatorId
- * @param data.shareCode
- * @returns The created quiz object
+ * Updates quiz title/description.
+ * @param id - Quiz id.
+ * @param data - Partial update payload.
+ * @param data.title - New title.
+ * @param data.description - New description.
+ * @returns Updated quiz or null when not found.
  */
-async function create(data: { title: string; description?: string; creatorId: string; shareCode: string }): Promise<QUIZ> {
-    const createdQuiz = await db.insert(QUIZ).values({
-        title: data.title,
-        description: data.description,
-        creator_id: data.creatorId,
-        share_code: data.shareCode
-    }).returning();
+export async function update(
+  id: number,
+  data: { title?: string; description?: string }
+): Promise<QUIZ | null> {
+  const fieldsToUpdate: Partial<Pick<QUIZ, 'title' | 'description'>> = {};
 
-    return createdQuiz[0];
+  if (data.title !== undefined) {
+    fieldsToUpdate.title = data.title;
+  }
+  if (data.description !== undefined) {
+    fieldsToUpdate.description = data.description;
+  }
+
+  if (Object.keys(fieldsToUpdate).length === 0) {
+    return findById(id);
+  }
+
+  const result = await db.update(QUIZ).set(fieldsToUpdate).where(eq(QUIZ.id, id)).returning();
+  return result[0] ?? null;
 }
 
 /**
- * Deletes a quiz by its ID.
- * @param quizId - The ID of the quiz to delete
- * @returns True if a row was deleted, otherwise false
+ * Deletes a quiz by id.
+ * @param quizId - Quiz id.
+ * @returns True when row deleted.
  */
 export async function deleteQuiz(quizId: number): Promise<boolean> {
-    const deletedRows = await db.delete(QUIZ).where(eq(QUIZ.id, quizId)).returning();
-    return deletedRows.length > 0;
+  const result = await db.delete(QUIZ).where(eq(QUIZ.id, quizId)).returning();
+  return result.length > 0;
 }
 
 /**
- * Checks if a quiz with the given share code exists.
- * @param shareCode - The share code to check
- * @returns True if a quiz with the share code exists, otherwise false
+ * Checks whether share code exists.
+ * @param shareCode - Share code.
+ * @returns True when an existing quiz uses the code.
  */
-async function shareCodeExists(shareCode: string): Promise<boolean>{
-    const result = await db
-        .select()
-        .from(QUIZ)
-        .where(eq(QUIZ.share_code, shareCode))
-        .limit(1);
-    return result.length > 0;
+export async function shareCodeExists(shareCode: string): Promise<boolean> {
+  const result = await db.select().from(QUIZ).where(eq(QUIZ.share_code, shareCode)).limit(1);
+  return result.length > 0;
+}
+
+/**
+ * Verifies if a quiz belongs to a creator.
+ * @param quizId - Quiz id.
+ * @param creatorId - Creator id.
+ * @returns True when quiz belongs to creator.
+ */
+export async function belongsToCreator(quizId: number, creatorId: string): Promise<boolean> {
+  const result = await db
+    .select({ id: QUIZ.id })
+    .from(QUIZ)
+    .where(and(eq(QUIZ.id, quizId), eq(QUIZ.creator_id, creatorId)))
+    .limit(1);
+
+  return result.length > 0;
 }
