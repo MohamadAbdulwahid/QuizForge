@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { ZodError } from 'zod';
 import { createChildLogger } from '../../config/logger';
 import { StatusCodes } from 'http-status-codes';
+import { AppError } from '../../shared/errors';
 
 const errorLogger = createChildLogger('error-handler');
 
@@ -37,6 +38,15 @@ export function errorHandler(
       error: 'Validation failed',
       code: 'VALIDATION_ERROR',
       statusCode: StatusCodes.BAD_REQUEST,
+    });
+    return;
+  }
+
+  if (err instanceof AppError) {
+    res.status(err.statusCode).json({
+      error: err.message,
+      code: err.code,
+      statusCode: err.statusCode,
     });
     return;
   }

@@ -1,0 +1,138 @@
+{
+  "info": {
+    "title": "QuizForge Backend API",
+    "version": "1.0.0",
+    "description": "Sprint 2 Quiz and Session Management API"
+  },
+  "openapi": "3.0.3",
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "responses": {
+          "200": {
+            "description": "Server health",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "string" },
+                    "timestamp": { "type": "number" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/signup": {
+      "post": {
+        "summary": "Create account",
+        "tags": ["Auth"],
+        "responses": {
+          "201": { "description": "User created" },
+          "400": { "description": "Validation failed" },
+          "409": { "description": "Email already exists" }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "Login",
+        "tags": ["Auth"],
+        "responses": {
+          "200": { "description": "Authenticated" },
+          "401": { "description": "Invalid credentials" }
+        }
+      }
+    },
+    "/api/quizzes": {
+      "post": {
+        "summary": "Create quiz",
+        "tags": ["Quiz"],
+        "responses": {
+          "201": { "description": "Quiz created" },
+          "400": { "description": "Validation failed" },
+          "401": { "description": "Unauthorized" }
+        }
+      },
+      "get": {
+        "summary": "Get my quizzes",
+        "tags": ["Quiz"],
+        "responses": {
+          "200": { "description": "Quiz list" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/api/quizzes/{id}": {
+      "get": {
+        "summary": "Get quiz by id",
+        "tags": ["Quiz"],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Quiz details" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not found" }
+        }
+      },
+      "patch": {
+        "summary": "Update quiz",
+        "tags": ["Quiz"],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Quiz updated" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not found" }
+        }
+      },
+      "delete": {
+        "summary": "Delete quiz",
+        "tags": ["Quiz"],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "204": { "description": "Quiz deleted" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not found" }
+        }
+      }
+    },
+    "/api/quizzes/share/{shareCode}": {
+      "get": {
+        "summary": "Get quiz by share code",
+        "tags": ["Quiz"],
+        "parameters": [
+          { "name": "shareCode", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Public quiz preview" },
+          "404": { "description": "Not found" }
+        }
+      }
+    },
+    "/api/sessions": {
+      "post": {
+        "summary": "Create session",
+        "tags": ["Session"],
+        "responses": {
+          "201": { "description": "Session created" },
+          "400": { "description": "Validation failed" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Quiz not found" },
+          "409": { "description": "Active session already exists" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}
