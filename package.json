@@ -14,6 +14,7 @@
     "drizzle-orm": "^0.45.1",
     "express": "^5.2.1",
     "pino": "^10.3.1",
+    "swagger-ui-express": "^5.0.1",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -32,8 +33,9 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "25.1.0",
-    "backend": "^0.0.0",
     "@types/pino": "^7.0.5",
+    "@types/swagger-ui-express": "^4.1.8",
+    "backend": "^0.0.0",
     "drizzle-kit": "^0.31.9",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
@@ -47,6 +49,7 @@
     "prettier-plugin-tailwindcss": "^0.7.2",
     "supabase": "^2.76.15",
     "tslib": "^2.8.1",
+    "tspec": "^0.2.11",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.54.0"
   },
@@ -70,6 +73,10 @@
     "db:pull": "nx run backend:db:pull",
     "db:link": "nx run backend:db:link",
     "db:generate": "nx run backend:db:generate",
-    "seed": "nx run backend:db:seed"
+    "seed": "nx run backend:db:seed",
+    "swagger:generate": "bun run generate:api-docs",
+    "swagger:ui": "nx run backend:serve",
+    "generate:api-docs": "cd apps/backend && bunx tspec generate --specPathGlobs src/api/quizforge-api.spec.ts --tsconfigPath tsconfig.app.json --outputPath src/assets/swagger.json --openapiTitle QuizForge Backend API --openapiVersion 1.0.0",
+    "docs:api": "bun run generate:api-docs"
   }
 }
