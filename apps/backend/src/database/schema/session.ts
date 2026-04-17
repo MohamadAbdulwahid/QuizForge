@@ -13,13 +13,7 @@ export const SESSION_STATUS = pgEnum('SESSION_STATUS', [
 ]);
 export const PLAYER_STATUS = pgEnum('PLAYER_STATUS', ['active', 'disconnected', 'eliminated']);
 // Type exports from enum values
-export type SessionStatus =
-  | 'pending'
-  | 'waiting'
-  | 'playing'
-  | 'paused'
-  | 'in-progress'
-  | 'ended';
+export type SessionStatus = 'pending' | 'waiting' | 'playing' | 'paused' | 'in-progress' | 'ended';
 export type PlayerStatus = 'active' | 'disconnected' | 'eliminated';
 
 // Session and related tables

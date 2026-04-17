@@ -71,7 +71,9 @@ export class DashboardCreateSessionPageComponent {
           void this.router.navigate(['/game-lobby', response.pin]);
         },
         error: () => {
-          this.errorMessage.set('Could not create session. You may already have an active one for this quiz.');
+          this.errorMessage.set(
+            'Could not create session. You may already have an active one for this quiz.'
+          );
         },
       });
   }

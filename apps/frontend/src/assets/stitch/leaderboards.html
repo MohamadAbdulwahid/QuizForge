@@ -1,199 +1,322 @@
-<!DOCTYPE html>
+<!doctype html>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>QuizForge - Leaderboards</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800;900&amp;family=Nunito:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        colors: {
-          "primary": "#1E88E5",
-          "primary-shadow": "#1565C0",
-          "background": "#F8FAFC",
-          "surface": "#FFFFFF",
-          "text": "#1E293B",
-          "magenta": "#E91E63",
-          "gold": "#FFC107",
-          "soft-blue": "#E3F2FD",
-          "silver": "#C0C0C0",
-          "bronze": "#CD7F32",
-        },
-        fontFamily: {
-          "display": ["Lexend", "cursive"],
-          "body": ["Nunito", "sans-serif"],
-        },
-        boxShadow: {
-          'tactile': '0 6px 0 0 rgba(0,0,0,0.15)',
-          'button-primary': '0 6px 0 0 #1565C0',
-          'podium-gold': '0 8px 0 0 #b38705',
-          'podium-silver': '0 8px 0 0 #8c8c8c',
-          'podium-bronze': '0 8px 0 0 #8f5823',
-        },
-        borderRadius: {
-          "DEFAULT": "0.5rem", 
-          "lg": "1rem", 
-          "xl": "1.5rem", 
-          "2xl": "1.5rem", 
-          "full": "9999px"
-        },
-        keyframes: {
-          rise: {
-            '0%': { transform: 'translateY(100%)', opacity: '0' },
-            '100%': { transform: 'translateY(0)', opacity: '1' },
+<html
+  class="light"
+  lang="en"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      content="width=device-width, initial-scale=1.0"
+      name="viewport"
+    />
+    <title>QuizForge - Leaderboards</title>
+    <link
+      href="https://fonts.googleapis.com"
+      rel="preconnect"
+    />
+    <link
+      crossorigin=""
+      href="https://fonts.gstatic.com"
+      rel="preconnect"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800;900&amp;family=Nunito:wght@600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: '#1E88E5',
+              'primary-shadow': '#1565C0',
+              background: '#F8FAFC',
+              surface: '#FFFFFF',
+              text: '#1E293B',
+              magenta: '#E91E63',
+              gold: '#FFC107',
+              'soft-blue': '#E3F2FD',
+              silver: '#C0C0C0',
+              bronze: '#CD7F32',
+            },
+            fontFamily: {
+              display: ['Lexend', 'cursive'],
+              body: ['Nunito', 'sans-serif'],
+            },
+            boxShadow: {
+              tactile: '0 6px 0 0 rgba(0,0,0,0.15)',
+              'button-primary': '0 6px 0 0 #1565C0',
+              'podium-gold': '0 8px 0 0 #b38705',
+              'podium-silver': '0 8px 0 0 #8c8c8c',
+              'podium-bronze': '0 8px 0 0 #8f5823',
+            },
+            borderRadius: {
+              DEFAULT: '0.5rem',
+              lg: '1rem',
+              xl: '1.5rem',
+              '2xl': '1.5rem',
+              full: '9999px',
+            },
+            keyframes: {
+              rise: {
+                '0%': { transform: 'translateY(100%)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              bounceIn: {
+                '0%': { transform: 'scale(0.3) translateY(-100px)', opacity: '0' },
+                '50%': { transform: 'scale(1.05) translateY(10px)' },
+                '70%': { transform: 'scale(0.9) translateY(-5px)' },
+                '100%': { transform: 'scale(1) translateY(0)', opacity: '1' },
+              },
+            },
+            animation: {
+              'rise-1': 'rise 0.8s ease-out forwards',
+              'rise-2': 'rise 0.8s ease-out 0.2s forwards',
+              'rise-3': 'rise 0.8s ease-out 0.4s forwards',
+              'bounce-1': 'bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.6s forwards',
+              'bounce-2': 'bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.8s forwards',
+              'bounce-3': 'bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s forwards',
+            },
           },
-          bounceIn: {
-            '0%': { transform: 'scale(0.3) translateY(-100px)', opacity: '0' },
-            '50%': { transform: 'scale(1.05) translateY(10px)' },
-            '70%': { transform: 'scale(0.9) translateY(-5px)' },
-            '100%': { transform: 'scale(1) translateY(0)', opacity: '1' },
-          }
         },
-        animation: {
-          'rise-1': 'rise 0.8s ease-out forwards',
-          'rise-2': 'rise 0.8s ease-out 0.2s forwards',
-          'rise-3': 'rise 0.8s ease-out 0.4s forwards',
-          'bounce-1': 'bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.6s forwards',
-          'bounce-2': 'bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.8s forwards',
-          'bounce-3': 'bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s forwards',
-        }
-      },
-    },
-  }
-</script>
-<style>
-  /* Ensure animations start hidden */
-  .animate-rise-1, .animate-rise-2, .animate-rise-3 { opacity: 0; }
-  .animate-bounce-1, .animate-bounce-2, .animate-bounce-3 { opacity: 0; }
-</style>
-</head>
-<body class="bg-background text-text font-body min-h-screen flex flex-col items-center py-8 px-4 overflow-x-hidden relative">
-<!-- Background decorative elements -->
-<div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none -z-10">
-<div class="absolute top-10 left-10 w-64 h-64 bg-soft-blue rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-<div class="absolute top-0 right-10 w-72 h-72 bg-magenta/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-<div class="absolute -bottom-8 left-1/2 w-72 h-72 bg-gold/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
-</div>
-<!-- Shared Component: PageHeading adapted for this screen -->
-<div class="w-full max-w-4xl flex flex-col items-center mb-12">
-<h1 class="font-display text-5xl md:text-6xl font-black text-primary drop-shadow-[0_4px_0_#1565C0] tracking-wide text-center uppercase">
-      Final Standings
-    </h1>
-<p class="font-display text-xl text-text/80 mt-4 bg-surface px-6 py-2 rounded-full shadow-tactile border-2 border-primary/20">
-      Arcade Energy Mode
-    </p>
-</div>
-<!-- Podium Section -->
-<div class="relative w-full max-w-3xl flex justify-center items-end h-[400px] mb-16 px-4">
-<!-- 2nd Place -->
-<div class="flex flex-col items-center z-10 w-1/3 max-w-[200px] -mr-4 animate-rise-2">
-<!-- Avatar & Score -->
-<div class="flex flex-col items-center mb-4 animate-bounce-2">
-<div class="font-display text-2xl font-bold text-text mb-2 bg-surface px-4 py-1 rounded-full shadow-sm border-2 border-silver">8,450</div>
-<div class="w-24 h-24 rounded-2xl bg-surface border-4 border-silver shadow-tactile flex items-center justify-center overflow-hidden bg-cover bg-center" data-alt="Cartoon avatar of a cool cat wearing sunglasses with a confident smirk, vibrant colors, flat vector style" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD_5tafePYPlG4O31EmHDNZY8pAgkjwPFAe-ZL_AkJwAewNfcz_edwR_IRunE3-3HDF7w_NpIWwEMHao-OIsgAoEQPzEvFjeytUp_RJVMnV1xx0CCg-CBQmVGVRrlYA1AjsQX0U-TlaUPN5w8oEmGqvCOyvBRQLRUofHut559xkplyql5KaqzbP_5KYghijTEIaYcqkP0C7PXngo330e8Ru9m5kZuSYV2fItCxAmDqvJyfBShT-cXf-nUuYTTGa0eeDeenAzjPXyzM");'>
-</div>
-<div class="font-bold text-lg mt-2 text-text text-center truncate w-full px-2">Alex M.</div>
-</div>
-<!-- Block -->
-<div class="w-full bg-silver h-40 rounded-t-xl border-4 border-surface shadow-podium-silver flex items-start justify-center pt-4 relative overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-b from-white/30 to-transparent"></div>
-<span class="font-display text-5xl font-black text-surface drop-shadow-md">2</span>
-</div>
-</div>
-<!-- 1st Place -->
-<div class="flex flex-col items-center z-20 w-1/3 max-w-[240px] animate-rise-1">
-<!-- Avatar & Score -->
-<div class="flex flex-col items-center mb-6 animate-bounce-1">
-<div class="font-display text-3xl font-black text-magenta mb-2 bg-surface px-5 py-2 rounded-full shadow-md border-4 border-gold">12,300</div>
-<div class="relative">
-<!-- Crown Icon -->
-<div class="absolute -top-8 left-1/2 -translate-x-1/2 text-gold animate-bounce">
-<span class="material-symbols-outlined text-5xl drop-shadow-md" style="font-variation-settings: 'FILL' 1;">stars</span>
-</div>
-<div class="w-32 h-32 rounded-full bg-surface border-4 border-gold shadow-tactile flex items-center justify-center overflow-hidden bg-cover bg-center z-10 relative" data-alt="Cartoon avatar of a happy dog wearing a backwards cap, vibrant colors, flat vector style, energetic" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCf6CPp95arpDlrZbisJKmiqDk1c570pOAOLZzcKZM9WRsNqZt2ILLtIPVr_xQGb1VDQ-RgLCiVdgLpx_2S1aQG9aA2sTEoBiPnDd7eycqc741KqmdM4lcAeHa2zFm8pxJnWJRv0doHCcWukHfd3G8L9-lbZWNC3Qa5HQIxPtPfNN8K-kbjzylnwvTxJAHWuvBPyb3w0IfBLlnEyio7uU7ohQRMR5SynqB9CnRk3qy2SVg8cIqMoONOa19rWnzSXxOj0pYnRwGG7kU");'>
-</div>
-</div>
-<div class="font-display font-bold text-2xl mt-3 text-text text-center truncate w-full px-2">Sarah J.</div>
-</div>
-<!-- Block -->
-<div class="w-full bg-gold h-56 rounded-t-2xl border-4 border-surface shadow-podium-gold flex items-start justify-center pt-6 relative overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-b from-white/40 to-transparent"></div>
-<span class="font-display text-7xl font-black text-surface drop-shadow-lg">1</span>
-</div>
-</div>
-<!-- 3rd Place -->
-<div class="flex flex-col items-center z-10 w-1/3 max-w-[200px] -ml-4 animate-rise-3">
-<!-- Avatar & Score -->
-<div class="flex flex-col items-center mb-4 animate-bounce-3">
-<div class="font-display text-xl font-bold text-text mb-2 bg-surface px-3 py-1 rounded-full shadow-sm border-2 border-bronze">7,120</div>
-<div class="w-20 h-20 rounded-2xl bg-surface border-4 border-bronze shadow-tactile flex items-center justify-center overflow-hidden bg-cover bg-center" data-alt="Cartoon avatar of a robot with glowing blue eyes and an antenna, vibrant colors, flat vector style" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAA0c6ogUfQU5bjPtVkMJENND-RtZZPvaIiO-NNIwavdjGB8BpwYpcurRAlW4AjTPC52Hp4pE3HxwQvFS9ChPoQWDAllVa9ULcj0QaJp2hJb4T46MS6c_BYMiazQcBYwrcPoAWzMMLnluDh8NMitURcZ-cLjgaL6jiiTuB-sUvydqNcsHhJ-wTHRYnYKpimT4Qf6JUIY3ada5nGEi73Zz9VCpMrr0oNIX87yMwVmhRs2R4PLQZ8ZjkQyLrHdz_0Njdk0KosNbpGcCs");'>
-</div>
-<div class="font-bold text-lg mt-2 text-text text-center truncate w-full px-2">Chris T.</div>
-</div>
-<!-- Block -->
-<div class="w-full bg-bronze h-32 rounded-t-xl border-4 border-surface shadow-podium-bronze flex items-start justify-center pt-3 relative overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent"></div>
-<span class="font-display text-4xl font-black text-surface drop-shadow-md">3</span>
-</div>
-</div>
-</div>
-<!-- Runner-up List -->
-<div class="w-full max-w-2xl bg-surface rounded-2xl shadow-tactile border-4 border-soft-blue overflow-hidden mb-12">
-<div class="bg-primary py-3 px-6 border-b-4 border-primary-shadow">
-<h2 class="font-display text-surface text-xl font-bold tracking-wide">The Chasers</h2>
-</div>
-<div class="flex flex-col">
-<!-- Row 4 -->
-<div class="flex items-center justify-between py-4 px-6 bg-surface hover:bg-gray-50 transition-colors border-b-2 border-soft-blue">
-<div class="flex items-center gap-4">
-<span class="font-display text-xl font-bold text-text/60 w-8 text-center">4</span>
-<div class="w-10 h-10 rounded-full bg-soft-blue border-2 border-primary/20 flex items-center justify-center font-bold text-primary">DJ</div>
-<span class="font-bold text-lg text-text">David J.</span>
-</div>
-<span class="font-display font-bold text-text">6,800</span>
-</div>
-<!-- Row 5 -->
-<div class="flex items-center justify-between py-4 px-6 bg-soft-blue hover:bg-soft-blue/80 transition-colors border-b-2 border-soft-blue/50">
-<div class="flex items-center gap-4">
-<span class="font-display text-xl font-bold text-text/60 w-8 text-center">5</span>
-<div class="w-10 h-10 rounded-full bg-surface border-2 border-primary/20 flex items-center justify-center font-bold text-magenta">EW</div>
-<span class="font-bold text-lg text-text">Emma W.</span>
-</div>
-<span class="font-display font-bold text-text">6,250</span>
-</div>
-<!-- Row 6 -->
-<div class="flex items-center justify-between py-4 px-6 bg-surface hover:bg-gray-50 transition-colors border-b-2 border-soft-blue">
-<div class="flex items-center gap-4">
-<span class="font-display text-xl font-bold text-text/60 w-8 text-center">6</span>
-<div class="w-10 h-10 rounded-full bg-soft-blue border-2 border-primary/20 flex items-center justify-center font-bold text-gold">MK</div>
-<span class="font-bold text-lg text-text">Michael K.</span>
-</div>
-<span class="font-display font-bold text-text">5,900</span>
-</div>
-<!-- Row 7 -->
-<div class="flex items-center justify-between py-4 px-6 bg-soft-blue hover:bg-soft-blue/80 transition-colors">
-<div class="flex items-center gap-4">
-<span class="font-display text-xl font-bold text-text/60 w-8 text-center">7</span>
-<div class="w-10 h-10 rounded-full bg-surface border-2 border-primary/20 flex items-center justify-center font-bold text-primary">SL</div>
-<span class="font-bold text-lg text-text">Sam L.</span>
-</div>
-<span class="font-display font-bold text-text">5,100</span>
-</div>
-</div>
-</div>
-<!-- Primary CTA -->
-<div class="w-full max-w-sm px-4">
-<button class="w-full bg-primary text-surface font-display text-2xl font-bold py-5 px-8 rounded-2xl shadow-button-primary border-4 border-transparent hover:-translate-y-1 hover:shadow-[0_8px_0_0_#1565C0] active:translate-y-2 active:shadow-[0_0px_0_0_#1565C0] active:border-primary-shadow transition-all duration-150 flex items-center justify-center gap-3">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
-      Back to Dashboard
-    </button>
-</div>
-</body></html>
+      };
+    </script>
+    <style>
+      /* Ensure animations start hidden */
+      .animate-rise-1,
+      .animate-rise-2,
+      .animate-rise-3 {
+        opacity: 0;
+      }
+      .animate-bounce-1,
+      .animate-bounce-2,
+      .animate-bounce-3 {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-text font-body relative flex min-h-screen flex-col items-center overflow-x-hidden px-4 py-8"
+  >
+    <!-- Background decorative elements -->
+    <div class="pointer-events-none fixed top-0 left-0 -z-10 h-full w-full overflow-hidden">
+      <div
+        class="bg-soft-blue animate-blob absolute top-10 left-10 h-64 w-64 rounded-full opacity-70 mix-blend-multiply blur-3xl filter"
+      ></div>
+      <div
+        class="bg-magenta/10 animate-blob animation-delay-2000 absolute top-0 right-10 h-72 w-72 rounded-full opacity-70 mix-blend-multiply blur-3xl filter"
+      ></div>
+      <div
+        class="bg-gold/20 animate-blob animation-delay-4000 absolute -bottom-8 left-1/2 h-72 w-72 rounded-full opacity-70 mix-blend-multiply blur-3xl filter"
+      ></div>
+    </div>
+    <!-- Shared Component: PageHeading adapted for this screen -->
+    <div class="mb-12 flex w-full max-w-4xl flex-col items-center">
+      <h1
+        class="font-display text-primary text-center text-5xl font-black tracking-wide uppercase drop-shadow-[0_4px_0_#1565C0] md:text-6xl"
+      >
+        Final Standings
+      </h1>
+      <p
+        class="font-display text-text/80 bg-surface shadow-tactile border-primary/20 mt-4 rounded-full border-2 px-6 py-2 text-xl"
+      >
+        Arcade Energy Mode
+      </p>
+    </div>
+    <!-- Podium Section -->
+    <div class="relative mb-16 flex h-[400px] w-full max-w-3xl items-end justify-center px-4">
+      <!-- 2nd Place -->
+      <div class="animate-rise-2 z-10 -mr-4 flex w-1/3 max-w-[200px] flex-col items-center">
+        <!-- Avatar & Score -->
+        <div class="animate-bounce-2 mb-4 flex flex-col items-center">
+          <div
+            class="font-display text-text bg-surface border-silver mb-2 rounded-full border-2 px-4 py-1 text-2xl font-bold shadow-sm"
+          >
+            8,450
+          </div>
+          <div
+            class="bg-surface border-silver shadow-tactile flex h-24 w-24 items-center justify-center overflow-hidden rounded-2xl border-4 bg-cover bg-center"
+            data-alt="Cartoon avatar of a cool cat wearing sunglasses with a confident smirk, vibrant colors, flat vector style"
+            style="
+              background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD_5tafePYPlG4O31EmHDNZY8pAgkjwPFAe-ZL_AkJwAewNfcz_edwR_IRunE3-3HDF7w_NpIWwEMHao-OIsgAoEQPzEvFjeytUp_RJVMnV1xx0CCg-CBQmVGVRrlYA1AjsQX0U-TlaUPN5w8oEmGqvCOyvBRQLRUofHut559xkplyql5KaqzbP_5KYghijTEIaYcqkP0C7PXngo330e8Ru9m5kZuSYV2fItCxAmDqvJyfBShT-cXf-nUuYTTGa0eeDeenAzjPXyzM');
+            "
+          ></div>
+          <div class="text-text mt-2 w-full truncate px-2 text-center text-lg font-bold">
+            Alex M.
+          </div>
+        </div>
+        <!-- Block -->
+        <div
+          class="bg-silver border-surface shadow-podium-silver relative flex h-40 w-full items-start justify-center overflow-hidden rounded-t-xl border-4 pt-4"
+        >
+          <div class="absolute inset-0 bg-gradient-to-b from-white/30 to-transparent"></div>
+          <span class="font-display text-surface text-5xl font-black drop-shadow-md">2</span>
+        </div>
+      </div>
+      <!-- 1st Place -->
+      <div class="animate-rise-1 z-20 flex w-1/3 max-w-[240px] flex-col items-center">
+        <!-- Avatar & Score -->
+        <div class="animate-bounce-1 mb-6 flex flex-col items-center">
+          <div
+            class="font-display text-magenta bg-surface border-gold mb-2 rounded-full border-4 px-5 py-2 text-3xl font-black shadow-md"
+          >
+            12,300
+          </div>
+          <div class="relative">
+            <!-- Crown Icon -->
+            <div class="text-gold absolute -top-8 left-1/2 -translate-x-1/2 animate-bounce">
+              <span
+                class="material-symbols-outlined text-5xl drop-shadow-md"
+                style="font-variation-settings: 'FILL' 1"
+              >
+                stars
+              </span>
+            </div>
+            <div
+              class="bg-surface border-gold shadow-tactile relative z-10 flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border-4 bg-cover bg-center"
+              data-alt="Cartoon avatar of a happy dog wearing a backwards cap, vibrant colors, flat vector style, energetic"
+              style="
+                background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCf6CPp95arpDlrZbisJKmiqDk1c570pOAOLZzcKZM9WRsNqZt2ILLtIPVr_xQGb1VDQ-RgLCiVdgLpx_2S1aQG9aA2sTEoBiPnDd7eycqc741KqmdM4lcAeHa2zFm8pxJnWJRv0doHCcWukHfd3G8L9-lbZWNC3Qa5HQIxPtPfNN8K-kbjzylnwvTxJAHWuvBPyb3w0IfBLlnEyio7uU7ohQRMR5SynqB9CnRk3qy2SVg8cIqMoONOa19rWnzSXxOj0pYnRwGG7kU');
+              "
+            ></div>
+          </div>
+          <div
+            class="font-display text-text mt-3 w-full truncate px-2 text-center text-2xl font-bold"
+          >
+            Sarah J.
+          </div>
+        </div>
+        <!-- Block -->
+        <div
+          class="bg-gold border-surface shadow-podium-gold relative flex h-56 w-full items-start justify-center overflow-hidden rounded-t-2xl border-4 pt-6"
+        >
+          <div class="absolute inset-0 bg-gradient-to-b from-white/40 to-transparent"></div>
+          <span class="font-display text-surface text-7xl font-black drop-shadow-lg">1</span>
+        </div>
+      </div>
+      <!-- 3rd Place -->
+      <div class="animate-rise-3 z-10 -ml-4 flex w-1/3 max-w-[200px] flex-col items-center">
+        <!-- Avatar & Score -->
+        <div class="animate-bounce-3 mb-4 flex flex-col items-center">
+          <div
+            class="font-display text-text bg-surface border-bronze mb-2 rounded-full border-2 px-3 py-1 text-xl font-bold shadow-sm"
+          >
+            7,120
+          </div>
+          <div
+            class="bg-surface border-bronze shadow-tactile flex h-20 w-20 items-center justify-center overflow-hidden rounded-2xl border-4 bg-cover bg-center"
+            data-alt="Cartoon avatar of a robot with glowing blue eyes and an antenna, vibrant colors, flat vector style"
+            style="
+              background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAA0c6ogUfQU5bjPtVkMJENND-RtZZPvaIiO-NNIwavdjGB8BpwYpcurRAlW4AjTPC52Hp4pE3HxwQvFS9ChPoQWDAllVa9ULcj0QaJp2hJb4T46MS6c_BYMiazQcBYwrcPoAWzMMLnluDh8NMitURcZ-cLjgaL6jiiTuB-sUvydqNcsHhJ-wTHRYnYKpimT4Qf6JUIY3ada5nGEi73Zz9VCpMrr0oNIX87yMwVmhRs2R4PLQZ8ZjkQyLrHdz_0Njdk0KosNbpGcCs');
+            "
+          ></div>
+          <div class="text-text mt-2 w-full truncate px-2 text-center text-lg font-bold">
+            Chris T.
+          </div>
+        </div>
+        <!-- Block -->
+        <div
+          class="bg-bronze border-surface shadow-podium-bronze relative flex h-32 w-full items-start justify-center overflow-hidden rounded-t-xl border-4 pt-3"
+        >
+          <div class="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent"></div>
+          <span class="font-display text-surface text-4xl font-black drop-shadow-md">3</span>
+        </div>
+      </div>
+    </div>
+    <!-- Runner-up List -->
+    <div
+      class="bg-surface shadow-tactile border-soft-blue mb-12 w-full max-w-2xl overflow-hidden rounded-2xl border-4"
+    >
+      <div class="bg-primary border-primary-shadow border-b-4 px-6 py-3">
+        <h2 class="font-display text-surface text-xl font-bold tracking-wide">The Chasers</h2>
+      </div>
+      <div class="flex flex-col">
+        <!-- Row 4 -->
+        <div
+          class="bg-surface border-soft-blue flex items-center justify-between border-b-2 px-6 py-4 transition-colors hover:bg-gray-50"
+        >
+          <div class="flex items-center gap-4">
+            <span class="font-display text-text/60 w-8 text-center text-xl font-bold">4</span>
+            <div
+              class="bg-soft-blue border-primary/20 text-primary flex h-10 w-10 items-center justify-center rounded-full border-2 font-bold"
+            >
+              DJ
+            </div>
+            <span class="text-text text-lg font-bold">David J.</span>
+          </div>
+          <span class="font-display text-text font-bold">6,800</span>
+        </div>
+        <!-- Row 5 -->
+        <div
+          class="bg-soft-blue hover:bg-soft-blue/80 border-soft-blue/50 flex items-center justify-between border-b-2 px-6 py-4 transition-colors"
+        >
+          <div class="flex items-center gap-4">
+            <span class="font-display text-text/60 w-8 text-center text-xl font-bold">5</span>
+            <div
+              class="bg-surface border-primary/20 text-magenta flex h-10 w-10 items-center justify-center rounded-full border-2 font-bold"
+            >
+              EW
+            </div>
+            <span class="text-text text-lg font-bold">Emma W.</span>
+          </div>
+          <span class="font-display text-text font-bold">6,250</span>
+        </div>
+        <!-- Row 6 -->
+        <div
+          class="bg-surface border-soft-blue flex items-center justify-between border-b-2 px-6 py-4 transition-colors hover:bg-gray-50"
+        >
+          <div class="flex items-center gap-4">
+            <span class="font-display text-text/60 w-8 text-center text-xl font-bold">6</span>
+            <div
+              class="bg-soft-blue border-primary/20 text-gold flex h-10 w-10 items-center justify-center rounded-full border-2 font-bold"
+            >
+              MK
+            </div>
+            <span class="text-text text-lg font-bold">Michael K.</span>
+          </div>
+          <span class="font-display text-text font-bold">5,900</span>
+        </div>
+        <!-- Row 7 -->
+        <div
+          class="bg-soft-blue hover:bg-soft-blue/80 flex items-center justify-between px-6 py-4 transition-colors"
+        >
+          <div class="flex items-center gap-4">
+            <span class="font-display text-text/60 w-8 text-center text-xl font-bold">7</span>
+            <div
+              class="bg-surface border-primary/20 text-primary flex h-10 w-10 items-center justify-center rounded-full border-2 font-bold"
+            >
+              SL
+            </div>
+            <span class="text-text text-lg font-bold">Sam L.</span>
+          </div>
+          <span class="font-display text-text font-bold">5,100</span>
+        </div>
+      </div>
+    </div>
+    <!-- Primary CTA -->
+    <div class="w-full max-w-sm px-4">
+      <button
+        class="bg-primary text-surface font-display shadow-button-primary active:border-primary-shadow flex w-full items-center justify-center gap-3 rounded-2xl border-4 border-transparent px-8 py-5 text-2xl font-bold transition-all duration-150 hover:-translate-y-1 hover:shadow-[0_8px_0_0_#1565C0] active:translate-y-2 active:shadow-[0_0px_0_0_#1565C0]"
+      >
+        <span
+          class="material-symbols-outlined"
+          style="font-variation-settings: 'FILL' 1"
+        >
+          home
+        </span>
+        Back to Dashboard
+      </button>
+    </div>
+  </body>
+</html>
