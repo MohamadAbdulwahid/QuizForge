@@ -1,0 +1,62 @@
+@if (errorMessage()) {
+  <p class="mb-4 rounded-xl border border-[#fca5a5] bg-[#fee2e2] px-4 py-3 text-sm font-bold text-[#b91c1c]">
+    {{ errorMessage() }}
+  </p>
+}
+
+<section class="mb-8 rounded-3xl bg-[#e91e63] p-6 text-white shadow-[0_6px_0_0_#c2185b]">
+  <h3 class="text-3xl font-display font-bold">Quick Join</h3>
+  <p class="mt-2 text-sm font-semibold text-white/85">Drop a 6-digit PIN to jump straight into a live lobby.</p>
+  <div class="mt-5 flex flex-col gap-3 md:flex-row">
+    <input
+      [(ngModel)]="quickJoinPin"
+      maxlength="6"
+      class="h-14 flex-1 rounded-2xl border-2 border-white/40 bg-white/10 px-4 text-center text-2xl font-display font-bold tracking-[0.2em]"
+      placeholder="729415"
+      inputmode="numeric"
+    />
+    <button
+      type="button"
+      class="h-14 rounded-2xl border-2 border-white/30 bg-[#1e88e5] px-8 text-lg font-display font-bold shadow-[0_6px_0_0_#1565c0] transition active:translate-y-1 active:shadow-[0_2px_0_0_#1565c0]"
+      [disabled]="busyAction() === 'join'"
+      (click)="joinByPin()"
+    >
+      {{ busyAction() === 'join' ? 'Joining...' : 'Enter Lobby' }}
+    </button>
+  </div>
+</section>
+
+<section class="grid gap-6 lg:grid-cols-3">
+  <a
+    routerLink="/dashboard/quizzes"
+    class="overflow-hidden rounded-2xl border border-[#dbe3ea] bg-white shadow-[0_4px_0_0_rgba(0,0,0,0.1)] transition hover:-translate-y-1"
+  >
+    <img src="assets/stitch/dashboard.png" alt="My quizzes management" class="h-40 w-full object-cover" />
+    <div class="p-4">
+      <h4 class="text-xl font-display font-bold text-[#1e88e5]">My Quizzes</h4>
+      <p class="mt-1 text-sm font-semibold text-[#475569]">Search, sort, and launch sessions from your own quiz library.</p>
+    </div>
+  </a>
+
+  <a
+    routerLink="/dashboard/create-session"
+    class="overflow-hidden rounded-2xl border border-[#dbe3ea] bg-white shadow-[0_4px_0_0_rgba(0,0,0,0.1)] transition hover:-translate-y-1"
+  >
+    <img src="assets/stitch/game-lobby.png" alt="Create a new session" class="h-40 w-full object-cover" />
+    <div class="p-4">
+      <h4 class="text-xl font-display font-bold text-[#1e88e5]">Create Session</h4>
+      <p class="mt-1 text-sm font-semibold text-[#475569]">Pick a quiz from a list instead of typing raw IDs.</p>
+    </div>
+  </a>
+
+  <a
+    routerLink="/dashboard/sessions"
+    class="overflow-hidden rounded-2xl border border-[#dbe3ea] bg-white shadow-[0_4px_0_0_rgba(0,0,0,0.1)] transition hover:-translate-y-1"
+  >
+    <img src="assets/stitch/leaderboards.png" alt="Hosted sessions table" class="h-40 w-full object-cover" />
+    <div class="p-4">
+      <h4 class="text-xl font-display font-bold text-[#1e88e5]">My Sessions</h4>
+      <p class="mt-1 text-sm font-semibold text-[#475569]">Pause, resume, finish, and copy PINs from one table.</p>
+    </div>
+  </a>
+</section>

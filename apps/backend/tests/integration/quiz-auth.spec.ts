@@ -45,6 +45,10 @@ mock.module('../../src/api/controllers/session.controller', () => ({
   sessionController: {
     createSession: (_req: express.Request, res: express.Response) =>
       res.status(201).json({ session: { id: 1 }, pin: '123456' }),
+    getSessionByPin: (_req: express.Request, res: express.Response) =>
+      res.status(200).json({ id: 1, pin: '123456', status: 'waiting' }),
+    updateSessionStatus: (_req: express.Request, res: express.Response) =>
+      res.status(200).json({ id: 1, pin: '123456', status: 'playing' }),
   },
 }));
 

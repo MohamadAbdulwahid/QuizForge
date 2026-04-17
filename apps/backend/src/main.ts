@@ -7,6 +7,7 @@ import { logger } from './config/logger';
 import { errorHandler } from './api/middleware/error-handler';
 import { registerRoutes } from './api/routes';
 import { apiVersionMiddleware } from './api/middleware/api-version';
+import { setupWebsocketServer } from './websocket/server';
 
 const app = express();
 
@@ -77,8 +78,13 @@ app.use(errorHandler);
 const server = app.listen(config.PORT, () => {
   logger.info({ port: config.PORT }, 'Server listening');
 });
+const io = setupWebsocketServer(server);
+
 server.on('error', (err) => {
   logger.error({ err }, 'Server error');
 });
+server.on('close', () => {
+  io.close();
+});
 
-export { app };
+export { app, io };

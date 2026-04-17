@@ -48,7 +48,7 @@ export default [
         }
     },
     {
-        files: ["**/*"],
+        files: ["**/*.{ts,tsx,js,jsx,mjs,cjs}"],
         plugins: {
             "check-file": checkFilePlugin,
         },

@@ -1,0 +1,192 @@
+# QuizForge: Arcade Energy
+
+## Product Overview
+
+**The Pitch:** A high-octane multiplayer learning platform that turns quizzes into competitive arcade games. Built to maximize classroom engagement through tactile UI, vibrant colors, and rapid-fire gameplay modes.
+
+**For:** Students seeking gamified learning and teachers wanting high-engagement classroom activities. 
+
+**Device:** desktop
+
+**Design Direction:** Chunky, tactile, and unabashedly playful. Bouncy animations, heavy drop shadows that mimic physical arcade buttons, and high-contrast vibrant colors.
+
+**Inspired by:** Blooket, Kahoot!, Nintendo Switch UI
+
+---
+
+## Screens
+
+- **Dashboard:** Mission control for students to join rooms, find games, and track stats
+- **Game Lobby:** The chaotic pre-game waiting room where players pick avatars and taunt
+- **Active Game (Gold Quest):** High-speed quiz interface with risk/reward mechanics
+- **Leaderboards:** Global and classroom rankings with podium fanfare
+
+---
+
+## Key Flows
+
+**Join a Game:** Enter a live classroom session
+
+1. User is on Dashboard -> sees Quick Join input
+2. User types 6-digit code -> clicks "Smash to Join"
+3. Transitions to Game Lobby, assigning a random avatar
+
+---
+
+<details>
+<summary>Design System</summary>
+
+## Color Palette
+
+- **Primary:** `#1E88E5` - Main buttons, sidebar active states
+- **Background:** `#F8FAFC` - Main app background
+- **Surface:** `#FFFFFF` - Cards, modals, panels
+- **Text:** `#1E293B` - Body text, headings
+- **Muted:** `#94A3B8` - Secondary text, inactive icons
+- **Accent Magenta:** `#E91E63` - Important badges, timer warnings
+- **Accent Gold:** `#FFC107` - Featured game mode, coins, stars
+- **Soft Blue:** `#E3F2FD` - Card backgrounds, hover states
+
+## Typography
+
+- **Headings:** DynaPuff, 700, 24-48px
+- **Body:** Nunito, 700, 16px (bold body for legibility)
+- **Small text:** Nunito, 600, 14px
+- **Buttons:** DynaPuff, 600, 18px
+
+**Style notes:** 
+- **Radius:** Extreme (`24px` for large cards, `16px` for buttons)
+- **Shadows:** Hard, solid shadows for tactile feel (`0 6px 0 0 #1565C0` for primary buttons)
+- **Borders:** Thick `4px` borders on active/featured elements
+
+## Design Tokens
+
+```css
+:root {
+  --color-primary: #1E88E5;
+  --color-primary-shadow: #1565C0;
+  --color-background: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-text: #1E293B;
+  --color-magenta: #E91E63;
+  --color-gold: #FFC107;
+  --color-soft-blue: #E3F2FD;
+  
+  --font-headings: 'DynaPuff', cursive;
+  --font-body: 'Nunito', sans-serif;
+  
+  --radius-card: 24px;
+  --radius-button: 16px;
+  --shadow-tactile: 0 6px 0 0 rgba(0,0,0,0.15);
+  --shadow-button-primary: 0 6px 0 0 #1565C0;
+}
+```
+
+</details>
+
+---
+
+<details>
+<summary>Screen Specifications</summary>
+
+### Dashboard
+
+**Purpose:** Main entry point for joining live games and exploring study sets.
+
+**Layout:** 240px fixed left sidebar, 80px top header, remaining fluid main content area.
+
+**Key Elements:**
+- **Sidebar:** Home, Games, Leaderboard, Settings. Active state features soft blue background, primary blue icon, and bold text.
+- **Header:** 48px high. Left: "QuizForge" logo (DynaPuff, Primary Blue). Center: Search bar (rounded full, grey background). Right: Notification bell, Profile avatar (36px circle).
+- **Quick Join Card:** Top center of dashboard. Magenta background, white text. Large input field (6-digit code), massive "GO" button with hard shadow.
+- **Featured Gold Quest:** Large 16:9 banner card. Gold background (`#FFC107`). Illustration of treasure chest. CTA: "Play Solo".
+- **Game Grid:** 3-column grid of upcoming/popular quizzes. 
+
+**States:**
+- **Empty:** No recent activity shows a playful ghost illustration: "Spooky... it's empty here! Join a game!"
+- **Loading:** Pulsing soft blue skeleton screens with chunky border radii.
+
+**Components:**
+- **Quick Join Box:** 600px width, `#E91E63` background, 24px radius. 
+- **Game Card:** 100% width of grid column, white surface, 16px radius, hover lift.
+
+**Interactions:**
+- **Hover Card:** Y-axis translation `-4px`, box-shadow increases by 4px vertical.
+- **Click GO:** Button presses down (Y-axis translate `+6px`, box shadow reduces to `0`).
+
+**Responsive:**
+- **Desktop:** Sidebar + main content grid.
+
+### Game Lobby
+
+**Purpose:** Pre-game waiting area for students to gather.
+
+**Layout:** Centered focused layout. Giant room code at the top, grid of joined players below.
+
+**Key Elements:**
+- **Room Code:** Massive text (DynaPuff, 80px, Primary Blue).
+- **Player Count:** Pill badge (Magenta, 24px radius) showing "14/30 Players".
+- **Player Grid:** 8-column grid of player avatars (64x64px squares, 16px radius) with names below (Nunito, 14px, dark text).
+- **Waiting Message:** Bouncing text "Waiting for host to start..."
+
+**States:**
+- **Loading:** Spinner is an animated 8-bit coin.
+
+**Components:**
+- **Avatar Card:** Soft Blue background, random emoji/character in center.
+
+**Interactions:**
+- **Hover Player:** Avatar spins 360 degrees.
+
+### Active Game (Gold Quest)
+
+**Purpose:** High-speed quiz interface.
+
+**Layout:** Split vertically. Top 20% timer and stats. Bottom 80% question and answer grid.
+
+**Key Elements:**
+- **Header Stats:** Left: Current Gold (`#FFC107`). Right: Timer countdown (progress bar shrinking horizontally).
+- **Question Container:** Centered, large text (DynaPuff, 32px), white background card with 4px primary blue border.
+- **Answer Grid:** 2x2 grid of massive chunky buttons. Red, Blue, Green, Yellow backgrounds. 
+- **Feedback Overlay:** Covers screen on answer. Green "CORRECT! +50G" or Red "YIKES!".
+
+**States:**
+- **Timer < 5s:** Timer bar turns Magenta and pulses.
+
+**Components:**
+- **Answer Button:** 100% height/width of grid cell. 24px radius, 8px solid shadow. Large white text.
+
+**Interactions:**
+- **Click Answer:** Button depresses fully. Immediate overlay slides up from bottom.
+
+### Leaderboards
+
+**Purpose:** End-of-game ranking display.
+
+**Layout:** Centered podium layout with list of runner-ups below.
+
+**Key Elements:**
+- **Podium:** 3 steps. 1st place center (highest), 2nd left, 3rd right. Avatars sit on top of gold, silver, and bronze colored blocks.
+- **Score Readout:** Animated count-up of final scores above avatars.
+- **Runner-up List:** Vertical list. 16px radius rows, alternating soft blue and white backgrounds.
+- **Primary CTA:** "Back to Dashboard" button (Primary Blue, bottom center).
+
+**Interactions:**
+- **Entry Animation:** Podium blocks rise from the bottom staggered. Avatars bounce onto them.
+
+</details>
+
+---
+
+<details>
+<summary>Build Guide</summary>
+
+**Stack:** HTML + Tailwind CSS v3
+
+**Build Order:**
+1. **Dashboard** - Establishes the core layout (sidebar, header) and primary tactile components (cards, buttons).
+2. **Active Game** - Defines the core gameplay loop UI, grid systems, and extreme color usage.
+3. **Game Lobby** - Reuses cards and typography, introduces avatar grid.
+4. **Leaderboards** - Final flow, complex animation and layout requirements for podium.
+
+</details>

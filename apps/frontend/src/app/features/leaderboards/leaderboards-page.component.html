@@ -1,0 +1,66 @@
+<main class="min-h-screen bg-[#f8fafc] px-4 py-8 text-[#1e293b]">
+  <section class="mx-auto w-full max-w-5xl">
+    <header class="mb-10 text-center">
+      <h1 class="text-5xl font-display font-black uppercase tracking-wide text-[#1e88e5] drop-shadow-[0_4px_0_#1565c0]">
+        Final Standings
+      </h1>
+      <p class="mx-auto mt-4 inline-flex rounded-full border-2 border-[#1e88e5]/20 bg-white px-5 py-2 text-lg font-bold text-[#334155] shadow-[0_4px_0_0_rgba(0,0,0,0.12)]">
+        Arcade Energy Mode
+      </p>
+    </header>
+
+    <section class="mb-12 grid items-end gap-4 sm:grid-cols-3">
+      @for (player of podium; track player.rank) {
+        <article [class]="'rounded-2xl border-4 border-white bg-white p-4 text-center shadow-[0_6px_0_0_rgba(0,0,0,0.15)] ' + (player.rank === 1 ? 'sm:-translate-y-3' : '')">
+          <p class="mb-2 text-xl font-display font-bold text-[#475569]">{{ player.score }}</p>
+          <div
+            class="mx-auto mb-3 rounded-full border-4"
+            [class.w-28]="player.rank === 1"
+            [class.h-28]="player.rank === 1"
+            [class.w-24]="player.rank !== 1"
+            [class.h-24]="player.rank !== 1"
+            [class.border-[#ffc107]]="player.rank === 1"
+            [class.border-[#c0c0c0]]="player.rank === 2"
+            [class.border-[#cd7f32]]="player.rank === 3"
+            [style.background-image]="'url(' + player.avatarImage + ')'"
+            style="background-size: cover; background-position: center"
+          ></div>
+          <p class="mb-3 text-xl font-display font-bold text-[#0f172a]">{{ player.name }}</p>
+          <div [class]="'rounded-t-2xl border-4 border-white pt-4 text-5xl font-display font-black text-white ' + podiumHeight(player.rank) + ' ' + podiumColor(player.rank)">
+            {{ player.rank }}
+          </div>
+        </article>
+      }
+    </section>
+
+    <section class="mb-10 overflow-hidden rounded-2xl border-4 border-[#e3f2fd] bg-white shadow-[0_6px_0_0_rgba(0,0,0,0.15)]">
+      <header class="border-b-4 border-[#1565c0] bg-[#1e88e5] px-6 py-4">
+        <h2 class="text-xl font-display font-bold text-white">The Chasers</h2>
+      </header>
+
+      <div class="grid">
+        @for (player of chasers; track player.rank) {
+          <div class="flex items-center justify-between border-b border-[#e2e8f0] px-6 py-4 odd:bg-white even:bg-[#e3f2fd]/40">
+            <div class="flex items-center gap-4">
+              <span class="w-6 text-center text-lg font-display font-bold text-[#64748b]">{{ player.rank }}</span>
+              <span class="flex h-10 w-10 items-center justify-center rounded-full border-2 border-[#93c5fd] bg-white text-sm font-bold text-[#1e88e5]">
+                {{ player.initials }}
+              </span>
+              <span class="text-lg font-bold text-[#0f172a]">{{ player.name }}</span>
+            </div>
+            <span class="text-lg font-display font-bold text-[#1e293b]">{{ player.score }}</span>
+          </div>
+        }
+      </div>
+    </section>
+
+    <div class="mx-auto max-w-sm">
+      <a
+        routerLink="/dashboard"
+        class="flex h-14 items-center justify-center rounded-2xl bg-[#1e88e5] px-6 text-xl font-display font-bold text-white shadow-[0_6px_0_0_#1565c0] transition hover:-translate-y-0.5 active:translate-y-1 active:shadow-[0_2px_0_0_#1565c0]"
+      >
+        Back To Dashboard
+      </a>
+    </div>
+  </section>
+</main>
