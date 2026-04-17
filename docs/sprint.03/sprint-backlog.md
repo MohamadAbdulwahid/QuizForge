@@ -2,7 +2,7 @@
 
 **Sprint Goal:** Build Angular frontend scaffold with Bubbly Minimalism styling. Complete session management backend and set up Socket.IO WebSocket communication.
 
-**Duration:** 2 weeks  
+**Duration:** 3 weeks  
 **Total Story Points:** 25 SP (≈50 hours)  
 **Team:** Mohamad, Nishan, David, Behrang
 

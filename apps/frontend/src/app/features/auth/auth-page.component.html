@@ -1,0 +1,118 @@
+<main class="mx-auto flex min-h-screen w-full max-w-6xl items-center px-4 py-10 md:px-8">
+  <section class="grid w-full gap-8 rounded-3xl border border-base-300 bg-base-100 p-6 shadow-tactile lg:grid-cols-2 lg:p-10">
+    <article class="flex flex-col justify-between rounded-3xl bg-[#1e88e5] p-8 text-white">
+      <div>
+        <p class="inline-flex rounded-full border border-white/50 px-4 py-1 text-xs font-bold uppercase tracking-[0.25em]">
+          QuizForge
+        </p>
+        <h1 class="mt-4 text-4xl font-display font-bold leading-tight">Arcade Login Portal</h1>
+        <p class="mt-4 text-base font-semibold text-white/85">
+          Enter your credentials to join live rooms, host sessions, and open realtime game lobbies.
+        </p>
+      </div>
+
+      <figure class="mt-6 overflow-hidden rounded-2xl border-2 border-white/35 bg-black/20 p-2">
+        <img
+          src="assets/stitch/image.png"
+          alt="Stitch project reference image"
+          class="h-full w-full rounded-xl object-cover"
+        />
+      </figure>
+
+      <div class="mt-6 flex items-center gap-3 text-sm font-bold text-white/90">
+        <span class="h-3 w-3 rounded-full bg-[#fbbf24]"></span>
+        <span>Supabase Auth + Socket.IO handshake ready</span>
+      </div>
+    </article>
+
+    <article class="rounded-3xl border border-base-300 bg-base-200/60 p-6 md:p-8">
+      <div class="mb-6 flex rounded-2xl border border-base-300 bg-base-100 p-1">
+        <button
+          type="button"
+          class="flex-1 rounded-xl px-4 py-2 text-sm font-bold transition"
+          [class.bg-bubbly-primary]="authMode() === 'login'"
+          [class.text-white]="authMode() === 'login'"
+          [class.text-base-content/70]="authMode() !== 'login'"
+          (click)="setAuthMode('login')"
+        >
+          Login
+        </button>
+        <button
+          type="button"
+          class="flex-1 rounded-xl px-4 py-2 text-sm font-bold transition"
+          [class.bg-bubbly-primary]="authMode() === 'signup'"
+          [class.text-white]="authMode() === 'signup'"
+          [class.text-base-content/70]="authMode() !== 'signup'"
+          (click)="setAuthMode('signup')"
+        >
+          Signup
+        </button>
+      </div>
+
+      <h2 class="text-2xl font-display font-bold text-base-content">{{ formTitle() }}</h2>
+
+      @if (errorMessage()) {
+        <p class="mt-3 rounded-xl border border-error/30 bg-error/10 px-4 py-3 text-sm font-bold text-error">
+          {{ errorMessage() }}
+        </p>
+      }
+
+      <form class="mt-6 grid gap-4" (ngSubmit)="submitAuthForm()">
+        <label class="grid gap-2 text-sm font-bold text-base-content">
+          Email
+          <input
+            type="email"
+            required
+            name="email"
+            [(ngModel)]="formModel.email"
+            class="h-12 rounded-xl border border-base-300 bg-base-100 px-4"
+            placeholder="you@example.com"
+          />
+        </label>
+
+        @if (authMode() === 'signup') {
+          <label class="grid gap-2 text-sm font-bold text-base-content">
+            Username
+            <input
+              type="text"
+              required
+              minlength="3"
+              name="username"
+              [(ngModel)]="formModel.username"
+              class="h-12 rounded-xl border border-base-300 bg-base-100 px-4"
+              placeholder="arcade_name"
+            />
+          </label>
+        }
+
+        <label class="grid gap-2 text-sm font-bold text-base-content">
+          Password
+          <input
+            type="password"
+            required
+            [minlength]="authMode() === 'signup' ? 8 : 1"
+            name="password"
+            [(ngModel)]="formModel.password"
+            class="h-12 rounded-xl border border-base-300 bg-base-100 px-4"
+            placeholder="••••••••"
+          />
+        </label>
+
+        <button
+          type="submit"
+          [disabled]="isSubmitting()"
+          class="mt-2 h-12 rounded-2xl bg-bubbly-accent px-6 text-base font-bold text-white transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70"
+        >
+          {{ isSubmitting() ? 'Please wait...' : authMode() === 'login' ? 'Login to QuizForge' : 'Create account and enter' }}
+        </button>
+      </form>
+
+      <a
+        routerLink="/"
+        class="mt-6 inline-flex text-sm font-bold text-bubbly-primary underline-offset-4 hover:underline"
+      >
+        Back to landing page
+      </a>
+    </article>
+  </section>
+</main>
