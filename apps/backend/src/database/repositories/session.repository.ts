@@ -1,8 +1,18 @@
-import { and, eq, inArray } from 'drizzle-orm';
+import { and, desc, eq, inArray } from 'drizzle-orm';
 import { db } from '../client';
 import { InsertSession, Session, SessionStatus, SESSION } from '../schema/session';
+import { QUIZ } from '../schema/quiz';
 
-const ACTIVE_STATUSES: SessionStatus[] = ['waiting', 'in-progress'];
+const ACTIVE_STATUSES: SessionStatus[] = ['waiting', 'playing', 'paused', 'in-progress'];
+
+export type HostSessionSummary = {
+  id: number;
+  pin: string;
+  status: SessionStatus;
+  quiz_id: number;
+  quiz_title: string;
+  started_at: Date;
+};
 
 /**
  * Creates a new session row.
@@ -43,6 +53,15 @@ export async function findByPin(pin: string): Promise<Session | null> {
     .limit(1);
 
   return result[0] ?? null;
+}
+
+/**
+ * Finds an active session by pin.
+ * @param pin - Session pin.
+ * @returns Active session or null.
+ */
+export async function findActiveByPin(pin: string): Promise<Session | null> {
+  return findByPin(pin);
 }
 
 /**
@@ -92,4 +111,25 @@ export async function pinExists(pin: string): Promise<boolean> {
     .limit(1);
 
   return result.length > 0;
+}
+
+/**
+ * Lists sessions created by a specific host with quiz title metadata.
+ * @param hostId - Host user id.
+ * @returns Sessions ordered by newest first.
+ */
+export async function findByHost(hostId: string): Promise<HostSessionSummary[]> {
+  return db
+    .select({
+      id: SESSION.id,
+      pin: SESSION.pin,
+      status: SESSION.status,
+      quiz_id: SESSION.quiz_id,
+      quiz_title: QUIZ.title,
+      started_at: SESSION.started_at,
+    })
+    .from(SESSION)
+    .innerJoin(QUIZ, eq(SESSION.quiz_id, QUIZ.id))
+    .where(eq(SESSION.host_id, hostId))
+    .orderBy(desc(SESSION.started_at));
 }

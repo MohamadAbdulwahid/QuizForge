@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QuizForge Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Custom Arcade Shadows */
+        .arcade-shadow {
+            box-shadow: 0 6px 0 0 rgba(0,0,0,0.15);
+            transition: all 0.1s ease;
+        }
+        .arcade-shadow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 0 rgba(0,0,0,0.15);
+        }
+        
+        .btn-arcade {
+            box-shadow: 0 6px 0 0 #1565C0;
+            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-arcade:active {
+            transform: translateY(6px);
+            box-shadow: 0 0px 0 0 #1565C0;
+        }
+
+        .btn-arcade-magenta {
+            box-shadow: 0 6px 0 0 #C2185B;
+            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-arcade-magenta:active {
+            transform: translateY(6px);
+            box-shadow: 0 0px 0 0 #C2185B;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1c81d9",
+                        "primary-dark": "#1565C0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111a21",
+                        "magenta": "#E91E63",
+                        "gold": "#FFC107",
+                        "soft-blue": "#E3F2FD",
+                        "text-dark": "#1E293B"
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem", 
+                        "lg": "1rem", 
+                        "xl": "1.5rem", 
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light font-display text-text-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col sm:flex-row">
+<!-- Sidebar Navigation (Desktop) -->
+<aside class="hidden sm:flex flex-col w-[240px] h-screen fixed left-0 top-0 bg-white border-r border-[#f0f2f4] z-20">
+<div class="flex items-center gap-3 px-6 py-6 border-b border-[#f0f2f4]">
+<div class="size-8 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 45.8096C19.6865 45.8096 15.4698 44.5305 11.8832 42.134C8.29667 39.7376 5.50128 36.3314 3.85056 32.3462C2.19985 28.361 1.76794 23.9758 2.60947 19.7452C3.451 15.5145 5.52816 11.6284 8.57829 8.5783C11.6284 5.52817 15.5145 3.45101 19.7452 2.60948C23.9758 1.76795 28.361 2.19986 32.3462 3.85057C36.3314 5.50129 39.7376 8.29668 42.134 11.8833C44.5305 15.4698 45.8096 19.6865 45.8096 24L24 24L24 45.8096Z"></path>
+</svg>
+</div>
+<h2 class="text-primary text-xl font-bold tracking-tight">QuizForge</h2>
+</div>
+<nav class="flex flex-col gap-2 p-4 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-soft-blue text-primary font-bold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<p class="text-base">Home</p>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-600 font-semibold transition-colors" href="#">
+<span class="material-symbols-outlined">sports_esports</span>
+<p class="text-base">Games</p>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-600 font-semibold transition-colors" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<p class="text-base">Leaderboard</p>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 text-gray-600 font-semibold transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-base">Settings</p>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 sm:ml-[240px] flex flex-col min-h-screen">
+<!-- Top Header -->
+<header class="h-20 flex items-center justify-between px-8 bg-white border-b border-[#f0f2f4] sticky top-0 z-10">
+<div class="flex-1 max-w-xl">
+<div class="flex w-full items-center rounded-full bg-background-light h-12 px-4 focus-within:ring-2 ring-primary transition-all">
+<span class="material-symbols-outlined text-gray-400">search</span>
+<input class="w-full bg-transparent border-none focus:ring-0 text-base font-medium px-3 text-text-dark placeholder-gray-400" placeholder="Search games, subjects..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6 ml-4">
+<button class="relative p-2 text-gray-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2.5 h-2.5 bg-magenta rounded-full border-2 border-white"></span>
+</button>
+<div class="w-10 h-10 rounded-full bg-cover bg-center border-2 border-primary" data-alt="Playful 3D cartoon avatar of a student smiling" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA2VhPxqcRtOwau1-g5uXLSDJQIRU8GXO_hjPLSryfvTZuPAaaoZdIe24-kwm2LOVGtL8zOgmC0OZoXffOuTciIt0tRbvDOIieJtQOogYXOrHEetisa8mjsINbR2fohvQsfq02CK_zEQV6Rgy64QlPFgioJECjlJDW_nu8-8dFtLS0G_kvp0CKy4lBvo25louKpQ0K5ddkJImBfJtd3I3ieJLi6tv4jdWhSwRcosrWPdKyxGI6a6rJdDXaO4gvvcpJ78plp20A99lw');"></div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-8 max-w-[1200px] mx-auto w-full flex flex-col gap-10">
+<!-- Quick Join Section -->
+<section class="flex justify-center w-full">
+<div class="bg-magenta rounded-2xl p-8 w-full max-w-2xl arcade-shadow flex flex-col items-center gap-6 text-white text-center">
+<h2 class="text-3xl font-bold tracking-wide">Join a Live Game</h2>
+<div class="flex w-full gap-4 max-w-md">
+<input class="flex-1 h-16 rounded-xl border-4 border-white/20 bg-white/10 text-white placeholder-white/50 text-center text-2xl font-bold focus:outline-none focus:border-white focus:ring-0 uppercase tracking-[0.2em]" maxlength="6" placeholder="6-digit code" type="text"/>
+<button class="h-16 px-8 bg-primary rounded-xl text-white font-bold text-xl btn-arcade border-2 border-white/20">
+                                GO!
+                            </button>
+</div>
+</div>
+</section>
+<!-- Featured Banner -->
+<section>
+<div class="bg-gold rounded-2xl p-8 arcade-shadow flex flex-col md:flex-row items-center justify-between overflow-hidden relative border-4 border-gold">
+<div class="z-10 flex flex-col gap-4 max-w-md">
+<span class="inline-block px-3 py-1 bg-white/30 text-yellow-900 rounded-full font-bold text-sm w-max uppercase tracking-wider">New Mode</span>
+<h1 class="text-4xl md:text-5xl font-bold text-yellow-900 leading-tight">Gold Quest</h1>
+<p class="text-yellow-800 font-semibold text-lg">Hunt for treasure, avoid the mimic, and become the richest pirate in the classroom!</p>
+<button class="mt-4 bg-white text-yellow-900 px-6 py-3 rounded-xl font-bold text-lg w-max btn-arcade-magenta !shadow-[0_6px_0_0_#B45309] hover:-translate-y-1 transition-transform">
+                                Play Solo
+                            </button>
+</div>
+<div class="w-64 h-64 mt-6 md:mt-0 z-10 rounded-xl bg-cover bg-center" data-alt="3D vibrant cartoon illustration of an open treasure chest spilling shiny gold coins and gems" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuARWfJt3Ufq8QheEWM9LUtZZUb1XazvZFsXS2OmV6mkmnmTOzz3bnlULGVFh8bqygIzUSlVQk9ENwSdm8X42eJ2uTFemVS6vK5knkQblH-Rq6vOQ0BkSsb5Ji4QvIBVVcJ9PsfPzXqMExUCLgoL3exnIeYAfbrAWAmlGG9uwBgVUrQ0GRyB3rLmw9po8Ym-H5UxamC1ikUndb5zx62Wz-7b9vtYJn8rbMfVKN3hcymgSocKJqGiIJdY3NS9NhISxS7Be-8t0QPBVR0');"></div>
+<!-- Decorative background elements -->
+<div class="absolute -top-10 -right-10 w-40 h-40 bg-white/20 rounded-full blur-2xl"></div>
+<div class="absolute bottom-0 left-20 w-32 h-32 bg-white/20 rounded-full blur-xl"></div>
+</div>
+</section>
+<!-- Game Grid -->
+<section class="flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<h3 class="text-2xl font-bold text-text-dark">Popular Games</h3>
+<a class="text-primary font-semibold hover:underline" href="#">View All</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Game Card 1 -->
+<div class="bg-white rounded-xl p-5 arcade-shadow border-2 border-[#f0f2f4] flex flex-col gap-4 group">
+<div class="w-full h-40 rounded-lg bg-cover bg-center" data-alt="Playful 3D illustration of floating math symbols and calculators on a bright blue background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDn0KvOti_5oS75jucPPCdAvaBQOEoBXAZzZ0yZP7peOAfS6tbk1HmeynPfUMAPwP9bIDcA3gAWF_duwZt9FBoIWixxR_PbLey0zqz0ukIZPVDhcH9RFa2eErMYhl3d7cBYngywYzC85J-xydAO4pvtD6eRiPTE1hW9odrUAHR_DspkC0k23VKABBkT7n511LCZrjRfuRvQ9f7m6sIvxTGavh9XWn3E_L-f1qhVJgpJkruHMxVZyxFO9MGOhbH9QmaUMypH2zDX--U');"></div>
+<div>
+<h4 class="text-xl font-bold text-text-dark mb-1 group-hover:text-primary transition-colors">Math Blaster Pro</h4>
+<p class="text-gray-500 font-medium text-sm">Algebra • 24 Questions</p>
+</div>
+<div class="flex items-center justify-between mt-auto pt-2">
+<div class="flex items-center gap-1 text-gray-400 text-sm font-semibold">
+<span class="material-symbols-outlined text-lg">group</span>
+<span>1.2k Plays</span>
+</div>
+<button class="bg-soft-blue text-primary px-4 py-2 rounded-lg font-bold hover:bg-primary hover:text-white transition-colors">
+                                    Host
+                                </button>
+</div>
+</div>
+<!-- Game Card 2 -->
+<div class="bg-white rounded-xl p-5 arcade-shadow border-2 border-[#f0f2f4] flex flex-col gap-4 group">
+<div class="w-full h-40 rounded-lg bg-cover bg-center" data-alt="Cartoon style illustration of an ancient greek temple and a roman gladiator helmet" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA4itQyLumfqCIbdTjtxmjEyrgHMeY8XbE57hLAR2Nfg-rM7l5G6CS5x80h9BTgn1FO_-K-j7j056RQPeIGZ1rpUUbO0tGawl3GUEZQkMEePwAhEzJa6UdsEaMyvhs9Tvtom-YYYvbuA5ut8LGNDX8g2vSi6RByw8eqZlXIljnHBw2l_Yrc6_PsYc0520nKkypr4JjFj4YUDo5N7aqSZyGYDIyM_HIVEM7s1hPFmWYxOOyiSd4M3oLkSdyzW3B3cHY-_BERtxPGQYY');"></div>
+<div>
+<h4 class="text-xl font-bold text-text-dark mb-1 group-hover:text-primary transition-colors">History Heroes</h4>
+<p class="text-gray-500 font-medium text-sm">World War II • 15 Questions</p>
+</div>
+<div class="flex items-center justify-between mt-auto pt-2">
+<div class="flex items-center gap-1 text-gray-400 text-sm font-semibold">
+<span class="material-symbols-outlined text-lg">group</span>
+<span>850 Plays</span>
+</div>
+<button class="bg-soft-blue text-primary px-4 py-2 rounded-lg font-bold hover:bg-primary hover:text-white transition-colors">
+                                    Host
+                                </button>
+</div>
+</div>
+<!-- Game Card 3 -->
+<div class="bg-white rounded-xl p-5 arcade-shadow border-2 border-[#f0f2f4] flex flex-col gap-4 group">
+<div class="w-full h-40 rounded-lg bg-cover bg-center" data-alt="Vibrant 3D bubbling science beakers and an atom model on a bright green background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuByDeTsFDoBzFuVTZ4TintrnYl_t173uxyUtBcVHvOXCSutOteHwdjldwprs-7W9rNBfNpOb5qdgmOi4S9q8rIYp2NG_M3Pop8LK6v1IY1Q0KgM5SVQdFePkfqLKrc3FZl-pUnZlWcuwISuC6VA6amtHp_iEHv2JZVPLaCqsiDPbq35P7seNJSTSQCL6D1WmeOlSx9U8l2CBkS5RRQiXMzQc1VxXhVY-OJnkSAk5Z6bIfWhvaGWQS7tRiK3ZSD8-dLxjJiouKQgNiY');"></div>
+<div>
+<h4 class="text-xl font-bold text-text-dark mb-1 group-hover:text-primary transition-colors">Science Safari</h4>
+<p class="text-gray-500 font-medium text-sm">Biology • 30 Questions</p>
+</div>
+<div class="flex items-center justify-between mt-auto pt-2">
+<div class="flex items-center gap-1 text-gray-400 text-sm font-semibold">
+<span class="material-symbols-outlined text-lg">group</span>
+<span>3.4k Plays</span>
+</div>
+<button class="bg-soft-blue text-primary px-4 py-2 rounded-lg font-bold hover:bg-primary hover:text-white transition-colors">
+                                    Host
+                                </button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+</div>
+</body></html>

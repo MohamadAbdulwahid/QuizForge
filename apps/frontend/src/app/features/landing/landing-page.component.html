@@ -1,0 +1,68 @@
+<main class="mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-10 px-4 py-10 md:px-8">
+  <section class="card border border-base-300 bg-base-100 shadow-tactile">
+    <div class="card-body gap-6 rounded-3xl border-2 border-bubbly-primary/20 bg-base-100 p-8">
+      <p class="badge badge-accent badge-outline px-4 py-3 text-xs font-bold uppercase tracking-[0.2em]">
+        Stitch Direction
+      </p>
+      <h1 class="text-4xl font-display font-bold text-bubbly-primary md:text-5xl">
+        QuizForge Arcade Forge
+      </h1>
+      <p class="max-w-3xl text-lg font-semibold text-base-content/80">
+        Bubbly Minimalism meets arcade energy. This landing shell is built from the provided Stitch project
+        references and prepared for Sprint 3 frontend growth.
+      </p>
+
+      <div class="flex flex-wrap gap-3">
+        <a
+          routerLink="/auth"
+          class="rounded-2xl bg-bubbly-primary px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5"
+        >
+          Login / Signup
+        </a>
+        <a
+          routerLink="/dashboard"
+          class="rounded-2xl border border-base-300 bg-base-200 px-5 py-3 text-sm font-bold text-base-content transition hover:-translate-y-0.5"
+        >
+          Open Dashboard
+        </a>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-3">
+        <article class="rounded-2xl border border-base-300 bg-base-200/70 p-4">
+          <h2 class="text-xl font-display font-bold text-bubbly-primary">Join</h2>
+          <p class="mt-1 text-sm font-semibold text-base-content/70">Use a 6-digit game PIN to jump in fast.</p>
+        </article>
+        <article class="rounded-2xl border border-base-300 bg-base-200/70 p-4">
+          <h2 class="text-xl font-display font-bold text-bubbly-primary">Compete</h2>
+          <p class="mt-1 text-sm font-semibold text-base-content/70">Play fast rounds with tactile, colorful UI feedback.</p>
+        </article>
+        <article class="rounded-2xl border border-base-300 bg-base-200/70 p-4">
+          <h2 class="text-xl font-display font-bold text-bubbly-primary">Rise</h2>
+          <p class="mt-1 text-sm font-semibold text-base-content/70">Celebrate rankings on podium-style leaderboards.</p>
+        </article>
+      </div>
+      <app-button-test />
+    </div>
+  </section>
+
+  <section>
+    <header class="mb-4">
+      <h2 class="text-2xl font-display font-bold text-base-content">Stitch Screen Previews</h2>
+      <p class="text-sm font-semibold text-base-content/70">These previews are sourced from the provided Stitch exports.</p>
+    </header>
+
+    <div class="grid gap-6 md:grid-cols-3">
+      @for (preview of stitchScreenPreviews; track preview.title) {
+        <a [routerLink]="preview.route" class="card overflow-hidden border border-base-300 bg-base-100 shadow-tactile transition hover:-translate-y-1">
+          <figure class="h-48 overflow-hidden bg-base-200">
+            <img [src]="preview.imageUrl" [alt]="preview.title + ' stitch preview'" class="h-full w-full object-cover" />
+          </figure>
+          <div class="card-body p-4">
+            <h3 class="text-lg font-display font-bold text-bubbly-primary">{{ preview.title }}</h3>
+            <p class="text-sm font-semibold text-base-content/70">{{ preview.subtitle }}</p>
+          </div>
+        </a>
+      }
+    </div>
+  </section>
+</main>

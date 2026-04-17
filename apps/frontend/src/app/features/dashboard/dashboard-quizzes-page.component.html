@@ -1,0 +1,77 @@
+<section class="mb-6 rounded-2xl border border-[#e4e7eb] bg-white p-5 shadow-[0_4px_0_0_rgba(0,0,0,0.08)]">
+  <h3 class="text-2xl font-display font-bold text-[#1e88e5]">My Quizzes</h3>
+  <p class="mt-1 text-sm font-semibold text-[#64748b]">Search and sort your quiz library, then launch sessions directly.</p>
+
+  <div class="mt-4 grid gap-3 md:grid-cols-[1fr_auto]">
+    <input
+      #searchInput
+      type="text"
+      class="h-12 rounded-xl border border-[#dbe3ea] px-4 text-sm font-semibold text-[#0f172a]"
+      placeholder="Search by title or description"
+      (input)="updateSearch(searchInput.value)"
+    />
+
+    <select
+      #sortSelect
+      class="h-12 rounded-xl border border-[#dbe3ea] px-4 text-sm font-semibold text-[#0f172a]"
+      (change)="updateSort(sortSelect.value === 'newest' || sortSelect.value === 'oldest' || sortSelect.value === 'title' ? sortSelect.value : 'newest')"
+    >
+      <option value="newest">Newest first</option>
+      <option value="oldest">Oldest first</option>
+      <option value="title">Title A-Z</option>
+    </select>
+  </div>
+</section>
+
+@if (errorMessage()) {
+  <div class="mb-4 rounded-xl border border-[#fca5a5] bg-[#fee2e2] px-4 py-3 text-sm font-bold text-[#b91c1c]">
+    {{ errorMessage() }}
+  </div>
+}
+
+@if (loading()) {
+  <div class="grid gap-4 md:grid-cols-2">
+    @for (item of [1, 2, 3, 4]; track item) {
+      <div class="h-44 rounded-2xl border border-[#e2e8f0] bg-white/60"></div>
+    }
+  </div>
+} @else {
+  <section class="grid gap-4 md:grid-cols-2">
+    @for (quiz of filteredQuizzes(); track quiz.id) {
+      <article class="rounded-2xl border border-[#dbe3ea] bg-white p-5 shadow-[0_4px_0_0_rgba(0,0,0,0.08)]">
+        <h4 class="text-xl font-display font-bold text-[#1e88e5]">{{ quiz.title }}</h4>
+        <p class="mt-2 min-h-10 text-sm font-semibold text-[#475569]">{{ quiz.description || 'No description yet.' }}</p>
+
+        <div class="mt-4 flex flex-wrap gap-2 text-xs font-bold uppercase tracking-[0.08em] text-[#64748b]">
+          <span class="rounded-full bg-[#f1f5f9] px-3 py-1">{{ quiz.questionCount }} Questions</span>
+          @if (quiz.share_code) {
+            <span class="rounded-full bg-[#f1f5f9] px-3 py-1">Share {{ quiz.share_code }}</span>
+          }
+        </div>
+
+        <div class="mt-5 flex flex-wrap gap-3">
+          <button
+            type="button"
+            class="rounded-xl bg-[#1e88e5] px-4 py-2 text-sm font-bold text-white shadow-[0_4px_0_0_#1565c0] transition active:translate-y-1 active:shadow-[0_2px_0_0_#1565c0]"
+            (click)="startSession(quiz.id)"
+          >
+            Create Session
+          </button>
+        </div>
+      </article>
+    }
+  </section>
+
+  @if (filteredQuizzes().length === 0) {
+    <div class="mt-4 rounded-xl border border-dashed border-[#cbd5e1] bg-white px-4 py-6 text-center text-sm font-semibold text-[#64748b]">
+      No quizzes match your search.
+      <button
+        type="button"
+        class="ml-2 rounded-lg bg-[#f1f5f9] px-3 py-1 text-[#1e88e5]"
+        (click)="refresh()"
+      >
+        Refresh
+      </button>
+    </div>
+  }
+}

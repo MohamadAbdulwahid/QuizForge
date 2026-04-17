@@ -1,0 +1,56 @@
+<section class="mb-6 rounded-2xl border border-[#e4e7eb] bg-white p-5 shadow-[0_4px_0_0_rgba(0,0,0,0.08)]">
+  <h3 class="text-2xl font-display font-bold text-[#1e88e5]">Create Session</h3>
+  <p class="mt-1 text-sm font-semibold text-[#64748b]">Select one of your quizzes and spin up a lobby instantly.</p>
+</section>
+
+@if (errorMessage()) {
+  <div class="mb-4 rounded-xl border border-[#fca5a5] bg-[#fee2e2] px-4 py-3 text-sm font-bold text-[#b91c1c]">
+    {{ errorMessage() }}
+  </div>
+}
+
+@if (loadingQuizzes()) {
+  <div class="rounded-2xl border border-[#e2e8f0] bg-white p-8 text-center text-sm font-semibold text-[#64748b]">
+    Loading your quizzes...
+  </div>
+} @else {
+  @if (quizzes().length === 0) {
+    <div class="rounded-2xl border border-dashed border-[#cbd5e1] bg-white p-8 text-center text-sm font-semibold text-[#64748b]">
+      You have no quizzes yet.
+      <a routerLink="/dashboard/quizzes" class="ml-2 text-[#1e88e5] underline">Go to My Quizzes</a>
+    </div>
+  } @else {
+    <section class="grid gap-4">
+      @for (quiz of quizzes(); track quiz.id) {
+        <button
+          type="button"
+          class="rounded-2xl border p-4 text-left transition"
+          [class.border-[#1e88e5]]="selectedQuizId() === quiz.id"
+          [class.bg-[#e3f2fd]]="selectedQuizId() === quiz.id"
+          [class.border-[#dbe3ea]]="selectedQuizId() !== quiz.id"
+          [class.bg-white]="selectedQuizId() !== quiz.id"
+          (click)="selectQuiz(quiz.id)"
+        >
+          <h4 class="text-lg font-display font-bold text-[#1e88e5]">{{ quiz.title }}</h4>
+          <p class="mt-1 text-sm font-semibold text-[#475569]">{{ quiz.description || 'No description yet.' }}</p>
+          <p class="mt-2 text-xs font-bold uppercase tracking-[0.08em] text-[#64748b]">
+            {{ quiz.questionCount }} questions
+          </p>
+        </button>
+      }
+    </section>
+
+    <div class="mt-6 rounded-2xl border border-[#dbe3ea] bg-white p-5">
+      <p class="text-sm font-semibold text-[#64748b]">Selected quiz</p>
+      <h4 class="text-xl font-display font-bold text-[#1e88e5]">{{ selectedQuiz()?.title || 'None' }}</h4>
+      <button
+        type="button"
+        class="mt-4 rounded-xl bg-[#1e88e5] px-5 py-3 text-sm font-bold text-white shadow-[0_4px_0_0_#1565c0] transition active:translate-y-1 active:shadow-[0_2px_0_0_#1565c0]"
+        [disabled]="creatingSession()"
+        (click)="createSession()"
+      >
+        {{ creatingSession() ? 'Creating...' : 'Create Session and Open Lobby' }}
+      </button>
+    </div>
+  }
+}

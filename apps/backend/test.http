@@ -3,6 +3,7 @@
 @accessToken = REPLACE_WITH_JWT
 @quizId = 1
 @shareCode = REPLACE_WITH_SHARE_CODE
+@sessionPin = 123456
 
 ### Health Check
 GET {{baseUrl}}/health
@@ -91,6 +92,50 @@ Content-Type: application/json
 
 {
   "quiz_id": {{quizId}}
+}
+
+### Get Active Session By PIN (Public)
+GET {{baseUrl}}/api/sessions/{{sessionPin}}
+API-Version: {{apiVersion}}
+
+### Transition Session Status To Playing (Protected Host)
+PATCH {{baseUrl}}/api/sessions/{{sessionPin}}/status
+API-Version: {{apiVersion}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "action": "start"
+}
+
+### Pause Active Session (Protected Host)
+PATCH {{baseUrl}}/api/sessions/{{sessionPin}}/status
+API-Version: {{apiVersion}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "action": "pause"
+}
+
+### Resume Paused Session (Protected Host)
+PATCH {{baseUrl}}/api/sessions/{{sessionPin}}/status
+API-Version: {{apiVersion}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "action": "resume"
+}
+
+### Finish Session (Protected Host)
+PATCH {{baseUrl}}/api/sessions/{{sessionPin}}/status
+API-Version: {{apiVersion}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "action": "finish"
 }
 
 ### Swagger JSON
