@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  AuthChangeEvent,
-  Session,
-  SupabaseClient,
-  createClient,
-} from '@supabase/supabase-js';
+import { AuthChangeEvent, Session, SupabaseClient, createClient } from '@supabase/supabase-js';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
@@ -18,10 +13,7 @@ export class SupabaseService {
   private readonly supabaseClient: SupabaseClient;
 
   constructor() {
-    this.supabaseClient = createClient(
-      environment.supabaseUrl,
-      environment.supabasePublishableKey
-    );
+    this.supabaseClient = createClient(environment.supabaseUrl, environment.supabasePublishableKey);
   }
 
   get client(): SupabaseClient {

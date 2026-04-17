@@ -56,10 +56,7 @@ export class SessionApiService {
     });
   }
 
-  updateSessionStatus(
-    pin: string,
-    action: SessionAction
-  ): Observable<UpdateSessionStatusResponse> {
+  updateSessionStatus(pin: string, action: SessionAction): Observable<UpdateSessionStatusResponse> {
     return this.httpClient.patch<UpdateSessionStatusResponse>(
       `${environment.apiBaseUrl}/api/sessions/${pin}/status`,
       { action },
@@ -70,8 +67,11 @@ export class SessionApiService {
   }
 
   getMySessions(): Observable<HostSessionSummary[]> {
-    return this.httpClient.get<HostSessionSummary[]>(`${environment.apiBaseUrl}/api/sessions/mine`, {
-      headers: this.authService.getAuthorizedHeaders(),
-    });
+    return this.httpClient.get<HostSessionSummary[]>(
+      `${environment.apiBaseUrl}/api/sessions/mine`,
+      {
+        headers: this.authService.getAuthorizedHeaders(),
+      }
+    );
   }
 }

@@ -1,9 +1,11 @@
-<main class="min-h-screen bg-[#f6f7f8] font-body text-[#1e293b]">
+<main class="font-body min-h-screen bg-[#f6f7f8] text-[#1e293b]">
   <div class="mx-auto flex max-w-[1280px] flex-col sm:flex-row">
-    <aside class="hidden min-h-screen w-[260px] shrink-0 border-r border-[#e4e7eb] bg-white sm:flex sm:flex-col">
+    <aside
+      class="hidden min-h-screen w-[260px] shrink-0 border-r border-[#e4e7eb] bg-white sm:flex sm:flex-col"
+    >
       <div class="border-b border-[#e4e7eb] px-6 py-6">
-        <h1 class="text-2xl font-display font-bold text-[#1e88e5]">QuizForge</h1>
-        <p class="text-xs font-bold uppercase tracking-[0.2em] text-[#64748b]">Command Center</p>
+        <h1 class="font-display text-2xl font-bold text-[#1e88e5]">QuizForge</h1>
+        <p class="text-xs font-bold tracking-[0.2em] text-[#64748b] uppercase">Command Center</p>
       </div>
 
       <nav class="grid gap-2 px-3 py-4 text-sm font-bold">
@@ -55,15 +57,37 @@
 
     <section class="flex-1 px-4 py-8 md:px-8">
       <nav class="mb-4 grid grid-cols-2 gap-2 text-xs font-bold sm:hidden">
-        <a routerLink="/dashboard" class="rounded-lg bg-white px-3 py-2 text-center text-[#1e88e5]">Overview</a>
-        <a routerLink="/dashboard/quizzes" class="rounded-lg bg-white px-3 py-2 text-center text-[#1e88e5]">Quizzes</a>
-        <a routerLink="/dashboard/create-session" class="rounded-lg bg-white px-3 py-2 text-center text-[#1e88e5]">Create</a>
-        <a routerLink="/dashboard/sessions" class="rounded-lg bg-white px-3 py-2 text-center text-[#1e88e5]">Sessions</a>
+        <a
+          routerLink="/dashboard"
+          class="rounded-lg bg-white px-3 py-2 text-center text-[#1e88e5]"
+        >
+          Overview
+        </a>
+        <a
+          routerLink="/dashboard/quizzes"
+          class="rounded-lg bg-white px-3 py-2 text-center text-[#1e88e5]"
+        >
+          Quizzes
+        </a>
+        <a
+          routerLink="/dashboard/create-session"
+          class="rounded-lg bg-white px-3 py-2 text-center text-[#1e88e5]"
+        >
+          Create
+        </a>
+        <a
+          routerLink="/dashboard/sessions"
+          class="rounded-lg bg-white px-3 py-2 text-center text-[#1e88e5]"
+        >
+          Sessions
+        </a>
       </nav>
 
-      <header class="mb-8 rounded-2xl border border-[#e4e7eb] bg-white p-5 shadow-[0_4px_0_0_rgba(0,0,0,0.08)]">
+      <header
+        class="mb-8 rounded-2xl border border-[#e4e7eb] bg-white p-5 shadow-[0_4px_0_0_rgba(0,0,0,0.08)]"
+      >
         <p class="text-sm font-bold text-[#64748b]">Signed in as</p>
-        <h2 class="text-2xl font-display font-bold text-[#1e88e5]">
+        <h2 class="font-display text-2xl font-bold text-[#1e88e5]">
           {{ currentUser()?.username || currentUser()?.email }}
         </h2>
       </header>

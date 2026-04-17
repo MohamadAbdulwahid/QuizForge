@@ -1,252 +1,446 @@
-<!DOCTYPE html>
+<!doctype html>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>QuizForge: Game Lobby</title>
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Tailwind Config -->
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#1c81d9",
-                        "primary-shadow": "#1565C0",
-                        "background-light": "#f6f7f8",
-                        "background-dark": "#111a21",
-                        "surface": "#FFFFFF",
-                        "text": "#1E293B",
-                        "magenta": "#E91E63",
-                        "magenta-shadow": "#C2185B",
-                        "soft-blue": "#E3F2FD",
-                        "soft-blue-border": "#BBDEFB"
-                    },
-                    fontFamily: {
-                        "display": ["Lexend", "sans-serif"],
-                        "body": ["Lexend", "sans-serif"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.5rem",
-                        "lg": "1rem",
-                        "xl": "1.5rem",
-                        "full": "9999px"
-                    },
-                    boxShadow: {
-                        'tactile': '0 6px 0 0 rgba(0,0,0,0.15)',
-                        'button-primary': '0 6px 0 0 #1565C0',
-                        'button-magenta': '0 6px 0 0 #C2185B',
-                        'card': '0 4px 0 0 #BBDEFB'
-                    },
-                    animation: {
-                        'bounce-slow': 'bounce 2s infinite',
-                        'spin-hover': 'spin 0.5s ease-in-out',
-                    }
-                },
+<html
+  class="light"
+  lang="en"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      content="width=device-width, initial-scale=1.0"
+      name="viewport"
+    />
+    <title>QuizForge: Game Lobby</title>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com"
+      rel="preconnect"
+    />
+    <link
+      crossorigin=""
+      href="https://fonts.gstatic.com"
+      rel="preconnect"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Tailwind Config -->
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: '#1c81d9',
+              'primary-shadow': '#1565C0',
+              'background-light': '#f6f7f8',
+              'background-dark': '#111a21',
+              surface: '#FFFFFF',
+              text: '#1E293B',
+              magenta: '#E91E63',
+              'magenta-shadow': '#C2185B',
+              'soft-blue': '#E3F2FD',
+              'soft-blue-border': '#BBDEFB',
             },
-        }
+            fontFamily: {
+              display: ['Lexend', 'sans-serif'],
+              body: ['Lexend', 'sans-serif'],
+            },
+            borderRadius: {
+              DEFAULT: '0.5rem',
+              lg: '1rem',
+              xl: '1.5rem',
+              full: '9999px',
+            },
+            boxShadow: {
+              tactile: '0 6px 0 0 rgba(0,0,0,0.15)',
+              'button-primary': '0 6px 0 0 #1565C0',
+              'button-magenta': '0 6px 0 0 #C2185B',
+              card: '0 4px 0 0 #BBDEFB',
+            },
+            animation: {
+              'bounce-slow': 'bounce 2s infinite',
+              'spin-hover': 'spin 0.5s ease-in-out',
+            },
+          },
+        },
+      };
     </script>
-<style>
-        body {
-            font-family: 'Lexend', sans-serif;
-            background-color: theme('colors.background-light');
-            background-image: radial-gradient(circle at center, #E3F2FD 2px, transparent 2px);
-            background-size: 40px 40px;
-        }
+    <style>
+      body {
+        font-family: 'Lexend', sans-serif;
+        background-color: theme('colors.background-light');
+        background-image: radial-gradient(circle at center, #e3f2fd 2px, transparent 2px);
+        background-size: 40px 40px;
+      }
 
-        .avatar-hover-spin:hover .avatar-emoji {
-            transform: rotate(360deg);
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .avatar-emoji {
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            will-change: transform;
-        }
+      .avatar-hover-spin:hover .avatar-emoji {
+        transform: rotate(360deg);
+        transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
 
-        .bouncing-text span {
-            display: inline-block;
-            animation: wave 1.5s infinite ease-in-out;
-        }
+      .avatar-emoji {
+        transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        will-change: transform;
+      }
 
-        @keyframes wave {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+      .bouncing-text span {
+        display: inline-block;
+        animation: wave 1.5s infinite ease-in-out;
+      }
 
-        /* Staggered animation for waiting text */
-        .bouncing-text span:nth-child(1) { animation-delay: 0.0s; }
-        .bouncing-text span:nth-child(2) { animation-delay: 0.1s; }
-        .bouncing-text span:nth-child(3) { animation-delay: 0.2s; }
+      @keyframes wave {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      /* Staggered animation for waiting text */
+      .bouncing-text span:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .bouncing-text span:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      .bouncing-text span:nth-child(3) {
+        animation-delay: 0.2s;
+      }
     </style>
-</head>
-<body class="min-h-screen w-full flex flex-col items-center justify-start pt-12 pb-24 overflow-x-hidden text-text">
-<!-- Header Section (Shared Component logic applied: Focused View -> Exclude Nav, Include Minimal Header) -->
-<header class="w-full max-w-[1200px] px-8 flex justify-between items-center mb-8">
-<button aria-label="Go Back" class="flex items-center justify-center w-12 h-12 bg-white rounded-lg shadow-tactile border-2 border-gray-200 text-text hover:bg-gray-50 active:translate-y-[4px] active:shadow-none transition-all">
-<span class="material-symbols-outlined font-bold text-xl">arrow_back</span>
-</button>
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary font-bold text-3xl" style="font-variation-settings: 'FILL' 1;">videogame_asset</span>
-<span class="font-display font-extrabold text-2xl tracking-tight text-primary">QuizForge</span>
-</div>
-<div class="w-12"></div> <!-- Spacer for centering -->
-</header>
-<!-- Main Content Container -->
-<main class="w-full max-w-[1200px] flex flex-col items-center px-4 md:px-8">
-<!-- Top Section: Room Code & Status -->
-<div class="flex flex-col items-center mb-16 space-y-6 w-full max-w-[800px] bg-white rounded-xl shadow-tactile border-4 border-gray-100 p-8 relative">
-<!-- Room Code -->
-<div class="text-center">
-<h2 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">Join at quizforge.com with code:</h2>
-<h1 class="text-primary font-display font-extrabold text-[64px] md:text-[80px] leading-none tracking-[0.1em] drop-shadow-sm">
-                    7 2 9 4 1 5
-                </h1>
-</div>
-<!-- Player Count Badge -->
-<div aria-live="polite" class="flex px-4 justify-center">
-<div class="flex cursor-default items-center justify-center rounded-lg h-12 px-6 bg-magenta border-b-[6px] border-magenta-shadow text-white text-lg font-extrabold tracking-wide transform hover:-translate-y-1 transition-transform">
-<span class="material-symbols-outlined mr-2" style="font-variation-settings: 'FILL' 1;">group</span>
-<span>14/30 Players</span>
-</div>
-</div>
-<!-- Waiting Message -->
-<div class="mt-8 pt-6 border-t-2 border-gray-100 w-full text-center">
-<div class="text-2xl font-bold text-gray-500 bouncing-text flex items-center justify-center gap-3">
-<span class="material-symbols-outlined text-primary animate-spin" style="animation-duration: 2s; font-variation-settings: 'FILL' 1;">monetization_on</span>
-<p>
-<span>Waiting</span> <span>for</span> <span>host...</span>
-</p>
-</div>
-</div>
-</div>
-<!-- Player Grid Section -->
-<div class="w-full">
-<h3 class="text-xl font-bold mb-6 text-gray-600 flex items-center gap-2">
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">bolt</span>
-                Players in Lobby
-            </h3>
-<div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 md:gap-6">
-<!-- Player Card Template 1 -->
-<div class="avatar-hover-spin flex flex-col items-center p-3 bg-soft-blue border-2 border-soft-blue-border rounded-lg shadow-card cursor-pointer hover:-translate-y-1 transition-all group">
-<div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center text-4xl shadow-inner mb-2 border border-blue-100">
-<span class="avatar-emoji select-none">🦊</span>
-</div>
-<span class="font-bold text-sm text-text truncate w-full text-center group-hover:text-primary transition-colors">AlexG</span>
-</div>
-<!-- Player Card 2 -->
-<div class="avatar-hover-spin flex flex-col items-center p-3 bg-soft-blue border-2 border-soft-blue-border rounded-lg shadow-card cursor-pointer hover:-translate-y-1 transition-all group">
-<div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center text-4xl shadow-inner mb-2 border border-blue-100">
-<span class="avatar-emoji select-none">🚀</span>
-</div>
-<span class="font-bold text-sm text-text truncate w-full text-center group-hover:text-primary transition-colors">StarGazer</span>
-</div>
-<!-- Player Card 3 -->
-<div class="avatar-hover-spin flex flex-col items-center p-3 bg-soft-blue border-2 border-soft-blue-border rounded-lg shadow-card cursor-pointer hover:-translate-y-1 transition-all group">
-<div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center text-4xl shadow-inner mb-2 border border-blue-100">
-<span class="avatar-emoji select-none">🦄</span>
-</div>
-<span class="font-bold text-sm text-text truncate w-full text-center group-hover:text-primary transition-colors">MagicM</span>
-</div>
-<!-- Player Card 4 -->
-<div class="avatar-hover-spin flex flex-col items-center p-3 bg-soft-blue border-2 border-soft-blue-border rounded-lg shadow-card cursor-pointer hover:-translate-y-1 transition-all group">
-<div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center text-4xl shadow-inner mb-2 border border-blue-100">
-<span class="avatar-emoji select-none">🍕</span>
-</div>
-<span class="font-bold text-sm text-text truncate w-full text-center group-hover:text-primary transition-colors">PizzaPro</span>
-</div>
-<!-- Player Card 5 -->
-<div class="avatar-hover-spin flex flex-col items-center p-3 bg-soft-blue border-2 border-soft-blue-border rounded-lg shadow-card cursor-pointer hover:-translate-y-1 transition-all group">
-<div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center text-4xl shadow-inner mb-2 border border-blue-100">
-<span class="avatar-emoji select-none">👻</span>
-</div>
-<span class="font-bold text-sm text-text truncate w-full text-center group-hover:text-primary transition-colors">Boo22</span>
-</div>
-<!-- Player Card 6 -->
-<div class="avatar-hover-spin flex flex-col items-center p-3 bg-soft-blue border-2 border-soft-blue-border rounded-lg shadow-card cursor-pointer hover:-translate-y-1 transition-all group">
-<div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center text-4xl shadow-inner mb-2 border border-blue-100">
-<span class="avatar-emoji select-none">👾</span>
-</div>
-<span class="font-bold text-sm text-text truncate w-full text-center group-hover:text-primary transition-colors">RetroKid</span>
-</div>
-<!-- Player Card 7 -->
-<div class="avatar-hover-spin flex flex-col items-center p-3 bg-soft-blue border-2 border-soft-blue-border rounded-lg shadow-card cursor-pointer hover:-translate-y-1 transition-all group">
-<div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center text-4xl shadow-inner mb-2 border border-blue-100">
-<span class="avatar-emoji select-none">🐯</span>
-</div>
-<span class="font-bold text-sm text-text truncate w-full text-center group-hover:text-primary transition-colors">TigerPaw</span>
-</div>
-<!-- Player Card 8 -->
-<div class="avatar-hover-spin flex flex-col items-center p-3 bg-soft-blue border-2 border-soft-blue-border rounded-lg shadow-card cursor-pointer hover:-translate-y-1 transition-all group">
-<div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center text-4xl shadow-inner mb-2 border border-blue-100">
-<span class="avatar-emoji select-none">⚡</span>
-</div>
-<span class="font-bold text-sm text-text truncate w-full text-center group-hover:text-primary transition-colors">ZapDash</span>
-</div>
-<!-- Player Card 9 -->
-<div class="avatar-hover-spin flex flex-col items-center p-3 bg-soft-blue border-2 border-soft-blue-border rounded-lg shadow-card cursor-pointer hover:-translate-y-1 transition-all group">
-<div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center text-4xl shadow-inner mb-2 border border-blue-100">
-<span class="avatar-emoji select-none">🎮</span>
-</div>
-<span class="font-bold text-sm text-text truncate w-full text-center group-hover:text-primary transition-colors">Gamer1</span>
-</div>
-<!-- Player Card 10 -->
-<div class="avatar-hover-spin flex flex-col items-center p-3 bg-soft-blue border-2 border-soft-blue-border rounded-lg shadow-card cursor-pointer hover:-translate-y-1 transition-all group">
-<div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center text-4xl shadow-inner mb-2 border border-blue-100">
-<span class="avatar-emoji select-none">🌵</span>
-</div>
-<span class="font-bold text-sm text-text truncate w-full text-center group-hover:text-primary transition-colors">Spike</span>
-</div>
-<!-- Player Card 11 -->
-<div class="avatar-hover-spin flex flex-col items-center p-3 bg-soft-blue border-2 border-soft-blue-border rounded-lg shadow-card cursor-pointer hover:-translate-y-1 transition-all group">
-<div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center text-4xl shadow-inner mb-2 border border-blue-100">
-<span class="avatar-emoji select-none">🐙</span>
-</div>
-<span class="font-bold text-sm text-text truncate w-full text-center group-hover:text-primary transition-colors">Kraken</span>
-</div>
-<!-- Player Card 12 -->
-<div class="avatar-hover-spin flex flex-col items-center p-3 bg-soft-blue border-2 border-soft-blue-border rounded-lg shadow-card cursor-pointer hover:-translate-y-1 transition-all group">
-<div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center text-4xl shadow-inner mb-2 border border-blue-100">
-<span class="avatar-emoji select-none">🤖</span>
-</div>
-<span class="font-bold text-sm text-text truncate w-full text-center group-hover:text-primary transition-colors">Bot_01</span>
-</div>
-<!-- Player Card 13 -->
-<div class="avatar-hover-spin flex flex-col items-center p-3 bg-soft-blue border-2 border-soft-blue-border rounded-lg shadow-card cursor-pointer hover:-translate-y-1 transition-all group">
-<div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center text-4xl shadow-inner mb-2 border border-blue-100">
-<span class="avatar-emoji select-none">🌟</span>
-</div>
-<span class="font-bold text-sm text-text truncate w-full text-center group-hover:text-primary transition-colors">Shiny</span>
-</div>
-<!-- Player Card 14 -->
-<div class="avatar-hover-spin flex flex-col items-center p-3 bg-soft-blue border-2 border-soft-blue-border rounded-lg shadow-card cursor-pointer hover:-translate-y-1 transition-all group">
-<div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center text-4xl shadow-inner mb-2 border border-blue-100">
-<span class="avatar-emoji select-none">🐸</span>
-</div>
-<span class="font-bold text-sm text-text truncate w-full text-center group-hover:text-primary transition-colors">Ribbit</span>
-</div>
-<!-- Empty Slots to show capacity (optional stylistic choice for grid layout) -->
-<div class="flex flex-col items-center p-3 bg-gray-50 border-2 border-dashed border-gray-200 rounded-lg opacity-50">
-<div class="w-16 h-16 rounded-lg flex items-center justify-center mb-2">
-<span class="material-symbols-outlined text-gray-300 text-3xl">add</span>
-</div>
-<span class="font-bold text-sm text-gray-400 truncate w-full text-center">Empty</span>
-</div>
-<div class="flex flex-col items-center p-3 bg-gray-50 border-2 border-dashed border-gray-200 rounded-lg opacity-50 hidden md:flex">
-<div class="w-16 h-16 rounded-lg flex items-center justify-center mb-2">
-<span class="material-symbols-outlined text-gray-300 text-3xl">add</span>
-</div>
-<span class="font-bold text-sm text-gray-400 truncate w-full text-center">Empty</span>
-</div>
-</div>
-</div>
-</main>
-</body></html>
+  </head>
+  <body
+    class="text-text flex min-h-screen w-full flex-col items-center justify-start overflow-x-hidden pt-12 pb-24"
+  >
+    <!-- Header Section (Shared Component logic applied: Focused View -> Exclude Nav, Include Minimal Header) -->
+    <header class="mb-8 flex w-full max-w-[1200px] items-center justify-between px-8">
+      <button
+        aria-label="Go Back"
+        class="shadow-tactile text-text flex h-12 w-12 items-center justify-center rounded-lg border-2 border-gray-200 bg-white transition-all hover:bg-gray-50 active:translate-y-[4px] active:shadow-none"
+      >
+        <span class="material-symbols-outlined text-xl font-bold">arrow_back</span>
+      </button>
+      <div class="flex items-center gap-2">
+        <span
+          class="material-symbols-outlined text-primary text-3xl font-bold"
+          style="font-variation-settings: 'FILL' 1"
+        >
+          videogame_asset
+        </span>
+        <span class="font-display text-primary text-2xl font-extrabold tracking-tight">
+          QuizForge
+        </span>
+      </div>
+      <div class="w-12"></div>
+      <!-- Spacer for centering -->
+    </header>
+    <!-- Main Content Container -->
+    <main class="flex w-full max-w-[1200px] flex-col items-center px-4 md:px-8">
+      <!-- Top Section: Room Code & Status -->
+      <div
+        class="shadow-tactile relative mb-16 flex w-full max-w-[800px] flex-col items-center space-y-6 rounded-xl border-4 border-gray-100 bg-white p-8"
+      >
+        <!-- Room Code -->
+        <div class="text-center">
+          <h2 class="mb-2 text-sm font-bold tracking-widest text-gray-400 uppercase">
+            Join at quizforge.com with code:
+          </h2>
+          <h1
+            class="text-primary font-display text-[64px] leading-none font-extrabold tracking-[0.1em] drop-shadow-sm md:text-[80px]"
+          >
+            7 2 9 4 1 5
+          </h1>
+        </div>
+        <!-- Player Count Badge -->
+        <div
+          aria-live="polite"
+          class="flex justify-center px-4"
+        >
+          <div
+            class="bg-magenta border-magenta-shadow flex h-12 transform cursor-default items-center justify-center rounded-lg border-b-[6px] px-6 text-lg font-extrabold tracking-wide text-white transition-transform hover:-translate-y-1"
+          >
+            <span
+              class="material-symbols-outlined mr-2"
+              style="font-variation-settings: 'FILL' 1"
+            >
+              group
+            </span>
+            <span>14/30 Players</span>
+          </div>
+        </div>
+        <!-- Waiting Message -->
+        <div class="mt-8 w-full border-t-2 border-gray-100 pt-6 text-center">
+          <div
+            class="bouncing-text flex items-center justify-center gap-3 text-2xl font-bold text-gray-500"
+          >
+            <span
+              class="material-symbols-outlined text-primary animate-spin"
+              style="animation-duration: 2s; font-variation-settings: 'FILL' 1"
+            >
+              monetization_on
+            </span>
+            <p>
+              <span>Waiting</span>
+              <span>for</span>
+              <span>host...</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- Player Grid Section -->
+      <div class="w-full">
+        <h3 class="mb-6 flex items-center gap-2 text-xl font-bold text-gray-600">
+          <span
+            class="material-symbols-outlined text-primary"
+            style="font-variation-settings: 'FILL' 1"
+          >
+            bolt
+          </span>
+          Players in Lobby
+        </h3>
+        <div class="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 md:gap-6 lg:grid-cols-8">
+          <!-- Player Card Template 1 -->
+          <div
+            class="avatar-hover-spin bg-soft-blue border-soft-blue-border shadow-card group flex cursor-pointer flex-col items-center rounded-lg border-2 p-3 transition-all hover:-translate-y-1"
+          >
+            <div
+              class="mb-2 flex h-16 w-16 items-center justify-center rounded-lg border border-blue-100 bg-white text-4xl shadow-inner"
+            >
+              <span class="avatar-emoji select-none">🦊</span>
+            </div>
+            <span
+              class="text-text group-hover:text-primary w-full truncate text-center text-sm font-bold transition-colors"
+            >
+              AlexG
+            </span>
+          </div>
+          <!-- Player Card 2 -->
+          <div
+            class="avatar-hover-spin bg-soft-blue border-soft-blue-border shadow-card group flex cursor-pointer flex-col items-center rounded-lg border-2 p-3 transition-all hover:-translate-y-1"
+          >
+            <div
+              class="mb-2 flex h-16 w-16 items-center justify-center rounded-lg border border-blue-100 bg-white text-4xl shadow-inner"
+            >
+              <span class="avatar-emoji select-none">🚀</span>
+            </div>
+            <span
+              class="text-text group-hover:text-primary w-full truncate text-center text-sm font-bold transition-colors"
+            >
+              StarGazer
+            </span>
+          </div>
+          <!-- Player Card 3 -->
+          <div
+            class="avatar-hover-spin bg-soft-blue border-soft-blue-border shadow-card group flex cursor-pointer flex-col items-center rounded-lg border-2 p-3 transition-all hover:-translate-y-1"
+          >
+            <div
+              class="mb-2 flex h-16 w-16 items-center justify-center rounded-lg border border-blue-100 bg-white text-4xl shadow-inner"
+            >
+              <span class="avatar-emoji select-none">🦄</span>
+            </div>
+            <span
+              class="text-text group-hover:text-primary w-full truncate text-center text-sm font-bold transition-colors"
+            >
+              MagicM
+            </span>
+          </div>
+          <!-- Player Card 4 -->
+          <div
+            class="avatar-hover-spin bg-soft-blue border-soft-blue-border shadow-card group flex cursor-pointer flex-col items-center rounded-lg border-2 p-3 transition-all hover:-translate-y-1"
+          >
+            <div
+              class="mb-2 flex h-16 w-16 items-center justify-center rounded-lg border border-blue-100 bg-white text-4xl shadow-inner"
+            >
+              <span class="avatar-emoji select-none">🍕</span>
+            </div>
+            <span
+              class="text-text group-hover:text-primary w-full truncate text-center text-sm font-bold transition-colors"
+            >
+              PizzaPro
+            </span>
+          </div>
+          <!-- Player Card 5 -->
+          <div
+            class="avatar-hover-spin bg-soft-blue border-soft-blue-border shadow-card group flex cursor-pointer flex-col items-center rounded-lg border-2 p-3 transition-all hover:-translate-y-1"
+          >
+            <div
+              class="mb-2 flex h-16 w-16 items-center justify-center rounded-lg border border-blue-100 bg-white text-4xl shadow-inner"
+            >
+              <span class="avatar-emoji select-none">👻</span>
+            </div>
+            <span
+              class="text-text group-hover:text-primary w-full truncate text-center text-sm font-bold transition-colors"
+            >
+              Boo22
+            </span>
+          </div>
+          <!-- Player Card 6 -->
+          <div
+            class="avatar-hover-spin bg-soft-blue border-soft-blue-border shadow-card group flex cursor-pointer flex-col items-center rounded-lg border-2 p-3 transition-all hover:-translate-y-1"
+          >
+            <div
+              class="mb-2 flex h-16 w-16 items-center justify-center rounded-lg border border-blue-100 bg-white text-4xl shadow-inner"
+            >
+              <span class="avatar-emoji select-none">👾</span>
+            </div>
+            <span
+              class="text-text group-hover:text-primary w-full truncate text-center text-sm font-bold transition-colors"
+            >
+              RetroKid
+            </span>
+          </div>
+          <!-- Player Card 7 -->
+          <div
+            class="avatar-hover-spin bg-soft-blue border-soft-blue-border shadow-card group flex cursor-pointer flex-col items-center rounded-lg border-2 p-3 transition-all hover:-translate-y-1"
+          >
+            <div
+              class="mb-2 flex h-16 w-16 items-center justify-center rounded-lg border border-blue-100 bg-white text-4xl shadow-inner"
+            >
+              <span class="avatar-emoji select-none">🐯</span>
+            </div>
+            <span
+              class="text-text group-hover:text-primary w-full truncate text-center text-sm font-bold transition-colors"
+            >
+              TigerPaw
+            </span>
+          </div>
+          <!-- Player Card 8 -->
+          <div
+            class="avatar-hover-spin bg-soft-blue border-soft-blue-border shadow-card group flex cursor-pointer flex-col items-center rounded-lg border-2 p-3 transition-all hover:-translate-y-1"
+          >
+            <div
+              class="mb-2 flex h-16 w-16 items-center justify-center rounded-lg border border-blue-100 bg-white text-4xl shadow-inner"
+            >
+              <span class="avatar-emoji select-none">⚡</span>
+            </div>
+            <span
+              class="text-text group-hover:text-primary w-full truncate text-center text-sm font-bold transition-colors"
+            >
+              ZapDash
+            </span>
+          </div>
+          <!-- Player Card 9 -->
+          <div
+            class="avatar-hover-spin bg-soft-blue border-soft-blue-border shadow-card group flex cursor-pointer flex-col items-center rounded-lg border-2 p-3 transition-all hover:-translate-y-1"
+          >
+            <div
+              class="mb-2 flex h-16 w-16 items-center justify-center rounded-lg border border-blue-100 bg-white text-4xl shadow-inner"
+            >
+              <span class="avatar-emoji select-none">🎮</span>
+            </div>
+            <span
+              class="text-text group-hover:text-primary w-full truncate text-center text-sm font-bold transition-colors"
+            >
+              Gamer1
+            </span>
+          </div>
+          <!-- Player Card 10 -->
+          <div
+            class="avatar-hover-spin bg-soft-blue border-soft-blue-border shadow-card group flex cursor-pointer flex-col items-center rounded-lg border-2 p-3 transition-all hover:-translate-y-1"
+          >
+            <div
+              class="mb-2 flex h-16 w-16 items-center justify-center rounded-lg border border-blue-100 bg-white text-4xl shadow-inner"
+            >
+              <span class="avatar-emoji select-none">🌵</span>
+            </div>
+            <span
+              class="text-text group-hover:text-primary w-full truncate text-center text-sm font-bold transition-colors"
+            >
+              Spike
+            </span>
+          </div>
+          <!-- Player Card 11 -->
+          <div
+            class="avatar-hover-spin bg-soft-blue border-soft-blue-border shadow-card group flex cursor-pointer flex-col items-center rounded-lg border-2 p-3 transition-all hover:-translate-y-1"
+          >
+            <div
+              class="mb-2 flex h-16 w-16 items-center justify-center rounded-lg border border-blue-100 bg-white text-4xl shadow-inner"
+            >
+              <span class="avatar-emoji select-none">🐙</span>
+            </div>
+            <span
+              class="text-text group-hover:text-primary w-full truncate text-center text-sm font-bold transition-colors"
+            >
+              Kraken
+            </span>
+          </div>
+          <!-- Player Card 12 -->
+          <div
+            class="avatar-hover-spin bg-soft-blue border-soft-blue-border shadow-card group flex cursor-pointer flex-col items-center rounded-lg border-2 p-3 transition-all hover:-translate-y-1"
+          >
+            <div
+              class="mb-2 flex h-16 w-16 items-center justify-center rounded-lg border border-blue-100 bg-white text-4xl shadow-inner"
+            >
+              <span class="avatar-emoji select-none">🤖</span>
+            </div>
+            <span
+              class="text-text group-hover:text-primary w-full truncate text-center text-sm font-bold transition-colors"
+            >
+              Bot_01
+            </span>
+          </div>
+          <!-- Player Card 13 -->
+          <div
+            class="avatar-hover-spin bg-soft-blue border-soft-blue-border shadow-card group flex cursor-pointer flex-col items-center rounded-lg border-2 p-3 transition-all hover:-translate-y-1"
+          >
+            <div
+              class="mb-2 flex h-16 w-16 items-center justify-center rounded-lg border border-blue-100 bg-white text-4xl shadow-inner"
+            >
+              <span class="avatar-emoji select-none">🌟</span>
+            </div>
+            <span
+              class="text-text group-hover:text-primary w-full truncate text-center text-sm font-bold transition-colors"
+            >
+              Shiny
+            </span>
+          </div>
+          <!-- Player Card 14 -->
+          <div
+            class="avatar-hover-spin bg-soft-blue border-soft-blue-border shadow-card group flex cursor-pointer flex-col items-center rounded-lg border-2 p-3 transition-all hover:-translate-y-1"
+          >
+            <div
+              class="mb-2 flex h-16 w-16 items-center justify-center rounded-lg border border-blue-100 bg-white text-4xl shadow-inner"
+            >
+              <span class="avatar-emoji select-none">🐸</span>
+            </div>
+            <span
+              class="text-text group-hover:text-primary w-full truncate text-center text-sm font-bold transition-colors"
+            >
+              Ribbit
+            </span>
+          </div>
+          <!-- Empty Slots to show capacity (optional stylistic choice for grid layout) -->
+          <div
+            class="flex flex-col items-center rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 p-3 opacity-50"
+          >
+            <div class="mb-2 flex h-16 w-16 items-center justify-center rounded-lg">
+              <span class="material-symbols-outlined text-3xl text-gray-300">add</span>
+            </div>
+            <span class="w-full truncate text-center text-sm font-bold text-gray-400">Empty</span>
+          </div>
+          <div
+            class="flex hidden flex-col items-center rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 p-3 opacity-50 md:flex"
+          >
+            <div class="mb-2 flex h-16 w-16 items-center justify-center rounded-lg">
+              <span class="material-symbols-outlined text-3xl text-gray-300">add</span>
+            </div>
+            <span class="w-full truncate text-center text-sm font-bold text-gray-400">Empty</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
