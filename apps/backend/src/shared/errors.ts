@@ -59,3 +59,17 @@ export class ConflictError extends AppError {
     super(message, 409, code);
   }
 }
+
+/**
+ * Invalid game/session state transition error mapped to HTTP 400.
+ */
+export class InvalidStateTransitionError extends AppError {
+  /**
+   * Creates a 400 invalid state transition error.
+   * @param message - Human-readable message.
+   * @param code - Machine-readable code.
+   */
+  constructor(message = 'Invalid state transition', code = 'INVALID_STATE_TRANSITION') {
+    super(message, 400, code);
+  }
+}

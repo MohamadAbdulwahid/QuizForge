@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import { Tspec } from 'tspec';
 import type { CreateQuizRequest, UpdateQuizRequest } from './dtos/quiz.dto';
-import type { CreateSessionRequest } from './dtos/session.dto';
+import type { CreateSessionRequest, UpdateSessionStatusRequest } from './dtos/session.dto';
 import type { SignInDto, SignUpDto } from './dtos/auth.dto';
 
 type HealthResponse = { status: string; timestamp: number };
@@ -27,6 +27,11 @@ type PublicQuizByCodeHandler = (
 ) => void;
 type CreateSessionHandler = (
   _req: Request<unknown, unknown, CreateSessionRequest>,
+  res: Response<unknown>
+) => void;
+type GetSessionByPinHandler = (_req: Request<{ pin: string }>, res: Response<unknown>) => void;
+type PatchSessionStatusHandler = (
+  _req: Request<{ pin: string }, unknown, UpdateSessionStatusRequest>,
   res: Response<unknown>
 ) => void;
 
@@ -147,6 +152,32 @@ export type QuizForgeApiSpec = Tspec.DefineApiSpec<{
           403: ErrorResponse;
           404: ErrorResponse;
           409: ErrorResponse;
+        };
+      };
+    };
+    '/api/sessions/{pin}': {
+      get: {
+        tags: ['Session'];
+        summary: 'Get active session by pin';
+        handler: GetSessionByPinHandler;
+        responses: {
+          200: unknown;
+          400: ErrorResponse;
+          404: ErrorResponse;
+        };
+      };
+    };
+    '/api/sessions/{pin}/status': {
+      patch: {
+        tags: ['Session'];
+        summary: 'Transition session status';
+        handler: PatchSessionStatusHandler;
+        responses: {
+          200: unknown;
+          400: ErrorResponse;
+          401: ErrorResponse;
+          403: ErrorResponse;
+          404: ErrorResponse;
         };
       };
     };

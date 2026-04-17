@@ -19,7 +19,7 @@ export function registerRoutes(): Router {
 
   // Protected quiz/session routes.
   router.use('/quizzes', authMiddleware, quizRouter);
-  router.use('/sessions', authMiddleware, sessionRouter);
+  router.use('/sessions', sessionRouter);
 
   return router;
 }

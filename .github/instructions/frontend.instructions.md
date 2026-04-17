@@ -82,6 +82,13 @@ bootstrapApplication(AppComponent, {
 }).catch((err) => console.error(err));
 ```
 
+**Zoneless Testing & Debugging Checklist:**
+- Verify `zone.js` is not present in dependencies and not imported from any polyfill file.
+- Add an E2E assertion that `window.Zone` is `undefined` after loading the landing page.
+- For Vitest, keep `@analogjs/vite-plugin-angular/setup-vitest` in a dedicated test setup file only.
+- If UI updates do not render, inspect signal writes (`set`, `update`) and `computed` dependencies first.
+- For SSR issues, validate `app.routes.server.ts` has explicit render modes per route before debugging hydration.
+
 **Deferred Loading for Non-Critical UI:**
 ```html
 <!-- Use @defer for everything below-the-fold or non-essential -->

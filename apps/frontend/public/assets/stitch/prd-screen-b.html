@@ -1,0 +1,189 @@
+# QuizForge: Arcade Energy
+
+## Product Overview
+
+**The Pitch:** A high-octane multiplayer learning platform that turns educational quizzes into intensely competitive arcade games. Blends fast-paced trivia with tactile, satisfying UI to keep players engaged and energized.
+
+**For:** Students and casual trivia fans who crave fast-paced, high-energy gamified learning with a competitive edge.
+
+**Device:** desktop
+
+**Design Direction:** Chunky, tactile arcade aesthetic. Heavy borders, vibrant primary colors, and hard shadows that make every element feel like a physical, pushable arcade button.
+
+**Inspired by:** Blooket, Kahoot, classic 90s arcade cabinets.
+
+---
+
+## Screens
+
+- **Dashboard:** Launchpad for quick game entry and featured game modes.
+- **Game Lobby:** Pre-game waiting area displaying connected players and game code.
+- **Active Game:** Core gameplay loop with question prompts and 2x2 answer grids.
+- **Leaderboards:** Post-game victory screen with a tiered podium and final scores.
+
+---
+
+## Key Flows
+
+**Join and Play:** User enters a game code and plays a live match.
+
+1. User is on Dashboard -> sees **Quick Join** input
+2. User enters `6-digit PIN` and clicks **Join** -> routed to Game Lobby
+3. Host starts game -> User routed to Active Game, sees 2x2 answer grid
+4. User completes questions -> routed to Leaderboards to view final rank
+
+---
+
+<details>
+<summary>Design System</summary>
+
+## Color Palette
+
+- **Primary:** `#2563EB` - Primary Blue for main actions and heavy UI components
+- **Background:** `#EFF6FF` - Soft Blue for full-page background
+- **Surface:** `#FFFFFF` - Clean white for cards and answer blocks
+- **Text:** `#0F172A` - Near black for ultimate readability
+- **Muted:** `#94A3B8` - Subdued text, inactive states
+- **Accent:** `#F72585` - Neon Magenta for alerts, timers, and critical CTAs
+- **Secondary Accents:** `#FBBF24` (Gold/Yellow), `#10B981` (Green), `#EF4444` (Red) for answer grids
+
+## Typography
+
+- **Headings:** DynaPuff, 700, 32-48px
+- **Body:** Nunito, 600, 16-18px
+- **Small text:** Nunito, 500, 14px
+- **Buttons:** DynaPuff, 600, 20px
+
+**Style notes:** The "Neo-Brutalism meets Arcade" look. All interactive elements have a `4px solid #0F172A` border and an `8px 8px 0px #0F172A` hard shadow. `16px` border radius everywhere. On active/click, elements translate `4px 4px` and shadow reduces to `4px 4px 0px`.
+
+## Design Tokens
+
+```css
+:root {
+  --color-primary: #2563EB;
+  --color-background: #EFF6FF;
+  --color-surface: #FFFFFF;
+  --color-text: #0F172A;
+  --color-accent: #F72585;
+  --font-heading: 'DynaPuff', cursive;
+  --font-body: 'Nunito', sans-serif;
+  --radius: 16px;
+  --border-width: 4px;
+  --border-color: #0F172A;
+  --shadow-hard: 8px 8px 0px #0F172A;
+  --shadow-hard-active: 4px 4px 0px #0F172A;
+}
+```
+
+</details>
+
+---
+
+<details>
+<summary>Screen Specifications</summary>
+
+### Dashboard
+
+**Purpose:** Entry point to join a live game or explore featured game modes.
+
+**Layout:** Split layout. Left column (40%) for Quick Join, right column (60%) for Featured Gold Quest banner.
+
+**Key Elements:**
+- **Logo:** `DynaPuff`, 48px, `#F72585`, top-left
+- **Quick Join Card:** `#FFFFFF` background, 16px padding, hard shadow. Contains 6-digit PIN input and **Join!** button.
+- **PIN Input:** 64px height, `#EFF6FF` background, text-center, `DynaPuff` 32px text, 4px black border.
+- **Featured Banner:** `#2563EB` background, gold `#FBBF24` text accents, graphic of a treasure chest, **Host Now** CTA.
+
+**States:**
+- **Empty:** PIN input displays placeholder `GAME PIN`
+- **Error:** PIN input border turns `#EF4444`, shakes animation, helper text `Invalid PIN`.
+
+**Components:**
+- **Arcade Button:** 100% width, 64px height, `#F72585` background, `#FFFFFF` text, hard black shadow, hover transform.
+
+**Interactions:**
+- **Click [Join]:** Input validates. If valid, simulates button press (translates 4px down-right), routes to Lobby.
+- **Hover [Featured Banner]:** Banner rotates `2deg`, cursor changes to pointer.
+
+### Game Lobby
+
+**Purpose:** Waiting area showing the game code and avatars of players who have successfully joined.
+
+**Layout:** Centered header with large game code. Grid of player avatars taking up the remaining viewport height.
+
+**Key Elements:**
+- **Game Code Banner:** Massive `DynaPuff` 64px text, centered, bordered pill shape, `#FBBF24` background.
+- **Player Count:** `Nunito` 24px, `#0F172A`, upper right. Example: `Players: 42`
+- **Avatar Grid:** Flex layout with wrap, `gap-4`.
+- **Player Chip:** `#FFFFFF` background, 4px border, small drop shadow, contains randomly generated monster avatar and player name.
+
+**States:**
+- **Empty:** Grid displays glowing placeholder text `Waiting for players to join...`
+
+**Components:**
+- **Player Chip:** 120px width, 48px height, flex-row, center-aligned, text truncate.
+
+**Interactions:**
+- **New Player Joins:** Chip scales up from `0` to `1` with an elastic spring animation.
+
+### Active Game
+
+**Purpose:** Core gameplay loop. Displays the question and four answer options in a grid.
+
+**Layout:** Top progress bar and timer. Centered question text. Bottom half dominated by a 2x2 grid of massive answer buttons.
+
+**Key Elements:**
+- **Timer Bar:** Fixed top, full width, 16px height, `#F72585` fill, shrinks to the left.
+- **Question Card:** `#FFFFFF` background, heavy border, centered `DynaPuff` 32px text.
+- **Answer Grid:** 2x2 CSS Grid, `gap-6`.
+- **Answer Buttons:** 4 distinct colors (Red `#EF4444`, Blue `#2563EB`, Yellow `#FBBF24`, Green `#10B981`). Massive tap targets, centered `Nunito` 24px text.
+
+**States:**
+- **Correct Selection:** Screen flashes `#10B981`, checkmark overlay, +100 score popup.
+- **Incorrect Selection:** Screen flashes `#EF4444`, X overlay, screen shake effect.
+
+**Components:**
+- **Answer Button:** 100% height/width of grid cell, heavy black borders, 8px drop shadows.
+
+**Interactions:**
+- **Click [Answer]:** Button depresses (shadow goes to 0px, translates 8px), locks out other options.
+
+### Leaderboards
+
+**Purpose:** Post-game glory screen celebrating the top 3 players and listing the rest.
+
+**Layout:** Top half features a centered 3-step podium. Bottom half lists ranks 4-10.
+
+**Key Elements:**
+- **Victory Header:** `DynaPuff` 48px, `#FBBF24`, glowing drop shadow.
+- **Podium Steps:** Three vertical columns. 1st place center (highest, `#FBBF24`), 2nd place left (medium, `#94A3B8`), 3rd place right (lowest, `#B45309`).
+- **Podium Avatars:** Sit on top of steps. Heavy border, bouncing animation for 1st place.
+- **Runner-up List:** Vertical stack of rows, each `#FFFFFF` background, flex-between for Rank, Name, and Score.
+
+**States:**
+- **Loading:** Podium steps grow from bottom up; avatars drop in from top.
+
+**Components:**
+- **Podium Step:** `<div class="border-4 border-black bg-yellow-400 rounded-t-2xl">`, width 120px, height varies.
+- **Runner-up Row:** 100% width max 600px, 64px height, 16px padding.
+
+**Interactions:**
+- **Page Load:** Confetti animation triggers across the entire viewport.
+- **Hover [Runner-up Row]:** Translates `-2px` on Y axis, shadow increases.
+
+</details>
+
+---
+
+<details>
+<summary>Build Guide</summary>
+
+**Stack:** HTML + Tailwind CSS v3
+
+**Build Order:**
+1. **Active Game** - Defines the core interactions, establishes the intense color palette, answer grids, and tactile button presses (the hardest shadow/border combos).
+2. **Dashboard** - Reuses the button styles, establishes form inputs and general layout wrapper.
+3. **Game Lobby** - Introduces the avatar components and flex-wrap grid layouts.
+4. **Leaderboards** - Most complex layout (podium), utilizes the avatar components built in the lobby phase.
+
+</details>
