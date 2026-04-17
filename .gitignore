@@ -154,6 +154,9 @@ vite.config.ts.timestamp-*
 .opencode/
 .github/
 
+# VS Code workspace settings and local tool state
+.vscode/
+
 .angular
 
 __screenshots__/

@@ -49,7 +49,20 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
       !this.startRequested()
   );
 
-  private readonly emojiPool = ['🦊', '🚀', '🦄', '🍕', '👻', '👾', '🐯', '⚡', '🎮', '🌵', '🐙', '🤖'];
+  private readonly emojiPool = [
+    '🦊',
+    '🚀',
+    '🦄',
+    '🍕',
+    '👻',
+    '👾',
+    '🐯',
+    '⚡',
+    '🎮',
+    '🌵',
+    '🐙',
+    '🤖',
+  ];
   private hasJoined = false;
 
   ngOnInit(): void {
@@ -87,7 +100,10 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
             true,
             currentUser.id === session.host_id
           );
-          this.websocketService.joinGame(pin, this.buildDisplayName(currentUser.username, currentUser.email));
+          this.websocketService.joinGame(
+            pin,
+            this.buildDisplayName(currentUser.username, currentUser.email)
+          );
           this.hasJoined = true;
         },
         error: (error: unknown) => {
@@ -166,13 +182,11 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
         );
       });
 
-    this.websocketService.gameStarted$
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        this.startRequested.set(false);
-        this.sessionStatus.set('playing');
-        this.statusMessage.set('Game started. Waiting for the first question...');
-      });
+    this.websocketService.gameStarted$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.startRequested.set(false);
+      this.sessionStatus.set('playing');
+      this.statusMessage.set('Game started. Waiting for the first question...');
+    });
   }
 
   protected startGame(): void {

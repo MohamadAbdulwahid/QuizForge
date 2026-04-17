@@ -45,3 +45,9 @@ supabase/*
 migrations/
 
 .angular
+
+# Stitch PRD artifacts are markdown content saved as .html and are not parseable by Prettier's HTML parser
+apps/frontend/src/assets/stitch/prd-screen-a.html
+apps/frontend/src/assets/stitch/prd-screen-b.html
+apps/frontend/public/assets/stitch/prd-screen-a.html
+apps/frontend/public/assets/stitch/prd-screen-b.html

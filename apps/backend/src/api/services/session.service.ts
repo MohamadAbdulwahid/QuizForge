@@ -67,7 +67,9 @@ export async function createSession(
  * @param hostId - Authenticated host id.
  * @returns Session summaries for dashboard management.
  */
-export async function getSessionsByHost(hostId: string): Promise<sessionRepository.HostSessionSummary[]> {
+export async function getSessionsByHost(
+  hostId: string
+): Promise<sessionRepository.HostSessionSummary[]> {
   return sessionRepository.findByHost(hostId);
 }
 

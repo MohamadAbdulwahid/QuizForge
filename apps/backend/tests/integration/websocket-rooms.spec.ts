@@ -168,10 +168,8 @@ describe('websocket room management', () => {
   it('join-game with missing pin emits validation error', async () => {
     const socket = await connectClient('token-alice');
 
-    const payload = await waitForEvent<{ code: string }>(
-      socket,
-      'error',
-      () => socket.emit('join-game', {})
+    const payload = await waitForEvent<{ code: string }>(socket, 'error', () =>
+      socket.emit('join-game', {})
     );
 
     expect(payload.code).toBe('VALIDATION_ERROR');

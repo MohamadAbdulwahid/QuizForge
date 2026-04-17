@@ -1,5 +1,8 @@
 import { describe, expect, it, mock } from 'bun:test';
-import { emitSocketValidationError, JoinGameMessageSchema } from '../../../src/websocket/validation/schemas';
+import {
+  emitSocketValidationError,
+  JoinGameMessageSchema,
+} from '../../../src/websocket/validation/schemas';
 
 describe('websocket zod schemas', () => {
   it('JoinGameMessageSchema rejects missing pin', () => {

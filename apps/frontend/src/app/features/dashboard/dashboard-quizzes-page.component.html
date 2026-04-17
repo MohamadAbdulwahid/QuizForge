@@ -1,6 +1,10 @@
-<section class="mb-6 rounded-2xl border border-[#e4e7eb] bg-white p-5 shadow-[0_4px_0_0_rgba(0,0,0,0.08)]">
-  <h3 class="text-2xl font-display font-bold text-[#1e88e5]">My Quizzes</h3>
-  <p class="mt-1 text-sm font-semibold text-[#64748b]">Search and sort your quiz library, then launch sessions directly.</p>
+<section
+  class="mb-6 rounded-2xl border border-[#e4e7eb] bg-white p-5 shadow-[0_4px_0_0_rgba(0,0,0,0.08)]"
+>
+  <h3 class="font-display text-2xl font-bold text-[#1e88e5]">My Quizzes</h3>
+  <p class="mt-1 text-sm font-semibold text-[#64748b]">
+    Search and sort your quiz library, then launch sessions directly.
+  </p>
 
   <div class="mt-4 grid gap-3 md:grid-cols-[1fr_auto]">
     <input
@@ -14,7 +18,15 @@
     <select
       #sortSelect
       class="h-12 rounded-xl border border-[#dbe3ea] px-4 text-sm font-semibold text-[#0f172a]"
-      (change)="updateSort(sortSelect.value === 'newest' || sortSelect.value === 'oldest' || sortSelect.value === 'title' ? sortSelect.value : 'newest')"
+      (change)="
+        updateSort(
+          sortSelect.value === 'newest' ||
+            sortSelect.value === 'oldest' ||
+            sortSelect.value === 'title'
+            ? sortSelect.value
+            : 'newest'
+        )
+      "
     >
       <option value="newest">Newest first</option>
       <option value="oldest">Oldest first</option>
@@ -24,7 +36,9 @@
 </section>
 
 @if (errorMessage()) {
-  <div class="mb-4 rounded-xl border border-[#fca5a5] bg-[#fee2e2] px-4 py-3 text-sm font-bold text-[#b91c1c]">
+  <div
+    class="mb-4 rounded-xl border border-[#fca5a5] bg-[#fee2e2] px-4 py-3 text-sm font-bold text-[#b91c1c]"
+  >
     {{ errorMessage() }}
   </div>
 }
@@ -38,12 +52,20 @@
 } @else {
   <section class="grid gap-4 md:grid-cols-2">
     @for (quiz of filteredQuizzes(); track quiz.id) {
-      <article class="rounded-2xl border border-[#dbe3ea] bg-white p-5 shadow-[0_4px_0_0_rgba(0,0,0,0.08)]">
-        <h4 class="text-xl font-display font-bold text-[#1e88e5]">{{ quiz.title }}</h4>
-        <p class="mt-2 min-h-10 text-sm font-semibold text-[#475569]">{{ quiz.description || 'No description yet.' }}</p>
+      <article
+        class="rounded-2xl border border-[#dbe3ea] bg-white p-5 shadow-[0_4px_0_0_rgba(0,0,0,0.08)]"
+      >
+        <h4 class="font-display text-xl font-bold text-[#1e88e5]">{{ quiz.title }}</h4>
+        <p class="mt-2 min-h-10 text-sm font-semibold text-[#475569]">
+          {{ quiz.description || 'No description yet.' }}
+        </p>
 
-        <div class="mt-4 flex flex-wrap gap-2 text-xs font-bold uppercase tracking-[0.08em] text-[#64748b]">
-          <span class="rounded-full bg-[#f1f5f9] px-3 py-1">{{ quiz.questionCount }} Questions</span>
+        <div
+          class="mt-4 flex flex-wrap gap-2 text-xs font-bold tracking-[0.08em] text-[#64748b] uppercase"
+        >
+          <span class="rounded-full bg-[#f1f5f9] px-3 py-1">
+            {{ quiz.questionCount }} Questions
+          </span>
           @if (quiz.share_code) {
             <span class="rounded-full bg-[#f1f5f9] px-3 py-1">Share {{ quiz.share_code }}</span>
           }
@@ -63,7 +85,9 @@
   </section>
 
   @if (filteredQuizzes().length === 0) {
-    <div class="mt-4 rounded-xl border border-dashed border-[#cbd5e1] bg-white px-4 py-6 text-center text-sm font-semibold text-[#64748b]">
+    <div
+      class="mt-4 rounded-xl border border-dashed border-[#cbd5e1] bg-white px-4 py-6 text-center text-sm font-semibold text-[#64748b]"
+    >
       No quizzes match your search.
       <button
         type="button"
