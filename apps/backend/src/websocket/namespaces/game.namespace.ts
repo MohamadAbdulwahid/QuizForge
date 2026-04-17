@@ -181,7 +181,9 @@ export function registerGameNamespace(
       }
 
       const socketsInRoom = await gameNamespace.in(pin).fetchSockets();
-      const activePlayerCount = socketsInRoom.filter((roomSocket) => Boolean(roomSocket.data.userId)).length;
+      const activePlayerCount = socketsInRoom.filter((roomSocket) =>
+        Boolean(roomSocket.data.userId)
+      ).length;
 
       if (activePlayerCount < MIN_PLAYERS_TO_START) {
         socket.emit('error', {

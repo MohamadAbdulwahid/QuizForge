@@ -6,34 +6,34 @@
 @import 'tailwindcss';
 
 :root {
-	--bubbly-background: #f9fafb;
-	--bubbly-primary: #00a5e0;
-	--bubbly-accent: #cd2750;
-	--bubbly-text: #070f18;
+  --bubbly-background: #f9fafb;
+  --bubbly-primary: #00a5e0;
+  --bubbly-accent: #cd2750;
+  --bubbly-text: #070f18;
 }
 
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html,
 body {
-	margin: 0;
-	min-height: 100%;
+  margin: 0;
+  min-height: 100%;
 }
 
 body {
-	background:
-		radial-gradient(circle at 10% 10%, rgba(0, 165, 224, 0.14), transparent 30%),
-		radial-gradient(circle at 90% 0%, rgba(205, 39, 80, 0.12), transparent 35%),
-		var(--bubbly-background);
-	color: var(--bubbly-text);
-	font-family: 'Nunito', sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(0, 165, 224, 0.14), transparent 30%),
+    radial-gradient(circle at 90% 0%, rgba(205, 39, 80, 0.12), transparent 35%),
+    var(--bubbly-background);
+  color: var(--bubbly-text);
+  font-family: 'Nunito', sans-serif;
 }
 
 h1,
 h2,
 h3,
 .font-display {
-	font-family: 'DynaPuff', cursive;
+  font-family: 'DynaPuff', cursive;
 }
