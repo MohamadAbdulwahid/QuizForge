@@ -1,0 +1,77 @@
+/* question-editor.component.css */
+
+/* Minimal CSS - most styling via Tailwind classes in template */
+
+/* Smooth transitions for interactive elements */
+.form-control input,
+.form-control textarea,
+.form-control select {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control input:focus,
+.form-control textarea:focus {
+  @apply border-accent shadow-lg;
+}
+
+/* Badge pulse animation for validation status */
+.badge-success,
+.badge-error {
+  animation: pulse-status 2s ease-in-out infinite;
+}
+
+@keyframes pulse-status {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .badge-success,
+  .badge-error {
+    animation: none;
+  }
+}
+
+/* Radio button customization for correct answer selection */
+.radio {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  transition: all 0.2s ease;
+}
+
+.radio:checked {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Error message styling */
+.alert-error {
+  @apply bg-red-100 border-red-300 text-red-800;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .card {
+    @apply p-4;
+  }
+
+  .grid-cols-2 {
+    @apply grid-cols-1;
+  }
+}
