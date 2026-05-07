@@ -1,0 +1,194 @@
+<div class="card bg-secondary rounded-3xl p-6 shadow-lg mb-6 max-w-4xl">
+  <div class="card-body">
+    <!-- Question Text Section -->
+    <div class="form-control mb-4">
+      <label class="label" for="questionText">
+        <span class="label-text font-display text-lg text-primary">Question</span>
+      </label>
+      <textarea
+        id="questionText"
+        class="textarea textarea-bordered rounded-2xl px-4 py-3 border-2 border-primary"
+        placeholder="Enter your question here..."
+        rows="2"
+        maxlength="500"
+        [value]="questionText()"
+        (input)="updateQuestionText(($event.target as HTMLTextAreaElement).value)"
+      ></textarea>
+      <label class="label">
+        <span class="label-text-alt">{{ questionText().length }}/500 characters</span>
+      </label>
+      @if (hasFieldError('text')()) {
+        <div class="alert alert-error rounded-2xl mt-2">
+          <span>{{ getFieldError('text')() }}</span>
+        </div>
+      }
+    </div>
+
+    <!-- Question Type Section -->
+    <div class="form-control mb-6">
+      <label class="label" for="questionType">
+        <span class="label-text font-display text-lg text-primary">Question Type</span>
+      </label>
+      <div class="flex gap-4">
+        <label class="label cursor-pointer gap-2 rounded-2xl px-4 py-2 border-2 border-transparent hover:border-primary transition"
+          [class.border-primary]="questionType() === 'multiple-choice'">
+          <input
+            type="radio"
+            name="questionType"
+            value="multiple-choice"
+            [checked]="questionType() === 'multiple-choice'"
+            (change)="updateQuestionType('multiple-choice')"
+            class="radio radio-primary"
+          />
+          <span class="label-text">Multiple Choice</span>
+        </label>
+        <label class="label cursor-pointer gap-2 rounded-2xl px-4 py-2 border-2 border-transparent hover:border-primary transition"
+          [class.border-primary]="questionType() === 'true-false'">
+          <input
+            type="radio"
+            name="questionType"
+            value="true-false"
+            [checked]="questionType() === 'true-false'"
+            (change)="updateQuestionType('true-false')"
+            class="radio radio-primary"
+          />
+          <span class="label-text">True/False</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Answer Options Section -->
+    <div class="form-control mb-6">
+      <label class="label">
+        <span class="label-text font-display text-lg text-primary">Answer Options</span>
+      </label>
+      <div class="space-y-3">
+        @for (option of answerOptions(); let i = $index; track option.id) {
+          <div class="flex gap-3 items-end">
+            <!-- Option ID Badge -->
+            <div class="badge badge-primary font-display text-lg px-3 py-4">
+              {{ option.id }}
+            </div>
+
+            <!-- Option Text Input -->
+            <div class="flex-1">
+              <input
+                type="text"
+                placeholder="Enter answer option..."
+                maxlength="500"
+                [value]="option.text"
+                (input)="updateAnswerOption(i, ($event.target as HTMLInputElement).value)"
+                class="input input-bordered rounded-2xl px-4 py-3 w-full border-2 border-primary focus:outline-none focus:ring-2 focus:ring-accent"
+              />
+              @if (hasFieldError(`option-${i}`)()) {
+                <div class="text-error text-sm mt-1">{{ getFieldError(`option-${i}`)() }}</div>
+              }
+            </div>
+
+            <!-- Correct Answer Toggle -->
+            <div class="flex items-center gap-2">
+              <input
+                type="radio"
+                [name]="'correctAnswer'"
+                [value]="option.id"
+                [checked]="correctAnswerId() === option.id"
+                (change)="markAsCorrect(option.id)"
+                class="radio radio-accent"
+              />
+              <label class="label-text text-sm font-semibold text-accent">Correct</label>
+            </div>
+
+            <!-- Remove Button (if more than 2 options) -->
+            @if (answerOptions().length > 2) {
+              <button
+                type="button"
+                class="btn btn-sm btn-outline btn-error rounded-2xl"
+                (click)="removeAnswerOption(i)"
+                title="Remove this option"
+              >
+                Remove
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      @if (hasFieldError('options')()) {
+        <div class="alert alert-error rounded-2xl mt-3">
+          <span>{{ getFieldError('options')() }}</span>
+        </div>
+      }
+
+      @if (hasFieldError('correct_answer')()) {
+        <div class="alert alert-error rounded-2xl mt-3">
+          <span>{{ getFieldError('correct_answer')() }}</span>
+        </div>
+      }
+
+      <!-- Add Answer Button -->
+      @if (answerOptions().length < 6) {
+        <button
+          type="button"
+          class="btn btn-secondary mt-3 rounded-2xl px-6 py-2"
+          (click)="addAnswerOption()"
+        >
+          <span class="text-lg">+</span> Add Answer Option
+        </button>
+      }
+    </div>
+
+    <!-- Time Limit and Points Settings -->
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <!-- Time Limit -->
+      <div class="form-control">
+        <label class="label" for="timeLimit">
+          <span class="label-text font-display text-sm text-primary">Time Limit (seconds)</span>
+        </label>
+        <input
+          id="timeLimit"
+          type="number"
+          min="5"
+          max="120"
+          [value]="timeLimit()"
+          (input)="updateTimeLimit(+($event.target as HTMLInputElement).value)"
+          class="input input-bordered rounded-2xl px-4 py-3 border-2 border-primary"
+        />
+        @if (hasFieldError('time_limit')()) {
+          <div class="text-error text-sm mt-1">{{ getFieldError('time_limit')() }}</div>
+        }
+      </div>
+
+      <!-- Points -->
+      <div class="form-control">
+        <label class="label" for="points">
+          <span class="label-text font-display text-sm text-primary">Points</span>
+        </label>
+        <input
+          id="points"
+          type="number"
+          min="0"
+          max="1000"
+          [value]="points()"
+          (input)="updatePoints(+($event.target as HTMLInputElement).value)"
+          class="input input-bordered rounded-2xl px-4 py-3 border-2 border-primary"
+        />
+        @if (hasFieldError('points')()) {
+          <div class="text-error text-sm mt-1">{{ getFieldError('points')() }}</div>
+        }
+      </div>
+    </div>
+
+    <!-- Validation Status Badge -->
+    <div class="flex justify-end">
+      @if (isValid()) {
+        <div class="badge badge-success font-semibold rounded-2xl px-4 py-2">
+          ✓ Valid
+        </div>
+      } @else {
+        <div class="badge badge-error font-semibold rounded-2xl px-4 py-2">
+          ✗ Invalid - Fix errors above
+        </div>
+      }
+    </div>
+  </div>
+</div>
