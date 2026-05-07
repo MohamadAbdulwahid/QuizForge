@@ -110,6 +110,7 @@
     "_comment:frontend": "==================== FRONTEND ====================",
     "lint:frontend": "nx lint frontend",
     "test:frontend": "nx test frontend",
+    "test:question-editor": "bun test apps/frontend/src/app/features/quiz-builder/components/question-editor/question-editor.component.spec.ts",
     "build:frontend": "nx build frontend",
     "start:frontend": "nx serve frontend",
     "dev:frontend": "nx serve frontend --configuration=development",
