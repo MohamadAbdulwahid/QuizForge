@@ -1,24 +1,27 @@
-<div class="card bg-secondary rounded-3xl p-6 shadow-lg mb-6 max-w-4xl">
+<div class="card bg-secondary mb-6 max-w-4xl rounded-3xl p-6 shadow-lg">
   <div class="card-body">
     <!-- Question Text Section -->
     <div class="form-control mb-4">
-      <label class="label" for="questionText">
-        <span class="label-text font-display text-lg text-primary">Question</span>
+      <label
+        class="label"
+        for="questionText"
+      >
+        <span class="label-text font-display text-primary text-lg">Question</span>
       </label>
       <textarea
         id="questionText"
-        class="textarea textarea-bordered rounded-2xl px-4 py-3 border-2 border-primary"
+        class="textarea textarea-bordered border-primary rounded-2xl border-2 px-4 py-3"
         placeholder="Enter your question here..."
         rows="2"
         maxlength="500"
         [value]="questionText()"
-        (input)="updateQuestionText(($event.target as HTMLTextAreaElement).value)"
+        (input)="onQuestionTextInput($event)"
       ></textarea>
-      <label class="label">
+      <div class="label">
         <span class="label-text-alt">{{ questionText().length }}/500 characters</span>
-      </label>
+      </div>
       @if (hasFieldError('text')()) {
-        <div class="alert alert-error rounded-2xl mt-2">
+        <div class="alert alert-error mt-2 rounded-2xl">
           <span>{{ getFieldError('text')() }}</span>
         </div>
       }
@@ -26,12 +29,17 @@
 
     <!-- Question Type Section -->
     <div class="form-control mb-6">
-      <label class="label" for="questionType">
-        <span class="label-text font-display text-lg text-primary">Question Type</span>
+      <label
+        class="label"
+        for="questionType"
+      >
+        <span class="label-text font-display text-primary text-lg">Question Type</span>
       </label>
       <div class="flex gap-4">
-        <label class="label cursor-pointer gap-2 rounded-2xl px-4 py-2 border-2 border-transparent hover:border-primary transition"
-          [class.border-primary]="questionType() === 'multiple-choice'">
+        <label
+          class="label hover:border-primary cursor-pointer gap-2 rounded-2xl border-2 border-transparent px-4 py-2 transition"
+          [class.border-primary]="questionType() === 'multiple-choice'"
+        >
           <input
             type="radio"
             name="questionType"
@@ -42,8 +50,10 @@
           />
           <span class="label-text">Multiple Choice</span>
         </label>
-        <label class="label cursor-pointer gap-2 rounded-2xl px-4 py-2 border-2 border-transparent hover:border-primary transition"
-          [class.border-primary]="questionType() === 'true-false'">
+        <label
+          class="label hover:border-primary cursor-pointer gap-2 rounded-2xl border-2 border-transparent px-4 py-2 transition"
+          [class.border-primary]="questionType() === 'true-false'"
+        >
           <input
             type="radio"
             name="questionType"
@@ -59,14 +69,14 @@
 
     <!-- Answer Options Section -->
     <div class="form-control mb-6">
-      <label class="label">
-        <span class="label-text font-display text-lg text-primary">Answer Options</span>
-      </label>
+      <div class="label">
+        <span class="label-text font-display text-primary text-lg">Answer Options</span>
+      </div>
       <div class="space-y-3">
         @for (option of answerOptions(); let i = $index; track option.id) {
-          <div class="flex gap-3 items-end">
+          <div class="flex items-end gap-3">
             <!-- Option ID Badge -->
-            <div class="badge badge-primary font-display text-lg px-3 py-4">
+            <div class="badge badge-primary font-display px-3 py-4 text-lg">
               {{ option.id }}
             </div>
 
@@ -77,11 +87,11 @@
                 placeholder="Enter answer option..."
                 maxlength="500"
                 [value]="option.text"
-                (input)="updateAnswerOption(i, ($event.target as HTMLInputElement).value)"
-                class="input input-bordered rounded-2xl px-4 py-3 w-full border-2 border-primary focus:outline-none focus:ring-2 focus:ring-accent"
+                (input)="onAnswerOptionInput(i, $event)"
+                class="input input-bordered border-primary focus:ring-accent w-full rounded-2xl border-2 px-4 py-3 focus:ring-2 focus:outline-none"
               />
               @if (hasFieldError(`option-${i}`)()) {
-                <div class="text-error text-sm mt-1">{{ getFieldError(`option-${i}`)() }}</div>
+                <div class="text-error mt-1 text-sm">{{ getFieldError(`option-${i}`)() }}</div>
               }
             </div>
 
@@ -95,7 +105,7 @@
                 (change)="markAsCorrect(option.id)"
                 class="radio radio-accent"
               />
-              <label class="label-text text-sm font-semibold text-accent">Correct</label>
+              <div class="label-text text-accent text-sm font-semibold">Correct</div>
             </div>
 
             <!-- Remove Button (if more than 2 options) -->
@@ -114,13 +124,13 @@
       </div>
 
       @if (hasFieldError('options')()) {
-        <div class="alert alert-error rounded-2xl mt-3">
+        <div class="alert alert-error mt-3 rounded-2xl">
           <span>{{ getFieldError('options')() }}</span>
         </div>
       }
 
       @if (hasFieldError('correct_answer')()) {
-        <div class="alert alert-error rounded-2xl mt-3">
+        <div class="alert alert-error mt-3 rounded-2xl">
           <span>{{ getFieldError('correct_answer')() }}</span>
         </div>
       }
@@ -132,17 +142,21 @@
           class="btn btn-secondary mt-3 rounded-2xl px-6 py-2"
           (click)="addAnswerOption()"
         >
-          <span class="text-lg">+</span> Add Answer Option
+          <span class="text-lg">+</span>
+          Add Answer Option
         </button>
       }
     </div>
 
     <!-- Time Limit and Points Settings -->
-    <div class="grid grid-cols-2 gap-4 mb-4">
+    <div class="mb-4 grid grid-cols-2 gap-4">
       <!-- Time Limit -->
       <div class="form-control">
-        <label class="label" for="timeLimit">
-          <span class="label-text font-display text-sm text-primary">Time Limit (seconds)</span>
+        <label
+          class="label"
+          for="timeLimit"
+        >
+          <span class="label-text font-display text-primary text-sm">Time Limit (seconds)</span>
         </label>
         <input
           id="timeLimit"
@@ -150,18 +164,21 @@
           min="5"
           max="120"
           [value]="timeLimit()"
-          (input)="updateTimeLimit(+($event.target as HTMLInputElement).value)"
-          class="input input-bordered rounded-2xl px-4 py-3 border-2 border-primary"
+          (input)="onTimeLimitInput($event)"
+          class="input input-bordered border-primary rounded-2xl border-2 px-4 py-3"
         />
         @if (hasFieldError('time_limit')()) {
-          <div class="text-error text-sm mt-1">{{ getFieldError('time_limit')() }}</div>
+          <div class="text-error mt-1 text-sm">{{ getFieldError('time_limit')() }}</div>
         }
       </div>
 
       <!-- Points -->
       <div class="form-control">
-        <label class="label" for="points">
-          <span class="label-text font-display text-sm text-primary">Points</span>
+        <label
+          class="label"
+          for="points"
+        >
+          <span class="label-text font-display text-primary text-sm">Points</span>
         </label>
         <input
           id="points"
@@ -169,11 +186,11 @@
           min="0"
           max="1000"
           [value]="points()"
-          (input)="updatePoints(+($event.target as HTMLInputElement).value)"
-          class="input input-bordered rounded-2xl px-4 py-3 border-2 border-primary"
+          (input)="onPointsInput($event)"
+          class="input input-bordered border-primary rounded-2xl border-2 px-4 py-3"
         />
         @if (hasFieldError('points')()) {
-          <div class="text-error text-sm mt-1">{{ getFieldError('points')() }}</div>
+          <div class="text-error mt-1 text-sm">{{ getFieldError('points')() }}</div>
         }
       </div>
     </div>
@@ -181,11 +198,9 @@
     <!-- Validation Status Badge -->
     <div class="flex justify-end">
       @if (isValid()) {
-        <div class="badge badge-success font-semibold rounded-2xl px-4 py-2">
-          ✓ Valid
-        </div>
+        <div class="badge badge-success rounded-2xl px-4 py-2 font-semibold">✓ Valid</div>
       } @else {
-        <div class="badge badge-error font-semibold rounded-2xl px-4 py-2">
+        <div class="badge badge-error rounded-2xl px-4 py-2 font-semibold">
           ✗ Invalid - Fix errors above
         </div>
       }

@@ -7,15 +7,15 @@ import { describe, it, expect, beforeEach } from 'vitest';
 
 // Mock component for testing validation logic
 class QuestionEditorValidationTest {
-  questionText: string = '';
+  questionText = '';
   questionType: 'multiple-choice' | 'true-false' = 'multiple-choice';
   answerOptions: Array<{ id: string; text: string }> = [
     { id: 'A', text: '' },
     { id: 'B', text: '' },
   ];
-  correctAnswerId: string = 'A';
-  timeLimit: number = 30;
-  points: number = 100;
+  correctAnswerId = 'A';
+  timeLimit = 30;
+  points = 100;
 
   getValidationErrors() {
     const errors: Array<{ field: string; message: string }> = [];

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Component, DestroyRef, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import type { User } from '@supabase/supabase-js';
 import { AuthService } from '../../core/services/auth.service';
 import { SessionApiService, SessionStatus } from '../../core/services/session-api.service';
 import { SocketErrorPayload, WebsocketService } from '../../core/services/websocket.service';
@@ -39,7 +40,9 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
   protected readonly minPlayersToStart = signal(2);
   protected readonly startRequested = signal(false);
   protected readonly connected = this.websocketService.connected;
-  protected readonly isHost = computed(() => this.authService.user()?.id === this.hostUserId());
+  protected readonly isHost = computed(
+    () => this.authService.currentUser()?.id === this.hostUserId()
+  );
   protected readonly canStartGame = computed(
     () =>
       this.isHost() &&
@@ -65,7 +68,7 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
   ];
   private hasJoined = false;
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     const pin = this.route.snapshot.paramMap.get('pin') ?? '';
     this.pin.set(pin);
 
@@ -74,11 +77,12 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
       return;
     }
 
+    await this.authService.whenReady();
     const token = this.authService.accessToken();
-    const currentUser = this.authService.user();
+    const currentUser = this.authService.currentUser();
 
     if (!token || !currentUser) {
-      void this.router.navigateByUrl('/auth');
+      await this.router.navigateByUrl('/login');
       return;
     }
 
@@ -96,14 +100,11 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
           this.websocketService.connect(token);
           this.upsertPlayer(
             currentUser.id,
-            this.buildDisplayName(currentUser.username, currentUser.email),
+            this.buildDisplayName(currentUser),
             true,
             currentUser.id === session.host_id
           );
-          this.websocketService.joinGame(
-            pin,
-            this.buildDisplayName(currentUser.username, currentUser.email)
-          );
+          this.websocketService.joinGame(pin, this.buildDisplayName(currentUser));
           this.hasJoined = true;
         },
         error: (error: unknown) => {
@@ -129,7 +130,7 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
           return;
         }
 
-        const ownUserId = this.authService.user()?.id;
+        const ownUserId = this.authService.currentUser()?.id;
         const isSelf = event.userId === ownUserId;
 
         this.upsertPlayer(
@@ -169,7 +170,7 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
         this.sessionStatus.set(normalizedStatus);
         this.statusMessage.set(this.buildStatusMessage(normalizedStatus));
 
-        const ownUserId = this.authService.user()?.id;
+        const ownUserId = this.authService.currentUser()?.id;
 
         this.players.set(
           event.players.map((player) => ({
@@ -242,12 +243,14 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
     return this.emojiPool[hash % this.emojiPool.length];
   }
 
-  private buildDisplayName(username: string, email: string): string {
-    if (username.trim().length > 0) {
+  private buildDisplayName(user: User): string {
+    const username = String(user.user_metadata?.['username'] ?? '').trim();
+
+    if (username.length > 0) {
       return username;
     }
 
-    return email.split('@')[0] ?? 'Player';
+    return user.email?.split('@')[0] ?? 'Player';
   }
 
   private formatRemoteName(userId: string): string {

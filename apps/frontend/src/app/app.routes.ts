@@ -8,9 +8,18 @@ export const appRoutes: Route[] = [
       import('./features/landing/landing-page.component').then((m) => m.LandingPageComponent),
   },
   {
-    path: 'auth',
+    path: 'login',
+    loadComponent: () => import('./features/auth/login.component').then((m) => m.LoginComponent),
+  },
+  {
+    path: 'register',
     loadComponent: () =>
-      import('./features/auth/auth-page.component').then((m) => m.AuthPageComponent),
+      import('./features/auth/register.component').then((m) => m.RegisterComponent),
+  },
+  {
+    path: 'auth',
+    redirectTo: 'login',
+    pathMatch: 'full',
   },
   {
     path: 'dashboard',
