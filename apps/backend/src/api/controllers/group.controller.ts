@@ -53,13 +53,15 @@ export class GroupController {
   }
 
   async searchGroups(req: AuthenticatedRequest, res: Response): Promise<void> {
-    if (!req.user?.id) {
+    const userId = req.user?.id;
+
+    if (!userId) {
       res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Unauthorized', code: 'UNAUTHORIZED' });
       return;
     }
 
     const query = req.query as SearchGroupsQuery;
-    const groups = await searchGroups(query.query);
+    const groups = await searchGroups(userId, query.query);
     res.status(StatusCodes.OK).json(groups);
   }
 

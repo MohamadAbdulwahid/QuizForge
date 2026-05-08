@@ -32,8 +32,10 @@ export async function listMyGroups(userId: string) {
   return groupRepository.listGroupsByMember(userId);
 }
 
-export async function searchGroups(query: string) {
-  return groupRepository.searchDiscoverableGroups(query);
+export async function searchGroups(userId: string, query: string) {
+  const memberGroupIds = await groupRepository.listGroupIdsByMember(userId);
+
+  return groupRepository.searchDiscoverableGroups(query, memberGroupIds);
 }
 
 export async function getGroupDetails(groupId: number, userId: string) {

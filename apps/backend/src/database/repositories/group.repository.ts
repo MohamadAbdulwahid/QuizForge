@@ -1,4 +1,4 @@
-import { and, asc, desc, eq, ilike, inArray } from 'drizzle-orm';
+import { and, asc, desc, eq, ilike, inArray, not } from 'drizzle-orm';
 import { db } from '../client';
 import {
   GROUP,
@@ -99,7 +99,28 @@ export async function listGroupsByMember(userId: string) {
     .orderBy(asc(GROUP.name));
 }
 
-export async function searchDiscoverableGroups(query: string) {
+export async function searchDiscoverableGroups(query: string, excludedGroupIds: number[] = []) {
+  const normalizedQuery = query.trim();
+  const visibilityFilter =
+    excludedGroupIds.length > 0
+      ? and(eq(GROUP.is_discoverable, true), not(inArray(GROUP.id, excludedGroupIds)))
+      : eq(GROUP.is_discoverable, true);
+
+  if (!normalizedQuery) {
+    return db
+      .select({
+        id: GROUP.id,
+        name: GROUP.name,
+        description: GROUP.description,
+        join_policy: GROUP.join_policy,
+        created_by: GROUP.created_by,
+        created_at: GROUP.created_at,
+      })
+      .from(GROUP)
+      .where(visibilityFilter)
+      .orderBy(asc(GROUP.name));
+  }
+
   return db
     .select({
       id: GROUP.id,
@@ -110,7 +131,7 @@ export async function searchDiscoverableGroups(query: string) {
       created_at: GROUP.created_at,
     })
     .from(GROUP)
-    .where(and(eq(GROUP.is_discoverable, true), ilike(GROUP.name, `%${query}%`)))
+    .where(and(visibilityFilter, ilike(GROUP.name, `%${normalizedQuery}%`)))
     .orderBy(asc(GROUP.name));
 }
 
@@ -202,7 +223,7 @@ export async function listJoinRequests(groupId: number): Promise<GroupJoinReques
     })
     .from(GROUP_JOIN_REQUEST)
     .innerJoin(PROFILE, eq(GROUP_JOIN_REQUEST.requester_user_id, PROFILE.user_id))
-    .where(eq(GROUP_JOIN_REQUEST.group_id, groupId))
+    .where(and(eq(GROUP_JOIN_REQUEST.group_id, groupId), eq(GROUP_JOIN_REQUEST.status, 'pending')))
     .orderBy(desc(GROUP_JOIN_REQUEST.created_at));
 }
 

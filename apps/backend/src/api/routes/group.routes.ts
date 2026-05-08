@@ -34,7 +34,6 @@ groupRouter.get(
       return;
     }
 
-    req.query = parsed.data;
     next();
   },
   groupController.searchGroups
