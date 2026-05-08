@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { ApiService } from './api.service';
 
 export type SessionStatus = 'pending' | 'waiting' | 'playing' | 'paused' | 'ended' | 'in-progress';
 export type SessionAction = 'start' | 'pause' | 'resume' | 'finish';
@@ -36,26 +35,23 @@ export interface HostSessionSummary {
 
 @Injectable({ providedIn: 'root' })
 export class SessionApiService {
-  private readonly httpClient = inject(HttpClient);
+  private readonly apiService = inject(ApiService);
 
   createSession(quizId: number): Observable<CreateSessionResponse> {
-    return this.httpClient.post<CreateSessionResponse>(`${environment.apiBaseUrl}/api/sessions`, {
-      quiz_id: quizId,
-    });
+    return this.apiService.post<CreateSessionResponse>('/api/sessions', { quiz_id: quizId });
   }
 
   getSessionByPin(pin: string): Observable<SessionDto> {
-    return this.httpClient.get<SessionDto>(`${environment.apiBaseUrl}/api/sessions/${pin}`);
+    return this.apiService.get<SessionDto>(`/api/sessions/${pin}`);
   }
 
   updateSessionStatus(pin: string, action: SessionAction): Observable<UpdateSessionStatusResponse> {
-    return this.httpClient.patch<UpdateSessionStatusResponse>(
-      `${environment.apiBaseUrl}/api/sessions/${pin}/status`,
-      { action }
-    );
+    return this.apiService.patch<UpdateSessionStatusResponse>(`/api/sessions/${pin}/status`, {
+      action,
+    });
   }
 
   getMySessions(): Observable<HostSessionSummary[]> {
-    return this.httpClient.get<HostSessionSummary[]>(`${environment.apiBaseUrl}/api/sessions/mine`);
+    return this.apiService.get<HostSessionSummary[]>('/api/sessions/mine');
   }
 }
