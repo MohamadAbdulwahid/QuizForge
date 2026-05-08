@@ -1,4 +1,13 @@
-import { bigint, boolean, pgEnum, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
+import {
+  bigint,
+  boolean,
+  pgEnum,
+  pgTable,
+  text,
+  timestamp,
+  uniqueIndex,
+  uuid,
+} from 'drizzle-orm/pg-core';
 import { USER } from './auth/user';
 
 export const GROUP_JOIN_POLICY = pgEnum('group_join_policy', [
@@ -40,17 +49,26 @@ export const GROUP = pgTable('group', {
   created_at: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 });
 
-export const GROUP_MEMBER = pgTable('group_member', {
-  id: bigint('id', { mode: 'number' }).primaryKey().generatedAlwaysAsIdentity(),
-  group_id: bigint('group_id', { mode: 'number' })
-    .notNull()
-    .references(() => GROUP.id, { onDelete: 'cascade' }),
-  user_id: uuid('user_id')
-    .notNull()
-    .references(() => USER.id, { onDelete: 'cascade' }),
-  role: GROUP_MEMBER_ROLE('role').notNull().default('member'),
-  joined_at: timestamp('joined_at', { withTimezone: true }).notNull().defaultNow(),
-});
+export const GROUP_MEMBER = pgTable(
+  'group_member',
+  {
+    id: bigint('id', { mode: 'number' }).primaryKey().generatedAlwaysAsIdentity(),
+    group_id: bigint('group_id', { mode: 'number' })
+      .notNull()
+      .references(() => GROUP.id, { onDelete: 'cascade' }),
+    user_id: uuid('user_id')
+      .notNull()
+      .references(() => USER.id, { onDelete: 'cascade' }),
+    role: GROUP_MEMBER_ROLE('role').notNull().default('member'),
+    joined_at: timestamp('joined_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    groupMemberUnique: uniqueIndex('group_member_group_id_user_id_unique').on(
+      table.group_id,
+      table.user_id
+    ),
+  })
+);
 
 export const GROUP_JOIN_REQUEST = pgTable('group_join_request', {
   id: bigint('id', { mode: 'number' }).primaryKey().generatedAlwaysAsIdentity(),
