@@ -52,6 +52,28 @@ mock.module('../../src/api/controllers/session.controller', () => ({
   },
 }));
 
+mock.module('../../src/api/controllers/group.controller', () => ({
+  groupController: {
+    createGroup: (_req: express.Request, res: express.Response) => res.status(201).json({ id: 1 }),
+    listMyGroups: (_req: express.Request, res: express.Response) => res.status(200).json([]),
+    searchGroups: (_req: express.Request, res: express.Response) => res.status(200).json([]),
+    getGroupDetails: (_req: express.Request, res: express.Response) =>
+      res.status(200).json({ id: 1 }),
+    updateGroup: (_req: express.Request, res: express.Response) => res.status(200).json({ id: 1 }),
+    requestJoin: (_req: express.Request, res: express.Response) =>
+      res.status(200).json({ joined: false }),
+    listJoinRequests: (_req: express.Request, res: express.Response) => res.status(200).json([]),
+    respondToJoinRequest: (_req: express.Request, res: express.Response) =>
+      res.status(200).json({}),
+    inviteMember: (_req: express.Request, res: express.Response) => res.status(201).json({}),
+    listMyInvites: (_req: express.Request, res: express.Response) => res.status(200).json([]),
+    respondToInvite: (_req: express.Request, res: express.Response) => res.status(200).json({}),
+    updateMemberRole: (_req: express.Request, res: express.Response) => res.status(200).json({}),
+    removeMember: (_req: express.Request, res: express.Response) => res.status(204).send(),
+    listActiveSessions: (_req: express.Request, res: express.Response) => res.status(200).json([]),
+  },
+}));
+
 const { registerRoutes } = await import('../../src/api/routes');
 const { apiVersionMiddleware } = await import('../../src/api/middleware/api-version');
 

@@ -152,11 +152,13 @@ enabled = true
 # The base URL of your website. Used as an allow-list for redirects and for constructing URLs used
 # in emails.
 site_url = "http://127.0.0.1:3000"
+# The public URL that Auth serves on. Defaults to the API external URL with `/auth/v1` appended.
+# external_url = ""
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
 additional_redirect_urls = ["https://127.0.0.1:3000"]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
 jwt_expiry = 3600
-# JWT issuer URL. If not set, defaults to the local API URL (http://127.0.0.1:<port>/auth/v1).
+# JWT issuer URL. If not set, defaults to auth.external_url.
 # jwt_issuer = ""
 # Path to JWT signing key. DO NOT commit your signing keys file to git.
 # signing_keys_path = "./signing_keys.json"
@@ -176,6 +178,16 @@ minimum_password_length = 6
 # Passwords that do not meet the following requirements will be rejected as weak. Supported values
 # are: `letters_digits`, `lower_upper_letters_digits`, `lower_upper_letters_digits_symbols`
 password_requirements = ""
+
+# Configure passkey sign-ins.
+# [auth.passkey]
+# enabled = false
+
+# Configure WebAuthn relying party settings (required when passkey is enabled).
+# [auth.webauthn]
+# rp_display_name = "Supabase"
+# rp_id = "localhost"
+# rp_origins = ["http://127.0.0.1:3000"]
 
 [auth.rate_limit]
 # Number of emails that can be sent per hour. Requires auth.email.smtp to be enabled.
@@ -307,7 +319,7 @@ enabled = false
 client_id = ""
 # DO NOT commit your OAuth provider secret to git. Use environment variable substitution instead:
 secret = "env(SUPABASE_AUTH_EXTERNAL_APPLE_SECRET)"
-# Overrides the default auth redirectUrl.
+# Overrides the default auth callback URL derived from auth.external_url.
 redirect_uri = ""
 # Overrides the default auth provider URL. Used to support self-hosted gitlab, single-tenant Azure,
 # or any other third-party OIDC providers.
@@ -386,3 +398,11 @@ s3_region = "env(S3_REGION)"
 s3_access_key = "env(S3_ACCESS_KEY)"
 # Configures AWS_SECRET_ACCESS_KEY for S3 bucket
 s3_secret_key = "env(S3_SECRET_KEY)"
+
+# [experimental.pgdelta]
+# When enabled, pg-delta becomes the active engine for supported schema flows.
+# enabled = false
+# Directory under `supabase/` where declarative files are written.
+# declarative_schema_path = "./database"
+# JSON string passed through to pg-delta SQL formatting.
+# format_options = "{\"keywordCase\":\"upper\",\"indent\":2,\"maxWidth\":80,\"commaStyle\":\"trailing\"}"

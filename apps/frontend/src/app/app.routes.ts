@@ -51,6 +51,13 @@ export const appRoutes: Route[] = [
           ),
       },
       {
+        path: 'groups',
+        loadComponent: () =>
+          import('./features/dashboard/dashboard-groups-page.component').then(
+            (m) => m.DashboardGroupsPageComponent
+          ),
+      },
+      {
         path: 'sessions',
         loadComponent: () =>
           import('./features/dashboard/dashboard-sessions-page.component').then(
