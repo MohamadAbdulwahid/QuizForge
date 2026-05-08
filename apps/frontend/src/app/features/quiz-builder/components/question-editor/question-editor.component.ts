@@ -1,14 +1,6 @@
-import {
-  Component,
-  input,
-  output,
-  signal,
-  computed,
-  effect,
-  OnInit,
-} from '@angular/core';
+import { Component, input, output, signal, computed, effect, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 
 /**
  * Question Option Model
@@ -197,20 +189,18 @@ export class QuestionEditorComponent implements OnInit {
    * Get error message for a specific field
    */
   getFieldError = (fieldName: string) =>
-    computed(() =>
-      this.validationErrors().find((e) => e.field === fieldName)?.message || ''
-    );
+    computed(() => this.validationErrors().find((e) => e.field === fieldName)?.message || '');
 
   // ============ Lifecycle ============
-  constructor(private fb: FormBuilder) {
-    // Effect to emit question update whenever signals change
-    effect(() => {
-      const isValidNow = this.isValid();
-      if (isValidNow) {
-        this.questionUpdated.emit(this.currentQuestion());
-      }
-    });
-  }
+  private fb = inject(FormBuilder);
+
+  // Effect to emit question update whenever signals change
+  private emitQuestionEffect = effect(() => {
+    const isValidNow = this.isValid();
+    if (isValidNow) {
+      this.questionUpdated.emit(this.currentQuestion());
+    }
+  });
 
   ngOnInit(): void {
     // Initialize from input if provided
@@ -234,6 +224,11 @@ export class QuestionEditorComponent implements OnInit {
    */
   updateQuestionText(text: string): void {
     this.questionText.set(text);
+  }
+
+  onQuestionTextInput(event: Event): void {
+    const target = event.target as HTMLTextAreaElement | null;
+    this.updateQuestionText(target?.value ?? '');
   }
 
   /**
@@ -267,6 +262,11 @@ export class QuestionEditorComponent implements OnInit {
       options[index].text = text;
       this.answerOptions.set(options);
     }
+  }
+
+  onAnswerOptionInput(index: number, event: Event): void {
+    const target = event.target as HTMLInputElement | null;
+    this.updateAnswerOption(index, target?.value ?? '');
   }
 
   /**
@@ -313,11 +313,21 @@ export class QuestionEditorComponent implements OnInit {
     this.timeLimit.set(Math.max(5, Math.min(120, value)));
   }
 
+  onTimeLimitInput(event: Event): void {
+    const target = event.target as HTMLInputElement | null;
+    this.updateTimeLimit(Number(target?.value ?? 0));
+  }
+
   /**
    * Update points
    */
   updatePoints(value: number): void {
     this.points.set(Math.max(0, Math.min(1000, value)));
+  }
+
+  onPointsInput(event: Event): void {
+    const target = event.target as HTMLInputElement | null;
+    this.updatePoints(Number(target?.value ?? 0));
   }
 
   /**

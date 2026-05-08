@@ -88,7 +88,7 @@
       >
         <p class="text-sm font-bold text-[#64748b]">Signed in as</p>
         <h2 class="font-display text-2xl font-bold text-[#1e88e5]">
-          {{ currentUser()?.username || currentUser()?.email }}
+          {{ currentUser()?.user_metadata?.['username'] || currentUser()?.email }}
         </h2>
       </header>
 

@@ -14,10 +14,10 @@ export class DashboardShellComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
-  protected readonly currentUser = this.authService.user;
+  protected readonly currentUser = this.authService.currentUser;
 
-  protected logout(): void {
-    this.authService.signOut();
-    void this.router.navigateByUrl('/auth');
+  protected async logout(): Promise<void> {
+    await this.authService.signOut();
+    await this.router.navigateByUrl('/login');
   }
 }

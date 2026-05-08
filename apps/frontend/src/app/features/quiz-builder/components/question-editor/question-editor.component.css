@@ -6,12 +6,18 @@
 .form-control input,
 .form-control textarea,
 .form-control select {
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .form-control input:focus,
 .form-control textarea:focus {
-  @apply border-accent shadow-lg;
+  border-color: var(--accent);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--accent) 18%, transparent),
+    0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 /* Badge pulse animation for validation status */
@@ -62,16 +68,18 @@
 
 /* Error message styling */
 .alert-error {
-  @apply bg-red-100 border-red-300 text-red-800;
+  background-color: rgb(254 242 242);
+  border-color: rgb(252 165 165);
+  color: rgb(153 27 27);
 }
 
 /* Responsive adjustments */
 @media (max-width: 640px) {
   .card {
-    @apply p-4;
+    padding: 1rem;
   }
 
   .grid-cols-2 {
-    @apply grid-cols-1;
+    grid-template-columns: 1fr;
   }
 }
