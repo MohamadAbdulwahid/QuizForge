@@ -85,6 +85,26 @@ export async function requestJoin(groupId: number, userId: string) {
     throw new ConflictError('You are already a member of this group', 'GROUP_MEMBER_EXISTS');
   }
 
+  const pendingInvite = await groupRepository.findPendingInvite(groupId, userId);
+
+  if (pendingInvite) {
+    await groupRepository.addGroupMember({
+      group_id: groupId,
+      user_id: userId,
+      role: 'member',
+    });
+
+    await groupRepository.updateInviteStatus(pendingInvite.id, 'accepted');
+
+    const pendingRequest = await groupRepository.findPendingJoinRequest(groupId, userId);
+
+    if (pendingRequest) {
+      await groupRepository.updateJoinRequestStatus(pendingRequest.id, 'cancelled', userId);
+    }
+
+    return { joined: true };
+  }
+
   if (!group.is_discoverable || group.join_policy === 'admin-controlled') {
     throw new ForbiddenError('This group does not allow self-join', 'GROUP_SELF_JOIN_FORBIDDEN');
   }
@@ -142,11 +162,27 @@ export async function respondToJoinRequest(
   const updated = await groupRepository.updateJoinRequestStatus(requestId, nextStatus, userId);
 
   if (data.action === 'approve') {
-    await groupRepository.addGroupMember({
-      group_id: request.group_id,
-      user_id: request.requester_user_id,
-      role: 'member',
-    });
+    const existingMember = await groupRepository.findGroupMember(
+      request.group_id,
+      request.requester_user_id
+    );
+
+    if (!existingMember) {
+      await groupRepository.addGroupMember({
+        group_id: request.group_id,
+        user_id: request.requester_user_id,
+        role: 'member',
+      });
+    }
+
+    const pendingInvite = await groupRepository.findPendingInvite(
+      request.group_id,
+      request.requester_user_id
+    );
+
+    if (pendingInvite) {
+      await groupRepository.updateInviteStatus(pendingInvite.id, 'revoked');
+    }
   }
 
   return updated;
@@ -204,11 +240,27 @@ export async function respondToInvite(inviteId: number, userId: string, data: In
   const updated = await groupRepository.updateInviteStatus(inviteId, nextStatus);
 
   if (data.action === 'accept') {
-    await groupRepository.addGroupMember({
-      group_id: invite.group_id,
-      user_id: invite.invited_user_id,
-      role: 'member',
-    });
+    const existingMember = await groupRepository.findGroupMember(
+      invite.group_id,
+      invite.invited_user_id
+    );
+
+    if (!existingMember) {
+      await groupRepository.addGroupMember({
+        group_id: invite.group_id,
+        user_id: invite.invited_user_id,
+        role: 'member',
+      });
+    }
+
+    const pendingRequest = await groupRepository.findPendingJoinRequest(
+      invite.group_id,
+      invite.invited_user_id
+    );
+
+    if (pendingRequest) {
+      await groupRepository.updateJoinRequestStatus(pendingRequest.id, 'cancelled', userId);
+    }
   }
 
   return updated;
