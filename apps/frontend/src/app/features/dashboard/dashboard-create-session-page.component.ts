@@ -2,8 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
+import { GroupApiService, MyGroupSummary } from '../../core/services/group-api.service';
 import { QuizApiService, QuizSummary } from '../../core/services/quiz-api.service';
-import { SessionApiService } from '../../core/services/session-api.service';
+import { SessionApiService, SessionBroadcastMode } from '../../core/services/session-api.service';
 
 @Component({
   selector: 'app-dashboard-create-session-page',
@@ -14,6 +15,7 @@ import { SessionApiService } from '../../core/services/session-api.service';
 })
 export class DashboardCreateSessionPageComponent {
   private readonly quizApiService = inject(QuizApiService);
+  private readonly groupApiService = inject(GroupApiService);
   private readonly sessionApiService = inject(SessionApiService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -21,7 +23,10 @@ export class DashboardCreateSessionPageComponent {
   protected readonly loadingQuizzes = signal(false);
   protected readonly creatingSession = signal(false);
   protected readonly quizzes = signal<QuizSummary[]>([]);
+  protected readonly groups = signal<MyGroupSummary[]>([]);
   protected readonly selectedQuizId = signal<number | null>(null);
+  protected readonly broadcastMode = signal<SessionBroadcastMode>('private');
+  protected readonly selectedBroadcastGroupIds = signal<number[]>([]);
   protected readonly errorMessage = signal<string | null>(null);
 
   protected readonly selectedQuiz = computed(() => {
@@ -35,6 +40,7 @@ export class DashboardCreateSessionPageComponent {
 
   constructor() {
     this.loadQuizzes();
+    this.loadGroups();
 
     const rawQuizId = this.route.snapshot.queryParamMap.get('quizId');
     const parsedQuizId = rawQuizId ? Number(rawQuizId) : null;
@@ -56,11 +62,23 @@ export class DashboardCreateSessionPageComponent {
       return;
     }
 
+    if (
+      this.broadcastMode() === 'selected-groups' &&
+      this.selectedBroadcastGroupIds().length === 0
+    ) {
+      this.errorMessage.set('Select at least one group when broadcasting to selected groups.');
+      return;
+    }
+
     this.errorMessage.set(null);
     this.creatingSession.set(true);
 
     this.sessionApiService
-      .createSession(quizId)
+      .createSession({
+        quiz_id: quizId,
+        broadcast_mode: this.broadcastMode(),
+        group_ids: this.selectedBroadcastGroupIds(),
+      })
       .pipe(
         finalize(() => {
           this.creatingSession.set(false);
@@ -76,6 +94,22 @@ export class DashboardCreateSessionPageComponent {
           );
         },
       });
+  }
+
+  protected updateBroadcastMode(mode: SessionBroadcastMode): void {
+    this.broadcastMode.set(mode);
+
+    if (mode !== 'selected-groups') {
+      this.selectedBroadcastGroupIds.set([]);
+    }
+  }
+
+  protected toggleBroadcastGroup(groupId: number): void {
+    this.selectedBroadcastGroupIds.update((current) =>
+      current.includes(groupId)
+        ? current.filter((value) => value !== groupId)
+        : [...current, groupId]
+    );
   }
 
   private loadQuizzes(): void {
@@ -110,5 +144,16 @@ export class DashboardCreateSessionPageComponent {
           this.errorMessage.set('Could not load your quizzes.');
         },
       });
+  }
+
+  private loadGroups(): void {
+    this.groupApiService.getMyGroups().subscribe({
+      next: (groups) => {
+        this.groups.set(groups);
+      },
+      error: () => {
+        this.errorMessage.set('Could not load your groups.');
+      },
+    });
   }
 }

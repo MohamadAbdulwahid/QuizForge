@@ -1,6 +1,14 @@
 import { and, desc, eq, inArray } from 'drizzle-orm';
 import { db } from '../client';
-import { InsertSession, Session, SessionStatus, SESSION } from '../schema/session';
+import {
+  InsertSession,
+  InsertSessionBroadcastGroup,
+  Session,
+  SessionBroadcastMode,
+  SessionStatus,
+  SESSION,
+  SESSION_BROADCAST_GROUP,
+} from '../schema/session';
 import { QUIZ } from '../schema/quiz';
 
 const ACTIVE_STATUSES: SessionStatus[] = ['waiting', 'playing', 'paused', 'in-progress'];
@@ -21,6 +29,8 @@ export type HostSessionSummary = {
  * @param data.pin - Session pin.
  * @param data.hostId - Host user id.
  * @param data.status - Optional session status.
+ * @param data.broadcastMode - Session discovery mode.
+ * @param data.groupIds - Broadcast group ids snapshot.
  * @returns Created session row.
  */
 export async function createSession(data: {
@@ -28,16 +38,30 @@ export async function createSession(data: {
   pin: string;
   hostId: string;
   status?: SessionStatus;
+  broadcastMode?: SessionBroadcastMode;
+  groupIds?: number[];
 }): Promise<Session> {
   const payload: InsertSession = {
     quiz_id: data.quizId,
     pin: data.pin,
     host_id: data.hostId,
     status: data.status ?? 'waiting',
+    broadcast_mode: data.broadcastMode ?? 'private',
   };
 
   const result = await db.insert(SESSION).values(payload).returning();
-  return result[0];
+  const session = result[0];
+
+  if (data.groupIds && data.groupIds.length > 0) {
+    const broadcastRows: InsertSessionBroadcastGroup[] = data.groupIds.map((groupId) => ({
+      session_id: session.id,
+      group_id: groupId,
+    }));
+
+    await db.insert(SESSION_BROADCAST_GROUP).values(broadcastRows);
+  }
+
+  return session;
 }
 
 /**

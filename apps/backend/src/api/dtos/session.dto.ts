@@ -2,6 +2,11 @@ import { z } from 'zod';
 
 const createSessionRequestSchema = z.object({
   quiz_id: z.coerce.number().int().positive(),
+  broadcast_mode: z
+    .enum(['private', 'selected-groups', 'all-my-groups'])
+    .optional()
+    .default('private'),
+  group_ids: z.array(z.coerce.number().int().positive()).optional().default([]),
 });
 
 const pinParamSchema = z.object({

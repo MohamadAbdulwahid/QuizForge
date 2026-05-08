@@ -18,6 +18,14 @@ export interface CreateSessionResponse {
   pin: string;
 }
 
+export type SessionBroadcastMode = 'private' | 'selected-groups' | 'all-my-groups';
+
+export interface CreateSessionPayload {
+  quiz_id: number;
+  broadcast_mode?: SessionBroadcastMode;
+  group_ids?: number[];
+}
+
 export interface UpdateSessionStatusResponse {
   session: SessionDto;
   previousStatus: Exclude<SessionStatus, 'pending' | 'in-progress'>;
@@ -37,8 +45,8 @@ export interface HostSessionSummary {
 export class SessionApiService {
   private readonly apiService = inject(ApiService);
 
-  createSession(quizId: number): Observable<CreateSessionResponse> {
-    return this.apiService.post<CreateSessionResponse>('/api/sessions', { quiz_id: quizId });
+  createSession(payload: CreateSessionPayload): Observable<CreateSessionResponse> {
+    return this.apiService.post<CreateSessionResponse>('/api/sessions', payload);
   }
 
   getSessionByPin(pin: string): Observable<SessionDto> {

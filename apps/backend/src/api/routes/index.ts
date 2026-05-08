@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { authMiddleware } from '../middleware/auth';
 import { authRoutes } from './auth.routes';
+import { groupRouter } from './group.routes';
 import { quizPublicRouter, quizRouter } from './quiz.routes';
 import { sessionRouter } from './session.routes';
 
@@ -18,6 +19,7 @@ export function registerRoutes(): Router {
   router.use('/quizzes', quizPublicRouter);
 
   // Protected quiz/session routes.
+  router.use('/groups', groupRouter);
   router.use('/quizzes', authMiddleware, quizRouter);
   router.use('/sessions', sessionRouter);
 

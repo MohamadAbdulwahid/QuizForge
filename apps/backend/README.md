@@ -20,6 +20,7 @@ cp apps/backend/.env.example apps/backend/.env
 | `PORT` | Server port (default: 3333) | Yes |
 | `FRONTEND_URL` | CORS origin URL | Yes |
 | `DATABASE_URL` | Supabase connection pooler URL (Transaction mode, port 6543) | Yes |
+| `SUPABASE_DB_PASSWORD` | Supabase database password used by the CLI for linked `db:push` / `db:reset` / `db:pull` commands | Yes for remote DB commands |
 | `SUPABASE_URL` | Supabase project URL | Yes |
 | `SUPABASE_PUBLISHABLE_KEY` | Supabase public anon key | Yes |
 | `SUPABASE_SECRET_KEY` | Supabase service role key (server-only) | Yes |

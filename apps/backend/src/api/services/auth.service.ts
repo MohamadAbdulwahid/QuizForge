@@ -2,6 +2,7 @@ import { supabaseClient, authAdminClient } from '../../config/supabase';
 import { getUserByEmail } from '../../database/repositories/user.repository';
 import { createChildLogger } from '../../config/logger';
 import { StatusCodes } from 'http-status-codes';
+import { upsertProfile } from '../../database/repositories/profile.repository';
 
 const authLogger = createChildLogger('auth-service');
 
@@ -104,6 +105,11 @@ export async function signUp(request: SignUpRequest): Promise<AuthResponse> {
   }
 
   authLogger.info({ userId: data.user.id }, 'User signed up successfully');
+
+  await upsertProfile({
+    user_id: data.user.id,
+    username,
+  });
 
   return {
     user: {

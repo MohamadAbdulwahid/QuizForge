@@ -1,4 +1,5 @@
 import { createChildLogger } from '../../config/logger';
+import * as groupRepository from '../../database/repositories/group.repository';
 import * as quizRepository from '../../database/repositories/quiz.repository';
 import * as sessionRepository from '../../database/repositories/session.repository';
 import type { Session, SessionStatus } from '../../database/schema/session';
@@ -43,12 +44,20 @@ export async function createSession(
     );
   }
 
+  const broadcastMode = data.broadcast_mode ?? 'private';
+  const broadcastGroupIds = await resolveBroadcastGroupIds(
+    hostId,
+    broadcastMode,
+    data.group_ids ?? []
+  );
   const pin = await generateUniquePin();
   const session = await sessionRepository.createSession({
     quizId: data.quiz_id,
     pin,
     hostId,
     status: 'waiting',
+    broadcastMode,
+    groupIds: broadcastGroupIds,
   });
 
   sessionServiceLogger.info(
@@ -60,6 +69,42 @@ export async function createSession(
     session,
     pin,
   };
+}
+
+async function resolveBroadcastGroupIds(
+  hostId: string,
+  broadcastMode: CreateSessionRequest['broadcast_mode'],
+  groupIds: number[]
+): Promise<number[]> {
+  if (broadcastMode === 'private') {
+    return [];
+  }
+
+  const memberGroupIds = await groupRepository.listGroupIdsByMember(hostId);
+
+  if (broadcastMode === 'all-my-groups') {
+    return memberGroupIds;
+  }
+
+  const normalizedGroupIds = [...new Set(groupIds)];
+
+  if (normalizedGroupIds.length === 0) {
+    throw new ConflictError(
+      'Select at least one group when broadcasting to selected groups',
+      'GROUP_BROADCAST_REQUIRED'
+    );
+  }
+
+  const invalidGroupId = normalizedGroupIds.find((groupId) => !memberGroupIds.includes(groupId));
+
+  if (invalidGroupId) {
+    throw new ForbiddenError(
+      'You can only broadcast to groups you belong to',
+      'GROUP_BROADCAST_FORBIDDEN'
+    );
+  }
+
+  return normalizedGroupIds;
 }
 
 /**
