@@ -136,8 +136,13 @@ export async function searchDiscoverableGroups(query: string, excludedGroupIds: 
 }
 
 export async function addGroupMember(data: InsertGroupMember) {
-  const result = await db.insert(GROUP_MEMBER).values(data).returning();
-  return result[0];
+  const result = await db.insert(GROUP_MEMBER).values(data).onConflictDoNothing().returning();
+
+  if (result[0]) {
+    return result[0];
+  }
+
+  return findGroupMember(data.group_id as number, data.user_id as string);
 }
 
 export async function findGroupMember(groupId: number, userId: string) {
