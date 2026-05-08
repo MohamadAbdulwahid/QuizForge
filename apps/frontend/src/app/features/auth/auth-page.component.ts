@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { finalize } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
 
 type AuthMode = 'login' | 'signup';
@@ -32,9 +31,11 @@ export class AuthPageComponent {
   };
 
   constructor() {
-    if (this.authService.isAuthenticated()) {
-      void this.router.navigateByUrl('/dashboard');
-    }
+    void this.authService.whenReady().then(() => {
+      if (this.authService.isAuthenticated()) {
+        void this.router.navigateByUrl('/dashboard');
+      }
+    });
   }
 
   protected setAuthMode(mode: AuthMode): void {
@@ -46,7 +47,7 @@ export class AuthPageComponent {
     this.errorMessage.set(null);
     this.isSubmitting.set(true);
 
-    const request$ =
+    const request =
       this.authMode() === 'login'
         ? this.authService.signIn({
             email: this.formModel.email,
@@ -58,19 +59,20 @@ export class AuthPageComponent {
             username: this.formModel.username,
           });
 
-    request$
-      .pipe(
-        finalize(() => {
-          this.isSubmitting.set(false);
-        })
-      )
-      .subscribe({
-        next: () => {
+    request
+      .then(() => {
+        if (this.authService.isAuthenticated()) {
           void this.router.navigateByUrl('/dashboard');
-        },
-        error: (error: unknown) => {
-          this.errorMessage.set(this.resolveAuthError(error));
-        },
+          return;
+        }
+
+        this.errorMessage.set('Check your email to confirm your account before signing in.');
+      })
+      .catch((error: unknown) => {
+        this.errorMessage.set(this.resolveAuthError(error));
+      })
+      .finally(() => {
+        this.isSubmitting.set(false);
       });
   }
 
