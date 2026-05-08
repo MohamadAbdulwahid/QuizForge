@@ -1,0 +1,186 @@
+<main class="min-h-screen bg-[#f6f7f8] text-[#1e293b]">
+  <div class="mx-auto w-full max-w-6xl px-4 py-8 md:px-8">
+    <section
+      class="mb-6 overflow-hidden rounded-3xl border border-[#e4e7eb] bg-white shadow-[0_6px_0_0_rgba(0,0,0,0.08)]"
+    >
+      <div class="border-b border-[#edf1f5] bg-[#f8fafc] px-6 py-4 md:px-8">
+        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p class="text-xs font-bold tracking-[0.22em] text-[#64748b] uppercase">
+              QuizForge Builder
+            </p>
+            <h1 class="font-display mt-2 text-4xl font-bold text-[#1e88e5]">
+              {{ isEditMode() ? 'Edit your quiz playground' : 'Build a new quiz playground' }}
+            </h1>
+            <p class="mt-2 max-w-3xl text-sm font-semibold text-[#64748b]">
+              Craft a polished round with the same bright, tactile QuizForge style used across the
+              dashboard.
+            </p>
+          </div>
+
+          <a
+            routerLink="/dashboard"
+            class="inline-flex h-12 items-center justify-center rounded-2xl border border-[#dbe3ea] bg-white px-5 text-sm font-bold text-[#1e88e5] shadow-[0_4px_0_0_rgba(0,0,0,0.06)] transition hover:-translate-y-0.5 hover:bg-[#f8fafc]"
+          >
+            Back to Dashboard
+          </a>
+        </div>
+      </div>
+
+      <div class="grid gap-3 px-6 py-5 text-sm font-semibold text-[#475569] md:grid-cols-3 md:px-8">
+        <div class="rounded-2xl border border-[#e4e7eb] bg-white px-4 py-3">
+          <p class="text-xs font-bold tracking-[0.18em] text-[#64748b] uppercase">Page Mode</p>
+          <p class="font-display mt-1 text-lg font-bold text-[#1e88e5]">
+            {{ isEditMode() ? 'Editing Existing Quiz' : 'Creating Fresh Quiz' }}
+          </p>
+        </div>
+        <div class="rounded-2xl border border-[#e4e7eb] bg-white px-4 py-3">
+          <p class="text-xs font-bold tracking-[0.18em] text-[#64748b] uppercase">Question Stack</p>
+          <p class="font-display mt-1 text-lg font-bold text-[#1e88e5]">
+            {{ questions().length }} question{{ questions().length === 1 ? '' : 's' }} ready
+          </p>
+        </div>
+        <div class="rounded-2xl border border-[#e4e7eb] bg-white px-4 py-3">
+          <p class="text-xs font-bold tracking-[0.18em] text-[#64748b] uppercase">Builder Goal</p>
+          <p class="mt-1 text-sm font-semibold text-[#475569]">
+            Keep every question readable, validated, and demo-ready.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    @if (quizResource.isLoading() && isEditMode()) {
+      <section
+        class="mb-4 rounded-3xl border border-[#e4e7eb] bg-white p-8 text-sm font-semibold text-[#64748b] shadow-[0_6px_0_0_rgba(0,0,0,0.08)]"
+      >
+        Loading quiz data...
+      </section>
+    }
+
+    @if (errorMessage()) {
+      <p
+        class="mb-4 rounded-2xl border border-[#fca5a5] bg-[#fff1f2] px-4 py-3 text-sm font-bold text-[#b91c1c] shadow-[0_4px_0_0_rgba(0,0,0,0.04)]"
+      >
+        {{ errorMessage() }}
+      </p>
+    }
+
+    <section class="grid gap-6">
+      <article
+        class="rounded-3xl border border-[#e4e7eb] bg-white p-6 shadow-[0_6px_0_0_rgba(0,0,0,0.08)]"
+      >
+        <div class="mb-5 flex items-center justify-between gap-3 border-b border-[#edf1f5] pb-4">
+          <div>
+            <h2 class="font-display text-2xl font-bold text-[#1e88e5]">Quiz Details</h2>
+            <p class="mt-1 text-sm font-semibold text-[#64748b]">
+              Set the title and context players will see before the round begins.
+            </p>
+          </div>
+          <div
+            class="rounded-full bg-[#e3f2fd] px-3 py-1 text-xs font-bold tracking-[0.16em] text-[#1e88e5] uppercase"
+          >
+            Step 1
+          </div>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-2">
+          <label class="grid gap-2 text-sm font-bold text-[#0f172a] md:col-span-2">
+            Quiz title
+            <input
+              type="text"
+              [value]="title()"
+              (input)="updateTitle($any($event.target).value)"
+              class="h-12 rounded-2xl border border-[#dbe3ea] bg-[#fcfdff] px-4 text-sm font-semibold text-[#0f172a] transition outline-none focus:border-[#1e88e5]"
+              placeholder="My first QuizForge quiz"
+            />
+          </label>
+
+          <label class="grid gap-2 text-sm font-bold text-[#0f172a] md:col-span-2">
+            Description
+            <textarea
+              [value]="description()"
+              (input)="updateDescription($any($event.target).value)"
+              class="min-h-28 rounded-2xl border border-[#dbe3ea] bg-[#fcfdff] px-4 py-3 text-sm font-semibold text-[#0f172a] transition outline-none focus:border-[#1e88e5]"
+              placeholder="Optional short description"
+            ></textarea>
+          </label>
+        </div>
+      </article>
+
+      <article
+        class="rounded-3xl border border-[#e4e7eb] bg-white p-6 shadow-[0_6px_0_0_rgba(0,0,0,0.08)]"
+      >
+        <div
+          class="mb-5 flex flex-col gap-3 border-b border-[#edf1f5] pb-4 md:flex-row md:items-center md:justify-between"
+        >
+          <div>
+            <h2 class="font-display text-2xl font-bold text-[#1e88e5]">Questions</h2>
+            <p class="text-sm font-semibold text-[#64748b]">
+              Add at least one question. Multiple-choice and true-false are supported here.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            class="h-12 rounded-2xl bg-[#1e88e5] px-5 text-sm font-bold text-white shadow-[0_6px_0_0_#1565c0] transition hover:-translate-y-0.5"
+            (click)="addQuestion()"
+          >
+            Add Question
+          </button>
+        </div>
+
+        <div class="grid gap-6">
+          @for (question of questions(); track question.clientId) {
+            <section
+              class="overflow-hidden rounded-3xl border border-[#dbe3ea] bg-white shadow-[0_4px_0_0_rgba(0,0,0,0.05)]"
+            >
+              <div
+                class="flex flex-col gap-3 border-b border-[#edf1f5] bg-[#f8fafc] px-4 py-4 md:flex-row md:items-center md:justify-between md:px-5"
+              >
+                <div>
+                  <p class="text-xs font-bold tracking-[0.2em] text-[#64748b] uppercase">
+                    Question {{ $index + 1 }}
+                  </p>
+                  <p class="font-display mt-1 text-lg font-bold text-[#1e88e5]">
+                    {{ questionTypeLabel(question.type) }}
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  class="inline-flex h-10 items-center justify-center rounded-2xl border border-[#dbe3ea] bg-white px-4 text-sm font-bold text-[#b91c1c] transition hover:bg-[#fff5f5] disabled:cursor-not-allowed disabled:opacity-50"
+                  [disabled]="questions().length === 1"
+                  (click)="removeQuestion(question.clientId)"
+                >
+                  Remove Question
+                </button>
+              </div>
+
+              <div class="px-4 py-4 md:px-5 md:py-5">
+                <app-question-editor
+                  [question]="question"
+                  (questionUpdated)="updateQuestion(question.clientId, $event)"
+                />
+              </div>
+            </section>
+          }
+        </div>
+      </article>
+
+      <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <p class="text-sm font-semibold text-[#64748b]">
+          {{ questions().length }} question{{ questions().length === 1 ? '' : 's' }} in this quiz
+        </p>
+
+        <button
+          type="button"
+          class="h-12 rounded-2xl bg-[#cd2750] px-6 text-base font-bold text-white shadow-[0_6px_0_0_#9f1d3d] transition hover:-translate-y-0.5 disabled:opacity-70"
+          [disabled]="isSaving()"
+          (click)="saveQuiz()"
+        >
+          {{ isSaving() ? 'Saving...' : 'Save Quiz' }}
+        </button>
+      </div>
+    </section>
+  </div>
+</main>

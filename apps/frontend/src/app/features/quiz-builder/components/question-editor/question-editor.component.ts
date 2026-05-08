@@ -1,18 +1,11 @@
-import { Component, input, output, signal, computed, effect, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { Component, computed, effect, input, output, signal } from '@angular/core';
 
-/**
- * Question Option Model
- */
-interface QuestionOption {
+export interface QuestionOption {
   id: string;
   text: string;
 }
 
-/**
- * Question Model (matches backend QuestionInput type)
- */
 export interface Question {
   text: string;
   type: 'multiple-choice' | 'true-false' | 'open';
@@ -22,147 +15,99 @@ export interface Question {
   points?: number;
 }
 
-/**
- * Validation Error Model
- */
-interface ValidationError {
+export interface QuestionValidationError {
   field: string;
   message: string;
 }
 
-/**
- * QuestionEditorComponent - Child component for editing individual questions in quiz builder
- *
- * Features:
- * - Question type selection (multiple-choice, true-false, open)
- * - Dynamic answer option management with "Add Answer" button
- * - Correct answer toggle/marking
- * - Form validation matching backend DTOs
- * - Bubbly Minimalism UI design
- *
- * @example
- * <app-question-editor
- *   [question]="currentQuestion()"
- *   (questionUpdated)="onQuestionUpdated($event)"
- *   (questionsRemoved)="onQuestionRemoved(index)"
- * />
- */
+export function createDefaultQuestion(): Question {
+  return {
+    text: '',
+    type: 'multiple-choice',
+    options: [
+      { id: 'A', text: '' },
+      { id: 'B', text: '' },
+    ],
+    correct_answer: 'A',
+    time_limit: 30,
+    points: 100,
+  };
+}
+
+export function validateQuestion(question: Question): QuestionValidationError[] {
+  const errors: QuestionValidationError[] = [];
+
+  if (!question.text.trim()) {
+    errors.push({ field: 'text', message: 'Question text is required' });
+  } else if (question.text.length > 500) {
+    errors.push({ field: 'text', message: 'Question must be 500 characters or less' });
+  }
+
+  if (question.type === 'multiple-choice' || question.type === 'true-false') {
+    const options = question.options ?? [];
+
+    if (options.length < 2) {
+      errors.push({ field: 'options', message: 'At least 2 answer options are required' });
+    }
+
+    options.forEach((option, index) => {
+      if (!option.text.trim()) {
+        errors.push({
+          field: `option-${index}`,
+          message: `Answer option ${option.id} cannot be empty`,
+        });
+      } else if (option.text.length > 500) {
+        errors.push({
+          field: `option-${index}`,
+          message: 'Answer option must be 500 characters or less',
+        });
+      }
+    });
+
+    const optionIds = new Set(options.map((option) => option.id));
+    if (!optionIds.has(question.correct_answer)) {
+      errors.push({ field: 'correct_answer', message: 'A correct answer must be marked' });
+    }
+  }
+
+  const timeLimit = question.time_limit ?? 30;
+  if (timeLimit < 5 || timeLimit > 120) {
+    errors.push({ field: 'time_limit', message: 'Time limit must be between 5 and 120 seconds' });
+  }
+
+  const points = question.points ?? 100;
+  if (points < 0 || points > 1000) {
+    errors.push({ field: 'points', message: 'Points must be between 0 and 1000' });
+  }
+
+  return errors;
+}
+
 @Component({
   selector: 'app-question-editor',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule],
   templateUrl: './question-editor.component.html',
   styleUrl: './question-editor.component.css',
 })
-export class QuestionEditorComponent implements OnInit {
-  // ============ Inputs ============
-  /** Individual question being edited - passed from parent quiz-builder */
-  question = input<Question>();
-
-  // ============ Outputs ============
-  /** Emitted when question data changes */
+export class QuestionEditorComponent {
+  question = input<Question | undefined>();
   questionUpdated = output<Question>();
 
-  // ============ Local State (Signals) ============
-  /** Question text */
-  questionText = signal<string>('');
-
-  /** Question type: multiple-choice or true-false */
+  questionText = signal('');
   questionType = signal<'multiple-choice' | 'true-false'>('multiple-choice');
-
-  /** Array of answer options (only for multiple-choice and true-false) */
   answerOptions = signal<QuestionOption[]>([
     { id: 'A', text: '' },
     { id: 'B', text: '' },
   ]);
+  correctAnswerId = signal('A');
+  timeLimit = signal(30);
+  points = signal(100);
+  validationErrors = signal<QuestionValidationError[]>([]);
 
-  /** Currently selected correct answer ID */
-  correctAnswerId = signal<string>('A');
+  readonly isValid = computed(() => this.validationErrors().length === 0);
 
-  /** Time limit in seconds (5-120) */
-  timeLimit = signal<number>(30);
-
-  /** Points value for the question (0-1000) */
-  points = signal<number>(100);
-
-  /** Validation errors */
-  validationErrors = signal<ValidationError[]>([]);
-
-  // ============ Computed Values ============
-  /**
-   * Validates entire question and returns true if all fields are valid
-   */
-  isValid = computed(() => {
-    const errors: ValidationError[] = [];
-
-    // Question text validation
-    if (!this.questionText().trim()) {
-      errors.push({ field: 'text', message: 'Question text is required' });
-    } else if (this.questionText().length > 500) {
-      errors.push({ field: 'text', message: 'Question must be 500 characters or less' });
-    }
-
-    // Type-specific validations
-    const type = this.questionType();
-    if (type === 'multiple-choice' || type === 'true-false') {
-      const options = this.answerOptions();
-
-      // Min 2 options validation
-      if (options.length < 2) {
-        errors.push({
-          field: 'options',
-          message: 'At least 2 answer options are required',
-        });
-      }
-
-      // All options must have text
-      options.forEach((option, idx) => {
-        if (!option.text.trim()) {
-          errors.push({
-            field: `option-${idx}`,
-            message: `Answer option ${option.id} cannot be empty`,
-          });
-        } else if (option.text.length > 500) {
-          errors.push({
-            field: `option-${idx}`,
-            message: `Answer option must be 500 characters or less`,
-          });
-        }
-      });
-
-      // Correct answer validation - must match one of the option IDs
-      const optionIds = new Set(options.map((o) => o.id));
-      if (!optionIds.has(this.correctAnswerId())) {
-        errors.push({
-          field: 'correct_answer',
-          message: 'A correct answer must be marked',
-        });
-      }
-    }
-
-    // Time limit validation (5-120 seconds)
-    const time = this.timeLimit();
-    if (time < 5 || time > 120) {
-      errors.push({
-        field: 'time_limit',
-        message: 'Time limit must be between 5 and 120 seconds',
-      });
-    }
-
-    // Points validation (0-1000)
-    const pts = this.points();
-    if (pts < 0 || pts > 1000) {
-      errors.push({ field: 'points', message: 'Points must be between 0 and 1000' });
-    }
-
-    this.validationErrors.set(errors);
-    return errors.length === 0;
-  });
-
-  /**
-   * Returns the current question object based on signal values
-   */
-  currentQuestion = computed(() => {
+  readonly currentQuestion = computed<Question>(() => {
     const question: Question = {
       text: this.questionText(),
       type: this.questionType(),
@@ -171,7 +116,6 @@ export class QuestionEditorComponent implements OnInit {
       points: this.points(),
     };
 
-    // Only include options for multiple-choice and true-false
     if (question.type === 'multiple-choice' || question.type === 'true-false') {
       question.options = this.answerOptions();
     }
@@ -179,49 +123,51 @@ export class QuestionEditorComponent implements OnInit {
     return question;
   });
 
-  /**
-   * Check if a specific field has validation error
-   */
-  hasFieldError = (fieldName: string) =>
-    computed(() => this.validationErrors().some((e) => e.field === fieldName));
+  private readonly ready = signal(false);
+  private readonly loadedQuestion = signal<Question | null>(null);
 
-  /**
-   * Get error message for a specific field
-   */
-  getFieldError = (fieldName: string) =>
-    computed(() => this.validationErrors().find((e) => e.field === fieldName)?.message || '');
+  constructor() {
+    effect(() => {
+      const inputQuestion = this.question();
+      const loadedQuestion = this.loadedQuestion();
 
-  // ============ Lifecycle ============
-  private fb = inject(FormBuilder);
+      if (inputQuestion) {
+        if (!loadedQuestion || !this.questionsMatch(inputQuestion, loadedQuestion)) {
+          this.loadQuestion(inputQuestion);
+          this.loadedQuestion.set(this.cloneQuestion(inputQuestion));
+          this.ready.set(true);
+        }
 
-  // Effect to emit question update whenever signals change
-  private emitQuestionEffect = effect(() => {
-    const isValidNow = this.isValid();
-    if (isValidNow) {
-      this.questionUpdated.emit(this.currentQuestion());
-    }
-  });
-
-  ngOnInit(): void {
-    // Initialize from input if provided
-    const inputQuestion = this.question();
-    if (inputQuestion) {
-      this.questionText.set(inputQuestion.text);
-      this.questionType.set(inputQuestion.type as 'multiple-choice' | 'true-false');
-      this.correctAnswerId.set(inputQuestion.correct_answer);
-      this.timeLimit.set(inputQuestion.time_limit ?? 30);
-      this.points.set(inputQuestion.points ?? 100);
-
-      if (inputQuestion.options) {
-        this.answerOptions.set(inputQuestion.options);
+        return;
       }
-    }
+
+      if (!loadedQuestion) {
+        const defaultQuestion = createDefaultQuestion();
+        this.loadQuestion(defaultQuestion);
+        this.loadedQuestion.set(this.cloneQuestion(defaultQuestion));
+        this.ready.set(true);
+      }
+    });
+
+    effect(() => {
+      const currentQuestion = this.currentQuestion();
+
+      this.validationErrors.set(validateQuestion(currentQuestion));
+
+      if (this.ready()) {
+        this.questionUpdated.emit(currentQuestion);
+      }
+    });
   }
 
-  // ============ Methods ============
-  /**
-   * Update question text
-   */
+  hasFieldError(fieldName: string): boolean {
+    return this.validationErrors().some((error) => error.field === fieldName);
+  }
+
+  getFieldError(fieldName: string): string {
+    return this.validationErrors().find((error) => error.field === fieldName)?.message ?? '';
+  }
+
   updateQuestionText(text: string): void {
     this.questionText.set(text);
   }
@@ -231,37 +177,34 @@ export class QuestionEditorComponent implements OnInit {
     this.updateQuestionText(target?.value ?? '');
   }
 
-  /**
-   * Change question type
-   */
   updateQuestionType(type: 'multiple-choice' | 'true-false'): void {
     this.questionType.set(type);
 
-    // Reset answer options based on type
     if (type === 'true-false') {
       this.answerOptions.set([
         { id: 'A', text: 'True' },
         { id: 'B', text: 'False' },
       ]);
       this.correctAnswerId.set('A');
-    } else if (type === 'multiple-choice') {
-      this.answerOptions.set([
-        { id: 'A', text: '' },
-        { id: 'B', text: '' },
-      ]);
-      this.correctAnswerId.set('A');
+      return;
     }
+
+    this.answerOptions.set([
+      { id: 'A', text: '' },
+      { id: 'B', text: '' },
+    ]);
+    this.correctAnswerId.set('A');
   }
 
-  /**
-   * Update a specific answer option text
-   */
   updateAnswerOption(index: number, text: string): void {
     const options = [...this.answerOptions()];
-    if (options[index]) {
-      options[index].text = text;
-      this.answerOptions.set(options);
+
+    if (!options[index]) {
+      return;
     }
+
+    options[index] = { ...options[index], text };
+    this.answerOptions.set(options);
   }
 
   onAnswerOptionInput(index: number, event: Event): void {
@@ -269,46 +212,45 @@ export class QuestionEditorComponent implements OnInit {
     this.updateAnswerOption(index, target?.value ?? '');
   }
 
-  /**
-   * Set which answer is correct
-   */
   markAsCorrect(optionId: string): void {
     this.correctAnswerId.set(optionId);
   }
 
-  /**
-   * Add a new answer option (multiple-choice only)
-   */
   addAnswerOption(): void {
-    const options = [...this.answerOptions()];
-    if (options.length < 6) {
-      // Max 6 options
-      const nextId = String.fromCharCode(65 + options.length); // A, B, C, D, E, F
-      options.push({ id: nextId, text: '' });
-      this.answerOptions.set(options);
+    if (this.questionType() !== 'multiple-choice') {
+      return;
     }
+
+    const options = [...this.answerOptions()];
+
+    if (options.length >= 6) {
+      return;
+    }
+
+    const nextId = String.fromCharCode(65 + options.length);
+    this.answerOptions.set([...options, { id: nextId, text: '' }]);
   }
 
-  /**
-   * Remove an answer option (only if more than 2 remain)
-   */
   removeAnswerOption(index: number): void {
-    const options = [...this.answerOptions()];
-    if (options.length > 2) {
-      const removedId = options[index].id;
-      options.splice(index, 1);
-      this.answerOptions.set(options);
+    if (this.questionType() !== 'multiple-choice') {
+      return;
+    }
 
-      // If removed option was marked correct, mark the first one as correct
-      if (removedId === this.correctAnswerId()) {
-        this.correctAnswerId.set(options[0].id);
-      }
+    const options = [...this.answerOptions()];
+
+    if (options.length <= 2 || !options[index]) {
+      return;
+    }
+
+    const removedId = options[index].id;
+    options.splice(index, 1);
+    this.answerOptions.set(options);
+
+    if (removedId === this.correctAnswerId()) {
+      this.correctAnswerId.set(options[0].id);
     }
   }
 
-  /**
-   * Update time limit
-   */
   updateTimeLimit(value: number): void {
     this.timeLimit.set(Math.max(5, Math.min(120, value)));
   }
@@ -318,9 +260,6 @@ export class QuestionEditorComponent implements OnInit {
     this.updateTimeLimit(Number(target?.value ?? 0));
   }
 
-  /**
-   * Update points
-   */
   updatePoints(value: number): void {
     this.points.set(Math.max(0, Math.min(1000, value)));
   }
@@ -330,10 +269,68 @@ export class QuestionEditorComponent implements OnInit {
     this.updatePoints(Number(target?.value ?? 0));
   }
 
-  /**
-   * Get all errors for display
-   */
-  getErrors(): ValidationError[] {
+  getErrors(): QuestionValidationError[] {
     return this.validationErrors();
+  }
+
+  private loadQuestion(question: Question): void {
+    this.questionText.set(question.text);
+
+    if (question.type === 'true-false') {
+      this.questionType.set('true-false');
+      this.answerOptions.set(
+        question.options?.length
+          ? question.options
+          : [
+              { id: 'A', text: 'True' },
+              { id: 'B', text: 'False' },
+            ]
+      );
+    } else {
+      this.questionType.set('multiple-choice');
+      this.answerOptions.set(
+        question.options?.length
+          ? question.options
+          : [
+              { id: 'A', text: '' },
+              { id: 'B', text: '' },
+            ]
+      );
+    }
+
+    this.correctAnswerId.set(question.correct_answer);
+    this.timeLimit.set(question.time_limit ?? 30);
+    this.points.set(question.points ?? 100);
+  }
+
+  private cloneQuestion(question: Question): Question {
+    return {
+      ...question,
+      options: question.options?.map((option) => ({ ...option })),
+    };
+  }
+
+  private questionsMatch(left: Question, right: Question): boolean {
+    if (
+      left.text !== right.text ||
+      left.type !== right.type ||
+      left.correct_answer !== right.correct_answer ||
+      (left.time_limit ?? 30) !== (right.time_limit ?? 30) ||
+      (left.points ?? 100) !== (right.points ?? 100)
+    ) {
+      return false;
+    }
+
+    const leftOptions = left.options ?? [];
+    const rightOptions = right.options ?? [];
+
+    if (leftOptions.length !== rightOptions.length) {
+      return false;
+    }
+
+    return leftOptions.every(
+      (option, index) =>
+        option.id === rightOptions[index]?.id && option.text === rightOptions[index]?.text
+    );
   }
 }

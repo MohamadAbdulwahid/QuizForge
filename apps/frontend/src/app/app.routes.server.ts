@@ -14,6 +14,34 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Prerender,
   },
   {
+    path: 'dashboard',
+    renderMode: RenderMode.Client,
+  },
+  {
+    path: 'dashboard/quizzes',
+    renderMode: RenderMode.Client,
+  },
+  {
+    path: 'dashboard/create-session',
+    renderMode: RenderMode.Client,
+  },
+  {
+    path: 'dashboard/sessions',
+    renderMode: RenderMode.Client,
+  },
+  {
+    path: 'builder/new',
+    renderMode: RenderMode.Client,
+  },
+  {
+    path: 'builder/:id',
+    renderMode: RenderMode.Client,
+  },
+  {
+    path: 'leaderboards',
+    renderMode: RenderMode.Client,
+  },
+  {
     path: 'game-lobby/:pin',
     renderMode: RenderMode.Client,
   },

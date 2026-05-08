@@ -32,7 +32,7 @@ describe('authInterceptor', () => {
 
     expect(authServiceStub.getAccessToken).toHaveBeenCalledTimes(1);
     expect(next).toHaveBeenCalledTimes(1);
-    expect(response.status).toBe(200);
+    expect((response as HttpResponse<unknown>).status).toBe(200);
 
     const forwardedRequest = next.mock.calls[0]?.[0] as HttpRequest<unknown>;
     expect(forwardedRequest.headers.get('Authorization')).toBe('Bearer token-123');

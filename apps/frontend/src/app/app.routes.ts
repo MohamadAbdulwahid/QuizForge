@@ -60,6 +60,18 @@ export const appRoutes: Route[] = [
     ],
   },
   {
+    path: 'builder/new',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/quiz-builder/quiz-builder.component').then((m) => m.QuizBuilderComponent),
+  },
+  {
+    path: 'builder/:id',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/quiz-builder/quiz-builder.component').then((m) => m.QuizBuilderComponent),
+  },
+  {
     path: 'game-lobby/:pin',
     canActivate: [authGuard],
     loadComponent: () =>
