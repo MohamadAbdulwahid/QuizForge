@@ -30,6 +30,10 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client,
   },
   {
+    path: 'dashboard/groups/discover',
+    renderMode: RenderMode.Client,
+  },
+  {
     path: 'dashboard/sessions',
     renderMode: RenderMode.Client,
   },

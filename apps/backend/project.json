@@ -82,7 +82,7 @@
     "db:push": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "bunx supabase db push --linked --yes",
+        "command": "bunx drizzle-kit push",
         "cwd": "apps/backend"
       }
     },
