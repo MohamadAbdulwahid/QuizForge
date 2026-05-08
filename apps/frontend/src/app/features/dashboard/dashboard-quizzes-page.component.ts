@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { QuizApiService, QuizSummary } from '../../core/services/quiz-api.service';
 
 type QuizSortMode = 'newest' | 'oldest' | 'title';
@@ -18,11 +18,19 @@ export class DashboardQuizzesPageComponent {
   private readonly quizApiService = inject(QuizApiService);
   private readonly router = inject(Router);
 
-  protected readonly loading = signal(false);
-  protected readonly errorMessage = signal<string | null>(null);
-  protected readonly quizzes = signal<QuizSummary[]>([]);
   protected readonly searchTerm = signal('');
   protected readonly sortMode = signal<QuizSortMode>('newest');
+
+  protected readonly quizzesResource = rxResource<QuizSummary[], number>({
+    params: () => 0,
+    stream: () => this.quizApiService.getMyQuizzes(),
+  });
+
+  protected readonly loading = computed(() => this.quizzesResource.isLoading());
+  protected readonly errorMessage = computed(() =>
+    this.quizzesResource.error() ? 'Could not load your quizzes. Please try again.' : null
+  );
+  protected readonly quizzes = computed(() => this.quizzesResource.value() ?? []);
 
   protected readonly filteredQuizzes = computed(() => {
     const term = this.searchTerm().trim().toLowerCase();
@@ -49,10 +57,6 @@ export class DashboardQuizzesPageComponent {
     });
   });
 
-  constructor() {
-    this.loadQuizzes();
-  }
-
   protected updateSearch(term: string): void {
     this.searchTerm.set(term);
   }
@@ -68,27 +72,6 @@ export class DashboardQuizzesPageComponent {
   }
 
   protected refresh(): void {
-    this.loadQuizzes();
-  }
-
-  private loadQuizzes(): void {
-    this.loading.set(true);
-    this.errorMessage.set(null);
-
-    this.quizApiService
-      .getMyQuizzes()
-      .pipe(
-        finalize(() => {
-          this.loading.set(false);
-        })
-      )
-      .subscribe({
-        next: (quizzes) => {
-          this.quizzes.set(quizzes);
-        },
-        error: () => {
-          this.errorMessage.set('Could not load your quizzes. Please try again.');
-        },
-      });
+    this.quizzesResource.reload();
   }
 }
