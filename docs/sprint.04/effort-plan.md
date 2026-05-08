@@ -1,7 +1,7 @@
 # Sprint 4 Effort Plan
 
 **Sprint Duration:** 2 weeks
-**Target Velocity:** 25 Story Points  
+**Target Velocity:** 38 Story Points  
 **Team Size:** 4 developers
 
 ---
@@ -10,10 +10,10 @@
 
 | Name | Role | Primary Focus | Hour worked |
 |------|------|---------------|--------------|
-| **Mohamad** | Product Owner, Developer | Core Frontend Services, Guards | 0h |
-| **David** | Scrum Master, Developer | Quiz Builder State & Routing | 0h |
-| **Nishan** | Stakeholder, Developer | Question Component & Validation | 0h |
-| **Behrang** | Stakeholder, Developer | Auth UI & Dashboard Styling | 0h |
+| **Mohamad** | Product Owner, Developer | Core Frontend Services, Guards | 20h |
+| **David** | Scrum Master, Developer | Quiz Builder State & Routing | 18.5h |
+| **Nishan** | Stakeholder, Developer | Question Component & Validation | 26h |
+| **Behrang** | Stakeholder, Developer | Auth UI & Dashboard Styling | 17.5h |
 
 ---
 
@@ -33,9 +33,9 @@
 
 ---
 
-### David - 5 SP
+### David - 8 SP
 
-- **PB-65**: Quiz builder page (CSR) with dynamic question management, form state, save (POST) and edit mode (PATCH) (5 SP) - Days 1-7
+- **PB-65**: Quiz builder page (CSR) with dynamic question management, form state, save (POST) and edit mode (PATCH) (8 SP) - Days 1-7
 
 **Responsibilities:**
 - Build the host layout for the Quiz Builder.
@@ -45,15 +45,19 @@
 
 ---
 
-### Nishan - 4 SP
+### Nishan - 14 SP
 
 - **PB-68**: Question component with type selection, answer options, correct marking, and validation (4 SP) - Days 1-6
+- **PB-115**: Groups, discovery, admin management, and session broadcasting (10 SP) - Days 7-14
 
 **Responsibilities:**
 - Create the granular UI components needed for the quiz builder's list of questions.
 - Support question types (multiple-choice, true-false).
 - Enforce validation within the form structure (min 1 question, required fields).
 - Ensure components emit state changes correctly to David's overarching quiz form state.
+- Build the groups data model and membership flows spanning profiles, requests, invites, and admin actions.
+- Extend session broadcasting so visible sessions can be discovered by selected groups or all host groups.
+- Add the dashboard/frontend groups surfaces for discovery, approvals, and active group sessions.
 
 ---
 

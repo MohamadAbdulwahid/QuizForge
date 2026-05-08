@@ -12,6 +12,8 @@
   align-items: center;
   justify-content: center;
   background-color: white;
+  flex-shrink: 0;
+  margin: 0;
   transition: all 0.2s ease;
 }
 

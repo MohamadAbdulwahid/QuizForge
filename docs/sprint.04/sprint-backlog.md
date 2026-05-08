@@ -3,7 +3,7 @@
 **Sprint Goal:** Build Angular authentication pages, user dashboard with quiz list, and full quiz builder with dynamic question management and edit mode.
 
 **Duration:** 2 weeks  
-**Total Story Points:** 25 SP (≈50 hours)  
+**Total Story Points:** 38 SP (≈76 hours)  
 **Team:** Mohamad, Nishan, David, Behrang
 
 ---
@@ -17,15 +17,15 @@
 **Story Points:** 3
 
 **Definition of Done (DoD):**
-- [ ] Create `apps/frontend/src/app/core/services/auth.service.ts`.
-- [ ] Incorporate the pre-configured Supabase client.
-- [ ] Expose `currentUser` as an Angular Signal containing the Supabase User or `null`.
-- [ ] Expose `isAuthenticated` as a computed Signal.
-- [ ] Implement `signIn`, `signUp`, and `signOut` methods wrapping Supabase Auth promises.
-- [ ] Ensure session initialization automatically updates the Signals on app bootstrap.
-- [ ] **Test File:** `apps/frontend/src/app/core/services/auth.service.spec.ts`
-  - [ ] Test: `isAuthenticated()` becomes true when a user signs in.
-  - [ ] Test: `signOut()` clears the `currentUser` Signal.
+- [x] Create `apps/frontend/src/app/core/services/auth.service.ts`.
+- [x] Incorporate the pre-configured Supabase client.
+- [x] Expose `currentUser` as an Angular Signal containing the Supabase User or `null`.
+- [x] Expose `isAuthenticated` as a computed Signal.
+- [x] Implement `signIn`, `signUp`, and `signOut` methods wrapping Supabase Auth promises.
+- [x] Ensure session initialization automatically updates the Signals on app bootstrap.
+- [x] **Test File:** `apps/frontend/src/app/core/services/auth.service.spec.ts`
+  - [x] Test: `isAuthenticated()` becomes true when a user signs in.
+  - [x] Test: `signOut()` clears the `currentUser` Signal.
 
 ---
 
@@ -37,15 +37,15 @@
 **Prerequisites:** PB-56
 
 **Definition of Done (DoD):**
-- [ ] Generate `login.component.ts` and `register.component.ts` in `apps/frontend/src/app/features/auth/`.
-- [ ] Implement email and password forms with Angular Reactive Forms.
-- [ ] Adhere to the Bubbly Minimalism design constraints for form inputs and marshmallow buttons.
-- [ ] Ensure `/login` and `/register` routes are configured as SSG in `app.routes.server.ts`.
-- [ ] Handle UI error states (e.g., validation rules, incorrect password messages).
-- [ ] Hook the submissions up to `AuthService`. Redirect to `/dashboard` upon success.
-- [ ] **Test File:** `apps/frontend/src/app/features/auth/login.component.spec.ts`
-  - [ ] Test: form submission fails and shows errors if inputs are invalid.
-  - [ ] Test: successful submission calls `authService.signIn()` and routes properly.
+- [x] Generate `login.component.ts` and `register.component.ts` in `apps/frontend/src/app/features/auth/`.
+- [x] Implement email and password forms with Angular Reactive Forms.
+- [x] Adhere to the Bubbly Minimalism design constraints for form inputs and marshmallow buttons.
+- [x] Ensure `/login` and `/register` routes are configured as SSG in `app.routes.server.ts`.
+- [x] Handle UI error states (e.g., validation rules, incorrect password messages).
+- [x] Hook the submissions up to `AuthService`. Redirect to `/dashboard` upon success.
+- [x] **Test File:** `apps/frontend/src/app/features/auth/login.component.spec.ts`
+  - [x] Test: form submission fails and shows errors if inputs are invalid.
+  - [x] Test: successful submission calls `authService.signIn()` and routes properly.
 
 ---
 
@@ -57,14 +57,14 @@
 **Prerequisites:** PB-56
 
 **Definition of Done (DoD):**
-- [ ] Create `apps/frontend/src/app/core/guards/auth.guard.ts`.
-- [ ] Use functional route guards introduced in modern Angular.
-- [ ] Read the `isAuthenticated` state from the injected `AuthService`.
-- [ ] Redirect to `/login` if not authenticated.
-- [ ] Apply to all dashboard, builder, and future authenticated routes.
-- [ ] **Test File:** `apps/frontend/src/app/core/guards/auth.guard.spec.ts`
-  - [ ] Test: Guard blocks unauthenticated users.
-  - [ ] Test: Guard permits authenticated users.
+- [x] Create `apps/frontend/src/app/core/guards/auth.guard.ts`.
+- [x] Use functional route guards introduced in modern Angular.
+- [x] Read the `isAuthenticated` state from the injected `AuthService`.
+- [x] Redirect to `/login` if not authenticated.
+- [x] Apply to all dashboard, builder, and future authenticated routes.
+- [x] **Test File:** `apps/frontend/src/app/core/guards/auth.guard.spec.ts`
+  - [x] Test: Guard blocks unauthenticated users.
+  - [x] Test: Guard permits authenticated users.
 
 ---
 
@@ -75,12 +75,12 @@
 **Story Points:** 3
 
 **Definition of Done (DoD):**
-- [ ] Create `apps/frontend/src/app/core/services/api.service.ts`.
-- [ ] Inject `HttpClient`.
-- [ ] Include an interceptor `apps/frontend/src/app/core/interceptors/auth.interceptor.ts` to attach the Supabase Auth JWT header automatically (from `AuthService`).
-- [ ] Establish standardized helper patterns leveraging `resource()` for fetch requests so component UI states (loading, error, loaded) map to Signal patterns seamlessly.
-- [ ] **Test File:** `apps/frontend/src/app/core/interceptors/auth.interceptor.spec.ts`
-  - [ ] Test: JWT token is injected when the user is logged in.
+- [x] Create `apps/frontend/src/app/core/services/api.service.ts`.
+- [x] Inject `HttpClient`.
+- [x] Include an interceptor `apps/frontend/src/app/core/interceptors/auth.interceptor.ts` to attach the Supabase Auth JWT header automatically (from `AuthService`).
+- [x] Establish standardized helper patterns leveraging `resource()` for fetch requests so component UI states (loading, error, loaded) map to Signal patterns seamlessly.
+- [x] **Test File:** `apps/frontend/src/app/core/interceptors/auth.interceptor.spec.ts`
+  - [x] Test: JWT token is injected when the user is logged in.
 
 ---
 
@@ -92,14 +92,14 @@
 **Prerequisites:** PB-59, PB-60
 
 **Definition of Done (DoD):**
-- [ ] Create `apps/frontend/src/app/features/dashboard/dashboard.component.ts`.
-- [ ] Retrieve list of user's quizzes from `GET /api/quizzes` via `ApiService`.
-- [ ] Utilize `rxResource()` in the component for the request to ensure smooth SSR processing.
-- [ ] Map the quizzes payload to Bubbly Card components styling matching `--background`, `--primary`, `--accent` rules.
-- [ ] Add empty state view if the user has no quizzes ("Create your first QuizForge playground!").
-- [ ] Set up route config to `SSR` inside `app.routes.server.ts`.
-- [ ] **Test File:** `apps/frontend-e2e/src/e2e/dashboard.spec.ts`
-  - [ ] Test: Users can view their quizzes listed visually on the dashboard.
+- [x] Create `apps/frontend/src/app/features/dashboard/dashboard.component.ts`.
+- [x] Retrieve list of user's quizzes from `GET /api/quizzes` via `ApiService`.
+- [x] Utilize `rxResource()` in the component for the request to ensure smooth SSR processing.
+- [x] Map the quizzes payload to Bubbly Card components styling matching `--background`, `--primary`, `--accent` rules.
+- [x] Add empty state view if the user has no quizzes ("Create your first QuizForge playground!").
+- [x] Set up route config to `SSR` inside `app.routes.server.ts`.
+- [x] **Test File:** `apps/frontend-e2e/src/e2e/dashboard.spec.ts`
+  - [x] Test: Users can view their quizzes listed visually on the dashboard.
 
 ---
 
@@ -107,17 +107,17 @@
 
 **User Story:** As a **User**, I want a quiz builder page (CSR) with dynamic question management, form state with Signals, save (POST) and edit mode (PATCH) so I can create and update quizzes. *(merged PB-65 + PB-66 + PB-67 + PB-71 + PB-72)*
 
-**Story Points:** 5
+**Story Points:** 8
 **Prerequisites:** PB-59, PB-60
 
 **Definition of Done (DoD):**
-- [ ] Create `apps/frontend/src/app/features/quiz-builder/quiz-builder.component.ts`.
-- [ ] Configure to act strongly as CSR (due to heavy local state interaction).
-- [ ] Create an independent Angular reactive `FormGroup` or custom Signals state for `Quiz` (Title, Description) and `Questions[]`.
-- [ ] Differentiate logic based on URL params (e.g. `/builder/new` directly creates vs `/builder/:id` performs a GET, then populates state, then PATCHes).
-- [ ] Implement Save mechanisms delegating through `ApiService`.
-- [ ] **Test File:** `apps/frontend-e2e/src/e2e/quiz-builder.spec.ts`
-  - [ ] Test: creating a new quiz sets routing to dashboard upon success.
+- [x] Create `apps/frontend/src/app/features/quiz-builder/quiz-builder.component.ts`.
+- [x] Configure to act strongly as CSR (due to heavy local state interaction).
+- [x] Create an independent Angular reactive `FormGroup` or custom Signals state for `Quiz` (Title, Description) and `Questions[]`.
+- [x] Differentiate logic based on URL params (e.g. `/builder/new` directly creates vs `/builder/:id` performs a GET, then populates state, then PATCHes).
+- [x] Implement Save mechanisms delegating through `ApiService`.
+- [x] **Test File:** `apps/frontend-e2e/src/e2e/quiz-builder.spec.ts`
+  - [x] Test: creating a new quiz sets routing to dashboard upon success.
 
 ---
 
@@ -129,11 +129,32 @@
 **Prerequisites:** PB-65
 
 **Definition of Done (DoD):**
-- [ ] Create child UI components: `apps/frontend/src/app/features/quiz-builder/components/question-editor/question-editor.component.ts`.
-- [ ] Allow host (`quiz-builder`) to pass in individual question models.
-- [ ] Allow users to add Answer bubbles. Design them as thick inputs applying `rounded-2xl` shapes depending on constraints.
-- [ ] Implement UI toggle toggling "isCorrect" for answers.
-- [ ] Enforce frontend integrity rule (Validation rules matching the backend Dto: min 1 question per quiz, each question >=2 answers, strictly 1 or more correct answer, etc).
-- [ ] **Test File:** `apps/frontend/src/app/features/quiz-builder/components/question-editor.component.spec.ts`
-  - [ ] Test: Form validation detects missing "correct" answers.
-  - [ ] Test: Ensure toggle for multichoice/true-false swaps input templates correctly.
+- [x] Create child UI components: `apps/frontend/src/app/features/quiz-builder/components/question-editor/question-editor.component.ts`.
+- [x] Allow host (`quiz-builder`) to pass in individual question models.
+- [x] Allow users to add Answer bubbles. Design them as thick inputs applying `rounded-2xl` shapes depending on constraints.
+- [x] Implement UI toggle toggling "isCorrect" for answers.
+- [x] Enforce frontend integrity rule (Validation rules matching the backend Dto: min 1 question per quiz, each question >=2 answers, strictly 1 or more correct answer, etc).
+- [x] **Test File:** `apps/frontend/src/app/features/quiz-builder/components/question-editor.component.spec.ts`
+  - [x] Test: Form validation detects missing "correct" answers.
+  - [x] Test: Ensure toggle for multichoice/true-false swaps input templates correctly.
+
+---
+
+### PB-115: Groups, Discovery, Admin Management, and Session Broadcasting (Nishan)
+
+**User Story:** As a **Teacher**, I want to create and manage groups with discoverability rules, invite or approve members, and broadcast visible sessions to one or more groups so classroom play can be organized around real group membership.
+
+**Story Points:** 10
+
+**Definition of Done (DoD):**
+- [x] Add Drizzle schema and migrations for `profiles`, `groups`, `group_members`, `group_join_requests`, `group_invites`, and session broadcast mapping.
+- [x] Ensure each authenticated user has a queryable profile username backing group invites and search.
+- [x] Implement backend routes and services for creating groups, searching discoverable groups, requesting to join, approving/rejecting join requests, inviting by username, accepting/declining invites, promoting/demoting admins, and removing members.
+- [x] Enforce product rules: hidden groups are always admin-controlled; discoverable groups may require approval or be open join.
+- [x] Extend session creation so a host can keep a session private, broadcast it to selected groups, or broadcast it to all groups they belong to.
+- [x] Add a dashboard groups surface so members can see their groups and active visible sessions hosted by group members.
+- [x] Update the session creation flow so hosts can configure session broadcast visibility from the frontend.
+- [x] **Test Files:** `apps/backend/tests/integration/group-endpoints.spec.ts`, `apps/frontend-e2e/src/e2e/groups.spec.ts`
+  - [x] Test: user can request to join a discoverable approval-based group and an admin can approve it.
+  - [x] Test: invited user can accept a pending invite and appear in group membership.
+  - [x] Test: visible sessions broadcast to a group appear in that group's active sessions view.

@@ -3,6 +3,7 @@ import { supabaseClient } from '../../config/supabase';
 import { createChildLogger } from '../../config/logger';
 import type { User } from '@supabase/supabase-js';
 import { StatusCodes } from 'http-status-codes';
+import { syncProfileForAuthUser } from '../services/profile.service';
 
 const authLogger = createChildLogger('auth');
 
@@ -57,6 +58,11 @@ export async function authMiddleware(
     }
 
     req.user = user;
+    try {
+      await syncProfileForAuthUser(user);
+    } catch (err) {
+      authLogger.warn({ err, userId: user.id }, 'Profile sync skipped during authentication');
+    }
     authLogger.debug({ userId: user.id }, 'User authenticated');
     next();
   } catch (err) {

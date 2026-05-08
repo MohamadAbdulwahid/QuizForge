@@ -62,6 +62,70 @@
       <h4 class="font-display text-xl font-bold text-[#1e88e5]">
         {{ selectedQuiz()?.title || 'None' }}
       </h4>
+
+      <div class="mt-5 rounded-2xl border border-[#e4e7eb] bg-[#f8fafc] p-4">
+        <p class="text-sm font-bold text-[#0f172a]">Session Visibility</p>
+        <p class="mt-1 text-sm font-semibold text-[#64748b]">
+          Keep the session private, broadcast it to selected groups, or share it with all your
+          groups.
+        </p>
+
+        <div class="mt-4 flex flex-wrap gap-3">
+          <button
+            type="button"
+            class="rounded-xl border px-4 py-2 text-sm font-bold"
+            [class.border-[#1e88e5]]="broadcastMode() === 'private'"
+            [class.bg-[#e3f2fd]]="broadcastMode() === 'private'"
+            (click)="updateBroadcastMode('private')"
+          >
+            Private
+          </button>
+          <button
+            type="button"
+            class="rounded-xl border px-4 py-2 text-sm font-bold"
+            [class.border-[#1e88e5]]="broadcastMode() === 'selected-groups'"
+            [class.bg-[#e3f2fd]]="broadcastMode() === 'selected-groups'"
+            (click)="updateBroadcastMode('selected-groups')"
+          >
+            Selected Groups
+          </button>
+          <button
+            type="button"
+            class="rounded-xl border px-4 py-2 text-sm font-bold"
+            [class.border-[#1e88e5]]="broadcastMode() === 'all-my-groups'"
+            [class.bg-[#e3f2fd]]="broadcastMode() === 'all-my-groups'"
+            (click)="updateBroadcastMode('all-my-groups')"
+          >
+            All My Groups
+          </button>
+        </div>
+
+        @if (broadcastMode() === 'selected-groups') {
+          <div class="mt-4 grid gap-3">
+            @for (group of groups(); track group.id) {
+              <label
+                class="flex items-center gap-3 rounded-xl border border-[#dbe3ea] bg-white px-4 py-3 text-sm font-bold text-[#475569]"
+              >
+                <input
+                  type="checkbox"
+                  [checked]="selectedBroadcastGroupIds().includes(group.id)"
+                  (change)="toggleBroadcastGroup(group.id)"
+                />
+                <span>{{ group.name }}</span>
+              </label>
+            }
+
+            @if (groups().length === 0) {
+              <div
+                class="rounded-xl border border-dashed border-[#cbd5e1] bg-white px-4 py-4 text-center text-sm font-semibold text-[#64748b]"
+              >
+                You need to join or create a group before you can broadcast to selected groups.
+              </div>
+            }
+          </div>
+        }
+      </div>
+
       <button
         type="button"
         class="mt-4 rounded-xl bg-[#1e88e5] px-5 py-3 text-sm font-bold text-white shadow-[0_4px_0_0_#1565c0] transition active:translate-y-1 active:shadow-[0_2px_0_0_#1565c0]"

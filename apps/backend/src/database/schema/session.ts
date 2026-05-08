@@ -1,5 +1,6 @@
 import { bigint, jsonb, pgEnum, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
 import { USER } from './auth/user';
+import { GROUP } from './group';
 import { QUIZ } from './quiz';
 
 // Enums for session and player status
@@ -12,9 +13,15 @@ export const SESSION_STATUS = pgEnum('SESSION_STATUS', [
   'ended',
 ]);
 export const PLAYER_STATUS = pgEnum('PLAYER_STATUS', ['active', 'disconnected', 'eliminated']);
+export const SESSION_BROADCAST_MODE = pgEnum('session_broadcast_mode', [
+  'private',
+  'selected-groups',
+  'all-my-groups',
+]);
 // Type exports from enum values
 export type SessionStatus = 'pending' | 'waiting' | 'playing' | 'paused' | 'in-progress' | 'ended';
 export type PlayerStatus = 'active' | 'disconnected' | 'eliminated';
+export type SessionBroadcastMode = 'private' | 'selected-groups' | 'all-my-groups';
 
 // Session and related tables
 export const SESSION = pgTable('session', {
@@ -27,7 +34,18 @@ export const SESSION = pgTable('session', {
   host_id: uuid('host_id')
     .notNull()
     .references(() => USER.id, { onDelete: 'cascade' }),
+  broadcast_mode: SESSION_BROADCAST_MODE('broadcast_mode').notNull().default('private'),
   started_at: timestamp('started_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const SESSION_BROADCAST_GROUP = pgTable('session_broadcast_group', {
+  id: bigint('id', { mode: 'number' }).primaryKey().generatedAlwaysAsIdentity(),
+  session_id: bigint('session_id', { mode: 'number' })
+    .notNull()
+    .references(() => SESSION.id, { onDelete: 'cascade' }),
+  group_id: bigint('group_id', { mode: 'number' })
+    .notNull()
+    .references(() => GROUP.id, { onDelete: 'cascade' }),
 });
 
 export const SESSION_PLAYER = pgTable('session_player', {
@@ -61,6 +79,8 @@ export const GAME_EVENT = pgTable('game_event', {
 // Type exports for tables
 export type Session = typeof SESSION.$inferSelect;
 export type InsertSession = typeof SESSION.$inferInsert;
+export type SessionBroadcastGroup = typeof SESSION_BROADCAST_GROUP.$inferSelect;
+export type InsertSessionBroadcastGroup = typeof SESSION_BROADCAST_GROUP.$inferInsert;
 
 export type SessionPlayer = typeof SESSION_PLAYER.$inferSelect;
 export type InsertSessionPlayer = typeof SESSION_PLAYER.$inferInsert;
