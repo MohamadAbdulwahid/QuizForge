@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import {
-  DiscoverableGroupSummary,
   GroupActiveSessionSummary,
   GroupApiService,
   GroupDetail,
@@ -28,21 +27,24 @@ export class DashboardGroupsPageComponent {
 
   protected readonly groups = signal<MyGroupSummary[]>([]);
   protected readonly invites = signal<GroupInviteSummary[]>([]);
-  protected readonly searchQuery = signal('');
-  protected readonly searchResults = signal<DiscoverableGroupSummary[]>([]);
   protected readonly selectedGroupId = signal<number | null>(null);
   protected readonly selectedGroup = signal<GroupDetail | null>(null);
   protected readonly joinRequests = signal<GroupJoinRequestSummary[]>([]);
   protected readonly activeSessions = signal<GroupActiveSessionSummary[]>([]);
   protected readonly loadingGroups = signal(false);
   protected readonly loadingDetail = signal(false);
-  protected readonly loadingSearch = signal(false);
   protected readonly creatingGroup = signal(false);
   protected readonly inviteUsername = signal('');
   protected readonly createName = signal('');
   protected readonly createDescription = signal('');
   protected readonly createDiscoverable = signal(true);
   protected readonly createJoinPolicy = signal<GroupJoinPolicy>('request-approval');
+  protected readonly settingsModalOpen = signal(false);
+  protected readonly settingsName = signal('');
+  protected readonly settingsDescription = signal('');
+  protected readonly settingsDiscoverable = signal(true);
+  protected readonly settingsJoinPolicy = signal<GroupJoinPolicy>('request-approval');
+  protected readonly savingSettings = signal(false);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly successMessage = signal<string | null>(null);
 
@@ -108,53 +110,80 @@ export class DashboardGroupsPageComponent {
       });
   }
 
-  protected searchGroups(): void {
-    const query = this.searchQuery().trim();
+  protected openSettingsModal(): void {
+    const group = this.selectedGroup();
 
-    if (!query) {
-      this.searchResults.set([]);
+    if (!group) {
       return;
     }
 
-    this.loadingSearch.set(true);
+    this.settingsName.set(group.name);
+    this.settingsDescription.set(group.description ?? '');
+    this.settingsDiscoverable.set(group.is_discoverable);
+    this.settingsJoinPolicy.set(
+      group.is_discoverable && group.join_policy !== 'admin-controlled'
+        ? group.join_policy
+        : 'request-approval'
+    );
+    this.settingsModalOpen.set(true);
+  }
+
+  protected closeSettingsModal(): void {
+    this.settingsModalOpen.set(false);
+  }
+
+  protected updateSettingsDiscoverable(isDiscoverable: boolean): void {
+    this.settingsDiscoverable.set(isDiscoverable);
+
+    if (!isDiscoverable) {
+      this.settingsJoinPolicy.set('request-approval');
+    }
+  }
+
+  protected saveGroupSettings(): void {
+    const groupId = this.selectedGroupId();
+
+    if (!groupId) {
+      return;
+    }
+
+    const name = this.settingsName().trim();
+
+    if (!name) {
+      this.errorMessage.set('Group name is required.');
+      return;
+    }
+
+    this.errorMessage.set(null);
+    this.successMessage.set(null);
+    this.savingSettings.set(true);
 
     this.groupApiService
-      .searchGroups(query)
+      .updateGroup(groupId, {
+        name,
+        description: this.settingsDescription().trim() || undefined,
+        is_discoverable: this.settingsDiscoverable(),
+        join_policy: this.settingsDiscoverable() ? this.settingsJoinPolicy() : 'admin-controlled',
+      })
       .pipe(
         finalize(() => {
-          this.loadingSearch.set(false);
+          this.savingSettings.set(false);
         })
       )
       .subscribe({
-        next: (results) => {
-          this.searchResults.set(results);
+        next: () => {
+          this.successMessage.set('Group settings updated.');
+          this.settingsModalOpen.set(false);
+          this.loadGroups();
+
+          if (groupId) {
+            this.loadGroupDetail(groupId);
+          }
         },
         error: () => {
-          this.errorMessage.set('Could not search groups right now.');
+          this.errorMessage.set('Could not update group settings.');
         },
       });
-  }
-
-  protected requestJoin(groupId: number): void {
-    this.errorMessage.set(null);
-    this.successMessage.set(null);
-
-    this.groupApiService.requestJoin(groupId).subscribe({
-      next: (result: unknown) => {
-        const typedResult = result as { joined?: boolean; status?: string };
-        this.successMessage.set(
-          typedResult.joined
-            ? 'You joined the group.'
-            : typedResult.status === 'pending'
-              ? 'Join request sent.'
-              : 'Request processed.'
-        );
-        this.loadGroups();
-      },
-      error: () => {
-        this.errorMessage.set('Could not join or request this group.');
-      },
-    });
   }
 
   protected inviteMember(): void {
@@ -187,6 +216,9 @@ export class DashboardGroupsPageComponent {
     this.groupApiService.respondToJoinRequest(groupId, requestId, action).subscribe({
       next: () => {
         this.successMessage.set(action === 'approve' ? 'Request approved.' : 'Request rejected.');
+        this.joinRequests.update((requests) =>
+          requests.filter((request) => request.id !== requestId)
+        );
         this.loadGroupDetail(groupId);
         this.loadGroups();
       },

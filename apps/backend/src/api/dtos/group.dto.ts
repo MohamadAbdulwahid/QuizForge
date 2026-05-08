@@ -62,7 +62,7 @@ const updateMemberRoleSchema = z.object({
 });
 
 const searchGroupsQuerySchema = z.object({
-  query: z.string().trim().min(1).max(120),
+  query: z.string().trim().max(120).default(''),
 });
 
 export {

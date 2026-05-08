@@ -72,6 +72,13 @@ export interface CreateGroupPayload {
   join_policy: GroupJoinPolicy;
 }
 
+export interface UpdateGroupPayload {
+  name?: string;
+  description?: string;
+  is_discoverable?: boolean;
+  join_policy?: GroupJoinPolicy;
+}
+
 @Injectable({ providedIn: 'root' })
 export class GroupApiService {
   private readonly apiService = inject(ApiService);
@@ -88,6 +95,10 @@ export class GroupApiService {
 
   createGroup(payload: CreateGroupPayload) {
     return this.apiService.post('/api/groups', payload);
+  }
+
+  updateGroup(groupId: number, payload: UpdateGroupPayload) {
+    return this.apiService.patch(`/api/groups/${groupId}`, payload);
   }
 
   getGroupDetails(groupId: number): Observable<GroupDetail> {
