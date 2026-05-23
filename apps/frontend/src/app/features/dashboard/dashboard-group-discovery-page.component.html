@@ -1,111 +1,90 @@
-<section
-  class="mb-6 rounded-2xl border border-[#e4e7eb] bg-white p-5 shadow-[0_4px_0_0_rgba(0,0,0,0.08)]"
->
-  <h3 class="font-display text-2xl font-bold text-[#1e88e5]">Group Discovery</h3>
-  <p class="mt-1 text-sm font-semibold text-[#64748b]">
-    Browse all discoverable groups, search by name, and join instantly or request approval.
-  </p>
-</section>
-
-@if (errorMessage()) {
-  <div
-    class="mb-4 rounded-xl border border-[#fca5a5] bg-[#fee2e2] px-4 py-3 text-sm font-bold text-[#b91c1c]"
-  >
-    {{ errorMessage() }}
-  </div>
-}
-
-@if (successMessage()) {
-  <div
-    class="mb-4 rounded-xl border border-[#bae6fd] bg-[#e0f2fe] px-4 py-3 text-sm font-bold text-[#0369a1]"
-  >
-    {{ successMessage() }}
-  </div>
-}
-
-<section
-  class="mb-6 rounded-2xl border border-[#e4e7eb] bg-white p-5 shadow-[0_4px_0_0_rgba(0,0,0,0.08)]"
->
-  <div class="grid gap-3 md:grid-cols-[1fr_auto_auto]">
-    <input
-      type="text"
-      [value]="searchQuery()"
-      (input)="searchQuery.set($any($event.target).value)"
-      class="h-12 rounded-xl border border-[#dbe3ea] px-4 text-sm font-semibold text-[#0f172a]"
-      placeholder="Search by group name"
+<div class="qf-page-stack">
+  <app-bubbly-card>
+    <app-page-heading
+      eyebrow="Classrooms"
+      title="Group Discovery"
+      description="Browse all discoverable groups, search by name, and join instantly or request approval."
     />
-    <button
-      type="button"
-      class="rounded-xl bg-[#1e88e5] px-5 py-3 text-sm font-bold text-white shadow-[0_4px_0_0_#1565c0] disabled:opacity-70"
-      [disabled]="loading()"
-      (click)="searchGroups()"
-    >
-      {{ loading() ? 'Searching...' : 'Search' }}
-    </button>
-    @if (hasQuery()) {
-      <button
-        type="button"
-        class="rounded-xl border border-[#dbe3ea] bg-white px-5 py-3 text-sm font-bold text-[#1e88e5]"
-        (click)="clearSearch()"
-      >
-        Clear
-      </button>
-    }
-  </div>
-</section>
+  </app-bubbly-card>
 
-@if (loading()) {
-  <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-    @for (item of [1, 2, 3, 4, 5, 6]; track item) {
-      <div class="h-44 rounded-2xl border border-[#e2e8f0] bg-white/60"></div>
-    }
-  </div>
-} @else {
-  <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-    @for (group of groups(); track group.id) {
-      <article
-        class="rounded-2xl border border-[#dbe3ea] bg-white p-5 shadow-[0_4px_0_0_rgba(0,0,0,0.08)]"
-      >
-        <div class="flex items-start justify-between gap-3">
-          <div>
-            <h4 class="font-display text-xl font-bold text-[#1e88e5]">{{ group.name }}</h4>
-            <p class="mt-2 min-h-10 text-sm font-semibold text-[#475569]">
-              {{ group.description || 'No description provided.' }}
-            </p>
-          </div>
-          <span
-            class="rounded-full bg-[#f1f5f9] px-3 py-1 text-xs font-bold tracking-[0.08em] text-[#64748b] uppercase"
-          >
-            {{ groupJoinPolicyLabel(group.join_policy) }}
-          </span>
-        </div>
-
-        <div class="mt-5 flex flex-wrap gap-3">
-          @if (group.join_policy !== 'admin-controlled') {
-            <button
-              type="button"
-              class="rounded-xl bg-[#1e88e5] px-4 py-2 text-sm font-bold text-white shadow-[0_4px_0_0_#1565c0]"
-              (click)="requestJoin(group.id)"
-            >
-              {{ group.join_policy === 'open' ? 'Join Group' : 'Request to Join' }}
-            </button>
-          } @else {
-            <span
-              class="rounded-xl border border-[#dbe3ea] bg-white px-4 py-2 text-sm font-bold text-[#64748b]"
-            >
-              Invite Only
-            </span>
-          }
-        </div>
-      </article>
-    }
-  </section>
-
-  @if (groups().length === 0) {
-    <div
-      class="mt-4 rounded-xl border border-dashed border-[#cbd5e1] bg-white px-4 py-6 text-center text-sm font-semibold text-[#64748b]"
-    >
-      No discoverable groups found that you are not already a member of.
-    </div>
+  @if (errorMessage()) {
+    <div class="qf-alert-error">{{ errorMessage() }}</div>
   }
-}
+
+  @if (successMessage()) {
+    <div class="qf-alert-info">{{ successMessage() }}</div>
+  }
+
+  <app-bubbly-card>
+    <div class="grid gap-3 md:grid-cols-[1fr_auto_auto]">
+      <input
+        type="text"
+        [value]="searchQuery()"
+        (input)="searchQuery.set($any($event.target).value)"
+        class="qf-input px-4 text-sm font-semibold"
+        placeholder="Search by group name"
+      />
+      <app-bubbly-button
+        [disabled]="loading()"
+        (click)="searchGroups()"
+      >
+        {{ loading() ? 'Searching...' : 'Search' }}
+      </app-bubbly-button>
+      @if (hasQuery()) {
+        <app-bubbly-button
+          tone="ghost"
+          (click)="clearSearch()"
+        >
+          Clear
+        </app-bubbly-button>
+      }
+    </div>
+  </app-bubbly-card>
+
+  @if (loading()) {
+    <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      @for (item of [1, 2, 3, 4, 5, 6]; track item) {
+        <div class="qf-soft-surface h-44 rounded-3xl"></div>
+      }
+    </div>
+  } @else {
+    <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      @for (group of groups(); track group.id) {
+        <app-bubbly-card [interactive]="true">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <h4 class="qf-panel-title text-xl">{{ group.name }}</h4>
+              <p class="qf-muted mt-2 min-h-10 text-sm font-semibold">
+                {{ group.description || 'No description provided.' }}
+              </p>
+            </div>
+            <span class="qf-chip">
+              {{ groupJoinPolicyLabel(group.join_policy) }}
+            </span>
+          </div>
+
+          <div class="mt-5 flex flex-wrap gap-3">
+            @if (group.join_policy !== 'admin-controlled') {
+              <app-bubbly-button
+                size="sm"
+                (click)="requestJoin(group.id)"
+              >
+                {{ group.join_policy === 'open' ? 'Join Group' : 'Request to Join' }}
+              </app-bubbly-button>
+            } @else {
+              <span class="qf-button-ghost rounded-2xl px-4 py-2 text-sm font-bold">
+                Invite Only
+              </span>
+            }
+          </div>
+        </app-bubbly-card>
+      }
+    </section>
+
+    @if (groups().length === 0) {
+      <div class="qf-empty-state">
+        No discoverable groups found that you are not already a member of.
+      </div>
+    }
+  }
+</div>

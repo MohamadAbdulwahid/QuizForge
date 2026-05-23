@@ -4,6 +4,7 @@ import { authGuard } from './core/guards/auth.guard';
 export const appRoutes: Route[] = [
   {
     path: '',
+    pathMatch: 'full',
     loadComponent: () =>
       import('./features/landing/landing-page.component').then((m) => m.LandingPageComponent),
   },
@@ -22,7 +23,7 @@ export const appRoutes: Route[] = [
     pathMatch: 'full',
   },
   {
-    path: 'dashboard',
+    path: '',
     canActivate: [authGuard],
     loadComponent: () =>
       import('./features/dashboard/dashboard-shell.component').then(
@@ -30,74 +31,79 @@ export const appRoutes: Route[] = [
       ),
     children: [
       {
-        path: '',
+        path: 'dashboard',
         loadComponent: () =>
           import('./features/dashboard/dashboard-page.component').then(
             (m) => m.DashboardPageComponent
           ),
       },
       {
-        path: 'quizzes',
+        path: 'dashboard/quizzes',
         loadComponent: () =>
           import('./features/dashboard/dashboard-quizzes-page.component').then(
             (m) => m.DashboardQuizzesPageComponent
           ),
       },
       {
-        path: 'create-session',
+        path: 'dashboard/create-session',
         loadComponent: () =>
           import('./features/dashboard/dashboard-create-session-page.component').then(
             (m) => m.DashboardCreateSessionPageComponent
           ),
       },
       {
-        path: 'groups/discover',
+        path: 'dashboard/groups/discover',
         loadComponent: () =>
           import('./features/dashboard/dashboard-group-discovery-page.component').then(
             (m) => m.DashboardGroupDiscoveryPageComponent
           ),
       },
       {
-        path: 'groups',
+        path: 'dashboard/groups',
         loadComponent: () =>
           import('./features/dashboard/dashboard-groups-page.component').then(
             (m) => m.DashboardGroupsPageComponent
           ),
       },
       {
-        path: 'sessions',
+        path: 'dashboard/sessions',
         loadComponent: () =>
           import('./features/dashboard/dashboard-sessions-page.component').then(
             (m) => m.DashboardSessionsPageComponent
           ),
       },
+      {
+        path: 'builder/new',
+        loadComponent: () =>
+          import('./features/quiz-builder/quiz-builder.component').then(
+            (m) => m.QuizBuilderComponent
+          ),
+      },
+      {
+        path: 'builder/:id',
+        loadComponent: () =>
+          import('./features/quiz-builder/quiz-builder.component').then(
+            (m) => m.QuizBuilderComponent
+          ),
+      },
+      {
+        path: 'game-lobby/:pin',
+        loadComponent: () =>
+          import('./features/game/game-lobby-page.component').then((m) => m.GameLobbyPageComponent),
+      },
+      {
+        path: 'game/:pin',
+        loadComponent: () =>
+          import('./features/game/game-play-page.component').then((m) => m.GamePlayPageComponent),
+      },
+      {
+        path: 'leaderboards',
+        loadComponent: () =>
+          import('./features/leaderboards/leaderboards-page.component').then(
+            (m) => m.LeaderboardsPageComponent
+          ),
+      },
     ],
-  },
-  {
-    path: 'builder/new',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./features/quiz-builder/quiz-builder.component').then((m) => m.QuizBuilderComponent),
-  },
-  {
-    path: 'builder/:id',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./features/quiz-builder/quiz-builder.component').then((m) => m.QuizBuilderComponent),
-  },
-  {
-    path: 'game-lobby/:pin',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./features/game/game-lobby-page.component').then((m) => m.GameLobbyPageComponent),
-  },
-  {
-    path: 'leaderboards',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./features/leaderboards/leaderboards-page.component').then(
-        (m) => m.LeaderboardsPageComponent
-      ),
   },
   {
     path: '**',

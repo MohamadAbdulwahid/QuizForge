@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
 
 interface PodiumPlayer {
   rank: 1 | 2 | 3;
@@ -19,7 +20,7 @@ interface RunnerUp {
 @Component({
   selector: 'app-leaderboards-page',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, PageHeadingComponent],
   templateUrl: './leaderboards-page.component.html',
   styleUrl: './leaderboards-page.component.css',
 })
@@ -69,13 +70,13 @@ export class LeaderboardsPageComponent {
 
   protected podiumColor(rank: 1 | 2 | 3): string {
     if (rank === 1) {
-      return 'bg-[#ffc107]';
+      return 'bg-warning';
     }
 
     if (rank === 2) {
-      return 'bg-[#c0c0c0]';
+      return 'bg-slate-300';
     }
 
-    return 'bg-[#cd7f32]';
+    return 'bg-amber-700';
   }
 }

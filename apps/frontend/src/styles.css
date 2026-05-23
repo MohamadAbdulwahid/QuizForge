@@ -8,8 +8,17 @@
 :root {
   --bubbly-background: #f9fafb;
   --bubbly-primary: #00a5e0;
+  --bubbly-primary-deep: #007fb0;
+  --bubbly-secondary: #93c1eb;
   --bubbly-accent: #cd2750;
+  --bubbly-accent-deep: #9f1d3d;
   --bubbly-text: #070f18;
+  --bubbly-muted: #64748b;
+  --bubbly-surface: #ffffff;
+  --bubbly-surface-soft: #eaf1f8;
+  --bubbly-border: #dbe3ea;
+  --bubbly-shadow: rgba(7, 15, 24, 0.14);
+  --bubbly-focus: rgba(0, 165, 224, 0.32);
 }
 
 * {
@@ -31,9 +40,185 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
+a,
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  outline-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--bubbly-focus);
+  outline-offset: 3px;
+}
+
 h1,
 h2,
 h3,
 .font-display {
   font-family: 'DynaPuff', cursive;
+}
+
+@layer components {
+  .qf-app-bg {
+    background:
+      radial-gradient(circle at 12% 8%, rgba(0, 165, 224, 0.14), transparent 28%),
+      radial-gradient(circle at 92% 0%, rgba(205, 39, 80, 0.1), transparent 32%),
+      var(--bubbly-background);
+  }
+
+  .qf-surface {
+    border: 1px solid var(--bubbly-border);
+    background: var(--bubbly-surface);
+    box-shadow: 0 6px 0 0 var(--bubbly-shadow);
+  }
+
+  .qf-soft-surface {
+    border: 1px solid var(--bubbly-border);
+    background: var(--bubbly-surface-soft);
+  }
+
+  .qf-tactile {
+    transition:
+      transform 160ms ease,
+      box-shadow 160ms ease,
+      background-color 160ms ease,
+      color 160ms ease,
+      border-color 160ms ease;
+  }
+
+  .qf-tactile:hover {
+    transform: translateY(-2px);
+  }
+
+  .qf-tactile:active {
+    transform: translateY(2px) scale(0.98);
+  }
+
+  .qf-button-primary {
+    background: var(--bubbly-primary);
+    box-shadow: 0 6px 0 0 var(--bubbly-primary-deep);
+    color: white;
+  }
+
+  .qf-button-accent {
+    background: var(--bubbly-accent);
+    box-shadow: 0 6px 0 0 var(--bubbly-accent-deep);
+    color: white;
+  }
+
+  .qf-button-ghost {
+    border: 1px solid var(--bubbly-border);
+    background: var(--bubbly-surface);
+    box-shadow: 0 4px 0 0 rgba(7, 15, 24, 0.08);
+    color: var(--bubbly-primary-deep);
+  }
+
+  .qf-input {
+    min-height: 3rem;
+    border: 1px solid var(--bubbly-border);
+    border-radius: 1rem;
+    background: var(--bubbly-surface);
+    color: var(--bubbly-text);
+  }
+
+  .qf-input::placeholder {
+    color: color-mix(in srgb, var(--bubbly-muted) 72%, white);
+  }
+
+  .qf-page-stack {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .qf-panel-title {
+    color: var(--bubbly-primary-deep);
+    font-family: 'DynaPuff', cursive;
+    font-weight: 700;
+  }
+
+  .qf-muted {
+    color: var(--bubbly-muted);
+  }
+
+  .qf-chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    background: var(--bubbly-surface-soft);
+    color: var(--bubbly-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .qf-alert-error {
+    border: 1px solid #fca5a5;
+    border-radius: 1rem;
+    background: #fee2e2;
+    color: #b91c1c;
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 0.75rem 1rem;
+  }
+
+  .qf-alert-info {
+    border: 1px solid #bae6fd;
+    border-radius: 1rem;
+    background: #e0f2fe;
+    color: #0369a1;
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 0.75rem 1rem;
+  }
+
+  .qf-empty-state {
+    border: 1px dashed #cbd5e1;
+    border-radius: 1.5rem;
+    background: var(--bubbly-surface);
+    color: var(--bubbly-muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 1.5rem 1rem;
+    text-align: center;
+  }
+
+  .qf-choice {
+    border: 1px solid var(--bubbly-border);
+    border-radius: 1.5rem;
+    background: var(--bubbly-surface);
+    padding: 1rem;
+    text-align: left;
+  }
+
+  .qf-choice-selected {
+    border-color: var(--bubbly-primary);
+    background: color-mix(in srgb, var(--bubbly-primary) 13%, white);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

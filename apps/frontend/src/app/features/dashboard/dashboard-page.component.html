@@ -1,12 +1,15 @@
 @if (errorMessage()) {
   <p
-    class="mb-4 rounded-xl border border-[#fca5a5] bg-[#fee2e2] px-4 py-3 text-sm font-bold text-[#b91c1c]"
+    class="mb-4 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-bold text-rose-700"
   >
     {{ errorMessage() }}
   </p>
 }
 
-<section class="mb-8 rounded-3xl bg-[#e91e63] p-6 text-white shadow-[0_6px_0_0_#c2185b]">
+<app-bubbly-card
+  class="mb-8 block"
+  tone="accent"
+>
   <h3 class="font-display text-3xl font-bold">Quick Join</h3>
   <p class="mt-2 text-sm font-semibold text-white/85">
     Drop a 6-digit PIN to jump straight into a live lobby.
@@ -15,25 +18,26 @@
     <input
       [(ngModel)]="quickJoinPin"
       maxlength="6"
-      class="font-display h-14 flex-1 rounded-2xl border-2 border-white/40 bg-white/10 px-4 text-center text-2xl font-bold tracking-[0.2em]"
+      class="font-display min-h-14 flex-1 rounded-2xl border-2 border-white/40 bg-white/10 px-4 text-center text-2xl font-bold tracking-[0.2em] text-white placeholder:text-white/60"
       placeholder="729415"
       inputmode="numeric"
     />
-    <button
+    <app-bubbly-button
       type="button"
-      class="font-display h-14 rounded-2xl border-2 border-white/30 bg-[#1e88e5] px-8 text-lg font-bold shadow-[0_6px_0_0_#1565c0] transition active:translate-y-1 active:shadow-[0_2px_0_0_#1565c0]"
+      tone="primary"
+      size="lg"
       [disabled]="busyAction() === 'join'"
       (click)="joinByPin()"
     >
       {{ busyAction() === 'join' ? 'Joining...' : 'Enter Lobby' }}
-    </button>
+    </app-bubbly-button>
   </div>
-</section>
+</app-bubbly-card>
 
-<section class="grid gap-6 lg:grid-cols-5">
+<section class="grid gap-6 md:grid-cols-2 xl:grid-cols-5">
   <a
     routerLink="/dashboard/quizzes"
-    class="overflow-hidden rounded-2xl border border-[#dbe3ea] bg-white shadow-[0_4px_0_0_rgba(0,0,0,0.1)] transition hover:-translate-y-1"
+    class="qf-surface qf-tactile overflow-hidden rounded-3xl"
   >
     <img
       src="assets/stitch/dashboard.png"
@@ -41,8 +45,8 @@
       class="h-40 w-full object-cover"
     />
     <div class="p-4">
-      <h4 class="font-display text-xl font-bold text-[#1e88e5]">My Quizzes</h4>
-      <p class="mt-1 text-sm font-semibold text-[#475569]">
+      <h4 class="font-display text-bubbly-primary text-xl font-bold">My Quizzes</h4>
+      <p class="mt-1 text-sm font-semibold text-slate-600">
         Search, sort, and launch sessions from your own quiz library.
       </p>
     </div>
@@ -50,7 +54,7 @@
 
   <a
     routerLink="/dashboard/create-session"
-    class="overflow-hidden rounded-2xl border border-[#dbe3ea] bg-white shadow-[0_4px_0_0_rgba(0,0,0,0.1)] transition hover:-translate-y-1"
+    class="qf-surface qf-tactile overflow-hidden rounded-3xl"
   >
     <img
       src="assets/stitch/game-lobby.png"
@@ -58,8 +62,8 @@
       class="h-40 w-full object-cover"
     />
     <div class="p-4">
-      <h4 class="font-display text-xl font-bold text-[#1e88e5]">Create Session</h4>
-      <p class="mt-1 text-sm font-semibold text-[#475569]">
+      <h4 class="font-display text-bubbly-primary text-xl font-bold">Create Session</h4>
+      <p class="mt-1 text-sm font-semibold text-slate-600">
         Pick a quiz from a list instead of typing raw IDs.
       </p>
     </div>
@@ -67,7 +71,7 @@
 
   <a
     routerLink="/dashboard/sessions"
-    class="overflow-hidden rounded-2xl border border-[#dbe3ea] bg-white shadow-[0_4px_0_0_rgba(0,0,0,0.1)] transition hover:-translate-y-1"
+    class="qf-surface qf-tactile overflow-hidden rounded-3xl"
   >
     <img
       src="assets/stitch/leaderboards.png"
@@ -75,8 +79,8 @@
       class="h-40 w-full object-cover"
     />
     <div class="p-4">
-      <h4 class="font-display text-xl font-bold text-[#1e88e5]">My Sessions</h4>
-      <p class="mt-1 text-sm font-semibold text-[#475569]">
+      <h4 class="font-display text-bubbly-primary text-xl font-bold">My Sessions</h4>
+      <p class="mt-1 text-sm font-semibold text-slate-600">
         Pause, resume, finish, and copy PINs from one table.
       </p>
     </div>
@@ -84,7 +88,7 @@
 
   <a
     routerLink="/builder/new"
-    class="overflow-hidden rounded-2xl border border-[#dbe3ea] bg-white shadow-[0_4px_0_0_rgba(0,0,0,0.1)] transition hover:-translate-y-1"
+    class="qf-surface qf-tactile overflow-hidden rounded-3xl"
   >
     <img
       src="assets/stitch/dashboard.png"
@@ -92,8 +96,8 @@
       class="h-40 w-full object-cover"
     />
     <div class="p-4">
-      <h4 class="font-display text-xl font-bold text-[#cd2750]">Quiz Builder</h4>
-      <p class="mt-1 text-sm font-semibold text-[#475569]">
+      <h4 class="font-display text-bubbly-accent text-xl font-bold">Quiz Builder</h4>
+      <p class="mt-1 text-sm font-semibold text-slate-600">
         Create or edit a quiz with question blocks and validation.
       </p>
     </div>
@@ -101,7 +105,7 @@
 
   <a
     routerLink="/dashboard/groups"
-    class="overflow-hidden rounded-2xl border border-[#dbe3ea] bg-white shadow-[0_4px_0_0_rgba(0,0,0,0.1)] transition hover:-translate-y-1"
+    class="qf-surface qf-tactile overflow-hidden rounded-3xl"
   >
     <img
       src="assets/stitch/leaderboards.png"
@@ -109,8 +113,8 @@
       class="h-40 w-full object-cover"
     />
     <div class="p-4">
-      <h4 class="font-display text-xl font-bold text-[#1e88e5]">Groups</h4>
-      <p class="mt-1 text-sm font-semibold text-[#475569]">
+      <h4 class="font-display text-bubbly-primary text-xl font-bold">Groups</h4>
+      <p class="mt-1 text-sm font-semibold text-slate-600">
         Manage memberships, approvals, invites, and live sessions for your classroom groups.
       </p>
     </div>
