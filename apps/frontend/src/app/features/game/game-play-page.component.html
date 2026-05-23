@@ -1,0 +1,149 @@
+<section class="grid gap-6">
+  <app-page-heading
+    eyebrow="Forge Classic"
+    title="Live Question Flow"
+    description="Answer fast, watch your score move, and keep the round paced from one polished game surface."
+    [hasActions]="true"
+  >
+    <div
+      page-actions
+      class="flex flex-wrap gap-3"
+    >
+      <app-status-pill [tone]="connected() ? 'success' : 'danger'">
+        {{ connected() ? 'Connected' : 'Disconnected' }}
+      </app-status-pill>
+      <a
+        routerLink="/dashboard"
+        class="qf-button-ghost qf-tactile rounded-2xl px-4 py-3 text-sm font-bold"
+      >
+        Dashboard
+      </a>
+    </div>
+  </app-page-heading>
+
+  @if (gameState.ended()) {
+    <app-bubbly-card>
+      <h2 class="font-display text-bubbly-primary text-3xl font-bold">Game Complete</h2>
+      <p class="mt-2 text-sm font-semibold text-slate-600">
+        Final standings are ready for the sprint review demo.
+      </p>
+    </app-bubbly-card>
+  }
+
+  @if (gameState.currentQuestion(); as question) {
+    <section class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
+      <app-bubbly-card>
+        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p class="text-xs font-bold tracking-[0.2em] text-slate-500 uppercase">
+              Question {{ question.order }} of {{ question.totalQuestions }}
+            </p>
+            <h2 class="font-display text-bubbly-primary mt-2 text-3xl font-bold">
+              {{ question.text }}
+            </h2>
+          </div>
+          <div
+            class="bg-bubbly-accent rounded-3xl px-5 py-3 text-center text-white shadow-[0_6px_0_0_var(--bubbly-accent-deep)]"
+          >
+            <p class="text-xs font-bold tracking-[0.18em] text-white/80 uppercase">Time</p>
+            <p class="font-display text-3xl font-bold">{{ gameState.timeRemainingSeconds() }}</p>
+          </div>
+        </div>
+
+        <div class="mt-6 h-4 overflow-hidden rounded-full bg-slate-100">
+          <div
+            class="bg-bubbly-primary h-full rounded-full transition-all duration-200"
+            [style.width.%]="gameState.progressPercent()"
+          ></div>
+        </div>
+
+        <div class="mt-6 grid gap-3 md:grid-cols-2">
+          @for (option of question.options; track option.id) {
+            <button
+              type="button"
+              class="qf-tactile min-h-20 rounded-3xl border-2 bg-white px-5 py-4 text-left text-lg font-bold text-slate-800 shadow-[0_5px_0_0_rgba(7,15,24,0.12)]"
+              [class.border-bubbly-primary]="gameState.selectedAnswer() === option.id"
+              [class.bg-sky-50]="gameState.selectedAnswer() === option.id"
+              [disabled]="gameState.submissionState() !== 'idle'"
+              (click)="selectAnswer(option.id)"
+            >
+              {{ option.text }}
+            </button>
+          }
+        </div>
+
+        <div class="mt-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <div>
+            <app-status-pill
+              [tone]="
+                gameState.submissionState() === 'accepted'
+                  ? 'success'
+                  : gameState.submissionState() === 'rejected'
+                    ? 'danger'
+                    : gameState.submissionState() === 'pending'
+                      ? 'info'
+                      : 'neutral'
+              "
+            >
+              {{ gameState.submissionState() }}
+            </app-status-pill>
+            @if (gameState.lastAnswer(); as answer) {
+              <p class="mt-2 text-sm font-bold text-slate-600">
+                {{ answer.correct ? 'Correct' : 'Incorrect' }} · +{{ answer.scoreDelta }} points
+              </p>
+            }
+            @if (gameState.errorMessage()) {
+              <p class="mt-2 text-sm font-bold text-rose-700">{{ gameState.errorMessage() }}</p>
+            }
+          </div>
+
+          <div class="flex flex-wrap gap-3">
+            <app-bubbly-button
+              tone="accent"
+              [disabled]="!gameState.canSubmit()"
+              (click)="submitAnswer()"
+            >
+              Submit Answer
+            </app-bubbly-button>
+            @if (isHost()) {
+              <app-bubbly-button
+                tone="ghost"
+                (click)="nextQuestion()"
+              >
+                Next Question
+              </app-bubbly-button>
+            }
+          </div>
+        </div>
+      </app-bubbly-card>
+
+      <app-bubbly-card>
+        <h3 class="font-display text-bubbly-primary text-2xl font-bold">Live Leaderboard</h3>
+        <div class="mt-5 grid gap-3">
+          @for (player of gameState.leaderboard(); track player.userId) {
+            <div class="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3">
+              <div>
+                <p class="text-xs font-bold text-slate-500">#{{ player.rank }}</p>
+                <p class="font-bold text-slate-900">{{ player.username }}</p>
+              </div>
+              <p class="font-display text-bubbly-accent text-xl font-bold">{{ player.score }}</p>
+            </div>
+          } @empty {
+            <p
+              class="rounded-2xl bg-slate-50 px-4 py-6 text-center text-sm font-bold text-slate-500"
+            >
+              Scores will appear after the first answer.
+            </p>
+          }
+        </div>
+      </app-bubbly-card>
+    </section>
+  } @else if (!gameState.ended()) {
+    <app-bubbly-card>
+      <h2 class="font-display text-bubbly-primary text-2xl font-bold">Waiting for question...</h2>
+      <p class="mt-2 text-sm font-semibold text-slate-600">
+        If the host already started, the socket will resync this page automatically.
+      </p>
+    </app-bubbly-card>
+  }
+</section>

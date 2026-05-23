@@ -8,6 +8,11 @@ import {
   SessionStatus,
   SESSION,
   SESSION_BROADCAST_GROUP,
+  SESSION_PLAYER,
+  GAME_EVENT,
+  SessionPlayer,
+  GameEvent,
+  InsertGameEvent,
 } from '../schema/session';
 import { QUIZ } from '../schema/quiz';
 
@@ -120,6 +125,121 @@ export async function updateStatus(
     .returning();
 
   return result[0] ?? null;
+}
+
+/**
+ * Finds a session player row by session and user.
+ * @param sessionId - Session id.
+ * @param userId - User id.
+ * @returns Session player or null.
+ */
+export async function findPlayerBySessionAndUser(
+  sessionId: number,
+  userId: string
+): Promise<SessionPlayer | null> {
+  const result = await db
+    .select()
+    .from(SESSION_PLAYER)
+    .where(and(eq(SESSION_PLAYER.session_id, sessionId), eq(SESSION_PLAYER.user_id, userId)))
+    .limit(1);
+
+  return result[0] ?? null;
+}
+
+/**
+ * Creates or reactivates a session player for reconnect-safe room membership.
+ * @param data - Player data.
+ * @param data.sessionId - Session id.
+ * @param data.userId - Player user id.
+ * @param data.username - Player display name.
+ * @returns Persisted player row.
+ */
+export async function upsertSessionPlayer(data: {
+  sessionId: number;
+  userId: string;
+  username: string;
+}): Promise<SessionPlayer> {
+  const existingPlayer = await findPlayerBySessionAndUser(data.sessionId, data.userId);
+
+  if (existingPlayer) {
+    const result = await db
+      .update(SESSION_PLAYER)
+      .set({ username: data.username, status: 'active' })
+      .where(eq(SESSION_PLAYER.id, existingPlayer.id))
+      .returning();
+
+    return result[0];
+  }
+
+  const result = await db
+    .insert(SESSION_PLAYER)
+    .values({
+      session_id: data.sessionId,
+      user_id: data.userId,
+      username: data.username,
+      score: 0,
+      status: 'active',
+    })
+    .returning();
+
+  return result[0];
+}
+
+/**
+ * Updates a player's score and returns the updated row.
+ * @param playerId - Session player id.
+ * @param score - Authoritative total score.
+ * @returns Updated player row.
+ */
+export async function updatePlayerScore(playerId: number, score: number): Promise<SessionPlayer> {
+  const result = await db
+    .update(SESSION_PLAYER)
+    .set({ score })
+    .where(eq(SESSION_PLAYER.id, playerId))
+    .returning();
+
+  return result[0];
+}
+
+/**
+ * Marks a player disconnected without removing their room identity.
+ * @param sessionId - Session id.
+ * @param userId - User id.
+ */
+export async function markPlayerDisconnected(sessionId: number, userId: string): Promise<void> {
+  const player = await findPlayerBySessionAndUser(sessionId, userId);
+
+  if (!player) {
+    return;
+  }
+
+  await db
+    .update(SESSION_PLAYER)
+    .set({ status: 'disconnected' })
+    .where(eq(SESSION_PLAYER.id, player.id));
+}
+
+/**
+ * Lists players for a session in score-friendly order.
+ * @param sessionId - Session id.
+ * @returns Session players.
+ */
+export async function listPlayersBySession(sessionId: number): Promise<SessionPlayer[]> {
+  return db
+    .select()
+    .from(SESSION_PLAYER)
+    .where(eq(SESSION_PLAYER.session_id, sessionId))
+    .orderBy(desc(SESSION_PLAYER.score));
+}
+
+/**
+ * Persists a gameplay analytics event.
+ * @param data - Event insert data.
+ * @returns Created event.
+ */
+export async function createGameEvent(data: InsertGameEvent): Promise<GameEvent> {
+  const result = await db.insert(GAME_EVENT).values(data).returning();
+  return result[0];
 }
 
 /**

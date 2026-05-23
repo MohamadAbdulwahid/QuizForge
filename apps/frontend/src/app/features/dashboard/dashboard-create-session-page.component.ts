@@ -5,11 +5,20 @@ import { finalize } from 'rxjs';
 import { GroupApiService, MyGroupSummary } from '../../core/services/group-api.service';
 import { QuizApiService, QuizSummary } from '../../core/services/quiz-api.service';
 import { SessionApiService, SessionBroadcastMode } from '../../core/services/session-api.service';
+import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
+import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
+import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
 
 @Component({
   selector: 'app-dashboard-create-session-page',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [
+    CommonModule,
+    RouterLink,
+    BubblyButtonComponent,
+    BubblyCardComponent,
+    PageHeadingComponent,
+  ],
   templateUrl: './dashboard-create-session-page.component.html',
   styleUrl: './dashboard-create-session-page.component.css',
 })

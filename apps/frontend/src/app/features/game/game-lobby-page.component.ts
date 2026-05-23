@@ -1,11 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Component, DestroyRef, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import type { User } from '@supabase/supabase-js';
 import { AuthService } from '../../core/services/auth.service';
 import { SessionApiService, SessionStatus } from '../../core/services/session-api.service';
 import { SocketErrorPayload, WebsocketService } from '../../core/services/websocket.service';
+import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
+import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
+import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
+import { PlayerBubbleComponent } from '../../shared/ui/player-bubble.component';
 
 interface LobbyPlayer {
   userId: string;
@@ -18,7 +22,13 @@ interface LobbyPlayer {
 @Component({
   selector: 'app-game-lobby-page',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [
+    CommonModule,
+    BubblyButtonComponent,
+    BubblyCardComponent,
+    PageHeadingComponent,
+    PlayerBubbleComponent,
+  ],
   templateUrl: './game-lobby-page.component.html',
   styleUrl: './game-lobby-page.component.css',
 })
@@ -187,6 +197,7 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
       this.startRequested.set(false);
       this.sessionStatus.set('playing');
       this.statusMessage.set('Game started. Waiting for the first question...');
+      void this.router.navigate(['/game', this.pin()]);
     });
   }
 

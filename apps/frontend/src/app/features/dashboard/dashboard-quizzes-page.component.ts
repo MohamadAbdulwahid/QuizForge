@@ -4,13 +4,22 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { QuizApiService, QuizSummary } from '../../core/services/quiz-api.service';
+import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
+import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
+import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
 
 type QuizSortMode = 'newest' | 'oldest' | 'title';
 
 @Component({
   selector: 'app-dashboard-quizzes-page',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    BubblyButtonComponent,
+    BubblyCardComponent,
+    PageHeadingComponent,
+  ],
   templateUrl: './dashboard-quizzes-page.component.html',
   styleUrl: './dashboard-quizzes-page.component.css',
 })

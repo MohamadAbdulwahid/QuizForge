@@ -1,139 +1,122 @@
-<section
-  class="mb-6 rounded-2xl border border-[#e4e7eb] bg-white p-5 shadow-[0_4px_0_0_rgba(0,0,0,0.08)]"
->
-  <h3 class="font-display text-2xl font-bold text-[#1e88e5]">Create Session</h3>
-  <p class="mt-1 text-sm font-semibold text-[#64748b]">
-    Select one of your quizzes and spin up a lobby instantly.
-  </p>
-</section>
+<div class="qf-page-stack">
+  <app-bubbly-card>
+    <app-page-heading
+      eyebrow="Host"
+      title="Create Session"
+      description="Select one of your quizzes and spin up a lobby instantly."
+    />
+  </app-bubbly-card>
 
-@if (errorMessage()) {
-  <div
-    class="mb-4 rounded-xl border border-[#fca5a5] bg-[#fee2e2] px-4 py-3 text-sm font-bold text-[#b91c1c]"
-  >
-    {{ errorMessage() }}
-  </div>
-}
+  @if (errorMessage()) {
+    <div class="qf-alert-error">{{ errorMessage() }}</div>
+  }
 
-@if (loadingQuizzes()) {
-  <div
-    class="rounded-2xl border border-[#e2e8f0] bg-white p-8 text-center text-sm font-semibold text-[#64748b]"
-  >
-    Loading your quizzes...
-  </div>
-} @else {
-  @if (quizzes().length === 0) {
-    <div
-      class="rounded-2xl border border-dashed border-[#cbd5e1] bg-white p-8 text-center text-sm font-semibold text-[#64748b]"
-    >
-      You have no quizzes yet.
-      <a
-        routerLink="/dashboard/quizzes"
-        class="ml-2 text-[#1e88e5] underline"
-      >
-        Go to My Quizzes
-      </a>
-    </div>
+  @if (loadingQuizzes()) {
+    <div class="qf-empty-state">Loading your quizzes...</div>
   } @else {
-    <section class="grid gap-4">
-      @for (quiz of quizzes(); track quiz.id) {
-        <button
-          type="button"
-          class="rounded-2xl border p-4 text-left transition"
-          [class.border-[#1e88e5]]="selectedQuizId() === quiz.id"
-          [class.bg-[#e3f2fd]]="selectedQuizId() === quiz.id"
-          [class.border-[#dbe3ea]]="selectedQuizId() !== quiz.id"
-          [class.bg-white]="selectedQuizId() !== quiz.id"
-          (click)="selectQuiz(quiz.id)"
+    @if (quizzes().length === 0) {
+      <div class="qf-empty-state">
+        You have no quizzes yet.
+        <a
+          routerLink="/dashboard/quizzes"
+          class="ml-2 text-[#1e88e5] underline"
         >
-          <h4 class="font-display text-lg font-bold text-[#1e88e5]">{{ quiz.title }}</h4>
-          <p class="mt-1 text-sm font-semibold text-[#475569]">
-            {{ quiz.description || 'No description yet.' }}
+          Go to My Quizzes
+        </a>
+      </div>
+    } @else {
+      <section class="grid gap-4">
+        @for (quiz of quizzes(); track quiz.id) {
+          <button
+            type="button"
+            class="qf-choice qf-tactile"
+            [class.qf-choice-selected]="selectedQuizId() === quiz.id"
+            (click)="selectQuiz(quiz.id)"
+          >
+            <h4 class="qf-panel-title text-lg">{{ quiz.title }}</h4>
+            <p class="qf-muted mt-1 text-sm font-semibold">
+              {{ quiz.description || 'No description yet.' }}
+            </p>
+            <p class="qf-muted mt-2 text-xs font-bold tracking-[0.08em] uppercase">
+              {{ quiz.questionCount }} questions
+            </p>
+          </button>
+        }
+      </section>
+
+      <app-bubbly-card>
+        <p class="qf-muted text-sm font-semibold">Selected quiz</p>
+        <h4 class="qf-panel-title text-xl">
+          {{ selectedQuiz()?.title || 'None' }}
+        </h4>
+
+        <div class="qf-soft-surface mt-5 rounded-3xl p-4">
+          <p class="text-sm font-bold text-[#0f172a]">Session Visibility</p>
+          <p class="qf-muted mt-1 text-sm font-semibold">
+            Keep the session private, broadcast it to selected groups, or share it with all your
+            groups.
           </p>
-          <p class="mt-2 text-xs font-bold tracking-[0.08em] text-[#64748b] uppercase">
-            {{ quiz.questionCount }} questions
-          </p>
-        </button>
-      }
-    </section>
 
-    <div class="mt-6 rounded-2xl border border-[#dbe3ea] bg-white p-5">
-      <p class="text-sm font-semibold text-[#64748b]">Selected quiz</p>
-      <h4 class="font-display text-xl font-bold text-[#1e88e5]">
-        {{ selectedQuiz()?.title || 'None' }}
-      </h4>
+          <div class="mt-4 flex flex-wrap gap-3">
+            <button
+              type="button"
+              class="rounded-xl border px-4 py-2 text-sm font-bold"
+              [class.border-[#1e88e5]]="broadcastMode() === 'private'"
+              [class.bg-[#e3f2fd]]="broadcastMode() === 'private'"
+              (click)="updateBroadcastMode('private')"
+            >
+              Private
+            </button>
+            <button
+              type="button"
+              class="rounded-xl border px-4 py-2 text-sm font-bold"
+              [class.border-[#1e88e5]]="broadcastMode() === 'selected-groups'"
+              [class.bg-[#e3f2fd]]="broadcastMode() === 'selected-groups'"
+              (click)="updateBroadcastMode('selected-groups')"
+            >
+              Selected Groups
+            </button>
+            <button
+              type="button"
+              class="rounded-xl border px-4 py-2 text-sm font-bold"
+              [class.border-[#1e88e5]]="broadcastMode() === 'all-my-groups'"
+              [class.bg-[#e3f2fd]]="broadcastMode() === 'all-my-groups'"
+              (click)="updateBroadcastMode('all-my-groups')"
+            >
+              All My Groups
+            </button>
+          </div>
 
-      <div class="mt-5 rounded-2xl border border-[#e4e7eb] bg-[#f8fafc] p-4">
-        <p class="text-sm font-bold text-[#0f172a]">Session Visibility</p>
-        <p class="mt-1 text-sm font-semibold text-[#64748b]">
-          Keep the session private, broadcast it to selected groups, or share it with all your
-          groups.
-        </p>
+          @if (broadcastMode() === 'selected-groups') {
+            <div class="mt-4 grid gap-3">
+              @for (group of groups(); track group.id) {
+                <label class="qf-choice flex items-center gap-3 text-sm font-bold text-slate-600">
+                  <input
+                    type="checkbox"
+                    [checked]="selectedBroadcastGroupIds().includes(group.id)"
+                    (change)="toggleBroadcastGroup(group.id)"
+                  />
+                  <span>{{ group.name }}</span>
+                </label>
+              }
 
-        <div class="mt-4 flex flex-wrap gap-3">
-          <button
-            type="button"
-            class="rounded-xl border px-4 py-2 text-sm font-bold"
-            [class.border-[#1e88e5]]="broadcastMode() === 'private'"
-            [class.bg-[#e3f2fd]]="broadcastMode() === 'private'"
-            (click)="updateBroadcastMode('private')"
-          >
-            Private
-          </button>
-          <button
-            type="button"
-            class="rounded-xl border px-4 py-2 text-sm font-bold"
-            [class.border-[#1e88e5]]="broadcastMode() === 'selected-groups'"
-            [class.bg-[#e3f2fd]]="broadcastMode() === 'selected-groups'"
-            (click)="updateBroadcastMode('selected-groups')"
-          >
-            Selected Groups
-          </button>
-          <button
-            type="button"
-            class="rounded-xl border px-4 py-2 text-sm font-bold"
-            [class.border-[#1e88e5]]="broadcastMode() === 'all-my-groups'"
-            [class.bg-[#e3f2fd]]="broadcastMode() === 'all-my-groups'"
-            (click)="updateBroadcastMode('all-my-groups')"
-          >
-            All My Groups
-          </button>
+              @if (groups().length === 0) {
+                <div class="qf-empty-state">
+                  You need to join or create a group before you can broadcast to selected groups.
+                </div>
+              }
+            </div>
+          }
         </div>
 
-        @if (broadcastMode() === 'selected-groups') {
-          <div class="mt-4 grid gap-3">
-            @for (group of groups(); track group.id) {
-              <label
-                class="flex items-center gap-3 rounded-xl border border-[#dbe3ea] bg-white px-4 py-3 text-sm font-bold text-[#475569]"
-              >
-                <input
-                  type="checkbox"
-                  [checked]="selectedBroadcastGroupIds().includes(group.id)"
-                  (change)="toggleBroadcastGroup(group.id)"
-                />
-                <span>{{ group.name }}</span>
-              </label>
-            }
-
-            @if (groups().length === 0) {
-              <div
-                class="rounded-xl border border-dashed border-[#cbd5e1] bg-white px-4 py-4 text-center text-sm font-semibold text-[#64748b]"
-              >
-                You need to join or create a group before you can broadcast to selected groups.
-              </div>
-            }
-          </div>
-        }
-      </div>
-
-      <button
-        type="button"
-        class="mt-4 rounded-xl bg-[#1e88e5] px-5 py-3 text-sm font-bold text-white shadow-[0_4px_0_0_#1565c0] transition active:translate-y-1 active:shadow-[0_2px_0_0_#1565c0]"
-        [disabled]="creatingSession()"
-        (click)="createSession()"
-      >
-        {{ creatingSession() ? 'Creating...' : 'Create Session and Open Lobby' }}
-      </button>
-    </div>
+        <app-bubbly-button
+          class="mt-4 inline-flex"
+          [disabled]="creatingSession()"
+          (click)="createSession()"
+        >
+          {{ creatingSession() ? 'Creating...' : 'Create Session and Open Lobby' }}
+        </app-bubbly-button>
+      </app-bubbly-card>
+    }
   }
-}
+</div>

@@ -13,11 +13,13 @@ import {
   GroupMemberRole,
   MyGroupSummary,
 } from '../../core/services/group-api.service';
+import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
+import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
 
 @Component({
   selector: 'app-dashboard-groups-page',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, BubblyCardComponent, PageHeadingComponent],
   templateUrl: './dashboard-groups-page.component.html',
   styleUrl: './dashboard-groups-page.component.css',
 })
