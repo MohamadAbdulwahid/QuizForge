@@ -8,13 +8,22 @@ import {
   SessionApiService,
   SessionStatus,
 } from '../../core/services/session-api.service';
+import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
+import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
+import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
 
 type ActionCapableStatus = Exclude<SessionStatus, 'ended'>;
 
 @Component({
   selector: 'app-dashboard-sessions-page',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [
+    CommonModule,
+    RouterLink,
+    BubblyButtonComponent,
+    BubblyCardComponent,
+    PageHeadingComponent,
+  ],
   templateUrl: './dashboard-sessions-page.component.html',
   styleUrl: './dashboard-sessions-page.component.css',
 })

@@ -10,6 +10,10 @@ const sessionStatuses = new Map<string, 'waiting' | 'playing'>([
   ['123456', 'waiting'],
   ['654321', 'waiting'],
 ]);
+const sessionPlayers = new Map<
+  string,
+  Array<{ id: number; user_id: string; username: string; score: number }>
+>();
 
 let httpServer: ReturnType<typeof createServer>;
 let ioServer: Server;
@@ -47,6 +51,7 @@ beforeAll(async () => {
         pin,
         status,
         host_id: 'host-1',
+        broadcast_mode: 'private',
         started_at: new Date(),
       };
     },
@@ -58,9 +63,81 @@ beforeAll(async () => {
         pin: '123456',
         status,
         host_id: 'host-1',
+        broadcast_mode: 'private',
         started_at: new Date(),
       };
     },
+    findQuizByIdWithQuestions: async () => ({
+      id: 1,
+      title: 'Socket Quiz',
+      description: null,
+      creator_id: 'host-1',
+      share_code: 'SOCKET01',
+      created_at: new Date(),
+      questions: [
+        {
+          id: 1,
+          quiz_id: 1,
+          text: 'What is 2 + 2?',
+          type: 'multiple-choice',
+          options: [
+            { id: 'a', text: '3' },
+            { id: 'b', text: '4' },
+          ],
+          correct_answer: 'b',
+          time_limit: 30,
+          points: 100,
+          order_index: 0,
+        },
+      ],
+    }),
+    upsertSessionPlayer: async ({ sessionId, userId, username }) => {
+      const key = String(sessionId);
+      const currentPlayers = sessionPlayers.get(key) ?? [];
+      const existingPlayer = currentPlayers.find((player) => player.user_id === userId);
+
+      if (existingPlayer) {
+        existingPlayer.username = username;
+        return { ...existingPlayer, session_id: sessionId, lives: null, status: 'active' };
+      }
+
+      const player = {
+        id: currentPlayers.length + 1,
+        user_id: userId,
+        username,
+        score: 0,
+      };
+      sessionPlayers.set(key, [...currentPlayers, player]);
+      return { ...player, session_id: sessionId, lives: null, status: 'active' };
+    },
+    listPlayersBySession: async (sessionId: number) => {
+      return (sessionPlayers.get(String(sessionId)) ?? []).map((player) => ({
+        ...player,
+        session_id: sessionId,
+        lives: null,
+        status: 'active',
+      }));
+    },
+    updatePlayerScore: async (playerId: number, score: number) => {
+      for (const players of sessionPlayers.values()) {
+        const player = players.find((candidate) => candidate.id === playerId);
+        if (player) {
+          player.score = score;
+          return { ...player, session_id: 1, lives: null, status: 'active' };
+        }
+      }
+
+      throw new Error('Missing test player');
+    },
+    markPlayerDisconnected: async () => undefined,
+    createGameEvent: async (data) => ({
+      id: 1,
+      session_id: data.session_id,
+      session_player_id: data.session_player_id ?? null,
+      event_type: data.event_type,
+      data: data.data ?? null,
+      created_at: new Date(),
+    }),
   });
 
   await new Promise<void>((resolve) => {
@@ -76,6 +153,9 @@ beforeAll(async () => {
 });
 
 afterEach(() => {
+  sessionPlayers.clear();
+  sessionStatuses.set('123456', 'waiting');
+  sessionStatuses.set('654321', 'waiting');
   while (sockets.length > 0) {
     const socket = sockets.pop();
     socket?.disconnect();
@@ -264,5 +344,29 @@ describe('websocket room management', () => {
 
     expect(startedPayload.pin).toBe('123456');
     expect(startedPayload.startedByUserId).toBe('host-1');
+  });
+
+  it('host start broadcasts the first question payload', async () => {
+    const hostSocket = await connectClient('token-host-1');
+    await waitForEvent<{ userId: string }>(hostSocket, 'player-joined', () =>
+      hostSocket.emit('join-game', { pin: '123456', username: 'Host' })
+    );
+
+    const playerSocket = await connectClient('token-player-1');
+    await waitForEvent<{ userId: string }>(playerSocket, 'player-joined', () =>
+      playerSocket.emit('join-game', { pin: '123456', username: 'Player1' })
+    );
+
+    const questionPayload = await waitForEvent<{
+      questionId: number;
+      text: string;
+      options: Array<{ id: string; text: string }>;
+      timeLimitMs: number;
+    }>(playerSocket, 'question', () => hostSocket.emit('start-game', { pin: '123456' }));
+
+    expect(questionPayload.questionId).toBe(1);
+    expect(questionPayload.text).toBe('What is 2 + 2?');
+    expect(questionPayload.options).toHaveLength(2);
+    expect(questionPayload.timeLimitMs).toBe(30000);
   });
 });

@@ -1,137 +1,81 @@
-<main class="font-body min-h-screen bg-[#f6f7f8] text-[#1e293b]">
-  <div class="mx-auto flex max-w-[1280px] flex-col sm:flex-row">
+<main class="qf-app-bg font-body min-h-screen text-slate-900">
+  <div class="flex min-h-screen">
     <aside
-      class="hidden min-h-screen w-[260px] shrink-0 border-r border-[#e4e7eb] bg-white sm:flex sm:flex-col"
+      class="qf-surface sticky top-0 hidden h-screen w-72 shrink-0 flex-col rounded-r-[2rem] p-4 lg:flex"
     >
-      <div class="border-b border-[#e4e7eb] px-6 py-6">
-        <h1 class="font-display text-2xl font-bold text-[#1e88e5]">QuizForge</h1>
-        <p class="text-xs font-bold tracking-[0.2em] text-[#64748b] uppercase">Command Center</p>
+      <div
+        class="bg-bubbly-primary rounded-3xl p-5 text-white shadow-[0_6px_0_0_var(--bubbly-primary-deep)]"
+      >
+        <p class="text-xs font-bold tracking-[0.24em] text-white/80 uppercase">Command Center</p>
+        <h1 class="font-display mt-2 text-3xl font-bold">QuizForge</h1>
       </div>
 
-      <nav class="grid gap-2 px-3 py-4 text-sm font-bold">
-        <a
-          routerLink="/dashboard"
-          [routerLinkActiveOptions]="{ exact: true }"
-          routerLinkActive="bg-[#e3f2fd] text-[#1e88e5]"
-          class="rounded-xl px-4 py-3 text-[#64748b] hover:bg-[#f1f5f9]"
-        >
-          Overview
-        </a>
-        <a
-          routerLink="/dashboard/quizzes"
-          routerLinkActive="bg-[#e3f2fd] text-[#1e88e5]"
-          class="rounded-xl px-4 py-3 text-[#64748b] hover:bg-[#f1f5f9]"
-        >
-          My Quizzes
-        </a>
-        <a
-          routerLink="/builder/new"
-          routerLinkActive="bg-[#e3f2fd] text-[#1e88e5]"
-          class="rounded-xl px-4 py-3 text-[#64748b] hover:bg-[#f1f5f9]"
-        >
-          Quiz Builder
-        </a>
-        <a
-          routerLink="/dashboard/groups"
-          routerLinkActive="bg-[#e3f2fd] text-[#1e88e5]"
-          class="rounded-xl px-4 py-3 text-[#64748b] hover:bg-[#f1f5f9]"
-        >
-          My Groups
-        </a>
-        <a
-          routerLink="/dashboard/groups/discover"
-          routerLinkActive="bg-[#e3f2fd] text-[#1e88e5]"
-          class="rounded-xl px-4 py-3 text-[#64748b] hover:bg-[#f1f5f9]"
-        >
-          Discover Groups
-        </a>
-        <a
-          routerLink="/dashboard/create-session"
-          routerLinkActive="bg-[#e3f2fd] text-[#1e88e5]"
-          class="rounded-xl px-4 py-3 text-[#64748b] hover:bg-[#f1f5f9]"
-        >
-          Create Session
-        </a>
-        <a
-          routerLink="/dashboard/sessions"
-          routerLinkActive="bg-[#e3f2fd] text-[#1e88e5]"
-          class="rounded-xl px-4 py-3 text-[#64748b] hover:bg-[#f1f5f9]"
-        >
-          My Sessions
-        </a>
-        <a
-          routerLink="/leaderboards"
-          routerLinkActive="bg-[#e3f2fd] text-[#1e88e5]"
-          class="rounded-xl px-4 py-3 text-[#64748b] hover:bg-[#f1f5f9]"
-        >
-          Leaderboards
-        </a>
+      <nav class="mt-5 grid gap-2 text-sm font-bold">
+        @for (item of navItems; track item.route) {
+          <a
+            [routerLink]="item.route"
+            [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+            routerLinkActive="bg-bubbly-primary text-white shadow-[0_4px_0_0_var(--bubbly-primary-deep)]"
+            class="qf-tactile hover:text-bubbly-primary rounded-2xl px-4 py-3 text-slate-600 hover:bg-sky-50"
+          >
+            <span class="block">{{ item.label }}</span>
+            <span class="block text-xs opacity-70">{{ item.description }}</span>
+          </a>
+        }
+      </nav>
+
+      <div class="mt-auto rounded-3xl bg-slate-50 p-4">
+        <p class="text-xs font-bold tracking-[0.18em] text-slate-500 uppercase">Signed in</p>
+        <p class="font-display text-bubbly-primary mt-1 truncate text-lg font-bold">
+          {{ displayName() }}
+        </p>
         <button
           type="button"
-          class="rounded-xl px-4 py-3 text-left text-[#64748b] hover:bg-[#f1f5f9]"
+          class="qf-button-ghost qf-tactile mt-4 w-full rounded-2xl px-4 py-3 text-sm font-bold"
           (click)="logout()"
         >
           Logout
         </button>
-      </nav>
+      </div>
     </aside>
 
-    <section class="flex-1 px-4 py-8 md:px-8">
-      <nav class="mb-4 grid grid-cols-2 gap-2 text-xs font-bold sm:hidden">
-        <a
-          routerLink="/dashboard"
-          class="rounded-lg bg-white px-3 py-2 text-center text-[#1e88e5]"
-        >
-          Overview
-        </a>
-        <a
-          routerLink="/dashboard/quizzes"
-          class="rounded-lg bg-white px-3 py-2 text-center text-[#1e88e5]"
-        >
-          Quizzes
-        </a>
-        <a
-          routerLink="/builder/new"
-          class="rounded-lg bg-white px-3 py-2 text-center text-[#1e88e5]"
-        >
-          Builder
-        </a>
-        <a
-          routerLink="/dashboard/groups"
-          class="rounded-lg bg-white px-3 py-2 text-center text-[#1e88e5]"
-        >
-          My Groups
-        </a>
-        <a
-          routerLink="/dashboard/groups/discover"
-          class="rounded-lg bg-white px-3 py-2 text-center text-[#1e88e5]"
-        >
-          Discover
-        </a>
-        <a
-          routerLink="/dashboard/create-session"
-          class="rounded-lg bg-white px-3 py-2 text-center text-[#1e88e5]"
-        >
-          Create
-        </a>
-        <a
-          routerLink="/dashboard/sessions"
-          class="rounded-lg bg-white px-3 py-2 text-center text-[#1e88e5]"
-        >
-          Sessions
-        </a>
-      </nav>
+    <section class="flex min-w-0 flex-1 flex-col">
+      <header class="sticky top-0 z-30 border-b border-white/70 bg-white/90 px-4 py-3 lg:hidden">
+        <div class="flex items-center justify-between gap-3">
+          <div>
+            <p class="text-xs font-bold tracking-[0.2em] text-slate-500 uppercase">QuizForge</p>
+            <p class="font-display text-bubbly-primary text-xl font-bold">{{ displayName() }}</p>
+          </div>
+          <button
+            type="button"
+            class="qf-button-primary qf-tactile rounded-2xl px-4 py-3 text-sm font-bold"
+            [attr.aria-expanded]="mobileNavOpen()"
+            (click)="toggleMobileNav()"
+          >
+            Menu
+          </button>
+        </div>
 
-      <header
-        class="mb-8 rounded-2xl border border-[#e4e7eb] bg-white p-5 shadow-[0_4px_0_0_rgba(0,0,0,0.08)]"
-      >
-        <p class="text-sm font-bold text-[#64748b]">Signed in as</p>
-        <h2 class="font-display text-2xl font-bold text-[#1e88e5]">
-          {{ currentUser()?.user_metadata?.['username'] || currentUser()?.email }}
-        </h2>
+        @if (mobileNavOpen()) {
+          <nav class="mt-4 grid grid-cols-2 gap-2 text-xs font-bold">
+            @for (item of navItems; track item.route) {
+              <a
+                [routerLink]="item.route"
+                [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+                routerLinkActive="bg-bubbly-primary text-white"
+                class="rounded-2xl bg-slate-100 px-3 py-3 text-center text-slate-700"
+                (click)="closeMobileNav()"
+              >
+                {{ item.label }}
+              </a>
+            }
+          </nav>
+        }
       </header>
 
-      <router-outlet></router-outlet>
+      <div class="w-full flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+        <router-outlet></router-outlet>
+      </div>
     </section>
   </div>
 </main>

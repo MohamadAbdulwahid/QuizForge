@@ -7,11 +7,20 @@ import {
   GroupApiService,
   GroupJoinPolicy,
 } from '../../core/services/group-api.service';
+import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
+import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
+import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
 
 @Component({
   selector: 'app-dashboard-group-discovery-page',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    BubblyButtonComponent,
+    BubblyCardComponent,
+    PageHeadingComponent,
+  ],
   templateUrl: './dashboard-group-discovery-page.component.html',
   styleUrl: './dashboard-group-discovery-page.component.css',
 })
