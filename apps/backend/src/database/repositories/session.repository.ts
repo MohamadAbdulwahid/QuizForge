@@ -1,4 +1,4 @@
-import { and, desc, eq, inArray } from 'drizzle-orm';
+import { and, desc, eq, inArray, notInArray } from 'drizzle-orm';
 import { db } from '../client';
 import {
   InsertSession,
@@ -276,4 +276,42 @@ export async function findByHost(hostId: string): Promise<HostSessionSummary[]> 
     .innerJoin(QUIZ, eq(SESSION.quiz_id, QUIZ.id))
     .where(eq(SESSION.host_id, hostId))
     .orderBy(desc(SESSION.started_at));
+}
+
+/**
+ * Deletes sessions that have reached a terminal status.
+ * Removes rows where status is 'ended' or 'finished' to prevent
+ * orphaned session data from accumulating in the database.
+ * @returns Number of deleted session rows.
+ */
+export async function cleanupEndedSessions(): Promise<number> {
+  const terminalStatuses: SessionStatus[] = ['ended'];
+
+  const result = await db.delete(SESSION).where(inArray(SESSION.status, terminalStatuses));
+
+  return result.rowCount ?? 0;
+}
+
+/**
+ * Deletes active sessions whose host is no longer connected via WebSocket.
+ * Prevents zombie sessions when a host closes their browser or loses
+ * connectivity without explicitly ending the session.
+ * @param connectedHostIds - Set of host user IDs with active WebSocket connections.
+ * @returns Number of deleted orphaned session rows.
+ */
+export async function cleanupOrphanedSessions(connectedHostIds: Set<string>): Promise<number> {
+  if (connectedHostIds.size === 0) {
+    return 0;
+  }
+
+  const result = await db
+    .delete(SESSION)
+    .where(
+      and(
+        inArray(SESSION.status, ACTIVE_STATUSES),
+        notInArray(SESSION.host_id, [...connectedHostIds])
+      )
+    );
+
+  return result.rowCount ?? 0;
 }

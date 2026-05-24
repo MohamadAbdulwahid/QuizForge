@@ -14,6 +14,10 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Prerender,
   },
   {
+    path: 'play',
+    renderMode: RenderMode.Client,
+  },
+  {
     path: 'dashboard',
     renderMode: RenderMode.Client,
   },

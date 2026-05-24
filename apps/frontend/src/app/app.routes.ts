@@ -23,6 +23,12 @@ export const appRoutes: Route[] = [
     pathMatch: 'full',
   },
   {
+    path: 'play',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/play/play-page.component').then((m) => m.PlayPageComponent),
+  },
+  {
     path: '',
     canActivate: [authGuard],
     loadComponent: () =>
@@ -52,6 +58,13 @@ export const appRoutes: Route[] = [
           ),
       },
       {
+        path: 'dashboard/groups',
+        loadComponent: () =>
+          import('./features/dashboard/dashboard-groups-page.component').then(
+            (m) => m.DashboardGroupsPageComponent
+          ),
+      },
+      {
         path: 'dashboard/groups/discover',
         loadComponent: () =>
           import('./features/dashboard/dashboard-group-discovery-page.component').then(
@@ -59,10 +72,17 @@ export const appRoutes: Route[] = [
           ),
       },
       {
-        path: 'dashboard/groups',
+        path: 'dashboard/groups/new',
         loadComponent: () =>
-          import('./features/dashboard/dashboard-groups-page.component').then(
-            (m) => m.DashboardGroupsPageComponent
+          import('./features/dashboard/groups/groups-create-page.component').then(
+            (m) => m.GroupsCreatePageComponent
+          ),
+      },
+      {
+        path: 'dashboard/groups/:id',
+        loadComponent: () =>
+          import('./features/dashboard/groups/groups-detail-page.component').then(
+            (m) => m.GroupsDetailPageComponent
           ),
       },
       {
