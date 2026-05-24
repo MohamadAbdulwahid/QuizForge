@@ -1,0 +1,105 @@
+<div class="qf-page-stack">
+  <app-bubbly-card tone="soft">
+    <app-page-heading
+      eyebrow="Classrooms"
+      title="Create New Group"
+      description="Set up a new classroom group for your students."
+    />
+  </app-bubbly-card>
+
+  @if (errorMessage()) {
+    <div class="qf-alert-error">{{ errorMessage() }}</div>
+  }
+
+  @if (successMessage()) {
+    <div class="qf-alert-success">{{ successMessage() }}</div>
+  }
+
+  <app-bubbly-card tone="surface">
+    <form
+      (ngSubmit)="createGroup()"
+      class="grid gap-6"
+    >
+      <!-- Group Name -->
+      <app-bubbly-input
+        label="Group Name"
+        placeholder="e.g., Period 3 Science"
+        [error]="nameError()"
+        [(ngModel)]="groupName"
+        name="groupName"
+      />
+
+      <!-- Description -->
+      <app-bubbly-input
+        label="Description (optional)"
+        placeholder="What is this group about?"
+        [(ngModel)]="description"
+        name="description"
+      />
+
+      <!-- Discoverable Toggle -->
+      <div class="grid gap-2">
+        <span
+          class="text-sm font-bold"
+          style="color: var(--bubbly-text)"
+        >
+          Discoverable
+        </span>
+        <div class="flex items-center gap-3">
+          <button
+            type="button"
+            class="qf-tactile h-6 w-12 rounded-full transition-colors"
+            [style.background]="isDiscoverable() ? 'var(--bubbly-primary)' : 'var(--bubbly-border)'"
+            (click)="isDiscoverable.update((v) => !v)"
+            [attr.aria-checked]="isDiscoverable()"
+            role="switch"
+          >
+            <span
+              class="block h-5 w-5 rounded-full bg-white shadow-sm transition-transform"
+              [style.transform]="isDiscoverable() ? 'translateX(26px)' : 'translateX(2px)'"
+            ></span>
+          </button>
+          <span
+            class="text-sm font-semibold"
+            style="color: var(--bubbly-muted)"
+          >
+            {{ isDiscoverable() ? 'Visible in group discovery' : 'Hidden from group discovery' }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Join Policy -->
+      <app-bubbly-select
+        label="Join Policy"
+        placeholder="Select a join policy"
+        [options]="joinPolicyOptions"
+        [(ngModel)]="joinPolicy"
+        name="joinPolicy"
+      />
+
+      <!-- Actions -->
+      <div class="flex items-center gap-3 pt-2">
+        <app-bubbly-button
+          type="submit"
+          tone="primary"
+          size="md"
+          [disabled]="submitting()"
+        >
+          @if (submitting()) {
+            Creating...
+          } @else {
+            Create Group
+          }
+        </app-bubbly-button>
+        <app-bubbly-button
+          type="button"
+          tone="ghost"
+          size="md"
+          (click)="cancel()"
+        >
+          Cancel
+        </app-bubbly-button>
+      </div>
+    </form>
+  </app-bubbly-card>
+</div>

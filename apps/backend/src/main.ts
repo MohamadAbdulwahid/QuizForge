@@ -8,6 +8,7 @@ import { errorHandler } from './api/middleware/error-handler';
 import { registerRoutes } from './api/routes';
 import { apiVersionMiddleware } from './api/middleware/api-version';
 import { setupWebsocketServer } from './websocket/server';
+import { startCleanupScheduler } from './websocket/namespaces/game.namespace';
 
 const app = express();
 
@@ -80,11 +81,15 @@ const server = app.listen(config.PORT, () => {
 });
 const io = setupWebsocketServer(server);
 
+// Start periodic session cleanup (removes ended/orphaned sessions every 5 minutes).
+const stopCleanup = startCleanupScheduler();
+
 server.on('error', (err) => {
   logger.error({ err }, 'Server error');
 });
 server.on('close', () => {
   io.close();
+  stopCleanup();
 });
 
 export { app, io };

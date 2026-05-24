@@ -40,6 +40,10 @@
   --bubbly-font-weight-semibold: 600;
   --bubbly-font-weight-bold: 700;
 
+  /* Global page padding tokens — applied to the main content container */
+  --bubbly-page-padding-x: 2rem;
+  --bubbly-page-padding-y: 2.5rem;
+
   /* Semantic color tokens derived from base palette */
   --bubbly-success-border: #bbf7d0;
   --bubbly-success-bg: #dcfce7;
@@ -179,6 +183,29 @@ h3,
     gap: 1.5rem;
   }
 
+  /* Global page content container — increased padding applied once at the parent level.
+     All dashboard pages inherit this padding via <router-outlet> children.
+     No per-page padding overrides needed. */
+  .qf-page-container {
+    width: 100%;
+    flex: 1;
+    padding: var(--bubbly-page-padding-y) var(--bubbly-page-padding-x);
+  }
+
+  @media (min-width: 640px) {
+    .qf-page-container {
+      --bubbly-page-padding-x: 3rem;
+      --bubbly-page-padding-y: 3.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .qf-page-container {
+      --bubbly-page-padding-x: 4rem;
+      --bubbly-page-padding-y: 4.5rem;
+    }
+  }
+
   .qf-panel-title {
     color: var(--bubbly-primary-deep);
     font-family: 'DynaPuff', cursive;
@@ -264,6 +291,179 @@ h3,
   .qf-choice-selected {
     border-color: var(--bubbly-primary);
     background: color-mix(in srgb, var(--bubbly-primary) 13%, white);
+  }
+
+  /* Play page - Blooket-inspired full-screen game join */
+  .play-page-bg {
+    background: linear-gradient(135deg, #00a5e0 0%, #007fb0 40%, #006090 100%);
+  }
+
+  .play-page-pattern {
+    background-image: repeating-conic-gradient(
+      rgba(255, 255, 255, 0.06) 0% 25%,
+      transparent 0% 50%
+    );
+    background-size: 60px 60px;
+  }
+
+  .play-logo {
+    animation: play-logo-float 3s ease-in-out infinite;
+  }
+
+  @keyframes play-logo-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  .play-input {
+    transition:
+      border-color 200ms ease,
+      background 200ms ease;
+  }
+
+  .play-input:focus {
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .play-join-btn {
+    transition: all 200ms ease;
+  }
+
+  .play-join-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  }
+
+  .play-join-btn:active {
+    transform: scale(0.95);
+  }
+
+  /* Floating shapes animation */
+  .play-float-1 {
+    animation: play-float-a 8s ease-in-out infinite;
+  }
+  .play-float-2 {
+    animation: play-float-b 10s ease-in-out infinite;
+  }
+  .play-float-3 {
+    animation: play-float-c 12s ease-in-out infinite;
+  }
+  .play-float-4 {
+    animation: play-float-d 9s ease-in-out infinite;
+  }
+  .play-float-5 {
+    animation: play-float-e 11s ease-in-out infinite;
+  }
+  .play-float-6 {
+    animation: play-float-f 7s ease-in-out infinite;
+  }
+
+  @keyframes play-float-a {
+    0%,
+    100% {
+      transform: translate(0, 0) rotate(12deg);
+    }
+    50% {
+      transform: translate(20px, -30px) rotate(20deg);
+    }
+  }
+  @keyframes play-float-b {
+    0%,
+    100% {
+      transform: translate(0, 0) rotate(-6deg);
+    }
+    50% {
+      transform: translate(-15px, 25px) rotate(5deg);
+    }
+  }
+  @keyframes play-float-c {
+    0%,
+    100% {
+      transform: translate(0, 0) rotate(45deg);
+    }
+    50% {
+      transform: translate(25px, 15px) rotate(55deg);
+    }
+  }
+  @keyframes play-float-d {
+    0%,
+    100% {
+      transform: translate(0, 0) rotate(-12deg);
+    }
+    50% {
+      transform: translate(-20px, -20px) rotate(-5deg);
+    }
+  }
+  @keyframes play-float-e {
+    0%,
+    100% {
+      transform: translate(0, 0) rotate(6deg);
+    }
+    50% {
+      transform: translate(15px, -25px) rotate(-3deg);
+    }
+  }
+  @keyframes play-float-f {
+    0%,
+    100% {
+      transform: translate(0, 0) rotate(-45deg);
+    }
+    50% {
+      transform: translate(-10px, 20px) rotate(-35deg);
+    }
+  }
+
+  /* Sidebar — active nav item stays blue on hover */
+  .active-nav {
+    background: var(--bubbly-primary);
+    color: white;
+    box-shadow: 0 4px 0 0 var(--bubbly-primary-deep);
+  }
+
+  .active-nav:hover {
+    background: var(--bubbly-primary);
+    color: white;
+  }
+
+  /* Profile dropdown slide-out animation */
+  .profile-dropdown {
+    animation: profile-dropdown-slide 200ms ease-out;
+    transform-origin: bottom left;
+  }
+
+  @keyframes profile-dropdown-slide {
+    from {
+      opacity: 0;
+      transform: translateX(-8px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .profile-dropdown {
+      animation: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .play-logo,
+    .play-float-1,
+    .play-float-2,
+    .play-float-3,
+    .play-float-4,
+    .play-float-5,
+    .play-float-6 {
+      animation: none !important;
+    }
   }
 }
 

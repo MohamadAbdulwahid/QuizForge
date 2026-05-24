@@ -14,6 +14,7 @@ export interface MyGroupSummary {
   created_by: string;
   created_at: string;
   role: GroupMemberRole;
+  member_count: number;
 }
 
 export interface DiscoverableGroupSummary {
