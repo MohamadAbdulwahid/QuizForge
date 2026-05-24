@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
+import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
+import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
 
 interface PodiumPlayer {
   rank: 1 | 2 | 3;
@@ -20,11 +22,16 @@ interface RunnerUp {
 @Component({
   selector: 'app-leaderboards-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, PageHeadingComponent],
+  imports: [CommonModule, PageHeadingComponent, BubblyCardComponent, BubblyButtonComponent],
   templateUrl: './leaderboards-page.component.html',
-  styleUrl: './leaderboards-page.component.css',
 })
 export class LeaderboardsPageComponent {
+  private readonly router = inject(Router);
+
+  protected goToDashboard(): void {
+    void this.router.navigateByUrl('/dashboard');
+  }
+
   protected readonly podium: PodiumPlayer[] = [
     {
       rank: 2,

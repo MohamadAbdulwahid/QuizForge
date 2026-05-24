@@ -3,6 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Component, DestroyRef, OnDestroy, OnInit, computed, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { buildDisplayName } from '../../shared/utils/display-name';
 import { WebsocketService } from '../../core/services/websocket.service';
 import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
 import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
@@ -48,7 +49,7 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
     }
 
     this.websocketService.connect(token);
-    this.websocketService.joinGame(this.pin, this.displayName());
+    this.websocketService.joinGame(this.pin, buildDisplayName(currentUser, 'Player'));
   }
 
   ngOnDestroy(): void {
@@ -108,11 +109,5 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
     this.websocketService.gameEnded$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((event) => this.gameState.endGame(event));
-  }
-
-  private displayName(): string {
-    const user = this.authService.currentUser();
-    const username = String(user?.user_metadata?.['username'] ?? '').trim();
-    return username || user?.email?.split('@')[0] || 'Player';
   }
 }

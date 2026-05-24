@@ -20,7 +20,6 @@ import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
     PageHeadingComponent,
   ],
   templateUrl: './dashboard-create-session-page.component.html',
-  styleUrl: './dashboard-create-session-page.component.css',
 })
 export class DashboardCreateSessionPageComponent {
   private readonly quizApiService = inject(QuizApiService);

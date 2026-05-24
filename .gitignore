@@ -160,3 +160,6 @@ vite.config.ts.timestamp-*
 .angular
 
 __screenshots__/
+
+# Temporary files
+.tmp/

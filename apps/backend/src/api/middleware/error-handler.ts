@@ -3,6 +3,7 @@ import { ZodError } from 'zod';
 import { createChildLogger } from '../../config/logger';
 import { StatusCodes } from 'http-status-codes';
 import { AppError } from '../../shared/errors';
+import { AuthServiceError } from '../services/auth.service';
 
 const errorLogger = createChildLogger('error-handler');
 
@@ -38,6 +39,16 @@ export function errorHandler(
       error: 'Validation failed',
       code: 'VALIDATION_ERROR',
       statusCode: StatusCodes.BAD_REQUEST,
+    });
+    return;
+  }
+
+  // AuthServiceError (from auth.service) → custom status + code
+  if (err instanceof AuthServiceError) {
+    res.status(err.statusCode).json({
+      error: err.message,
+      code: err.code,
+      statusCode: err.statusCode,
     });
     return;
   }
