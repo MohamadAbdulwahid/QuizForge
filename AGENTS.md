@@ -26,23 +26,36 @@
 
 ## Required Reading
 
-**ALWAYS** read and follow the guidelines in `.github/copilot-instructions.md` before working on any task. It contains architecture decisions, game mode specs, design language ("Bubbly Minimalism"), API versioning strategy, security checklist, and commit conventions.
+**ALWAYS** read `.github/copilot-instructions.md` before any task. It contains architecture decisions, game mode specs, Bubbly Minimalism design language, API versioning strategy, security checklist, and commit conventions.
 
-When working on specific parts of the codebase, also consult:
+When working on specific parts of the codebase:
 
-- **Backend** (`apps/backend/**`): `.github/instructions/backend.instructions.md` — Bun/Express patterns, Drizzle ORM, Supabase Auth, WebSocket protocol, Tspec API docs.
+- **Backend** (`apps/backend/**`): `.github/instructions/backend.instructions.md` — Bun/Express, Drizzle ORM, Supabase Auth, WebSocket protocol, Tspec API docs.
 - **Frontend** (`apps/frontend/**`): `.github/instructions/frontend.instructions.md` — Angular v21 zoneless, Signals, Tailwind/DaisyUI, Vitest + Angular Testing Library, hybrid rendering (SSG/SSR/CSR).
+- **Project-level context** (discovered automatically via `paths.json custom_dir`): `.opencode/context/project-intelligence/technical-domain.md` — in-repo patterns, standards, security.
+
+## Entrypoints
+
+| App | Entry File | Command |
+|-----|-----------|---------|
+| Frontend | `apps/frontend/src/main.ts` | `bun run dev:frontend` |
+| Backend | `apps/backend/src/main.ts` | `bun run dev:backend` |
+| Frontend SSR | Configured in `app.config.ts` via `provideClientHydration(withEventReplay())` | — |
+
+**Zoneless**: Frontend uses `provideZonelessChangeDetection()` — no `zone.js`. Never import it. If UI doesn't update, check signal writes (`set`, `update`) first.
 
 ## Package Manager & Commands
 
-All commands use **`bun`**. Never use `npm` or `npx` — use `bun` and `bunx`.
+All commands use **`bun`**. Never `npm` or `npx`.
+
+### Workspace Commands
 
 | Task | Command |
 |------|---------|
 | Lint all | `bun run lint` |
 | Lint affected | `bun run lint:affected` |
 | Test all | `bun run test` |
-| Test affected | `bun run test:affected` |
+| Test single frontend file | `bun test apps/frontend/src/app/features/.../*.spec.ts` |
 | Format write | `bun run format` |
 | Format check | `bun run format:check` |
 | Dev backend | `bun run dev:backend` |
@@ -50,15 +63,43 @@ All commands use **`bun`**. Never use `npm` or `npx` — use `bun` and `bunx`.
 | Build frontend | `bun run build:frontend` |
 | E2E frontend | `bun run e2e:frontend` |
 | E2E backend | `bun run e2e:backend` |
-| Generate Swagger | `bun run generate:api-docs` |
+
+### Database Commands
+
+All go through Nx (not `bunx supabase` directly):
+
+| Task | Command |
+|------|---------|
+| Push Drizzle schema | `bun run db:push` |
+| Reset local DB | `bun run db:reset` |
+| Pull from remote | `bun run db:pull` |
+| Link Supabase | `bun run db:link` |
+| Generate migration | `bun run db:generate` |
+| Seed | `bun run seed` |
+
+### Swagger Docs
+
+```sh
+bun run generate:api-docs   # runs `cd apps/backend && bunx tspec generate ...` → apps/backend/src/assets/swagger.json
+# Then visit http://localhost:3333/api-docs (dev backend must be running)
+```
+
+### Husky (Git Hooks)
+
+Auto-installed via `bun run prepare` (runs `husky`).
+
+- **Pre-commit**: `bun lint:affected` + `bun format:check` (tests commented out)
+- **Pre-push**: `bunx nx affected -t build --uncommitted`
 
 ## Project Structure
 
 ```
 apps/
   backend/          # Bun + Express + Socket.IO + Drizzle ORM
+    src/main.ts     # Entrypoint
   backend-e2e/      # Backend E2E tests
   frontend/         # Angular v21 (zoneless) + Tailwind + DaisyUI
+    src/main.ts     # Entrypoint
   frontend-e2e/     # Playwright E2E tests
 libs/
   shared/           # Shared TypeScript types/models
@@ -66,27 +107,18 @@ libs/
 
 ## Backend Key Facts
 
-- **Runtime**: Bun — entry point is `apps/backend/src/main.ts`
+- **Runtime**: Bun — entry at `apps/backend/src/main.ts`
 - **Test runner**: Bun built-in (`bun test` in `apps/backend/`)
-- **Database**: Supabase Postgres via Drizzle ORM (`postgres-js` driver)
+- **ORM**: Drizzle ORM with `postgres-js` driver
 - **Connection pool**: Supavisor Transaction mode — **must** use `prepare: false`
-- **Migrations**: Supabase CLI primary (`bunx supabase db reset`, `bunx supabase db push`), Drizzle Kit secondary (`bunx drizzle-kit generate`, `bunx drizzle-kit push`)
-- **Schema glob**: `src/database/schema/*.ts` — `schema/auth/user.ts` is excluded (Supabase-managed)
+- **Schema glob**: `src/database/schema/*.ts` — `schema/auth/user.ts` excluded (Supabase-managed)
 - **Auth**: Stateless JWT via Supabase — validate with `authMiddleware`, never store sessions
 - **API versioning**: Header-based (`API-Version: 1.0`), NOT path-based
-- **API docs**: Tspec code-first — `bun run generate:api-docs` outputs to `src/assets/swagger.json`
-
-### Database Commands
-
-| Task | Command |
-|------|---------|
-| Init Supabase | `bun run db:init` |
-| Reset local DB | `bun run db:reset` |
-| Push Drizzle schema | `bun run db:push` |
-| Pull from remote | `bun run db:pull` |
-| Link Supabase project | `bun run db:link` |
-| Generate Drizzle migration | `bun run db:generate` |
-| Seed database | `bun run seed` |
+- **Middleware chain**: `apiVersionMiddleware → registerRoutes()` (no global `authMiddleware` — applied per-route)
+- **Auth routes** skip `authMiddleware`, use `validateBody()` for Zod validation
+- **Protected routes** use `authMiddleware` + `validateBody()`/`validateParams()` — `req.user!.id` type assertion is safe after middleware
+- **Error pattern**: `try/catch → next(err)` → global `errorHandler`. `AuthServiceError` is caught centrally.
+- **API docs**: Tspec code-first → `apps/backend/src/assets/swagger.json`, served via swagger-ui at `/api-docs`
 
 ### Backend Env (`apps/backend/.env`)
 
@@ -95,38 +127,50 @@ Required: `DATABASE_URL`, `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_
 ## Frontend Key Facts
 
 - **Framework**: Angular v21, **zoneless** — no `zone.js`, use Signals everywhere
-- **State**: `signal()`, `computed()`, `resource()`, `rxResource()` — RxJS only for streams (WebSocket, timers)
-- **Testing**: Vitest + Angular Testing Library (`nx test frontend`)
-- **E2E**: Playwright, single worker (2GB RAM constraint)
+- **State**: `signal()`, `computed()`, `resource()`, `rxResource()` — **RxJS only for streams** (WebSocket, timers)
 - **Rendering**: Hybrid — SSG for marketing/auth, SSR for public pages, CSR for game engine
-- **Styling**: Tailwind CSS v4 + DaisyUI v5 — no custom CSS unless for animations
-- **Components**: Standonly only, signal-based `input()`/`output()`, `@if`/`@for`/`@defer` control flow
+- **Testing**: Vitest + Angular Testing Library (`bun test apps/frontend/src/app/features/.../*.spec.ts` for a single file)
+- **E2E**: Playwright, single worker (2GB RAM constraint)
+- **Styling**: Tailwind CSS v4 + DaisyUI v5 — CSS custom properties (`var(--bubbly-*)`) live in `styles.css`
+- **Components**: **Standalone only**, signal-based `input()`/`output()`, `@if`/`@for`/`@defer` control flow
+- **Form primitives**: `BubblyInput` (CVA), `BubblySelect` (CVA), `BubblyAlert`, `BubblyButton`, `BubblyCard` in `shared/ui/`
+- **Error handling**: Shared `buildErrorMessage()` util in `shared/utils/auth-errors.ts`
+- **Config**: `app.config.ts` provides zoneless CD, `provideClientHydration(withEventReplay())`, `authInterceptor`, `provideBrowserGlobalErrorListeners`
 
 ### Frontend Env (`apps/frontend/.env`)
 
-Required: Supabase URL and anon key, API URL, WebSocket URL. Copy from `.env.example` if present.
+Required: Supabase URL + anon key, API URL, WebSocket URL. Copy from `.env.example` if present.
 
 ## Code Conventions
 
-- **File naming**: `kebab-case` for all files
+- **File naming**: `kebab-case` for ALL files (enforced by `eslint-plugin-check-file` — error-level)
 - **No barrel files** — import directly from file paths to avoid circular deps
 - **Commit format**: `<type>(<scope>): <description>` — scopes: `frontend`, `backend`, `shared`, `ui-components`, `root`
 - **Git flow**: GitHub Flow — feature branches from `main`, merged via PR (1 reviewer required)
+- **ESLint**: Enforces `no-explicit-any` (error), `no-console` (warn, allows `warn`/`error`), `no-unused-vars` (error, `_` prefix exempt), PascalCase classes/interfaces, camelCase vars/functions
+- **No path aliases** — `tsconfig.base.json` has empty `paths: {}`. Import from relative paths.
+- **No CSS hardcoding** — use `var(--bubbly-*)` or DaisyUI semantic classes (`bg-primary`, `text-base-content`). Never `bg-[#xxxx]` or `text-[#xxxx]`.
 
-## Pre-commit / Pre-push Hooks
+## Shared Components & Utils
 
-- **Pre-commit**: `bun lint:affected` + `bun format:check` (tests commented out)
-- **Pre-push**: `bunx nx affected -t build --uncommitted`
-
-## Prettier
-
-Config at root `.prettierrc`: 100 char width, single quotes, semicolons, `prettier-plugin-tailwindcss`, Angular parser for HTML.
+| Module | Path | Purpose |
+|--------|------|---------|
+| BubblyButton | `shared/ui/bubbly-button.component.ts` | `tone: primary\|accent\|ghost`, `size`, `full`, `disabled` |
+| BubblyCard | `shared/ui/bubbly-card.component.ts` | `tone: surface\|soft\|primary\|accent`, `padded`, `interactive` |
+| BubblyInput | `shared/ui/bubbly-input.component.ts` | CVA form input with `label`, `type`, `placeholder`, `error` |
+| BubblySelect | `shared/ui/bubbly-select.component.ts` | CVA select with `label`, `options`, `error`, `placeholder` |
+| BubblyAlert | `shared/ui/bubbly-alert.component.ts` | `variant: error\|info\|success\|warning`, dismissible |
+| PageHeading | `shared/ui/page-heading.component.ts` | `eyebrow`, `title`, `description`, `hasActions` |
+| StatusPill | `shared/ui/status-pill.component.ts` | Status indicator pill |
+| PlayerBubble | `shared/ui/player-bubble.component.ts` | Player avatar bubble for lobby |
+| auth-errors | `shared/utils/auth-errors.ts` | `buildErrorMessage()` for Supabase + API errors |
+| display-name | `shared/utils/display-name.ts` | `buildDisplayName()` — username → email prefix → fallback |
 
 ## Design: Bubbly Minimalism
 
 - Containers: `rounded-2xl` or `rounded-3xl` — no sharp corners
-- Buttons: `px-6 py-3 rounded-2xl shadow-sm hover:shadow-md`
-- 60-30-10 colors: background `#f9fafb`, primary `#00a5e0`, accent `#cd2750`
-- Fonts: DynaPuff (headings), Nunito (body)
+- Buttons: `px-5 py-3 rounded-2xl shadow-sm`, tactile feedback via `qf-tactile` class
+- 60-30-10: background `var(--bubbly-background)`, primary `var(--bubbly-primary)`, accent `var(--bubbly-accent)`
+- Fonts: DynaPuff (headings, `font-display`), Nunito (body, `font-body`)
 - No blur/gradients — solid colors or opacity only
 - Respect `prefers-reduced-motion`
