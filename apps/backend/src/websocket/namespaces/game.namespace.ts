@@ -21,6 +21,14 @@ const MIN_PLAYERS_TO_START = 2;
 const DEFAULT_TIME_LIMIT_SECONDS = 30;
 const DEFAULT_POINTS = 100;
 
+/**
+ * Tracks which host user IDs currently have active WebSocket connections.
+ * Maps hostUserId → Set of session pins they are hosting.
+ * Used by the session cleanup scheduler to detect orphaned sessions
+ * when a host disconnects without explicitly ending their session.
+ */
+const connectedHosts = new Map<string, Set<string>>();
+
 interface QuestionOption {
   id: string;
   text: string;
@@ -277,6 +285,13 @@ export function registerGameNamespace(
         username,
         isHost: userId === session.host_id,
       });
+
+      // Track host connections for orphaned-session cleanup.
+      if (userId === session.host_id) {
+        const hostSessions = connectedHosts.get(userId) ?? new Set<string>();
+        hostSessions.add(pin);
+        connectedHosts.set(userId, hostSessions);
+      }
 
       socket.emit('lobby-state', await buildLobbyState(typedNamespace, pin, session));
       await sendGameResync(socket, activeGames.get(pin));
@@ -535,6 +550,17 @@ export function registerGameNamespace(
 
       if (pin) {
         typedNamespace.to(pin).emit('player-left', { userId });
+      }
+
+      // Remove host tracking when the hosting socket disconnects.
+      if (pin && userId && activeGame && userId === activeGame.hostUserId) {
+        const hostSessions = connectedHosts.get(userId);
+        if (hostSessions) {
+          hostSessions.delete(pin);
+          if (hostSessions.size === 0) {
+            connectedHosts.delete(userId);
+          }
+        }
       }
 
       if (activeGame && userId) {
@@ -852,4 +878,46 @@ function formatUsername(userId: string | undefined): string {
   }
 
   return `Player-${userId.replace(/-/g, '').slice(0, 6).toUpperCase()}`;
+}
+
+/**
+ * Returns all host user IDs that currently have active WebSocket connections.
+ * Used by the session cleanup scheduler to identify orphaned sessions.
+ */
+export function getConnectedHostIds(): Set<string> {
+  return new Set(connectedHosts.keys());
+}
+
+/**
+ * Starts a periodic cleanup interval that removes ended and orphaned sessions.
+ * Runs every 5 minutes by default. Cleans up:
+ * - Sessions with terminal status ('ended', 'finished')
+ * - Active sessions whose host has disconnected (no active WebSocket)
+ * @param intervalMs - Cleanup interval in milliseconds (default: 300000 = 5 min).
+ * @returns Cleanup function to stop the interval.
+ */
+export function startCleanupScheduler(intervalMs = 300_000): () => void {
+  const cleanupLogger = createChildLogger('session-cleanup');
+
+  const intervalId = setInterval(async () => {
+    try {
+      const endedCount = await sessionRepository.cleanupEndedSessions();
+      const connectedHostIds = getConnectedHostIds();
+      const orphanedCount = await sessionRepository.cleanupOrphanedSessions(connectedHostIds);
+
+      if (endedCount > 0 || orphanedCount > 0) {
+        cleanupLogger.info(
+          { endedCount, orphanedCount, connectedHosts: connectedHostIds.size },
+          'Session cleanup completed'
+        );
+      }
+    } catch (err) {
+      cleanupLogger.error({ err }, 'Session cleanup failed');
+    }
+  }, intervalMs);
+
+  return () => {
+    clearInterval(intervalId);
+    cleanupLogger.info('Session cleanup scheduler stopped');
+  };
 }

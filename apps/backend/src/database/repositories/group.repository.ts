@@ -1,4 +1,4 @@
-import { and, asc, desc, eq, ilike, inArray, not } from 'drizzle-orm';
+import { and, asc, count, desc, eq, ilike, inArray, not } from 'drizzle-orm';
 import { db } from '../client';
 import {
   GROUP,
@@ -82,6 +82,15 @@ export async function findGroupById(groupId: number) {
 }
 
 export async function listGroupsByMember(userId: string) {
+  const memberCountSubquery = db
+    .select({
+      groupId: GROUP_MEMBER.group_id,
+      count: count().as('count'),
+    })
+    .from(GROUP_MEMBER)
+    .groupBy(GROUP_MEMBER.group_id)
+    .as('member_count_subquery');
+
   return db
     .select({
       id: GROUP.id,
@@ -92,9 +101,11 @@ export async function listGroupsByMember(userId: string) {
       created_by: GROUP.created_by,
       created_at: GROUP.created_at,
       role: GROUP_MEMBER.role,
+      member_count: memberCountSubquery.count,
     })
     .from(GROUP_MEMBER)
     .innerJoin(GROUP, eq(GROUP_MEMBER.group_id, GROUP.id))
+    .leftJoin(memberCountSubquery, eq(memberCountSubquery.groupId, GROUP.id))
     .where(eq(GROUP_MEMBER.user_id, userId))
     .orderBy(asc(GROUP.name));
 }

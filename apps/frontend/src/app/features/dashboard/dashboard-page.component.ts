@@ -1,35 +1,54 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, computed, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
-import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
+import { AuthService } from '../../core/services/auth.service';
+import { DashboardCacheService } from '../../core/services/dashboard-cache.service';
+import { buildDisplayName } from '../../shared/utils/display-name';
 
 @Component({
   selector: 'app-dashboard-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, BubblyButtonComponent, BubblyCardComponent],
+  imports: [CommonModule, RouterLink],
   templateUrl: './dashboard-page.component.html',
 })
 export class DashboardPageComponent {
+  private readonly authService = inject(AuthService);
+  private readonly dashboardCache = inject(DashboardCacheService);
   private readonly router = inject(Router);
 
-  protected quickJoinPin = '';
+  // Delegate to cache service signals
+  protected readonly loading = this.dashboardCache.isLoading;
+  protected readonly errorMessage = this.dashboardCache.errorMessage;
+  protected readonly groups = this.dashboardCache.groups;
+  protected readonly joinableSessions = this.dashboardCache.joinableSessions;
+  protected readonly hasJoinableSessions = this.dashboardCache.hasJoinableSessions;
+  protected readonly hasGroups = this.dashboardCache.hasGroups;
 
-  protected readonly busyAction = signal<'join' | null>(null);
-  protected readonly errorMessage = signal<string | null>(null);
+  // Computed
+  protected readonly displayName = computed(() =>
+    buildDisplayName(this.authService.currentUser(), 'QuizForger')
+  );
 
-  protected joinByPin(): void {
-    this.errorMessage.set(null);
+  protected readonly firstName = computed(() => {
+    const name = this.displayName();
+    return name.split(' ')[0] ?? name;
+  });
 
-    if (!/^\d{6}$/.test(this.quickJoinPin)) {
-      this.errorMessage.set('Game PIN must be exactly 6 digits.');
-      return;
+  protected readonly userInitials = computed(() => {
+    const name = this.displayName();
+    const parts = name.split(' ');
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[1][0]).toUpperCase();
     }
+    return name.slice(0, 2).toUpperCase();
+  });
 
-    this.busyAction.set('join');
-    void this.router.navigate(['/game-lobby', this.quickJoinPin]).finally(() => {
-      this.busyAction.set(null);
-    });
+  constructor() {
+    // Load from cache instantly — only fetches from API if stale or empty
+    this.dashboardCache.load();
+  }
+
+  protected joinSession(pin: string): void {
+    void this.router.navigate(['/game-lobby', pin]);
   }
 }

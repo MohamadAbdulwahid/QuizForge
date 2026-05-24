@@ -1,25 +1,28 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import {
   GroupActiveSessionSummary,
   GroupApiService,
-  GroupDetail,
   GroupInviteSummary,
-  GroupJoinPolicy,
-  GroupJoinRequestSummary,
-  GroupMemberRole,
   MyGroupSummary,
 } from '../../core/services/group-api.service';
+import { BubblyBadgeComponent } from '../../shared/ui/bubbly-badge.component';
+import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
 import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
 import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
 
 @Component({
   selector: 'app-dashboard-groups-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, BubblyCardComponent, PageHeadingComponent],
+  imports: [
+    CommonModule,
+    BubblyBadgeComponent,
+    BubblyButtonComponent,
+    BubblyCardComponent,
+    PageHeadingComponent,
+  ],
   templateUrl: './dashboard-groups-page.component.html',
 })
 export class DashboardGroupsPageComponent {
@@ -28,211 +31,30 @@ export class DashboardGroupsPageComponent {
 
   protected readonly groups = signal<MyGroupSummary[]>([]);
   protected readonly invites = signal<GroupInviteSummary[]>([]);
-  protected readonly selectedGroupId = signal<number | null>(null);
-  protected readonly selectedGroup = signal<GroupDetail | null>(null);
-  protected readonly joinRequests = signal<GroupJoinRequestSummary[]>([]);
   protected readonly activeSessions = signal<GroupActiveSessionSummary[]>([]);
-  protected readonly loadingGroups = signal(false);
-  protected readonly loadingDetail = signal(false);
-  protected readonly creatingGroup = signal(false);
-  protected readonly inviteUsername = signal('');
-  protected readonly createName = signal('');
-  protected readonly createDescription = signal('');
-  protected readonly createDiscoverable = signal(true);
-  protected readonly createJoinPolicy = signal<GroupJoinPolicy>('request-approval');
-  protected readonly settingsModalOpen = signal(false);
-  protected readonly settingsName = signal('');
-  protected readonly settingsDescription = signal('');
-  protected readonly settingsDiscoverable = signal(true);
-  protected readonly settingsJoinPolicy = signal<GroupJoinPolicy>('request-approval');
-  protected readonly savingSettings = signal(false);
+  protected readonly joinRequestCounts = signal<Map<number, number>>(new Map());
+  protected readonly loading = signal(false);
   protected readonly errorMessage = signal<string | null>(null);
-  protected readonly successMessage = signal<string | null>(null);
-
-  protected readonly selectedGroupMembership = computed(() => {
-    const selectedGroupId = this.selectedGroupId();
-
-    if (selectedGroupId === null) {
-      return null;
-    }
-
-    return this.groups().find((group) => group.id === selectedGroupId) ?? null;
-  });
-
-  protected readonly selectedGroupIsAdmin = computed(
-    () => this.selectedGroupMembership()?.role === 'admin'
-  );
 
   constructor() {
-    this.loadGroups();
-    this.loadInvites();
+    this.loadData();
   }
 
-  protected selectGroup(groupId: number): void {
-    this.selectedGroupId.set(groupId);
-    this.loadGroupDetail(groupId);
+  protected navigateToGroup(groupId: number): void {
+    void this.router.navigate(['/dashboard/groups', groupId]);
   }
 
-  protected createGroup(): void {
-    this.errorMessage.set(null);
-    this.successMessage.set(null);
-
-    if (!this.createName().trim()) {
-      this.errorMessage.set('Group name is required.');
-      return;
-    }
-
-    this.creatingGroup.set(true);
-
-    this.groupApiService
-      .createGroup({
-        name: this.createName().trim(),
-        description: this.createDescription().trim() || undefined,
-        is_discoverable: this.createDiscoverable(),
-        join_policy: this.createDiscoverable() ? this.createJoinPolicy() : 'admin-controlled',
-      })
-      .pipe(
-        finalize(() => {
-          this.creatingGroup.set(false);
-        })
-      )
-      .subscribe({
-        next: () => {
-          this.createName.set('');
-          this.createDescription.set('');
-          this.createDiscoverable.set(true);
-          this.createJoinPolicy.set('request-approval');
-          this.successMessage.set('Group created successfully.');
-          this.loadGroups();
-        },
-        error: () => {
-          this.errorMessage.set('Could not create group.');
-        },
-      });
+  protected navigateToCreate(): void {
+    void this.router.navigate(['/dashboard/groups/new']);
   }
 
-  protected openSettingsModal(): void {
-    const group = this.selectedGroup();
-
-    if (!group) {
-      return;
-    }
-
-    this.settingsName.set(group.name);
-    this.settingsDescription.set(group.description ?? '');
-    this.settingsDiscoverable.set(group.is_discoverable);
-    this.settingsJoinPolicy.set(
-      group.is_discoverable && group.join_policy !== 'admin-controlled'
-        ? group.join_policy
-        : 'request-approval'
-    );
-    this.settingsModalOpen.set(true);
-  }
-
-  protected closeSettingsModal(): void {
-    this.settingsModalOpen.set(false);
-  }
-
-  protected updateSettingsDiscoverable(isDiscoverable: boolean): void {
-    this.settingsDiscoverable.set(isDiscoverable);
-
-    if (!isDiscoverable) {
-      this.settingsJoinPolicy.set('request-approval');
-    }
-  }
-
-  protected saveGroupSettings(): void {
-    const groupId = this.selectedGroupId();
-
-    if (!groupId) {
-      return;
-    }
-
-    const name = this.settingsName().trim();
-
-    if (!name) {
-      this.errorMessage.set('Group name is required.');
-      return;
-    }
-
-    this.errorMessage.set(null);
-    this.successMessage.set(null);
-    this.savingSettings.set(true);
-
-    this.groupApiService
-      .updateGroup(groupId, {
-        name,
-        description: this.settingsDescription().trim() || undefined,
-        is_discoverable: this.settingsDiscoverable(),
-        join_policy: this.settingsDiscoverable() ? this.settingsJoinPolicy() : 'admin-controlled',
-      })
-      .pipe(
-        finalize(() => {
-          this.savingSettings.set(false);
-        })
-      )
-      .subscribe({
-        next: () => {
-          this.successMessage.set('Group settings updated.');
-          this.settingsModalOpen.set(false);
-          this.loadGroups();
-
-          if (groupId) {
-            this.loadGroupDetail(groupId);
-          }
-        },
-        error: () => {
-          this.errorMessage.set('Could not update group settings.');
-        },
-      });
-  }
-
-  protected inviteMember(): void {
-    const groupId = this.selectedGroupId();
-    const username = this.inviteUsername().trim();
-
-    if (!groupId || !username) {
-      this.errorMessage.set('Enter a username to invite.');
-      return;
-    }
-
-    this.groupApiService.inviteMember(groupId, username).subscribe({
-      next: () => {
-        this.inviteUsername.set('');
-        this.successMessage.set('Invite sent.');
-      },
-      error: () => {
-        this.errorMessage.set('Could not send invite.');
-      },
-    });
-  }
-
-  protected respondToJoinRequest(requestId: number, action: 'approve' | 'reject'): void {
-    const groupId = this.selectedGroupId();
-
-    if (!groupId) {
-      return;
-    }
-
-    this.groupApiService.respondToJoinRequest(groupId, requestId, action).subscribe({
-      next: () => {
-        this.successMessage.set(action === 'approve' ? 'Request approved.' : 'Request rejected.');
-        this.joinRequests.update((requests) =>
-          requests.filter((request) => request.id !== requestId)
-        );
-        this.loadGroupDetail(groupId);
-        this.loadGroups();
-      },
-      error: () => {
-        this.errorMessage.set('Could not update join request.');
-      },
-    });
+  protected navigateToSession(pin: string): void {
+    void this.router.navigate(['/game-lobby', pin]);
   }
 
   protected respondToInvite(inviteId: number, action: 'accept' | 'decline'): void {
     this.groupApiService.respondToInvite(inviteId, action).subscribe({
       next: () => {
-        this.successMessage.set(action === 'accept' ? 'Invite accepted.' : 'Invite declined.');
         this.loadInvites();
         this.loadGroups();
       },
@@ -242,90 +64,26 @@ export class DashboardGroupsPageComponent {
     });
   }
 
-  protected updateMemberRole(userId: string, role: GroupMemberRole): void {
-    const groupId = this.selectedGroupId();
-
-    if (!groupId) {
-      return;
-    }
-
-    this.groupApiService.updateMemberRole(groupId, userId, role).subscribe({
-      next: () => {
-        this.successMessage.set('Member role updated.');
-        this.loadGroupDetail(groupId);
-        this.loadGroups();
-      },
-      error: () => {
-        this.errorMessage.set('Could not update member role.');
-      },
-    });
-  }
-
-  protected removeMember(userId: string): void {
-    const groupId = this.selectedGroupId();
-
-    if (!groupId) {
-      return;
-    }
-
-    this.groupApiService.removeMember(groupId, userId).subscribe({
-      next: () => {
-        this.successMessage.set('Member removed from group.');
-        this.loadGroupDetail(groupId);
-        this.loadGroups();
-      },
-      error: () => {
-        this.errorMessage.set('Could not remove member.');
-      },
-    });
-  }
-
-  protected joinSession(pin: string): void {
-    void this.router.navigate(['/game-lobby', pin]);
-  }
-
-  protected groupJoinPolicyLabel(policy: GroupJoinPolicy): string {
-    if (policy === 'open') {
-      return 'Open Join';
-    }
-
-    if (policy === 'request-approval') {
-      return 'Approval Required';
-    }
-
-    return 'Admin Controlled';
+  private loadData(): void {
+    this.loadGroups();
+    this.loadInvites();
   }
 
   private loadGroups(): void {
-    this.loadingGroups.set(true);
+    this.loading.set(true);
 
     this.groupApiService
       .getMyGroups()
       .pipe(
         finalize(() => {
-          this.loadingGroups.set(false);
+          this.loading.set(false);
         })
       )
       .subscribe({
         next: (groups) => {
           this.groups.set(groups);
-
-          if (groups.length === 0) {
-            this.selectedGroupId.set(null);
-            this.selectedGroup.set(null);
-            this.joinRequests.set([]);
-            this.activeSessions.set([]);
-            return;
-          }
-
-          const selectedGroupId = this.selectedGroupId();
-          const nextGroupId =
-            selectedGroupId !== null && groups.some((group) => group.id === selectedGroupId)
-              ? selectedGroupId
-              : groups[0].id;
-
-          this.selectedGroupId.set(nextGroupId);
-          this.loadGroupDetail(nextGroupId);
+          this.loadJoinRequestCounts(groups);
+          this.loadAllActiveSessions(groups);
         },
         error: () => {
           this.errorMessage.set('Could not load your groups.');
@@ -344,45 +102,60 @@ export class DashboardGroupsPageComponent {
     });
   }
 
-  private loadGroupDetail(groupId: number): void {
-    this.loadingDetail.set(true);
+  /** Fetch join request counts for admin groups only. */
+  private loadJoinRequestCounts(groups: MyGroupSummary[]): void {
+    const counts = new Map<number, number>();
+    const adminGroups = groups.filter((g) => g.role === 'admin');
 
-    this.groupApiService
-      .getGroupDetails(groupId)
-      .pipe(
-        finalize(() => {
-          this.loadingDetail.set(false);
-        })
-      )
-      .subscribe({
-        next: (group) => {
-          this.selectedGroup.set(group);
-        },
-        error: () => {
-          this.errorMessage.set('Could not load the selected group.');
-        },
-      });
+    if (adminGroups.length === 0) {
+      this.joinRequestCounts.set(counts);
+      return;
+    }
 
-    this.groupApiService.getActiveSessions(groupId).subscribe({
-      next: (sessions) => {
-        this.activeSessions.set(sessions);
-      },
-      error: () => {
-        this.errorMessage.set('Could not load active group sessions.');
-      },
-    });
-
-    if (this.selectedGroupMembership()?.role === 'admin') {
-      this.groupApiService.getJoinRequests(groupId).subscribe({
+    const requests = adminGroups.map((group) =>
+      this.groupApiService.getJoinRequests(group.id).subscribe({
         next: (requests) => {
-          this.joinRequests.set(requests);
+          counts.set(group.id, requests.length);
+          this.joinRequestCounts.set(new Map(counts));
         },
         error: () => {
-          this.errorMessage.set('Could not load join requests.');
+          counts.set(group.id, 0);
+          this.joinRequestCounts.set(new Map(counts));
+        },
+      })
+    );
+
+    // Cleanup subscriptions is not critical for this short-lived request,
+    // but we track them in case needed later.
+    void requests;
+  }
+
+  /** Aggregate active sessions across all groups. */
+  private loadAllActiveSessions(groups: MyGroupSummary[]): void {
+    if (groups.length === 0) {
+      this.activeSessions.set([]);
+      return;
+    }
+
+    const allSessions: GroupActiveSessionSummary[] = [];
+    let completed = 0;
+
+    for (const group of groups) {
+      this.groupApiService.getActiveSessions(group.id).subscribe({
+        next: (sessions) => {
+          allSessions.push(...sessions);
+          completed++;
+          if (completed === groups.length) {
+            this.activeSessions.set(allSessions);
+          }
+        },
+        error: () => {
+          completed++;
+          if (completed === groups.length) {
+            this.activeSessions.set(allSessions);
+          }
         },
       });
-    } else {
-      this.joinRequests.set([]);
     }
   }
 }
