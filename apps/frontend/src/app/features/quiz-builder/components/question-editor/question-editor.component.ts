@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, effect, input, output, signal } from '@angular/core';
+import { BubblyAlertComponent } from '../../../../shared/ui/bubbly-alert.component';
 
 export interface QuestionOption {
   id: string;
@@ -86,7 +87,7 @@ export function validateQuestion(question: Question): QuestionValidationError[] 
 @Component({
   selector: 'app-question-editor',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, BubblyAlertComponent],
   templateUrl: './question-editor.component.html',
   styleUrl: './question-editor.component.css',
 })

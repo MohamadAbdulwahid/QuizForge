@@ -22,7 +22,6 @@ import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
     PageHeadingComponent,
   ],
   templateUrl: './dashboard-group-discovery-page.component.html',
-  styleUrl: './dashboard-group-discovery-page.component.css',
 })
 export class DashboardGroupDiscoveryPageComponent {
   private readonly groupApiService = inject(GroupApiService);

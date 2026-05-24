@@ -1,120 +1,106 @@
 <main class="mx-auto flex min-h-screen w-full max-w-6xl items-center px-4 py-10 md:px-8">
-  <section
-    class="grid w-full gap-8 rounded-3xl border border-[#e4e7eb] bg-white p-6 shadow-[0_6px_0_0_rgba(0,0,0,0.08)] lg:grid-cols-[1.1fr_1fr] lg:p-10"
-  >
-    <article class="flex flex-col justify-between rounded-3xl bg-[#cd2750] p-8 text-white">
-      <div>
-        <p
-          class="inline-flex rounded-full border border-white/50 px-4 py-1 text-xs font-bold tracking-[0.25em] uppercase"
-        >
-          QuizForge
-        </p>
-        <h1 class="font-display mt-4 text-4xl leading-tight font-bold">Create Your Account</h1>
-        <p class="mt-4 text-base font-semibold text-white/85">
-          Start building quizzes, host real-time sessions, and invite your classroom to play.
-        </p>
-      </div>
-
-      <div class="mt-6 rounded-2xl border-2 border-white/40 bg-white/10 p-5">
-        <p class="text-sm font-semibold">
-          Choose a fun username. It shows up in lobbies and leaderboards.
-        </p>
-      </div>
-
-      <div class="mt-6 flex items-center gap-3 text-sm font-bold text-white/90">
-        <span class="h-3 w-3 rounded-full bg-[#fbbf24]"></span>
-        <span>Secure email-password signup</span>
-      </div>
-    </article>
-
-    <article class="rounded-3xl border border-[#e4e7eb] bg-[#f8fafc] p-6 md:p-8">
-      <h2 class="font-display text-2xl font-bold text-[#0f172a]">Register</h2>
-      <p class="mt-2 text-sm font-semibold text-[#64748b]">
-        Build your creator profile in less than a minute.
-      </p>
-
-      @if (errorMessage()) {
-        <p
-          class="mt-4 rounded-xl border border-[#fca5a5] bg-[#fee2e2] px-4 py-3 text-sm font-bold text-[#b91c1c]"
-        >
-          {{ errorMessage() }}
-        </p>
-      }
-
-      @if (infoMessage()) {
-        <p
-          class="mt-4 rounded-xl border border-[#bae6fd] bg-[#e0f2fe] px-4 py-3 text-sm font-bold text-[#0369a1]"
-        >
-          {{ infoMessage() }}
-        </p>
-      }
-
-      <form
-        class="mt-6 grid gap-4"
-        [formGroup]="form"
-        (ngSubmit)="submit()"
+  <app-bubbly-card tone="surface">
+    <div class="grid w-full gap-8 lg:grid-cols-[1.1fr_1fr]">
+      <app-bubbly-card
+        tone="accent"
+        [padded]="false"
       >
-        <label class="grid gap-2 text-sm font-bold text-[#0f172a]">
-          Email
-          <input
-            type="email"
+        <div class="flex flex-col justify-between p-6 md:p-8">
+          <div>
+            <p
+              class="inline-flex rounded-full border border-white/50 px-4 py-1 text-xs font-bold tracking-[0.25em] uppercase"
+            >
+              QuizForge
+            </p>
+            <h1 class="font-display mt-4 text-4xl leading-tight font-bold">Create Your Account</h1>
+            <p class="mt-4 text-base font-semibold text-white/85">
+              Start building quizzes, host real-time sessions, and invite your classroom to play.
+            </p>
+          </div>
+
+          <div class="mt-6 rounded-2xl border-2 border-white/40 bg-white/10 p-5">
+            <p class="text-sm font-semibold">
+              Choose a fun username. It shows up in lobbies and leaderboards.
+            </p>
+          </div>
+
+          <div class="mt-6 flex items-center gap-3 text-sm font-bold text-white/90">
+            <span class="h-3 w-3 rounded-full bg-amber-400"></span>
+            <span>Secure email-password signup</span>
+          </div>
+        </div>
+      </app-bubbly-card>
+
+      <article class="border-base-300 bg-base-200 rounded-3xl border p-6 md:p-8">
+        <h2 class="font-display text-base-content text-2xl font-bold">Register</h2>
+        <p class="text-base-content/60 mt-2 text-sm font-semibold">
+          Build your creator profile in less than a minute.
+        </p>
+
+        @if (errorMessage()) {
+          <app-bubbly-alert
+            variant="error"
+            [message]="errorMessage()"
+            class="mt-4"
+          />
+        }
+
+        @if (infoMessage()) {
+          <app-bubbly-alert
+            variant="info"
+            [message]="infoMessage()"
+            class="mt-4"
+          />
+        }
+
+        <form
+          class="mt-6 grid gap-4"
+          [formGroup]="form"
+          (ngSubmit)="submit()"
+        >
+          <app-bubbly-input
             formControlName="email"
-            class="h-12 rounded-xl border border-[#dbe3ea] bg-white px-4 text-sm font-semibold text-[#0f172a]"
+            label="Email"
+            type="email"
             placeholder="you@example.com"
+            [error]="isFieldInvalid('email') ? 'Enter a valid email.' : ''"
           />
-          @if (isFieldInvalid('email')) {
-            <span class="text-xs font-semibold text-[#dc2626]">Enter a valid email.</span>
-          }
-        </label>
 
-        <label class="grid gap-2 text-sm font-bold text-[#0f172a]">
-          Username
-          <input
-            type="text"
+          <app-bubbly-input
             formControlName="username"
-            class="h-12 rounded-xl border border-[#dbe3ea] bg-white px-4 text-sm font-semibold text-[#0f172a]"
+            label="Username"
+            type="text"
             placeholder="arcade_name"
+            [error]="isFieldInvalid('username') ? 'Username must be 3+ characters.' : ''"
           />
-          @if (isFieldInvalid('username')) {
-            <span class="text-xs font-semibold text-[#dc2626]">
-              Username must be 3+ characters.
-            </span>
-          }
-        </label>
 
-        <label class="grid gap-2 text-sm font-bold text-[#0f172a]">
-          Password
-          <input
-            type="password"
+          <app-bubbly-input
             formControlName="password"
-            class="h-12 rounded-xl border border-[#dbe3ea] bg-white px-4 text-sm font-semibold text-[#0f172a]"
+            label="Password"
+            type="password"
             placeholder="••••••••"
+            [error]="isFieldInvalid('password') ? 'Password must be at least 8 characters.' : ''"
           />
-          @if (isFieldInvalid('password')) {
-            <span class="text-xs font-semibold text-[#dc2626]">
-              Password must be at least 8 characters.
-            </span>
-          }
-        </label>
 
-        <button
-          type="submit"
-          [disabled]="isSubmitting()"
-          class="mt-2 h-12 rounded-2xl bg-[#1e88e5] px-6 text-base font-bold text-white shadow-[0_6px_0_0_#1565c0] transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70"
-        >
-          {{ isSubmitting() ? 'Creating account...' : 'Create account' }}
-        </button>
-      </form>
+          <app-bubbly-button
+            type="submit"
+            tone="primary"
+            [disabled]="isSubmitting()"
+          >
+            {{ isSubmitting() ? 'Creating account...' : 'Create account' }}
+          </app-bubbly-button>
+        </form>
 
-      <p class="mt-6 text-sm font-semibold text-[#64748b]">
-        Already have an account?
-        <a
-          routerLink="/login"
-          class="font-bold text-[#1e88e5] underline-offset-4 hover:underline"
-        >
-          Log in
-        </a>
-      </p>
-    </article>
-  </section>
+        <p class="text-base-content/60 mt-6 text-sm font-semibold">
+          Already have an account?
+          <a
+            routerLink="/login"
+            class="text-primary font-bold underline-offset-4 hover:underline"
+          >
+            Log in
+          </a>
+        </p>
+      </article>
+    </div>
+  </app-bubbly-card>
 </main>

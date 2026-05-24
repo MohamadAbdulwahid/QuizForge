@@ -21,7 +21,6 @@ type QuizSortMode = 'newest' | 'oldest' | 'title';
     PageHeadingComponent,
   ],
   templateUrl: './dashboard-quizzes-page.component.html',
-  styleUrl: './dashboard-quizzes-page.component.css',
 })
 export class DashboardQuizzesPageComponent {
   private readonly quizApiService = inject(QuizApiService);

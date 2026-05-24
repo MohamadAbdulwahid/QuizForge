@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { buildDisplayName } from '../../shared/utils/display-name';
 
 interface AppNavItem {
   label: string;
@@ -15,7 +16,6 @@ interface AppNavItem {
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive, RouterOutlet],
   templateUrl: './dashboard-shell.component.html',
-  styleUrl: './dashboard-shell.component.css',
 })
 export class DashboardShellComponent {
   private readonly authService = inject(AuthService);
@@ -34,10 +34,7 @@ export class DashboardShellComponent {
     { label: 'Leaderboards', description: 'Results', route: '/leaderboards' },
   ];
 
-  protected readonly displayName = () => {
-    const user = this.currentUser();
-    return user?.user_metadata?.['username'] || user?.email || 'QuizForger';
-  };
+  protected readonly displayName = () => buildDisplayName(this.currentUser(), 'QuizForger');
 
   protected closeMobileNav(): void {
     this.mobileNavOpen.set(false);

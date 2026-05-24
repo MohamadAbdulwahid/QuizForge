@@ -3,13 +3,25 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { resolveAuthError } from '../../shared/utils/auth-errors';
+import { BubblyAlertComponent } from '../../shared/ui/bubbly-alert.component';
+import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
+import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
+import { BubblyInputComponent } from '../../shared/ui/bubbly-input.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    BubblyAlertComponent,
+    BubblyButtonComponent,
+    BubblyCardComponent,
+    BubblyInputComponent,
+  ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
 })
 export class LoginComponent {
   private readonly formBuilder = inject(FormBuilder);
@@ -44,7 +56,9 @@ export class LoginComponent {
       });
       await this.router.navigateByUrl('/dashboard');
     } catch (error: unknown) {
-      this.errorMessage.set(this.resolveAuthError(error));
+      this.errorMessage.set(
+        resolveAuthError(error, 'Login failed. Please check your credentials and try again.')
+      );
     } finally {
       this.isSubmitting.set(false);
     }
@@ -53,16 +67,5 @@ export class LoginComponent {
   protected isFieldInvalid(controlName: 'email' | 'password'): boolean {
     const control = this.form.get(controlName);
     return Boolean(control && control.touched && control.invalid);
-  }
-
-  private resolveAuthError(error: unknown): string {
-    if (typeof error === 'object' && error !== null && 'message' in error) {
-      const candidate = error as { message?: string };
-      if (candidate.message) {
-        return candidate.message;
-      }
-    }
-
-    return 'Login failed. Please check your credentials and try again.';
   }
 }

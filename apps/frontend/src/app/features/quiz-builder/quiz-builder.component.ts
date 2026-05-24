@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, effect, inject, resource, signal } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
+import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
+import { BubblyAlertComponent } from '../../shared/ui/bubbly-alert.component';
 import {
   QuizApiService,
   type QuizDetailDto,
@@ -20,7 +23,13 @@ type QuestionDraft = Question & { clientId: string };
 @Component({
   selector: 'app-quiz-builder',
   standalone: true,
-  imports: [CommonModule, RouterLink, QuestionEditorComponent],
+  imports: [
+    CommonModule,
+    BubblyCardComponent,
+    BubblyButtonComponent,
+    BubblyAlertComponent,
+    QuestionEditorComponent,
+  ],
   templateUrl: './quiz-builder.component.html',
   styleUrl: './quiz-builder.component.css',
 })
@@ -95,6 +104,10 @@ export class QuizBuilderComponent {
     this.questions.update((current) =>
       current.map((draft) => (draft.clientId === clientId ? { ...question, clientId } : draft))
     );
+  }
+
+  navigateToDashboard(): void {
+    this.router.navigateByUrl('/dashboard');
   }
 
   async saveQuiz(): Promise<void> {

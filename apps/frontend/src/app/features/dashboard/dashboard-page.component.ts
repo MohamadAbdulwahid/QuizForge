@@ -10,7 +10,6 @@ import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink, BubblyButtonComponent, BubblyCardComponent],
   templateUrl: './dashboard-page.component.html',
-  styleUrl: './dashboard-page.component.css',
 })
 export class DashboardPageComponent {
   private readonly router = inject(Router);

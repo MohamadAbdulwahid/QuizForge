@@ -1,154 +1,171 @@
-<section class="w-full text-slate-900">
+<app-bubbly-card
+  tone="surface"
+  class="w-full"
+>
   <div class="w-full">
     <section
-      class="mb-6 overflow-hidden rounded-3xl border border-[#e4e7eb] bg-white shadow-[0_6px_0_0_rgba(0,0,0,0.08)]"
+      class="border-base-300 mb-6 overflow-hidden rounded-3xl border bg-white shadow-[0_6px_0_0_var(--bubbly-shadow)]"
     >
-      <div class="border-b border-[#edf1f5] bg-[#f8fafc] px-6 py-4 md:px-8">
+      <div class="border-base-200 bg-base-200 border-b px-6 py-4 md:px-8">
         <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <p class="text-xs font-bold tracking-[0.22em] text-[#64748b] uppercase">
+            <p class="text-base-content/60 text-xs font-bold tracking-[0.22em] uppercase">
               QuizForge Builder
             </p>
-            <h1 class="font-display mt-2 text-4xl font-bold text-[#1e88e5]">
+            <h1 class="font-display text-primary mt-2 text-4xl font-bold">
               {{ isEditMode() ? 'Edit your quiz playground' : 'Build a new quiz playground' }}
             </h1>
-            <p class="mt-2 max-w-3xl text-sm font-semibold text-[#64748b]">
+            <p class="text-base-content/60 mt-2 max-w-3xl text-sm font-semibold">
               Craft a polished round with the same bright, tactile QuizForge style used across the
               dashboard.
             </p>
           </div>
 
-          <a
-            routerLink="/dashboard"
-            class="inline-flex h-12 items-center justify-center rounded-2xl border border-[#dbe3ea] bg-white px-5 text-sm font-bold text-[#1e88e5] shadow-[0_4px_0_0_rgba(0,0,0,0.06)] transition hover:-translate-y-0.5 hover:bg-[#f8fafc]"
+          <app-bubbly-button
+            tone="ghost"
+            type="button"
+            (click)="navigateToDashboard()"
           >
             Back to Dashboard
-          </a>
+          </app-bubbly-button>
         </div>
       </div>
 
-      <div class="grid gap-3 px-6 py-5 text-sm font-semibold text-[#475569] md:grid-cols-3 md:px-8">
-        <div class="rounded-2xl border border-[#e4e7eb] bg-white px-4 py-3">
-          <p class="text-xs font-bold tracking-[0.18em] text-[#64748b] uppercase">Page Mode</p>
-          <p class="font-display mt-1 text-lg font-bold text-[#1e88e5]">
+      <div
+        class="grid gap-3 px-6 py-5 text-sm font-semibold text-[var(--bubbly-muted)] md:grid-cols-3 md:px-8"
+      >
+        <app-bubbly-card
+          tone="soft"
+          [padded]="false"
+        >
+          <p class="text-base-content/60 text-xs font-bold tracking-[0.18em] uppercase">
+            Page Mode
+          </p>
+          <p class="font-display text-primary mt-1 text-lg font-bold">
             {{ isEditMode() ? 'Editing Existing Quiz' : 'Creating Fresh Quiz' }}
           </p>
-        </div>
-        <div class="rounded-2xl border border-[#e4e7eb] bg-white px-4 py-3">
-          <p class="text-xs font-bold tracking-[0.18em] text-[#64748b] uppercase">Question Stack</p>
-          <p class="font-display mt-1 text-lg font-bold text-[#1e88e5]">
+        </app-bubbly-card>
+        <app-bubbly-card
+          tone="soft"
+          [padded]="false"
+        >
+          <p class="text-base-content/60 text-xs font-bold tracking-[0.18em] uppercase">
+            Question Stack
+          </p>
+          <p class="font-display text-primary mt-1 text-lg font-bold">
             {{ questions().length }} question{{ questions().length === 1 ? '' : 's' }} ready
           </p>
-        </div>
-        <div class="rounded-2xl border border-[#e4e7eb] bg-white px-4 py-3">
-          <p class="text-xs font-bold tracking-[0.18em] text-[#64748b] uppercase">Builder Goal</p>
-          <p class="mt-1 text-sm font-semibold text-[#475569]">
+        </app-bubbly-card>
+        <app-bubbly-card
+          tone="soft"
+          [padded]="false"
+        >
+          <p class="text-base-content/60 text-xs font-bold tracking-[0.18em] uppercase">
+            Builder Goal
+          </p>
+          <p class="mt-1 text-sm font-semibold text-[var(--bubbly-muted)]">
             Keep every question readable, validated, and demo-ready.
           </p>
-        </div>
+        </app-bubbly-card>
       </div>
     </section>
 
     @if (quizResource.isLoading() && isEditMode()) {
       <section
-        class="mb-4 rounded-3xl border border-[#e4e7eb] bg-white p-8 text-sm font-semibold text-[#64748b] shadow-[0_6px_0_0_rgba(0,0,0,0.08)]"
+        class="border-base-300 text-base-content/60 mb-4 rounded-3xl border bg-white p-8 text-sm font-semibold shadow-[0_6px_0_0_var(--bubbly-shadow)]"
       >
         Loading quiz data...
       </section>
     }
 
     @if (errorMessage()) {
-      <p
-        class="mb-4 rounded-2xl border border-[#fca5a5] bg-[#fff1f2] px-4 py-3 text-sm font-bold text-[#b91c1c] shadow-[0_4px_0_0_rgba(0,0,0,0.04)]"
-      >
-        {{ errorMessage() }}
-      </p>
+      <app-bubbly-alert
+        variant="error"
+        [message]="errorMessage()"
+        class="mb-4"
+      />
     }
 
     <section class="grid gap-6">
-      <article
-        class="rounded-3xl border border-[#e4e7eb] bg-white p-6 shadow-[0_6px_0_0_rgba(0,0,0,0.08)]"
-      >
-        <div class="mb-5 flex items-center justify-between gap-3 border-b border-[#edf1f5] pb-4">
+      <app-bubbly-card tone="surface">
+        <div class="border-base-200 mb-5 flex items-center justify-between gap-3 border-b pb-4">
           <div>
-            <h2 class="font-display text-2xl font-bold text-[#1e88e5]">Quiz Details</h2>
-            <p class="mt-1 text-sm font-semibold text-[#64748b]">
+            <h2 class="font-display text-primary text-2xl font-bold">Quiz Details</h2>
+            <p class="text-base-content/60 mt-1 text-sm font-semibold">
               Set the title and context players will see before the round begins.
             </p>
           </div>
           <div
-            class="rounded-full bg-[#e3f2fd] px-3 py-1 text-xs font-bold tracking-[0.16em] text-[#1e88e5] uppercase"
+            class="bg-primary/10 text-primary rounded-full px-3 py-1 text-xs font-bold tracking-[0.16em] uppercase"
           >
             Step 1
           </div>
         </div>
 
         <div class="grid gap-4 md:grid-cols-2">
-          <label class="grid gap-2 text-sm font-bold text-[#0f172a] md:col-span-2">
+          <label class="text-base-content grid gap-2 text-sm font-bold md:col-span-2">
             Quiz title
             <input
               type="text"
               [value]="title()"
               (input)="updateTitle($any($event.target).value)"
-              class="h-12 rounded-2xl border border-[#dbe3ea] bg-[#fcfdff] px-4 text-sm font-semibold text-[#0f172a] transition outline-none focus:border-[#1e88e5]"
+              class="qf-input h-12"
               placeholder="My first QuizForge quiz"
             />
           </label>
 
-          <label class="grid gap-2 text-sm font-bold text-[#0f172a] md:col-span-2">
+          <label class="text-base-content grid gap-2 text-sm font-bold md:col-span-2">
             Description
             <textarea
               [value]="description()"
               (input)="updateDescription($any($event.target).value)"
-              class="min-h-28 rounded-2xl border border-[#dbe3ea] bg-[#fcfdff] px-4 py-3 text-sm font-semibold text-[#0f172a] transition outline-none focus:border-[#1e88e5]"
+              class="qf-input min-h-28"
               placeholder="Optional short description"
             ></textarea>
           </label>
         </div>
-      </article>
+      </app-bubbly-card>
 
-      <article
-        class="rounded-3xl border border-[#e4e7eb] bg-white p-6 shadow-[0_6px_0_0_rgba(0,0,0,0.08)]"
-      >
+      <app-bubbly-card tone="surface">
         <div
-          class="mb-5 flex flex-col gap-3 border-b border-[#edf1f5] pb-4 md:flex-row md:items-center md:justify-between"
+          class="border-base-200 mb-5 flex flex-col gap-3 border-b pb-4 md:flex-row md:items-center md:justify-between"
         >
           <div>
-            <h2 class="font-display text-2xl font-bold text-[#1e88e5]">Questions</h2>
-            <p class="text-sm font-semibold text-[#64748b]">
+            <h2 class="font-display text-primary text-2xl font-bold">Questions</h2>
+            <p class="text-base-content/60 text-sm font-semibold">
               Add at least one question. Multiple-choice and true-false are supported here.
             </p>
           </div>
 
-          <button
+          <app-bubbly-button
+            tone="primary"
             type="button"
-            class="h-12 rounded-2xl bg-[#1e88e5] px-5 text-sm font-bold text-white shadow-[0_6px_0_0_#1565c0] transition hover:-translate-y-0.5"
             (click)="addQuestion()"
           >
             Add Question
-          </button>
+          </app-bubbly-button>
         </div>
 
         <div class="grid gap-6">
           @for (question of questions(); track question.clientId) {
             <section
-              class="overflow-hidden rounded-3xl border border-[#dbe3ea] bg-white shadow-[0_4px_0_0_rgba(0,0,0,0.05)]"
+              class="border-base-300 overflow-hidden rounded-3xl border bg-white shadow-[0_4px_0_0_var(--bubbly-shadow)]"
             >
               <div
-                class="flex flex-col gap-3 border-b border-[#edf1f5] bg-[#f8fafc] px-4 py-4 md:flex-row md:items-center md:justify-between md:px-5"
+                class="border-base-200 bg-base-200 flex flex-col gap-3 border-b px-4 py-4 md:flex-row md:items-center md:justify-between md:px-5"
               >
                 <div>
-                  <p class="text-xs font-bold tracking-[0.2em] text-[#64748b] uppercase">
+                  <p class="text-base-content/60 text-xs font-bold tracking-[0.2em] uppercase">
                     Question {{ $index + 1 }}
                   </p>
-                  <p class="font-display mt-1 text-lg font-bold text-[#1e88e5]">
+                  <p class="font-display text-primary mt-1 text-lg font-bold">
                     {{ questionTypeLabel(question.type) }}
                   </p>
                 </div>
 
                 <button
                   type="button"
-                  class="inline-flex h-10 items-center justify-center rounded-2xl border border-[#dbe3ea] bg-white px-4 text-sm font-bold text-[#b91c1c] transition hover:bg-[#fff5f5] disabled:cursor-not-allowed disabled:opacity-50"
+                  class="border-base-300 text-error inline-flex h-10 items-center justify-center rounded-2xl border bg-white px-4 text-sm font-bold transition hover:bg-[var(--bubbly-error-bg)] disabled:cursor-not-allowed disabled:opacity-50"
                   [disabled]="questions().length === 1"
                   (click)="removeQuestion(question.clientId)"
                 >
@@ -165,22 +182,22 @@
             </section>
           }
         </div>
-      </article>
+      </app-bubbly-card>
 
       <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <p class="text-sm font-semibold text-[#64748b]">
+        <p class="text-base-content/60 text-sm font-semibold">
           {{ questions().length }} question{{ questions().length === 1 ? '' : 's' }} in this quiz
         </p>
 
-        <button
+        <app-bubbly-button
+          tone="accent"
           type="button"
-          class="h-12 rounded-2xl bg-[#cd2750] px-6 text-base font-bold text-white shadow-[0_6px_0_0_#9f1d3d] transition hover:-translate-y-0.5 disabled:opacity-70"
           [disabled]="isSaving()"
           (click)="saveQuiz()"
         >
           {{ isSaving() ? 'Saving...' : 'Save Quiz' }}
-        </button>
+        </app-bubbly-button>
       </div>
     </section>
   </div>
-</section>
+</app-bubbly-card>

@@ -12,24 +12,14 @@ import {
 
 /**
  * HTTP handlers for quiz endpoints.
+ * Protected routes rely on authMiddleware to guarantee req.user exists.
  */
 export class QuizController {
   /**
    * Creates a quiz for the authenticated user.
-   * @param req - Express request containing validated quiz payload.
-   * @param res - Express response.
    */
   async createQuiz(req: AuthenticatedRequest, res: Response): Promise<void> {
-    const userId = req.user?.id;
-
-    if (!userId) {
-      res.status(StatusCodes.UNAUTHORIZED).json({
-        error: 'Unauthorized',
-        code: 'UNAUTHORIZED',
-        statusCode: StatusCodes.UNAUTHORIZED,
-      });
-      return;
-    }
+    const userId = req.user!.id;
 
     const result = await createQuizWithCollisionGuard(userId, req.body as never);
     res.status(StatusCodes.CREATED).json(result);
@@ -37,20 +27,9 @@ export class QuizController {
 
   /**
    * Updates quiz metadata and optionally replaces questions.
-   * @param req - Express request containing quiz id and update payload.
-   * @param res - Express response.
    */
   async updateQuiz(req: AuthenticatedRequest, res: Response): Promise<void> {
-    const userId = req.user?.id;
-
-    if (!userId) {
-      res.status(StatusCodes.UNAUTHORIZED).json({
-        error: 'Unauthorized',
-        code: 'UNAUTHORIZED',
-        statusCode: StatusCodes.UNAUTHORIZED,
-      });
-      return;
-    }
+    const userId = req.user!.id;
 
     const quizId = Number(req.params.id);
     const result = await updateQuiz(quizId, userId, req.body as never);
@@ -59,20 +38,9 @@ export class QuizController {
 
   /**
    * Deletes a quiz owned by the authenticated user.
-   * @param req - Express request containing quiz id.
-   * @param res - Express response.
    */
   async deleteQuiz(req: AuthenticatedRequest, res: Response): Promise<void> {
-    const userId = req.user?.id;
-
-    if (!userId) {
-      res.status(StatusCodes.UNAUTHORIZED).json({
-        error: 'Unauthorized',
-        code: 'UNAUTHORIZED',
-        statusCode: StatusCodes.UNAUTHORIZED,
-      });
-      return;
-    }
+    const userId = req.user!.id;
 
     const quizId = Number(req.params.id);
     await deleteQuiz(quizId, userId);
@@ -81,20 +49,9 @@ export class QuizController {
 
   /**
    * Lists all quizzes for the authenticated user.
-   * @param req - Express request.
-   * @param res - Express response.
    */
   async getMyQuizzes(req: AuthenticatedRequest, res: Response): Promise<void> {
-    const userId = req.user?.id;
-
-    if (!userId) {
-      res.status(StatusCodes.UNAUTHORIZED).json({
-        error: 'Unauthorized',
-        code: 'UNAUTHORIZED',
-        statusCode: StatusCodes.UNAUTHORIZED,
-      });
-      return;
-    }
+    const userId = req.user!.id;
 
     const quizzes = await getQuizzesByCreator(userId);
     res.status(StatusCodes.OK).json(quizzes);
@@ -102,20 +59,9 @@ export class QuizController {
 
   /**
    * Returns a quiz with questions for its owner.
-   * @param req - Express request containing quiz id.
-   * @param res - Express response.
    */
   async getQuizById(req: AuthenticatedRequest, res: Response): Promise<void> {
-    const userId = req.user?.id;
-
-    if (!userId) {
-      res.status(StatusCodes.UNAUTHORIZED).json({
-        error: 'Unauthorized',
-        code: 'UNAUTHORIZED',
-        statusCode: StatusCodes.UNAUTHORIZED,
-      });
-      return;
-    }
+    const userId = req.user!.id;
 
     const quizId = Number(req.params.id);
     const quiz = await getQuizById(quizId, userId);
@@ -123,9 +69,7 @@ export class QuizController {
   }
 
   /**
-   * Returns a public quiz preview by share code.
-   * @param req - Express request containing shareCode route param.
-   * @param res - Express response.
+   * Returns a public quiz preview by share code (no auth required).
    */
   async getQuizByShareCode(req: Request, res: Response): Promise<void> {
     const shareCodeParam = req.params.shareCode;
