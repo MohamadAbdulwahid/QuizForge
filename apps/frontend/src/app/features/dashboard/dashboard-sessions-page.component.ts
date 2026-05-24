@@ -25,7 +25,6 @@ type ActionCapableStatus = Exclude<SessionStatus, 'ended'>;
     PageHeadingComponent,
   ],
   templateUrl: './dashboard-sessions-page.component.html',
-  styleUrl: './dashboard-sessions-page.component.css',
 })
 export class DashboardSessionsPageComponent {
   private readonly sessionApiService = inject(SessionApiService);

@@ -21,7 +21,6 @@ import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
   standalone: true,
   imports: [CommonModule, FormsModule, BubblyCardComponent, PageHeadingComponent],
   templateUrl: './dashboard-groups-page.component.html',
-  styleUrl: './dashboard-groups-page.component.css',
 })
 export class DashboardGroupsPageComponent {
   private readonly groupApiService = inject(GroupApiService);

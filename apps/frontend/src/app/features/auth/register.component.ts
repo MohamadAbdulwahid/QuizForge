@@ -3,13 +3,25 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { resolveAuthError } from '../../shared/utils/auth-errors';
+import { BubblyAlertComponent } from '../../shared/ui/bubbly-alert.component';
+import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
+import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
+import { BubblyInputComponent } from '../../shared/ui/bubbly-input.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    BubblyAlertComponent,
+    BubblyButtonComponent,
+    BubblyCardComponent,
+    BubblyInputComponent,
+  ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
 })
 export class RegisterComponent {
   private readonly formBuilder = inject(FormBuilder);
@@ -54,7 +66,9 @@ export class RegisterComponent {
 
       this.infoMessage.set('Check your email to confirm your account, then log in.');
     } catch (error: unknown) {
-      this.errorMessage.set(this.resolveAuthError(error));
+      this.errorMessage.set(
+        resolveAuthError(error, 'Signup failed. Please double-check your details and try again.')
+      );
     } finally {
       this.isSubmitting.set(false);
     }
@@ -63,16 +77,5 @@ export class RegisterComponent {
   protected isFieldInvalid(controlName: 'email' | 'username' | 'password'): boolean {
     const control = this.form.get(controlName);
     return Boolean(control && control.touched && control.invalid);
-  }
-
-  private resolveAuthError(error: unknown): string {
-    if (typeof error === 'object' && error !== null && 'message' in error) {
-      const candidate = error as { message?: string };
-      if (candidate.message) {
-        return candidate.message;
-      }
-    }
-
-    return 'Signup failed. Please double-check your details and try again.';
   }
 }

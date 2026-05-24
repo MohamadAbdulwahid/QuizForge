@@ -8,6 +8,21 @@ import { syncProfileForAuthUser } from '../services/profile.service';
 const authLogger = createChildLogger('auth');
 
 /**
+ * Standardized JSON body for 401 responses.
+ * Use this helper in controllers that need to reject unauthenticated requests.
+ *
+ * @param res - Express response object
+ * @param message - Optional custom message (defaults to 'Unauthorized')
+ */
+export function sendUnauthorized(res: Response, message = 'Unauthorized'): void {
+  res.status(StatusCodes.UNAUTHORIZED).json({
+    error: message,
+    code: 'UNAUTHORIZED',
+    statusCode: StatusCodes.UNAUTHORIZED,
+  });
+}
+
+/**
  * Extended request with authenticated user data
  */
 export interface AuthenticatedRequest extends Request {

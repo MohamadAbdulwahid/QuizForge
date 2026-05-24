@@ -18,12 +18,12 @@
 }
 
 .radio:hover {
-  border-color: #1e88e5;
+  border-color: var(--bubbly-primary);
 }
 
 .radio:checked {
-  background-color: var(--accent);
-  border-color: var(--accent);
+  background-color: var(--bubbly-accent);
+  border-color: var(--bubbly-accent);
 }
 
 /* Responsive adjustments */

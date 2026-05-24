@@ -3,7 +3,7 @@ import { z } from 'zod';
 /**
  * Zod schema for sign-up request body
  */
-export const signUpSchema = z.object({
+const signUpRequestSchema = z.object({
   email: z.email({ message: 'Invalid email format' }),
   password: z.string().min(8, 'Password must be at least 8 characters'),
   username: z
@@ -16,14 +16,25 @@ export const signUpSchema = z.object({
     ),
 });
 
-export type SignUpDto = z.infer<typeof signUpSchema>;
+export type SignUpDto = z.infer<typeof signUpRequestSchema>;
 
 /**
  * Zod schema for sign-in request body
  */
-export const signInSchema = z.object({
+const signInRequestSchema = z.object({
   email: z.email({ message: 'Invalid email format' }),
   password: z.string().min(1, 'Password is required'),
 });
 
-export type SignInDto = z.infer<typeof signInSchema>;
+export type SignInDto = z.infer<typeof signInRequestSchema>;
+
+// PascalCase exports matching session.dto.ts and quiz.dto.ts pattern
+export { signUpRequestSchema as SignUpRequestSchema };
+export { signInRequestSchema as SignInRequestSchema };
+
+// Backward-compatible aliases
+export { signUpRequestSchema as signUpSchema };
+export { signInRequestSchema as signInSchema };
+
+export type SignUpRequest = z.infer<typeof signUpRequestSchema>;
+export type SignInRequest = z.infer<typeof signInRequestSchema>;

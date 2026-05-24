@@ -41,39 +41,45 @@
     }
   </section>
 
-  <section class="qf-surface mb-10 overflow-hidden rounded-3xl">
-    <header class="bg-bubbly-primary px-6 py-4">
-      <h2 class="font-display text-xl font-bold text-white">The Chasers</h2>
-    </header>
+  <div class="mb-10 overflow-hidden rounded-3xl">
+    <app-bubbly-card
+      tone="surface"
+      [padded]="false"
+    >
+      <header class="bg-bubbly-primary px-6 py-4">
+        <h2 class="font-display text-xl font-bold text-white">The Chasers</h2>
+      </header>
 
-    <div class="grid">
-      @for (player of chasers; track player.rank) {
-        <div
-          class="flex items-center justify-between border-b border-slate-100 px-6 py-4 odd:bg-white even:bg-sky-50/70"
-        >
-          <div class="flex items-center gap-4">
-            <span class="font-display w-6 text-center text-lg font-bold text-slate-500">
-              {{ player.rank }}
-            </span>
-            <span
-              class="text-bubbly-primary flex h-10 w-10 items-center justify-center rounded-full border-2 border-sky-200 bg-white text-sm font-bold"
-            >
-              {{ player.initials }}
-            </span>
-            <span class="text-lg font-bold text-slate-900">{{ player.name }}</span>
+      <div class="grid">
+        @for (player of chasers; track player.rank) {
+          <div
+            class="flex items-center justify-between border-b border-slate-100 px-6 py-4 odd:bg-white even:bg-sky-50/70"
+          >
+            <div class="flex items-center gap-4">
+              <span class="font-display w-6 text-center text-lg font-bold text-slate-500">
+                {{ player.rank }}
+              </span>
+              <span
+                class="text-bubbly-primary flex h-10 w-10 items-center justify-center rounded-full border-2 border-sky-200 bg-white text-sm font-bold"
+              >
+                {{ player.initials }}
+              </span>
+              <span class="text-lg font-bold text-slate-900">{{ player.name }}</span>
+            </div>
+            <span class="font-display text-lg font-bold text-slate-800">{{ player.score }}</span>
           </div>
-          <span class="font-display text-lg font-bold text-slate-800">{{ player.score }}</span>
-        </div>
-      }
-    </div>
-  </section>
+        }
+      </div>
+    </app-bubbly-card>
+  </div>
 
   <div class="mx-auto max-w-sm">
-    <a
-      routerLink="/dashboard"
-      class="qf-button-primary qf-tactile flex min-h-14 items-center justify-center rounded-2xl px-6 text-base font-bold"
+    <app-bubbly-button
+      tone="primary"
+      [full]="true"
+      (click)="goToDashboard()"
     >
       Back To Dashboard
-    </a>
+    </app-bubbly-button>
   </div>
 </section>

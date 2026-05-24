@@ -3,15 +3,27 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { resolveAuthError } from '../../shared/utils/auth-errors';
+import { BubblyAlertComponent } from '../../shared/ui/bubbly-alert.component';
+import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
+import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
+import { BubblyInputComponent } from '../../shared/ui/bubbly-input.component';
 
 type AuthMode = 'login' | 'signup';
 
 @Component({
   selector: 'app-auth-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    BubblyAlertComponent,
+    BubblyButtonComponent,
+    BubblyCardComponent,
+    BubblyInputComponent,
+  ],
   templateUrl: './auth-page.component.html',
-  styleUrl: './auth-page.component.css',
 })
 export class AuthPageComponent {
   private readonly authService = inject(AuthService);
@@ -69,26 +81,12 @@ export class AuthPageComponent {
         this.errorMessage.set('Check your email to confirm your account before signing in.');
       })
       .catch((error: unknown) => {
-        this.errorMessage.set(this.resolveAuthError(error));
+        this.errorMessage.set(
+          resolveAuthError(error, 'Authentication failed. Please verify credentials and try again.')
+        );
       })
       .finally(() => {
         this.isSubmitting.set(false);
       });
-  }
-
-  private resolveAuthError(error: unknown): string {
-    if (typeof error === 'object' && error !== null && 'error' in error) {
-      const transportError = error as {
-        error?: {
-          error?: string;
-        };
-      };
-
-      if (transportError.error?.error) {
-        return transportError.error.error;
-      }
-    }
-
-    return 'Authentication failed. Please verify credentials and try again.';
   }
 }

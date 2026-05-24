@@ -4,18 +4,18 @@
     <div class="form-control">
       <div class="mb-2 flex items-center justify-between gap-3">
         <label
-          class="font-display text-lg font-bold text-[#1e88e5]"
+          class="font-display text-primary text-lg font-bold"
           for="questionText"
         >
           Question
         </label>
-        <span class="text-xs font-bold tracking-[0.16em] text-[#64748b] uppercase">
+        <span class="text-base-content/60 text-xs font-bold tracking-[0.16em] uppercase">
           {{ questionText().length }}/500 characters
         </span>
       </div>
       <textarea
         id="questionText"
-        class="min-h-32 w-full rounded-2xl border border-[#dbe3ea] bg-[#fcfdff] px-4 py-4 text-sm leading-6 font-semibold text-[#0f172a] transition outline-none focus:border-[#1e88e5]"
+        class="qf-input min-h-32 w-full leading-6"
         placeholder="Enter your question here..."
         rows="2"
         maxlength="500"
@@ -23,28 +23,28 @@
         (input)="onQuestionTextInput($event)"
       ></textarea>
       @if (hasFieldError('text')) {
-        <div
-          class="mt-3 rounded-2xl border border-[#fca5a5] bg-[#fff1f2] px-4 py-3 text-sm leading-6 font-bold text-[#b91c1c]"
-        >
-          <span>{{ getFieldError('text') }}</span>
-        </div>
+        <app-bubbly-alert
+          variant="error"
+          [message]="getFieldError('text')"
+          class="mt-3"
+        />
       }
     </div>
 
     <!-- Question Type Section -->
     <div class="form-control">
       <label
-        class="font-display mb-3 text-lg font-bold text-[#1e88e5]"
+        class="font-display text-primary mb-3 text-lg font-bold"
         for="questionType"
       >
         Question Type
       </label>
       <div class="flex flex-wrap gap-3">
         <label
-          class="inline-flex min-h-12 items-center gap-3 rounded-2xl border border-[#dbe3ea] bg-white px-4 py-3 text-sm font-bold text-[#475569] transition hover:bg-[#f8fafc]"
-          [class.border-[#1e88e5]]="questionType() === 'multiple-choice'"
-          [class.bg-[#e3f2fd]]="questionType() === 'multiple-choice'"
-          [class.text-[#1e88e5]]="questionType() === 'multiple-choice'"
+          class="border-base-300 hover:bg-base-200 inline-flex min-h-12 items-center gap-3 rounded-2xl border bg-white px-4 py-3 text-sm font-bold text-[var(--bubbly-muted)] transition"
+          [class.border-primary]="questionType() === 'multiple-choice'"
+          [class.bg-primary/10]="questionType() === 'multiple-choice'"
+          [class.text-primary]="questionType() === 'multiple-choice'"
         >
           <input
             type="radio"
@@ -57,10 +57,10 @@
           <span class="label-text pl-1">Multiple Choice</span>
         </label>
         <label
-          class="inline-flex min-h-12 items-center gap-3 rounded-2xl border border-[#dbe3ea] bg-white px-4 py-3 text-sm font-bold text-[#475569] transition hover:bg-[#f8fafc]"
-          [class.border-[#1e88e5]]="questionType() === 'true-false'"
-          [class.bg-[#e3f2fd]]="questionType() === 'true-false'"
-          [class.text-[#1e88e5]]="questionType() === 'true-false'"
+          class="border-base-300 hover:bg-base-200 inline-flex min-h-12 items-center gap-3 rounded-2xl border bg-white px-4 py-3 text-sm font-bold text-[var(--bubbly-muted)] transition"
+          [class.border-primary]="questionType() === 'true-false'"
+          [class.bg-primary/10]="questionType() === 'true-false'"
+          [class.text-primary]="questionType() === 'true-false'"
         >
           <input
             type="radio"
@@ -78,19 +78,19 @@
     <!-- Answer Options Section -->
     <div class="form-control">
       <div class="mb-3 flex items-center justify-between gap-3">
-        <span class="font-display text-lg font-bold text-[#1e88e5]">Answer Options</span>
-        <span class="text-xs font-bold tracking-[0.16em] text-[#64748b] uppercase">
+        <span class="font-display text-primary text-lg font-bold">Answer Options</span>
+        <span class="text-base-content/60 text-xs font-bold tracking-[0.16em] uppercase">
           {{ questionType() === 'true-false' ? 'Locked values' : 'Editable choices' }}
         </span>
       </div>
       <div class="space-y-3">
         @for (option of answerOptions(); let i = $index; track option.id) {
           <div
-            class="grid gap-3 rounded-2xl border border-[#edf1f5] bg-[#f8fafc] p-3 md:grid-cols-[3.25rem_minmax(0,1fr)_auto_auto] md:items-center"
+            class="border-base-200 bg-base-200 grid gap-3 rounded-2xl border p-3 md:grid-cols-[3.25rem_minmax(0,1fr)_auto_auto] md:items-center"
           >
             <!-- Option ID Badge -->
             <div
-              class="font-display flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[#1e88e5] text-lg font-bold text-white"
+              class="font-display bg-primary flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl text-lg font-bold text-white"
             >
               {{ option.id }}
             </div>
@@ -99,7 +99,7 @@
             <div class="relative min-w-0">
               @if (questionType() === 'true-false') {
                 <div
-                  class="flex h-12 items-center rounded-2xl border border-[#dbe3ea] bg-white px-4 text-sm font-semibold text-[#475569]"
+                  class="border-base-300 flex h-12 items-center rounded-2xl border bg-white px-4 text-sm font-semibold text-[var(--bubbly-muted)]"
                 >
                   {{ option.text }}
                 </div>
@@ -110,13 +110,13 @@
                   maxlength="500"
                   [value]="option.text"
                   (input)="onAnswerOptionInput(i, $event)"
-                  class="h-12 w-full rounded-2xl border border-[#dbe3ea] bg-white px-4 text-sm font-semibold text-[#0f172a] transition outline-none focus:border-[#1e88e5]"
+                  class="qf-input h-12 w-full"
                 />
               }
 
               @if (questionType() !== 'true-false' && hasFieldError(`option-${i}`)) {
                 <div
-                  class="absolute top-full left-0 mt-1 text-sm leading-5 font-semibold text-[#b91c1c]"
+                  class="text-error absolute top-full left-0 mt-1 text-sm leading-5 font-semibold"
                 >
                   {{ getFieldError(`option-${i}`) }}
                 </div>
@@ -135,14 +135,14 @@
                 (change)="markAsCorrect(option.id)"
                 class="radio radio-accent"
               />
-              <div class="text-sm font-semibold text-[#cd2750]">Correct</div>
+              <div class="text-accent text-sm font-semibold">Correct</div>
             </div>
 
             <!-- Remove Button (if more than 2 options) -->
             @if (questionType() === 'multiple-choice' && answerOptions().length > 2) {
               <button
                 type="button"
-                class="inline-flex h-12 items-center justify-center rounded-2xl border border-[#f3d0d5] bg-white px-4 text-sm font-bold text-[#b91c1c] transition hover:bg-[#fff5f5]"
+                class="text-error inline-flex h-12 items-center justify-center rounded-2xl border border-[var(--bubbly-error-border)] bg-white px-4 text-sm font-bold transition hover:bg-[var(--bubbly-error-bg)]"
                 (click)="removeAnswerOption(i)"
                 title="Remove this option"
               >
@@ -154,26 +154,26 @@
       </div>
 
       @if (hasFieldError('options')) {
-        <div
-          class="mt-3 rounded-2xl border border-[#fca5a5] bg-[#fff1f2] px-4 py-3 text-sm leading-6 font-bold text-[#b91c1c]"
-        >
-          <span>{{ getFieldError('options') }}</span>
-        </div>
+        <app-bubbly-alert
+          variant="error"
+          [message]="getFieldError('options')"
+          class="mt-3"
+        />
       }
 
       @if (hasFieldError('correct_answer')) {
-        <div
-          class="mt-3 rounded-2xl border border-[#fca5a5] bg-[#fff1f2] px-4 py-3 text-sm leading-6 font-bold text-[#b91c1c]"
-        >
-          <span>{{ getFieldError('correct_answer') }}</span>
-        </div>
+        <app-bubbly-alert
+          variant="error"
+          [message]="getFieldError('correct_answer')"
+          class="mt-3"
+        />
       }
 
       <!-- Add Answer Button -->
       @if (questionType() === 'multiple-choice' && answerOptions().length < 6) {
         <button
           type="button"
-          class="mt-3 inline-flex h-11 items-center justify-center rounded-2xl border border-[#dbe3ea] bg-white px-5 text-sm font-bold text-[#1e88e5] transition hover:bg-[#f8fafc]"
+          class="border-base-300 text-primary hover:bg-base-200 mt-3 inline-flex h-11 items-center justify-center rounded-2xl border bg-white px-5 text-sm font-bold transition"
           (click)="addAnswerOption()"
         >
           <span class="text-lg leading-none">+</span>
@@ -199,10 +199,10 @@
           max="120"
           [value]="timeLimit()"
           (input)="onTimeLimitInput($event)"
-          class="h-12 rounded-2xl border border-[#dbe3ea] bg-[#fcfdff] px-4 text-sm font-semibold text-[#0f172a] transition outline-none focus:border-[#1e88e5]"
+          class="qf-input h-12"
         />
         @if (hasFieldError('time_limit')) {
-          <div class="mt-1 text-sm font-semibold text-[#b91c1c]">
+          <div class="text-error mt-1 text-sm font-semibold">
             {{ getFieldError('time_limit') }}
           </div>
         }
@@ -223,22 +223,26 @@
           max="1000"
           [value]="points()"
           (input)="onPointsInput($event)"
-          class="h-12 rounded-2xl border border-[#dbe3ea] bg-[#fcfdff] px-4 text-sm font-semibold text-[#0f172a] transition outline-none focus:border-[#1e88e5]"
+          class="qf-input h-12"
         />
         @if (hasFieldError('points')) {
-          <div class="mt-1 text-sm font-semibold text-[#b91c1c]">{{ getFieldError('points') }}</div>
+          <div class="text-error mt-1 text-sm font-semibold">{{ getFieldError('points') }}</div>
         }
       </div>
     </div>
 
     <!-- Validation Status Badge -->
-    <div class="flex justify-end border-t border-[#edf1f5] pt-2">
+    <div class="border-base-200 flex justify-end border-t pt-2">
       @if (isValid()) {
-        <div class="rounded-full bg-[#dcfce7] px-4 py-2 text-sm font-bold text-[#166534]">
+        <div
+          class="rounded-full bg-[var(--bubbly-success-bg)] px-4 py-2 text-sm font-bold text-[var(--bubbly-success-text)]"
+        >
           ✓ Valid
         </div>
       } @else {
-        <div class="rounded-full bg-[#fff1f2] px-4 py-2 text-sm font-bold text-[#b91c1c]">
+        <div
+          class="text-error rounded-full bg-[var(--bubbly-error-bg)] px-4 py-2 text-sm font-bold"
+        >
           ✗ Invalid - Fix errors above
         </div>
       }

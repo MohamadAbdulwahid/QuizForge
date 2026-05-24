@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ButtonTestComponent } from '../../shared/components/button-test.component';
 
 type StitchScreenPreview = {
   title: string;
@@ -13,9 +12,8 @@ type StitchScreenPreview = {
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, ButtonTestComponent],
+  imports: [CommonModule, RouterLink],
   templateUrl: './landing-page.component.html',
-  styleUrl: './landing-page.component.css',
 })
 export class LandingPageComponent {
   protected readonly stitchScreenPreviews: StitchScreenPreview[] = [
