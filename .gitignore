@@ -151,7 +151,6 @@ vite.config.ts.timestamp-*
 .claude/settings.local.json
 .agents/
 .codex/
-.opencode/
 .github/
 
 # VS Code workspace settings and local tool state
