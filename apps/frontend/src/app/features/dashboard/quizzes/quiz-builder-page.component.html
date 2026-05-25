@@ -12,8 +12,18 @@
       class="qf-button-ghost qf-tactile inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-bold"
       (click)="goBack()"
     >
-      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      <svg
+        class="h-4 w-4"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M10 19l-7-7m0 0l7-7m-7 7h18"
+        />
       </svg>
       Back to Quizzes
     </button>
@@ -39,7 +49,10 @@
 }
 
 <!-- Quiz Details -->
-<app-bubbly-card tone="surface" class="mb-6 block">
+<app-bubbly-card
+  tone="surface"
+  class="mb-6 block"
+>
   <h2 class="font-display text-bubbly-primary mb-4 text-lg font-bold">Quiz Details</h2>
   <div class="grid gap-4 md:grid-cols-2">
     <div class="md:col-span-2">
@@ -73,15 +86,27 @@
         Questions
         <span class="text-sm font-semibold text-slate-400">({{ questions().length }})</span>
       </h2>
-      <p class="text-xs font-semibold text-slate-500">Add and configure your quiz questions below.</p>
+      <p class="text-xs font-semibold text-slate-500">
+        Add and configure your quiz questions below.
+      </p>
     </div>
     <app-bubbly-button
       tone="accent"
       size="sm"
       (click)="addQuestion()"
     >
-      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      <svg
+        class="h-4 w-4"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2.5"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 4.5v15m7.5-7.5h-15"
+        />
       </svg>
       Add Question
     </app-bubbly-button>
@@ -92,22 +117,31 @@
       @let errors = getQuestionErrors(question.clientId);
       @let index = $index;
 
-      <app-bubbly-card tone="soft" class="block">
+      <app-bubbly-card
+        tone="soft"
+        class="block"
+      >
         <!-- Question header -->
         <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div class="flex items-center gap-3">
             <span
-              class="flex h-8 w-8 items-center justify-center rounded-xl bg-bubbly-accent text-xs font-bold text-white"
+              class="bg-bubbly-accent flex h-8 w-8 items-center justify-center rounded-xl text-xs font-bold text-white"
             >
               {{ index + 1 }}
             </span>
-            <span class="font-display text-sm font-bold text-slate-700">Question {{ index + 1 }}</span>
+            <span class="font-display text-sm font-bold text-slate-700">
+              Question {{ index + 1 }}
+            </span>
             @if (errors.length > 0) {
-              <span class="rounded-full bg-red-100 px-2.5 py-0.5 text-[11px] font-bold text-red-600">
+              <span
+                class="rounded-full bg-red-100 px-2.5 py-0.5 text-[11px] font-bold text-red-600"
+              >
                 {{ errors.length }} issue{{ errors.length !== 1 ? 's' : '' }}
               </span>
             } @else {
-              <span class="rounded-full bg-green-100 px-2.5 py-0.5 text-[11px] font-bold text-green-600">
+              <span
+                class="rounded-full bg-green-100 px-2.5 py-0.5 text-[11px] font-bold text-green-600"
+              >
                 Valid
               </span>
             }
@@ -131,8 +165,18 @@
                 (click)="removeQuestion(question.clientId)"
                 aria-label="Remove question"
               >
-                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  class="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             }
@@ -141,7 +185,7 @@
 
         <!-- Question text -->
         <div class="mb-4">
-          <label class="mb-1.5 block text-xs font-bold text-slate-500 uppercase tracking-wider">
+          <label class="mb-1.5 block text-xs font-bold tracking-wider text-slate-500 uppercase">
             Question Text
             <textarea
               class="qf-input mt-1.5 min-h-[70px] w-full resize-y px-4 py-3 pr-16 text-sm font-semibold placeholder:text-sm"
@@ -150,17 +194,21 @@
               (input)="onQuestionTextInput(question.clientId, $event)"
             ></textarea>
           </label>
-          <span class="pointer-events-none relative -top-8 float-right mr-3 text-[11px] font-semibold text-slate-400">
+          <span
+            class="pointer-events-none relative -top-8 float-right mr-3 text-[11px] font-semibold text-slate-400"
+          >
             {{ question.text.length }}/500
           </span>
           @if (errors.length > 0) {
-            <p class="-mt-6 text-xs font-semibold text-red-500">This question has {{ errors.length }} issue{{ errors.length !== 1 ? 's' : '' }}.</p>
+            <p class="-mt-6 text-xs font-semibold text-red-500">
+              This question has {{ errors.length }} issue{{ errors.length !== 1 ? 's' : '' }}.
+            </p>
           }
         </div>
 
         <!-- Options -->
         <div class="mb-4">
-          <p class="mb-2 block text-xs font-bold text-slate-500 uppercase tracking-wider">
+          <p class="mb-2 block text-xs font-bold tracking-wider text-slate-500 uppercase">
             Answer Options
           </p>
           <div class="grid gap-2">
@@ -177,7 +225,9 @@
 
                 <!-- Input (editable for MC, readonly for TF) -->
                 @if (question.type === 'true-false') {
-                  <div class="qf-input flex flex-1 items-center px-4 py-2.5 text-sm font-bold text-slate-600">
+                  <div
+                    class="qf-input flex flex-1 items-center px-4 py-2.5 text-sm font-bold text-slate-600"
+                  >
                     {{ opt.text }}
                   </div>
                 } @else {
@@ -197,13 +247,29 @@
                   [class.bg-slate-100.text-slate-400]="opt.id !== question.correctAnswerId"
                   (click)="markCorrect(question.clientId, opt.id)"
                   [attr.aria-label]="'Mark ' + optionLabel(optIdx) + ' as correct'"
-                  [title]="opt.id === question.correctAnswerId ? 'Correct answer' : 'Set as correct'"
+                  [title]="
+                    opt.id === question.correctAnswerId ? 'Correct answer' : 'Set as correct'
+                  "
                 >
-                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <svg
+                    class="h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                  >
                     @if (opt.id === question.correctAnswerId) {
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M4.5 12.75l6 6 9-13.5"
+                      />
                     } @else {
-                      <circle cx="12" cy="12" r="9" />
+                      <circle
+                        cx="12"
+                        cy="12"
+                        r="9"
+                      />
                     }
                   </svg>
                 </button>
@@ -216,8 +282,18 @@
                     (click)="removeOption(question.clientId, optIdx)"
                     aria-label="Remove option"
                   >
-                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      class="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                   </button>
                 }
@@ -229,11 +305,21 @@
           @if (question.type === 'multiple-choice' && question.options.length < 6) {
             <button
               type="button"
-              class="qf-button-ghost qf-tactile mt-2 inline-flex items-center gap-1.5 rounded-2xl px-3 py-1.5 text-xs font-bold text-bubbly-accent"
+              class="qf-button-ghost qf-tactile text-bubbly-accent mt-2 inline-flex items-center gap-1.5 rounded-2xl px-3 py-1.5 text-xs font-bold"
               (click)="addOption(question.clientId)"
             >
-              <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              <svg
+                class="h-3.5 w-3.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 4.5v15m7.5-7.5h-15"
+                />
               </svg>
               Add Option
             </button>
@@ -260,7 +346,7 @@
               max="120"
             />
           </label>
-          <span class="text-xs font-semibold text-slate-400 -ml-3">sec</span>
+          <span class="-ml-3 text-xs font-semibold text-slate-400">sec</span>
           <label class="flex items-center gap-2 text-xs font-bold text-slate-500">
             Points
             <input
@@ -272,7 +358,7 @@
               max="1000"
             />
           </label>
-          <span class="text-xs font-semibold text-slate-400 -ml-3">pts</span>
+          <span class="-ml-3 text-xs font-semibold text-slate-400">pts</span>
         </div>
       </app-bubbly-card>
     }
@@ -298,10 +384,11 @@
 <div class="sticky bottom-0 z-10 rounded-3xl bg-white p-4 shadow-[0_-4px_0_0_var(--bubbly-shadow)]">
   <div class="flex items-center justify-between">
     <p class="text-sm font-semibold text-slate-500">
-      <span class="font-bold text-bubbly-primary">{{ questions().length }}</span>
+      <span class="text-bubbly-primary font-bold">{{ questions().length }}</span>
       question{{ questions().length !== 1 ? 's' : '' }}
       @if (title().trim()) {
-        · <span class="text-bubbly-accent">{{ title().trim() }}</span>
+        ·
+        <span class="text-bubbly-accent">{{ title().trim() }}</span>
       }
     </p>
     <div class="flex items-center gap-3">
@@ -318,7 +405,9 @@
       >
         @if (isSaving()) {
           <span class="flex items-center gap-2">
-            <span class="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+            <span
+              class="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"
+            ></span>
             Saving...
           </span>
         } @else {
