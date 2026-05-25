@@ -38,15 +38,19 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client,
   },
   {
-    path: 'dashboard/sessions',
+    path: 'dashboard/quizzes/new',
     renderMode: RenderMode.Client,
   },
   {
-    path: 'builder/new',
+    path: 'dashboard/quizzes/:id',
     renderMode: RenderMode.Client,
   },
   {
-    path: 'builder/:id',
+    path: 'dashboard/groups/new',
+    renderMode: RenderMode.Client,
+  },
+  {
+    path: 'dashboard/groups/:id',
     renderMode: RenderMode.Client,
   },
   {
@@ -59,6 +63,10 @@ export const serverRoutes: ServerRoute[] = [
   },
   {
     path: 'game/:pin',
+    renderMode: RenderMode.Client,
+  },
+  {
+    path: 'host/:pin',
     renderMode: RenderMode.Client,
   },
   {

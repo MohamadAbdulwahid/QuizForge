@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { QuizApiService, QuizSummary } from '../../core/services/quiz-api.service';
 import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
@@ -16,6 +16,7 @@ type QuizSortMode = 'newest' | 'oldest' | 'title';
   imports: [
     CommonModule,
     FormsModule,
+    RouterLink,
     BubblyButtonComponent,
     BubblyCardComponent,
     PageHeadingComponent,

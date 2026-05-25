@@ -4,31 +4,26 @@ import { Component, DestroyRef, OnDestroy, OnInit, computed, inject, signal } fr
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { SessionApiService, SessionStatus } from '../../core/services/session-api.service';
-import { SocketErrorPayload, WebsocketService } from '../../core/services/websocket.service';
+import { SessionEventBus } from '../../core/services/session-event-bus.service';
+import {
+  SessionClosedEvent,
+  SocketErrorPayload,
+  WebsocketService,
+} from '../../core/services/websocket.service';
 import { buildDisplayName } from '../../shared/utils/display-name';
-import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
-import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
-import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
-import { PlayerBubbleComponent } from '../../shared/ui/player-bubble.component';
+import { BubblyModalComponent } from '../../shared/ui/bubbly-modal.component';
 
 interface LobbyPlayer {
   userId: string;
   name: string;
   emoji: string;
   isSelf: boolean;
-  isHost: boolean;
 }
 
 @Component({
   selector: 'app-game-lobby-page',
   standalone: true,
-  imports: [
-    CommonModule,
-    BubblyButtonComponent,
-    BubblyCardComponent,
-    PageHeadingComponent,
-    PlayerBubbleComponent,
-  ],
+  imports: [CommonModule, BubblyModalComponent],
   templateUrl: './game-lobby-page.component.html',
 })
 export class GameLobbyPageComponent implements OnInit, OnDestroy {
@@ -36,6 +31,7 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   private readonly authService = inject(AuthService);
+  private readonly sessionEventBus = inject(SessionEventBus);
   private readonly sessionApiService = inject(SessionApiService);
   private readonly websocketService = inject(WebsocketService);
 
@@ -63,18 +59,33 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
 
   private readonly emojiPool = [
     '🦊',
-    '🚀',
-    '🦄',
-    '🍕',
-    '👻',
-    '👾',
+    '🐼',
+    '🦁',
     '🐯',
-    '⚡',
-    '🎮',
-    '🌵',
+    '🐸',
     '🐙',
+    '🦄',
+    '🐧',
+    '🦉',
+    '🐺',
+    '🐱',
+    '🐶',
+    '🐰',
+    '🐭',
+    '🐹',
+    '🐻',
+    '🐲',
+    '👽',
     '🤖',
+    '👾',
+    '🫅',
+    '🐨',
   ];
+  // Modal states
+  protected readonly showEndConfirmModal = signal(false);
+  protected readonly showSessionClosedModal = signal(false);
+  protected readonly sessionClosedReason = signal('');
+
   private hasJoined = false;
 
   async ngOnInit(): Promise<void> {
@@ -107,12 +118,9 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
           this.statusMessage.set(this.buildStatusMessage(this.normalizeStatus(session.status)));
 
           this.websocketService.connect(token);
-          this.upsertPlayer(
-            currentUser.id,
-            buildDisplayName(currentUser, 'Player'),
-            true,
-            currentUser.id === session.host_id
-          );
+          if (currentUser.id !== session.host_id) {
+            this.upsertPlayer(currentUser.id, buildDisplayName(currentUser, 'Player'), true);
+          }
           this.websocketService.joinGame(pin, buildDisplayName(currentUser, 'Player'));
           this.hasJoined = true;
         },
@@ -131,11 +139,41 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
     void this.router.navigateByUrl('/dashboard');
   }
 
+  /** Host: show the end-session confirmation modal */
+  protected requestEndSession(): void {
+    this.showEndConfirmModal.set(true);
+  }
+
+  /** Host: confirmed — emit end-session, navigate to dashboard */
+  protected confirmEndSession(): void {
+    this.showEndConfirmModal.set(false);
+    this.websocketService.endSession(this.pin());
+    this.sessionEventBus.emit();
+    this.websocketService.disconnect();
+    void this.router.navigateByUrl('/dashboard');
+  }
+
+  /** Cancel end-session confirmation */
+  protected cancelEndSession(): void {
+    this.showEndConfirmModal.set(false);
+  }
+
+  /** Dismiss the session-closed popup and go to dashboard */
+  protected dismissSessionClosed(): void {
+    this.showSessionClosedModal.set(false);
+    void this.router.navigateByUrl('/dashboard');
+  }
+
   private bindSocketEvents(): void {
     this.websocketService.playerJoined$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((event) => {
         if (!event.userId) {
+          return;
+        }
+
+        // Skip host — they have a separate screen
+        if (event.isHost || event.userId === this.hostUserId()) {
           return;
         }
 
@@ -145,8 +183,7 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
         this.upsertPlayer(
           event.userId,
           event.username ?? this.formatRemoteName(event.userId),
-          isSelf,
-          event.isHost ?? event.userId === this.hostUserId()
+          isSelf
         );
       });
 
@@ -182,22 +219,34 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
         const ownUserId = this.authService.currentUser()?.id;
 
         this.players.set(
-          event.players.map((player) => ({
-            userId: player.userId,
-            name: player.username ?? this.formatRemoteName(player.userId),
-            isSelf: player.userId === ownUserId,
-            isHost: player.isHost ?? player.userId === event.hostUserId,
-            emoji: this.selectEmoji(player.userId),
-          }))
+          event.players
+            .filter((player) => !(player.isHost ?? player.userId === event.hostUserId))
+            .map((player) => ({
+              userId: player.userId,
+              name: player.username ?? this.formatRemoteName(player.userId),
+              isSelf: player.userId === ownUserId,
+              emoji: this.selectEmoji(player.userId),
+            }))
         );
       });
 
     this.websocketService.gameStarted$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.startRequested.set(false);
       this.sessionStatus.set('playing');
-      this.statusMessage.set('Game started. Waiting for the first question...');
-      void this.router.navigate(['/game', this.pin()]);
+      const target = this.isHost() ? '/host' : '/game';
+      this.statusMessage.set(
+        this.isHost()
+          ? 'Game started. Displaying questions...'
+          : 'Game started. Waiting for the first question...'
+      );
+      void this.router.navigate([target, this.pin()]);
     });
+
+    this.websocketService.sessionClosed$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((event) => {
+        this.handleSessionClosed(event);
+      });
   }
 
   protected startGame(): void {
@@ -219,19 +268,12 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
     this.websocketService.startGame(this.pin());
   }
 
-  private upsertPlayer(userId: string, name: string, isSelf: boolean, isHost: boolean): void {
+  private upsertPlayer(userId: string, name: string, isSelf: boolean): void {
     this.players.update((existingPlayers) => {
       const existing = existingPlayers.find((player) => player.userId === userId);
       if (existing) {
         return existingPlayers.map((player) =>
-          player.userId === userId
-            ? {
-                ...player,
-                name,
-                isSelf: player.isSelf || isSelf,
-                isHost: player.isHost || isHost,
-              }
-            : player
+          player.userId === userId ? { ...player, name, isSelf: player.isSelf || isSelf } : player
         );
       }
 
@@ -241,7 +283,6 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
           userId,
           name,
           isSelf,
-          isHost,
           emoji: this.selectEmoji(userId),
         },
       ];
@@ -331,5 +372,17 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
     this.websocketService.leaveGame(this.pin(), reason);
     this.websocketService.disconnect();
     this.hasJoined = false;
+  }
+
+  private handleSessionClosed(event: SessionClosedEvent): void {
+    if (!this.hasJoined) {
+      return;
+    }
+
+    this.hasJoined = false;
+    this.websocketService.disconnect();
+
+    this.sessionClosedReason.set(event.reason);
+    this.showSessionClosedModal.set(true);
   }
 }

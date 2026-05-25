@@ -117,6 +117,16 @@ export class GameStateService {
   }
 
   acceptAnswer(event: AnswerAckEvent): void {
+    // Guard: don't transition from 'idle' to 'accepted' — this happens when the
+    // host skips a question and the server sends a 0-point answer-ack to players
+    // who didn't submit. The 'idle' → 'closed' transition in closeRound handles
+    // this case so they see "Time's up!" instead of "Incorrect".
+    if (this.submissionStateSignal() === 'idle') {
+      this.lastAnswerState.set(event);
+      this.errorState.set(null);
+      return;
+    }
+
     this.submissionStateSignal.set('accepted');
     this.lastAnswerState.set(event);
     this.errorState.set(null);

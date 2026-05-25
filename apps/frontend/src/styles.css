@@ -419,6 +419,42 @@ h3,
     }
   }
 
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(-10deg);
+    }
+    50% {
+      transform: rotate(10deg);
+    }
+    75% {
+      transform: rotate(-5deg);
+    }
+  }
+
+  .animate-wiggle {
+    display: inline-block;
+    animation: wiggle 1s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .play-logo,
+    .play-float-1,
+    .play-float-2,
+    .play-float-3,
+    .play-float-4,
+    .play-float-5,
+    .play-float-6 {
+      animation: none !important;
+    }
+    .animate-wiggle {
+      animation: none !important;
+    }
+  }
+
   /* Sidebar — active nav item stays blue on hover */
   .active-nav {
     background: var(--bubbly-primary);

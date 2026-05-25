@@ -45,9 +45,10 @@
 
   <!-- Loading state -->
   @if (loading()) {
-    <app-bubbly-card tone="soft">
-      <div class="qf-empty-state">Loading group details...</div>
-    </app-bubbly-card>
+    <div class="grid gap-4">
+      <div class="qf-soft-surface h-36 rounded-3xl"></div>
+      <div class="qf-soft-surface h-48 rounded-3xl"></div>
+    </div>
   }
 
   <!-- Group details loaded -->

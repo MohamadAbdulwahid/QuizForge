@@ -27,12 +27,9 @@ export class DashboardShellComponent {
   protected readonly navItems: AppNavItem[] = [
     { label: 'Home', route: '/dashboard', exact: true, icon: 'home' },
     { label: 'My Quizzes', route: '/dashboard/quizzes', icon: 'quizzes' },
-    { label: 'Quiz Builder', route: '/builder/new', icon: 'builder' },
     { label: 'Groups', route: '/dashboard/groups', icon: 'groups' },
     { label: 'Discover', route: '/dashboard/groups/discover', icon: 'discover' },
     { label: 'Create Session', route: '/dashboard/create-session', icon: 'create-session' },
-    { label: 'Sessions', route: '/dashboard/sessions', icon: 'sessions' },
-    { label: 'Leaderboards', route: '/leaderboards', icon: 'leaderboards' },
   ];
 
   protected readonly displayName = () => buildDisplayName(this.currentUser(), 'QuizForger');
@@ -48,10 +45,6 @@ export class DashboardShellComponent {
     discover: 'M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z',
     'create-session':
       'M12 4.5a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Zm-1.5 7.5h-3a.75.75 0 0 1 0-1.5h3v-3a.75.75 0 0 1 1.5 0v3h3a.75.75 0 0 1 0 1.5h-3v3a.75.75 0 0 1-1.5 0v-3Z',
-    sessions:
-      'M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z',
-    leaderboards:
-      'M16.5 18.75h-9m9 0a1.5 1.5 0 0 1 1.5 1.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-9a1.5 1.5 0 0 1-1.5-1.5v-1.5a1.5 1.5 0 0 1 1.5-1.5m9-9V6a2.25 2.25 0 0 0-2.25-2.25h-1.5A2.25 2.25 0 0 0 10.5 6v3.75m-3.75 0h10.5a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75v-.75a.75.75 0 0 1 .75-.75Zm0 6h10.5a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75v-.75a.75.75 0 0 1 .75-.75Z',
   };
 
   protected closeMobileNav(): void {

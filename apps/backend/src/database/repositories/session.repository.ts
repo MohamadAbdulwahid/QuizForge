@@ -128,6 +128,20 @@ export async function updateStatus(
 }
 
 /**
+ * Returns the broadcast group IDs for a session.
+ * Used by SSE to filter which users should receive lifecycle events.
+ * @param sessionId - Session id.
+ * @returns Array of group IDs the session is broadcast to.
+ */
+export async function listBroadcastGroupIds(sessionId: number): Promise<number[]> {
+  const result = await db
+    .select({ groupId: SESSION_BROADCAST_GROUP.group_id })
+    .from(SESSION_BROADCAST_GROUP)
+    .where(eq(SESSION_BROADCAST_GROUP.session_id, sessionId));
+  return result.map((row) => row.groupId);
+}
+
+/**
  * Finds a session player row by session and user.
  * @param sessionId - Session id.
  * @param userId - User id.
@@ -243,6 +257,20 @@ export async function createGameEvent(data: InsertGameEvent): Promise<GameEvent>
 }
 
 /**
+ * Finds a session by pin regardless of status.
+ * Unlike findByPin which filters for active sessions only, this returns
+ * any session matching the pin — including ended or pending sessions.
+ * Used by the host view endpoint to look up sessions before the game starts.
+ * @param pin - Session pin.
+ * @returns Session or null.
+ */
+export async function getSessionByPin(pin: string): Promise<Session | null> {
+  const result = await db.select().from(SESSION).where(eq(SESSION.pin, pin)).limit(1);
+
+  return result[0] ?? null;
+}
+
+/**
  * Checks if pin exists among active sessions.
  * @param pin - Session pin.
  * @returns True when pin is already in use.
@@ -314,4 +342,23 @@ export async function cleanupOrphanedSessions(connectedHostIds: Set<string>): Pr
     );
 
   return result.rowCount ?? 0;
+}
+
+/**
+ * Deletes a session by its primary key.
+ * Cascades to session_players and game_events via DB foreign key constraints.
+ * @param id - Session id.
+ */
+export async function deleteSession(id: number): Promise<void> {
+  await db.delete(SESSION).where(eq(SESSION.id, id));
+}
+
+/**
+ * Deletes all players associated with a session.
+ * Useful when cleanup is needed before deleting the session row,
+ * or when explicitly removing player data.
+ * @param sessionId - Session id.
+ */
+export async function deletePlayersBySession(sessionId: number): Promise<void> {
+  await db.delete(SESSION_PLAYER).where(eq(SESSION_PLAYER.session_id, sessionId));
 }

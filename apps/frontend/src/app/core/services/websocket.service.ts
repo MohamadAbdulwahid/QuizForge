@@ -112,6 +112,12 @@ export interface GameEndedEvent {
   leaderboard: LeaderboardPlayerEvent[];
 }
 
+export interface SessionClosedEvent {
+  pin: string;
+  sessionId: number;
+  reason: string;
+}
+
 type ServerToClientEvents = {
   'player-joined': (payload: PlayerJoinedEvent) => void;
   'player-left': (payload: PlayerLeftEvent) => void;
@@ -125,12 +131,14 @@ type ServerToClientEvents = {
   'leaderboard-update': (payload: LeaderboardUpdateEvent) => void;
   'round-closed': (payload: RoundClosedEvent) => void;
   'game-ended': (payload: GameEndedEvent) => void;
+  'session-closed': (payload: SessionClosedEvent) => void;
   error: (payload: SocketErrorPayload) => void;
 };
 
 type ClientToServerEvents = {
   'join-game': (payload: { pin: string; username?: string }) => void;
   'leave-game': (payload: { pin: string; reason?: string }) => void;
+  'end-session': (payload: { pin: string }) => void;
   'start-game': (payload: { pin: string }) => void;
   'submit-answer': (payload: {
     pin: string;
@@ -139,6 +147,7 @@ type ClientToServerEvents = {
     selectedAnswer: string;
   }) => void;
   'next-question': (payload: { pin: string }) => void;
+  'skip-question': (payload: { pin: string }) => void;
 };
 
 @Injectable({ providedIn: 'root' })
@@ -157,6 +166,7 @@ export class WebsocketService {
   private readonly leaderboardUpdateSubject = new Subject<LeaderboardUpdateEvent>();
   private readonly roundClosedSubject = new Subject<RoundClosedEvent>();
   private readonly gameEndedSubject = new Subject<GameEndedEvent>();
+  private readonly sessionClosedSubject = new Subject<SessionClosedEvent>();
   private readonly socketErrorSubject = new Subject<SocketErrorPayload>();
 
   readonly playerJoined$: Observable<PlayerJoinedEvent> = this.playerJoinedSubject.asObservable();
@@ -173,6 +183,8 @@ export class WebsocketService {
     this.leaderboardUpdateSubject.asObservable();
   readonly roundClosed$: Observable<RoundClosedEvent> = this.roundClosedSubject.asObservable();
   readonly gameEnded$: Observable<GameEndedEvent> = this.gameEndedSubject.asObservable();
+  readonly sessionClosed$: Observable<SessionClosedEvent> =
+    this.sessionClosedSubject.asObservable();
   readonly socketError$: Observable<SocketErrorPayload> = this.socketErrorSubject.asObservable();
 
   readonly connected = signal(false);
@@ -247,6 +259,10 @@ export class WebsocketService {
       this.gameEndedSubject.next(payload);
     });
 
+    this.socket.on('session-closed', (payload) => {
+      this.sessionClosedSubject.next(payload);
+    });
+
     this.socket.on('error', (payload) => {
       this.socketErrorSubject.next(payload);
     });
@@ -264,8 +280,16 @@ export class WebsocketService {
     this.socket?.emit('start-game', { pin });
   }
 
+  endSession(pin: string): void {
+    this.socket?.emit('end-session', { pin });
+  }
+
   submitAnswer(pin: string, sessionId: number, questionId: number, selectedAnswer: string): void {
     this.socket?.emit('submit-answer', { pin, sessionId, questionId, selectedAnswer });
+  }
+
+  skipQuestion(pin: string): void {
+    this.socket?.emit('skip-question', { pin });
   }
 
   nextQuestion(pin: string): void {

@@ -11,7 +11,8 @@ export default [
         ignores: [
             "**/dist",
             "**/out-tsc",
-            "**/node_modules"
+            "**/node_modules",
+            "**/.opencode"
         ]
     },
     {
