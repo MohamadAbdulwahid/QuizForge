@@ -146,6 +146,20 @@ export async function deleteQuiz(quizId: number): Promise<boolean> {
 }
 
 /**
+ * Retrieves questions for a given quiz ordered by their index.
+ * Used by the host session view to display quiz questions alongside session data.
+ * @param quizId - The quiz ID.
+ * @returns Array of questions ordered by order_index.
+ */
+export async function getQuestionsByQuizId(quizId: number): Promise<QUESTION[]> {
+  return db
+    .select()
+    .from(QUESTION)
+    .where(eq(QUESTION.quiz_id, quizId))
+    .orderBy(QUESTION.order_index);
+}
+
+/**
  * Checks whether share code exists.
  * @param shareCode - Share code.
  * @returns True when an existing quiz uses the code.

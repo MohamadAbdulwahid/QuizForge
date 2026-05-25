@@ -3,7 +3,9 @@ import { authMiddleware } from '../middleware/auth';
 import { authRoutes } from './auth.routes';
 import { groupRouter } from './group.routes';
 import { quizPublicRouter, quizRouter } from './quiz.routes';
+import { hostSessionRouter } from './host-session.routes';
 import { sessionRouter } from './session.routes';
+import { sessionEventsRouter } from './session-events.routes';
 
 /**
  * Registers API routes under /api.
@@ -22,6 +24,8 @@ export function registerRoutes(): Router {
   router.use('/groups', groupRouter);
   router.use('/quizzes', authMiddleware, quizRouter);
   router.use('/sessions', sessionRouter);
+  router.use('/sessions', hostSessionRouter);
+  router.use('/sessions', sessionEventsRouter);
 
   return router;
 }

@@ -24,7 +24,11 @@
   <section>
     <h2 class="qf-panel-title mb-4 text-xl">Your Groups</h2>
     @if (loading()) {
-      <div class="qf-empty-state">Loading your groups...</div>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="qf-soft-surface h-44 rounded-3xl"></div>
+        <div class="qf-soft-surface h-44 rounded-3xl"></div>
+        <div class="qf-soft-surface h-44 rounded-3xl"></div>
+      </div>
     } @else if (groups().length === 0) {
       <app-bubbly-card tone="soft">
         <div class="qf-empty-state">

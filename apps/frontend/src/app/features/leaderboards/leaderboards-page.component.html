@@ -1,85 +1,121 @@
-<section class="grid gap-8 text-slate-900">
-  <app-page-heading
-    eyebrow="Results"
-    title="Final Standings"
-    description="Demo-ready podium, chasers, and leaderboard surfaces using the shared Bubbly UI language."
-  />
+<!-- Full-screen leaderboard matching game aesthetic -->
+<div
+  class="from-bubbly-primary fixed inset-0 flex flex-col overflow-y-auto bg-gradient-to-b via-[#007fb0] to-[#006090]"
+>
+  @if (hasData()) {
+    <!-- ── Header ── -->
+    <header class="shrink-0 px-6 pt-10 pb-6 text-center">
+      <p class="mb-2 text-5xl">🏆</p>
+      <h1 class="font-display text-4xl font-bold text-white sm:text-5xl">
+        {{ quizTitleSignal() || 'Game Complete' }}
+      </h1>
+      <p class="mt-2 text-lg font-semibold text-white/70">Final Standings</p>
+    </header>
 
-  <section class="mb-12 grid items-end gap-4 sm:grid-cols-3">
-    @for (player of podium; track player.rank) {
-      <article
-        [class]="
-          'qf-surface qf-tactile rounded-3xl border-4 border-white p-4 text-center ' +
-          (player.rank === 1 ? 'sm:-translate-y-3' : '')
-        "
-      >
-        <p class="font-display mb-2 text-xl font-bold text-slate-600">{{ player.score }}</p>
-        <div
-          class="mx-auto mb-3 rounded-full border-4"
-          [class.w-28]="player.rank === 1"
-          [class.h-28]="player.rank === 1"
-          [class.w-24]="player.rank !== 1"
-          [class.h-24]="player.rank !== 1"
-          [class.border-[#ffc107]]="player.rank === 1"
-          [class.border-[#c0c0c0]]="player.rank === 2"
-          [class.border-[#cd7f32]]="player.rank === 3"
-          [style.background-image]="'url(' + player.avatarImage + ')'"
-          style="background-size: cover; background-position: center"
-        ></div>
-        <p class="font-display mb-3 text-xl font-bold text-slate-900">{{ player.name }}</p>
-        <div
-          [class]="
-            'font-display rounded-t-2xl border-4 border-white pt-4 text-5xl font-black text-white ' +
-            podiumHeight(player.rank) +
-            ' ' +
-            podiumColor(player.rank)
-          "
-        >
-          {{ player.rank }}
-        </div>
-      </article>
-    }
-  </section>
-
-  <div class="mb-10 overflow-hidden rounded-3xl">
-    <app-bubbly-card
-      tone="surface"
-      [padded]="false"
-    >
-      <header class="bg-bubbly-primary px-6 py-4">
-        <h2 class="font-display text-xl font-bold text-white">The Chasers</h2>
-      </header>
-
-      <div class="grid">
-        @for (player of chasers; track player.rank) {
-          <div
-            class="flex items-center justify-between border-b border-slate-100 px-6 py-4 odd:bg-white even:bg-sky-50/70"
-          >
-            <div class="flex items-center gap-4">
-              <span class="font-display w-6 text-center text-lg font-bold text-slate-500">
-                {{ player.rank }}
-              </span>
-              <span
-                class="text-bubbly-primary flex h-10 w-10 items-center justify-center rounded-full border-2 border-sky-200 bg-white text-sm font-bold"
+    <!-- ── Podium ── -->
+    @if (first(); as gold) {
+      <div class="shrink-0 px-4 pb-8">
+        <div class="mx-auto flex max-w-lg items-end justify-center gap-3 sm:gap-4">
+          <!-- 2nd place -->
+          @let second = secondThird()[0];
+          @if (second) {
+            <div class="flex w-28 flex-col items-center sm:w-32">
+              <div
+                class="mb-2 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/25 text-2xl shadow-lg sm:h-16 sm:w-16 sm:text-3xl"
               >
-                {{ player.initials }}
-              </span>
-              <span class="text-lg font-bold text-slate-900">{{ player.name }}</span>
+                {{ getPlayerEmoji(second.userId) }}
+              </div>
+              <p class="max-w-full truncate text-sm font-bold text-white/90">
+                {{ second.username }}
+              </p>
+              <p class="text-xs font-semibold text-white/60">🥈 {{ second.score }} pts</p>
+              <div
+                class="mt-2 h-20 w-full rounded-t-2xl bg-white/20 backdrop-blur-sm sm:h-24"
+              ></div>
             </div>
-            <span class="font-display text-lg font-bold text-slate-800">{{ player.score }}</span>
-          </div>
-        }
-      </div>
-    </app-bubbly-card>
-  </div>
+          }
 
-  <div class="mx-auto max-w-sm">
-    <app-bubbly-button
-      tone="primary"
-      [full]="true"
-      (click)="goToDashboard()"
-    >
-      Back To Dashboard
-    </app-bubbly-button>
-  </div>
-</section>
+          <!-- 1st place -->
+          <div class="flex w-32 flex-col items-center sm:w-36">
+            <div
+              class="mb-2 flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-400/30 text-3xl shadow-lg ring-2 ring-amber-400/50 sm:h-20 sm:w-20 sm:text-4xl"
+            >
+              {{ getPlayerEmoji(gold.userId) }}
+            </div>
+            <p class="max-w-full truncate text-base font-bold text-white">{{ gold.username }}</p>
+            <p class="text-sm font-bold text-amber-300">🥇 {{ gold.score }} pts</p>
+            <div class="mt-2 h-28 w-full rounded-t-2xl bg-white/25 backdrop-blur-sm sm:h-32"></div>
+          </div>
+
+          <!-- 3rd place -->
+          @let third = secondThird()[1];
+          @if (third) {
+            <div class="flex w-28 flex-col items-center sm:w-32">
+              <div
+                class="mb-2 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/25 text-2xl shadow-lg sm:h-16 sm:w-16 sm:text-3xl"
+              >
+                {{ getPlayerEmoji(third.userId) }}
+              </div>
+              <p class="max-w-full truncate text-sm font-bold text-white/90">
+                {{ third.username }}
+              </p>
+              <p class="text-xs font-semibold text-white/60">🥉 {{ third.score }} pts</p>
+              <div
+                class="mt-2 h-16 w-full rounded-t-2xl bg-white/15 backdrop-blur-sm sm:h-20"
+              ></div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- ── Rest of players ── -->
+    @if (chasers().length > 0) {
+      <div class="shrink-0 px-6 pb-6">
+        <div class="mx-auto max-w-lg space-y-2">
+          @for (player of chasers(); track player.userId) {
+            <div
+              class="flex items-center justify-between rounded-2xl bg-white/15 px-4 py-3 backdrop-blur-sm transition-all hover:bg-white/25"
+            >
+              <div class="flex items-center gap-3">
+                <span class="w-6 text-center text-xs font-bold text-white/50">
+                  #{{ player.rank }}
+                </span>
+                <span class="text-xl">{{ getPlayerEmoji(player.userId) }}</span>
+                <span class="text-sm font-bold text-white/90">{{ player.username }}</span>
+              </div>
+              <span class="font-display text-lg font-bold text-white">{{ player.score }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- ── Back button ── -->
+    <div class="shrink-0 px-6 pb-10 text-center">
+      <button
+        type="button"
+        class="rounded-2xl bg-white/20 px-8 py-3 font-bold text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/30"
+        (click)="goToDashboard()"
+      >
+        Back to Dashboard
+      </button>
+    </div>
+  } @else {
+    <!-- ── Empty state ── -->
+    <div class="flex flex-1 items-center justify-center">
+      <div class="text-center">
+        <p class="mb-4 text-5xl">🏆</p>
+        <h1 class="font-display text-4xl font-bold text-white">Leaderboards</h1>
+        <p class="mt-4 text-lg font-semibold text-white/70">No game data available.</p>
+        <button
+          type="button"
+          class="mt-8 rounded-2xl bg-white/20 px-8 py-3 font-bold text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/30"
+          (click)="goToDashboard()"
+        >
+          Go to Dashboard
+        </button>
+      </div>
+    </div>
+  }
+</div>

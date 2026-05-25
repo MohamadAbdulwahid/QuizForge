@@ -12,7 +12,13 @@
   }
 
   @if (loading()) {
-    <div class="qf-empty-state">Loading your sessions...</div>
+    <div class="qf-surface overflow-hidden rounded-3xl">
+      <div class="divide-y divide-[#f1f5f9]">
+        <div class="qf-soft-surface h-16 rounded-3xl"></div>
+        <div class="qf-soft-surface h-16 rounded-3xl"></div>
+        <div class="qf-soft-surface h-16 rounded-3xl"></div>
+      </div>
+    </div>
   } @else {
     <div class="qf-surface overflow-x-auto rounded-3xl">
       <table class="min-w-full divide-y divide-[#e2e8f0] text-left text-sm">

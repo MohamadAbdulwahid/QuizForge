@@ -4,70 +4,94 @@
   </div>
 }
 
-@if (loading()) {
-  <div class="flex min-h-[60vh] items-center justify-center">
-    <div class="flex flex-col items-center gap-4">
+<!-- Welcome Header — centered, dynamic, visually appealing -->
+<div class="qf-surface mb-10 overflow-hidden rounded-3xl">
+  <div
+    class="from-bubbly-primary/5 to-bubbly-accent/5 relative bg-gradient-to-br via-white p-8 md:p-10"
+  >
+    <!-- Decorative shapes -->
+    <div
+      class="bg-bubbly-primary/10 pointer-events-none absolute top-6 right-8 h-16 w-16 -rotate-12 rounded-3xl"
+    ></div>
+    <div
+      class="bg-bubbly-accent/10 pointer-events-none absolute right-4 bottom-6 h-10 w-10 rotate-45 rounded-2xl"
+    ></div>
+
+    <div class="relative flex flex-col items-center text-center md:items-center md:text-center">
+      <!-- Greeting chip -->
       <div
-        class="border-bubbly-primary h-12 w-12 animate-spin rounded-full border-4 border-t-transparent"
-      ></div>
-      <p class="font-display text-bubbly-primary text-lg font-bold">Loading dashboard...</p>
+        class="bg-bubbly-primary/10 text-bubbly-primary mb-3 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold"
+      >
+        <span class="bg-bubbly-primary h-2 w-2 rounded-full"></span>
+        Welcome back, QuizForger!
+      </div>
+
+      <h1 class="font-display text-4xl font-bold md:text-5xl">
+        <span class="text-bubbly-primary">Hey, {{ firstName() }}!</span>
+        <span class="animate-wiggle ml-2 inline-block">👋</span>
+      </h1>
+
+      <p class="mt-3 max-w-xl text-sm font-semibold text-slate-500 md:text-base">
+        @if (hasJoinableSessions()) {
+          <span class="text-bubbly-accent font-bold">{{ joinableSessions().length }}</span>
+          active session{{ joinableSessions().length !== 1 ? 's' : '' }} waiting for you
+        } @else {
+          Ready to forge some knowledge? Jump in and start a session!
+        }
+      </p>
+
+      <!-- User profile row (compact, centered) -->
+      <div
+        class="mt-5 inline-flex items-center gap-2.5 rounded-2xl bg-white px-5 py-2.5 shadow-[0_2px_0_0_var(--bubbly-shadow)]"
+      >
+        <div
+          class="bg-bubbly-primary flex h-8 w-8 items-center justify-center rounded-xl text-xs font-bold text-white"
+        >
+          {{ userInitials() }}
+        </div>
+        <span class="font-display text-bubbly-primary text-sm font-bold">{{ displayName() }}</span>
+      </div>
     </div>
   </div>
-} @else {
-  <!-- Welcome Header -->
-  <div class="mb-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+</div>
+
+<!-- Joinable Sessions (Main Feature) -->
+<section class="mb-8">
+  <div class="mb-4 flex items-center justify-between">
     <div>
-      <p class="text-xs font-bold tracking-[0.2em] text-slate-500 uppercase">Welcome back</p>
-      <h1 class="font-display text-bubbly-primary mt-2 text-4xl font-bold md:text-5xl">
-        Hey, {{ firstName() }}! 👋
-      </h1>
-      <p class="mt-2 max-w-2xl text-sm font-semibold text-slate-600 md:text-base">
-        Ready to forge some knowledge? Jump into a live session or manage your quizzes.
+      <h2 class="font-display text-bubbly-primary text-2xl font-bold">Joinable Sessions</h2>
+      <p class="text-sm font-semibold text-slate-500">
+        Active games from your groups — jump right in!
       </p>
     </div>
-
-    <!-- User avatar -->
-    <div
-      class="flex items-center gap-3 rounded-3xl bg-white px-4 py-3 shadow-[0_4px_0_0_var(--bubbly-shadow)]"
+    <a
+      routerLink="/dashboard/groups"
+      class="text-bubbly-primary hover:text-bubbly-primary-deep rounded-2xl px-4 py-2 text-sm font-bold transition hover:bg-sky-50"
     >
-      <div
-        class="bg-bubbly-primary flex h-12 w-12 items-center justify-center rounded-2xl text-lg font-bold text-white"
-      >
-        {{ userInitials() }}
-      </div>
-      <div>
-        <p class="font-display text-bubbly-primary text-sm font-bold">{{ displayName() }}</p>
-        <p class="text-xs font-semibold text-slate-500">QuizForger</p>
-      </div>
-    </div>
+      View All Groups →
+    </a>
   </div>
 
-  <!-- Joinable Sessions (Main Feature) -->
-  <section class="mb-8">
-    <div class="mb-4 flex items-center justify-between">
-      <div>
-        <h2 class="font-display text-bubbly-primary text-2xl font-bold">Joinable Sessions</h2>
-        <p class="text-sm font-semibold text-slate-500">
-          Active games from your groups — jump right in!
-        </p>
+  @if (!isLoaded() && loading()) {
+    <!-- Single skeleton while loading (not three gray boxes) -->
+    <div class="qf-soft-surface flex h-72 items-center justify-center rounded-3xl">
+      <div class="flex flex-col items-center gap-3">
+        <div
+          class="border-bubbly-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent"
+        ></div>
+        <p class="text-sm font-semibold text-slate-400">Loading sessions...</p>
       </div>
-      <a
-        routerLink="/dashboard/groups"
-        class="text-bubbly-primary hover:text-bubbly-primary-deep rounded-2xl px-4 py-2 text-sm font-bold transition hover:bg-sky-50"
-      >
-        View All Groups →
-      </a>
     </div>
-
-    @if (hasJoinableSessions()) {
+  } @else if (hasJoinableSessions()) {
+    <div class="max-h-80 overflow-y-auto rounded-3xl">
       <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         @for (session of joinableSessions(); track session.session_id) {
-          <div class="qf-surface qf-tactile group overflow-hidden rounded-3xl">
+          <div class="qf-surface qf-tactile group flex flex-col overflow-hidden rounded-3xl">
             <div
               class="flex items-start justify-between border-b border-slate-100 bg-gradient-to-r from-sky-50 to-transparent p-4"
             >
-              <div class="flex-1">
-                <h3 class="font-display text-bubbly-primary text-lg font-bold">
+              <div class="min-w-0 flex-1">
+                <h3 class="font-display text-bubbly-primary truncate text-lg font-bold">
                   {{ session.quiz_title }}
                 </h3>
                 <p class="mt-1 text-xs font-semibold text-slate-500">
@@ -75,7 +99,9 @@
                   <span class="text-bubbly-accent">{{ session.host_username }}</span>
                 </p>
               </div>
-              <span class="rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">
+              <span
+                class="shrink-0 rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700"
+              >
                 {{ session.status }}
               </span>
             </div>
@@ -91,7 +117,7 @@
                 </p>
               </div>
             </div>
-            <div class="border-t border-slate-100 p-4 pt-0">
+            <div class="mt-auto border-t border-slate-100 p-4 pt-0">
               <button
                 type="button"
                 class="qf-button-primary qf-tactile w-full rounded-2xl px-4 py-3 text-sm font-bold"
@@ -103,115 +129,118 @@
           </div>
         }
       </div>
-    } @else {
-      <div class="qf-empty-state rounded-3xl py-12">
-        <div
-          class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-100"
+    </div>
+  } @else {
+    <div class="qf-empty-state rounded-3xl py-12">
+      <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-100">
+        <svg
+          class="h-8 w-8 text-slate-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="1.5"
         >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+          />
+        </svg>
+      </div>
+      <p class="text-base font-bold text-slate-600">No active sessions right now</p>
+      <p class="mt-1 text-sm text-slate-500">
+        Join a group or ask your teacher to start a session!
+      </p>
+      <a
+        routerLink="/dashboard/groups/discover"
+        class="qf-button-ghost qf-tactile mt-4 inline-flex rounded-2xl px-4 py-2 text-sm font-bold"
+      >
+        Discover Groups
+      </a>
+    </div>
+  }
+</section>
+
+<!-- My Groups -->
+<section>
+  <div class="mb-4 flex items-center justify-between">
+    <h2 class="font-display text-bubbly-primary text-2xl font-bold">My Groups</h2>
+    <a
+      routerLink="/dashboard/groups"
+      class="text-bubbly-primary hover:text-bubbly-primary-deep rounded-2xl px-4 py-2 text-sm font-bold transition hover:bg-sky-50"
+    >
+      Manage →
+    </a>
+  </div>
+
+  @if (!isLoaded() && loading()) {
+    <!-- Skeleton while first load is in progress -->
+    <div class="qf-surface divide-y divide-slate-100 overflow-hidden rounded-3xl">
+      <div class="qf-soft-surface h-20 rounded-3xl"></div>
+      <div class="qf-soft-surface h-20 rounded-3xl"></div>
+      <div class="qf-soft-surface h-20 rounded-3xl"></div>
+    </div>
+  } @else if (hasGroups()) {
+    <div class="qf-surface divide-y divide-slate-100 overflow-hidden rounded-3xl">
+      @for (group of groups(); track group.id) {
+        <a
+          [routerLink]="['/dashboard/groups']"
+          class="qf-tactile flex items-center justify-between p-4 hover:bg-sky-50/50"
+        >
+          <div class="flex items-center gap-3">
+            <div class="bg-bubbly-primary/10 flex h-10 w-10 items-center justify-center rounded-xl">
+              <span class="font-display text-bubbly-primary text-sm font-bold">
+                {{ group.name.charAt(0).toUpperCase() }}
+              </span>
+            </div>
+            <div>
+              <p class="font-display text-sm font-bold text-slate-800">{{ group.name }}</p>
+              <p class="text-xs text-slate-500">
+                {{
+                  group.join_policy === 'open'
+                    ? 'Open'
+                    : group.join_policy === 'request-approval'
+                      ? 'Approval'
+                      : 'Private'
+                }}
+                · {{ group.role }}
+              </p>
+            </div>
+          </div>
           <svg
-            class="h-8 w-8 text-slate-400"
+            class="h-5 w-5 text-slate-400"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            stroke-width="1.5"
+            stroke-width="2"
           >
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+              d="M9 5l7 7-7 7"
             />
           </svg>
-        </div>
-        <p class="text-base font-bold text-slate-600">No active sessions right now</p>
-        <p class="mt-1 text-sm text-slate-500">
-          Join a group or ask your teacher to start a session!
-        </p>
+        </a>
+      }
+    </div>
+  } @else {
+    <div class="qf-empty-state rounded-3xl py-10">
+      <p class="text-base font-bold text-slate-600">No groups yet</p>
+      <p class="mt-1 text-sm text-slate-500">Create a group or discover one to join!</p>
+      <div class="mt-4 flex gap-3">
+        <a
+          routerLink="/dashboard/groups"
+          class="qf-button-primary qf-tactile rounded-2xl px-4 py-2 text-sm font-bold"
+        >
+          Create Group
+        </a>
         <a
           routerLink="/dashboard/groups/discover"
-          class="qf-button-ghost qf-tactile mt-4 inline-flex rounded-2xl px-4 py-2 text-sm font-bold"
+          class="qf-button-ghost qf-tactile rounded-2xl px-4 py-2 text-sm font-bold"
         >
-          Discover Groups
+          Discover
         </a>
       </div>
-    }
-  </section>
-
-  <!-- My Groups -->
-  <section>
-    <div class="mb-4 flex items-center justify-between">
-      <h2 class="font-display text-bubbly-primary text-2xl font-bold">My Groups</h2>
-      <a
-        routerLink="/dashboard/groups"
-        class="text-bubbly-primary hover:text-bubbly-primary-deep rounded-2xl px-4 py-2 text-sm font-bold transition hover:bg-sky-50"
-      >
-        Manage →
-      </a>
     </div>
-
-    @if (hasGroups()) {
-      <div class="qf-surface divide-y divide-slate-100 overflow-hidden rounded-3xl">
-        @for (group of groups(); track group.id) {
-          <a
-            [routerLink]="['/dashboard/groups']"
-            class="qf-tactile flex items-center justify-between p-4 hover:bg-sky-50/50"
-          >
-            <div class="flex items-center gap-3">
-              <div
-                class="bg-bubbly-primary/10 flex h-10 w-10 items-center justify-center rounded-xl"
-              >
-                <span class="font-display text-bubbly-primary text-sm font-bold">
-                  {{ group.name.charAt(0).toUpperCase() }}
-                </span>
-              </div>
-              <div>
-                <p class="font-display text-sm font-bold text-slate-800">{{ group.name }}</p>
-                <p class="text-xs text-slate-500">
-                  {{
-                    group.join_policy === 'open'
-                      ? 'Open'
-                      : group.join_policy === 'request-approval'
-                        ? 'Approval'
-                        : 'Private'
-                  }}
-                  · {{ group.role }}
-                </p>
-              </div>
-            </div>
-            <svg
-              class="h-5 w-5 text-slate-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </a>
-        }
-      </div>
-    } @else {
-      <div class="qf-empty-state rounded-3xl py-10">
-        <p class="text-base font-bold text-slate-600">No groups yet</p>
-        <p class="mt-1 text-sm text-slate-500">Create a group or discover one to join!</p>
-        <div class="mt-4 flex gap-3">
-          <a
-            routerLink="/dashboard/groups"
-            class="qf-button-primary qf-tactile rounded-2xl px-4 py-2 text-sm font-bold"
-          >
-            Create Group
-          </a>
-          <a
-            routerLink="/dashboard/groups/discover"
-            class="qf-button-ghost qf-tactile rounded-2xl px-4 py-2 text-sm font-bold"
-          >
-            Discover
-          </a>
-        </div>
-      </div>
-    }
-  </section>
-}
+  }
+</section>

@@ -1,0 +1,330 @@
+<!-- Header -->
+<div class="mb-6 flex items-center justify-between">
+  <app-page-heading
+    eyebrow="Quiz Builder"
+    [title]="pageTitle()"
+    description="Design your quiz with questions, answers, and timing."
+    [hasActions]="true"
+  >
+    <button
+      page-actions
+      type="button"
+      class="qf-button-ghost qf-tactile inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-bold"
+      (click)="goBack()"
+    >
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Back to Quizzes
+    </button>
+  </app-page-heading>
+</div>
+
+<!-- Messages -->
+@if (errorMessage()) {
+  <app-bubbly-alert
+    variant="error"
+    [message]="errorMessage()"
+    class="mb-6 block"
+    (dismiss)="errorMessage.set(null)"
+  />
+}
+
+@if (successMessage()) {
+  <app-bubbly-alert
+    variant="success"
+    [message]="successMessage()"
+    class="mb-6 block"
+  />
+}
+
+<!-- Quiz Details -->
+<app-bubbly-card tone="surface" class="mb-6 block">
+  <h2 class="font-display text-bubbly-primary mb-4 text-lg font-bold">Quiz Details</h2>
+  <div class="grid gap-4 md:grid-cols-2">
+    <div class="md:col-span-2">
+      <app-bubbly-input
+        label="Quiz Title"
+        placeholder="e.g. History of the Internet"
+        [type]="'text'"
+        [ngModel]="title()"
+        (ngModelChange)="title.set($event)"
+      />
+    </div>
+    <div class="md:col-span-2">
+      <label class="mb-2 block text-sm font-bold text-slate-700">
+        Description
+        <textarea
+          class="qf-input mt-2 min-h-[80px] w-full resize-y px-4 py-3 text-sm font-semibold placeholder:text-sm"
+          placeholder="Optional — give your quiz a short description"
+          [value]="description()"
+          (input)="onDescriptionInput($event)"
+        ></textarea>
+      </label>
+    </div>
+  </div>
+</app-bubbly-card>
+
+<!-- Questions Section -->
+<section class="mb-6">
+  <div class="mb-4 flex items-center justify-between">
+    <div>
+      <h2 class="font-display text-bubbly-primary text-xl font-bold">
+        Questions
+        <span class="text-sm font-semibold text-slate-400">({{ questions().length }})</span>
+      </h2>
+      <p class="text-xs font-semibold text-slate-500">Add and configure your quiz questions below.</p>
+    </div>
+    <app-bubbly-button
+      tone="accent"
+      size="sm"
+      (click)="addQuestion()"
+    >
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>
+      Add Question
+    </app-bubbly-button>
+  </div>
+
+  <div class="grid gap-5">
+    @for (question of questions(); track question.clientId) {
+      @let errors = getQuestionErrors(question.clientId);
+      @let index = $index;
+
+      <app-bubbly-card tone="soft" class="block">
+        <!-- Question header -->
+        <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span
+              class="flex h-8 w-8 items-center justify-center rounded-xl bg-bubbly-accent text-xs font-bold text-white"
+            >
+              {{ index + 1 }}
+            </span>
+            <span class="font-display text-sm font-bold text-slate-700">Question {{ index + 1 }}</span>
+            @if (errors.length > 0) {
+              <span class="rounded-full bg-red-100 px-2.5 py-0.5 text-[11px] font-bold text-red-600">
+                {{ errors.length }} issue{{ errors.length !== 1 ? 's' : '' }}
+              </span>
+            } @else {
+              <span class="rounded-full bg-green-100 px-2.5 py-0.5 text-[11px] font-bold text-green-600">
+                Valid
+              </span>
+            }
+          </div>
+          <div class="flex items-center gap-2">
+            <!-- Type selector -->
+            <select
+              class="qf-input rounded-2xl px-3 py-1.5 text-xs font-bold"
+              [value]="question.type"
+              (change)="onTypeSelect(question.clientId, $event)"
+            >
+              <option value="multiple-choice">Multiple Choice</option>
+              <option value="true-false">True / False</option>
+            </select>
+
+            <!-- Remove -->
+            @if (hasMultipleQuestions()) {
+              <button
+                type="button"
+                class="flex h-8 w-8 items-center justify-center rounded-xl text-slate-400 transition hover:bg-red-50 hover:text-red-500"
+                (click)="removeQuestion(question.clientId)"
+                aria-label="Remove question"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            }
+          </div>
+        </div>
+
+        <!-- Question text -->
+        <div class="mb-4">
+          <label class="mb-1.5 block text-xs font-bold text-slate-500 uppercase tracking-wider">
+            Question Text
+            <textarea
+              class="qf-input mt-1.5 min-h-[70px] w-full resize-y px-4 py-3 pr-16 text-sm font-semibold placeholder:text-sm"
+              placeholder="Type your question here..."
+              [value]="question.text"
+              (input)="onQuestionTextInput(question.clientId, $event)"
+            ></textarea>
+          </label>
+          <span class="pointer-events-none relative -top-8 float-right mr-3 text-[11px] font-semibold text-slate-400">
+            {{ question.text.length }}/500
+          </span>
+          @if (errors.length > 0) {
+            <p class="-mt-6 text-xs font-semibold text-red-500">This question has {{ errors.length }} issue{{ errors.length !== 1 ? 's' : '' }}.</p>
+          }
+        </div>
+
+        <!-- Options -->
+        <div class="mb-4">
+          <p class="mb-2 block text-xs font-bold text-slate-500 uppercase tracking-wider">
+            Answer Options
+          </p>
+          <div class="grid gap-2">
+            @for (opt of question.options; track opt.id; let optIdx = $index) {
+              <div class="flex items-center gap-2">
+                <!-- Option badge -->
+                <span
+                  class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-xs font-bold"
+                  [class.bg-bubbly-accent/20]="opt.id !== question.correctAnswerId"
+                  [class.bg-bubbly-accent.text-white]="opt.id === question.correctAnswerId"
+                >
+                  {{ optionLabel(optIdx) }}
+                </span>
+
+                <!-- Input (editable for MC, readonly for TF) -->
+                @if (question.type === 'true-false') {
+                  <div class="qf-input flex flex-1 items-center px-4 py-2.5 text-sm font-bold text-slate-600">
+                    {{ opt.text }}
+                  </div>
+                } @else {
+                  <input
+                    class="qf-input flex-1 px-4 py-2.5 text-sm font-semibold placeholder:text-sm"
+                    [placeholder]="'Option ' + optionLabel(optIdx)"
+                    [value]="opt.text"
+                    (input)="onOptionTextInput(question.clientId, optIdx, $event)"
+                  />
+                }
+
+                <!-- Correct answer radio -->
+                <button
+                  type="button"
+                  class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl transition"
+                  [class.bg-green-100.text-green-700]="opt.id === question.correctAnswerId"
+                  [class.bg-slate-100.text-slate-400]="opt.id !== question.correctAnswerId"
+                  (click)="markCorrect(question.clientId, opt.id)"
+                  [attr.aria-label]="'Mark ' + optionLabel(optIdx) + ' as correct'"
+                  [title]="opt.id === question.correctAnswerId ? 'Correct answer' : 'Set as correct'"
+                >
+                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    @if (opt.id === question.correctAnswerId) {
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    } @else {
+                      <circle cx="12" cy="12" r="9" />
+                    }
+                  </svg>
+                </button>
+
+                <!-- Remove option (MC only, min 2) -->
+                @if (question.type === 'multiple-choice' && question.options.length > 2) {
+                  <button
+                    type="button"
+                    class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-slate-400 transition hover:bg-red-50 hover:text-red-500"
+                    (click)="removeOption(question.clientId, optIdx)"
+                    aria-label="Remove option"
+                  >
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Add option button -->
+          @if (question.type === 'multiple-choice' && question.options.length < 6) {
+            <button
+              type="button"
+              class="qf-button-ghost qf-tactile mt-2 inline-flex items-center gap-1.5 rounded-2xl px-3 py-1.5 text-xs font-bold text-bubbly-accent"
+              (click)="addOption(question.clientId)"
+            >
+              <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+              Add Option
+            </button>
+          }
+
+          <!-- Correct answer hint for TF -->
+          @if (question.type === 'true-false') {
+            <p class="mt-1.5 text-xs font-semibold text-slate-400">
+              Click the checkmark to switch between True and False as the correct answer.
+            </p>
+          }
+        </div>
+
+        <!-- Settings row -->
+        <div class="flex flex-wrap items-center gap-4 rounded-2xl bg-white p-3">
+          <label class="flex items-center gap-2 text-xs font-bold text-slate-500">
+            Time
+            <input
+              type="number"
+              class="qf-input w-20 px-3 py-1.5 text-center text-sm font-bold"
+              [value]="question.timeLimit"
+              (input)="onTimeLimitInput(question.clientId, $event)"
+              min="5"
+              max="120"
+            />
+          </label>
+          <span class="text-xs font-semibold text-slate-400 -ml-3">sec</span>
+          <label class="flex items-center gap-2 text-xs font-bold text-slate-500">
+            Points
+            <input
+              type="number"
+              class="qf-input w-20 px-3 py-1.5 text-center text-sm font-bold"
+              [value]="question.points"
+              (input)="onPointsInput(question.clientId, $event)"
+              min="0"
+              max="1000"
+            />
+          </label>
+          <span class="text-xs font-semibold text-slate-400 -ml-3">pts</span>
+        </div>
+      </app-bubbly-card>
+    }
+  </div>
+
+  <!-- Empty state (shouldn't happen since we always have 1) -->
+  @if (questions().length === 0) {
+    <div class="qf-soft-surface flex flex-col items-center rounded-3xl py-12">
+      <p class="text-sm font-bold text-slate-500">No questions yet</p>
+      <app-bubbly-button
+        tone="accent"
+        size="sm"
+        class="mt-3"
+        (click)="addQuestion()"
+      >
+        Add your first question
+      </app-bubbly-button>
+    </div>
+  }
+</section>
+
+<!-- Footer -->
+<div class="sticky bottom-0 z-10 rounded-3xl bg-white p-4 shadow-[0_-4px_0_0_var(--bubbly-shadow)]">
+  <div class="flex items-center justify-between">
+    <p class="text-sm font-semibold text-slate-500">
+      <span class="font-bold text-bubbly-primary">{{ questions().length }}</span>
+      question{{ questions().length !== 1 ? 's' : '' }}
+      @if (title().trim()) {
+        · <span class="text-bubbly-accent">{{ title().trim() }}</span>
+      }
+    </p>
+    <div class="flex items-center gap-3">
+      <app-bubbly-button
+        tone="ghost"
+        (click)="goBack()"
+      >
+        Cancel
+      </app-bubbly-button>
+      <app-bubbly-button
+        tone="primary"
+        [disabled]="isSaving() || !title().trim()"
+        (click)="save()"
+      >
+        @if (isSaving()) {
+          <span class="flex items-center gap-2">
+            <span class="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+            Saving...
+          </span>
+        } @else {
+          {{ isEditMode() ? 'Update Quiz' : 'Save Quiz' }}
+        }
+      </app-bubbly-button>
+    </div>
+  </div>
+</div>

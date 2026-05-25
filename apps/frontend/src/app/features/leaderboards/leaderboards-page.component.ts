@@ -1,89 +1,112 @@
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
-import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
-import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
-
-interface PodiumPlayer {
-  rank: 1 | 2 | 3;
-  name: string;
-  score: string;
-  avatarImage: string;
-}
-
-interface RunnerUp {
-  rank: number;
-  name: string;
-  score: string;
-  initials: string;
-}
+import type { LeaderboardPlayerEvent } from '../../core/services/websocket.service';
 
 @Component({
   selector: 'app-leaderboards-page',
   standalone: true,
-  imports: [CommonModule, PageHeadingComponent, BubblyCardComponent, BubblyButtonComponent],
+  imports: [CommonModule],
   templateUrl: './leaderboards-page.component.html',
 })
-export class LeaderboardsPageComponent {
+export class LeaderboardsPageComponent implements OnInit {
   private readonly router = inject(Router);
+
+  protected readonly leaderboardSignal = signal<LeaderboardPlayerEvent[]>([]);
+  protected readonly quizTitleSignal = signal<string>('');
+
+  /** Top 3 players sorted by rank ascending. */
+  protected readonly podium = computed(() =>
+    this.leaderboardSignal()
+      .filter((p) => p.rank <= 3)
+      .sort((a, b) => a.rank - b.rank)
+  );
+
+  /** The #1 player. */
+  protected readonly first = computed(() => this.podium().find((p) => p.rank === 1) ?? null);
+
+  /** The #2 and #3 players. */
+  protected readonly secondThird = computed(() =>
+    this.podium()
+      .filter((p) => p.rank > 1)
+      .sort((a, b) => a.rank - b.rank)
+  );
+
+  /** Players ranked 4th and below, sorted by rank ascending. */
+  protected readonly chasers = computed(() =>
+    this.leaderboardSignal()
+      .filter((p) => p.rank > 3)
+      .sort((a, b) => a.rank - b.rank)
+  );
+
+  /** Whether any leaderboard data is available. */
+  protected readonly hasData = computed(() => this.leaderboardSignal().length > 0);
+
+  private readonly emojiPool = [
+    '🦊',
+    '🐼',
+    '🦁',
+    '🐯',
+    '🐸',
+    '🐙',
+    '🦄',
+    '🐧',
+    '🦉',
+    '🐺',
+    '🐱',
+    '🐶',
+    '🐰',
+    '🐭',
+    '🐹',
+    '🐻',
+    '🐲',
+    '👽',
+    '🤖',
+    '👾',
+    '🫅',
+    '🐨',
+  ];
+
+  ngOnInit(): void {
+    // 1. Try current navigation extras (most reliable during same-app navigation)
+    const nav = this.router.getCurrentNavigation();
+    const state = nav?.extras.state as {
+      leaderboard?: LeaderboardPlayerEvent[];
+      quizTitle?: string;
+    } | null;
+
+    if (state?.leaderboard) {
+      this.leaderboardSignal.set(state.leaderboard);
+      this.quizTitleSignal.set(state.quizTitle ?? '');
+      return;
+    }
+
+    // 2. Fallback: history.state (survives page refresh via same-window navigation)
+    const histState = history.state as
+      | { leaderboard?: LeaderboardPlayerEvent[]; quizTitle?: string }
+      | undefined;
+
+    if (histState?.leaderboard) {
+      this.leaderboardSignal.set(histState.leaderboard);
+      this.quizTitleSignal.set(histState.quizTitle ?? '');
+    }
+  }
+
+  /** Returns a consistent emoji for a user based on their ID hash. */
+  protected getPlayerEmoji(userId: string): string {
+    const hash = Array.from(userId).reduce((sum, char) => sum + char.charCodeAt(0), 0);
+    return this.emojiPool[hash % this.emojiPool.length];
+  }
 
   protected goToDashboard(): void {
     void this.router.navigateByUrl('/dashboard');
   }
 
-  protected readonly podium: PodiumPlayer[] = [
-    {
-      rank: 2,
-      name: 'Alex M.',
-      score: '8,450',
-      avatarImage:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuD_5tafePYPlG4O31EmHDNZY8pAgkjwPFAe-ZL_AkJwAewNfcz_edwR_IRunE3-3HDF7w_NpIWwEMHao-OIsgAoEQPzEvFjeytUp_RJVMnV1xx0CCg-CBQmVGVRrlYA1AjsQX0U-TlaUPN5w8oEmGqvCOyvBRQLRUofHut559xkplyql5KaqzbP_5KYghijTEIaYcqkP0C7PXngo330e8Ru9m5kZuSYV2fItCxAmDqvJyfBShT-cXf-nUuYTTGa0eeDeenAzjPXyzM',
-    },
-    {
-      rank: 1,
-      name: 'Sarah J.',
-      score: '12,300',
-      avatarImage:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuCf6CPp95arpDlrZbisJKmiqDk1c570pOAOLZzcKZM9WRsNqZt2ILLtIPVr_xQGb1VDQ-RgLCiVdgLpx_2S1aQG9aA2sTEoBiPnDd7eycqc741KqmdM4lcAeHa2zFm8pxJnWJRv0doHCcWukHfd3G8L9-lbZWNC3Qa5HQIxPtPfNN8K-kbjzylnwvTxJAHWuvBPyb3w0IfBLlnEyio7uU7ohQRMR5SynqB9CnRk3qy2SVg8cIqMoONOa19rWnzSXxOj0pYnRwGG7kU',
-    },
-    {
-      rank: 3,
-      name: 'Chris T.',
-      score: '7,120',
-      avatarImage:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuAA0c6ogUfQU5bjPtVkMJENND-RtZZPvaIiO-NNIwavdjGB8BpwYpcurRAlW4AjTPC52Hp4pE3HxwQvFS9ChPoQWDAllVa9ULcj0QaJp2hJb4T46MS6c_BYMiazQcBYwrcPoAWzMMLnluDh8NMitURcZ-cLjgaL6jiiTuB-sUvydqNcsHhJ-wTHRYnYKpimT4Qf6JUIY3ada5nGEi73Zz9VCpMrr0oNIX87yMwVmhRs2R4PLQZ8ZjkQyLrHdz_0Njdk0KosNbpGcCs',
-    },
-  ];
-
-  protected readonly chasers: RunnerUp[] = [
-    { rank: 4, name: 'David J.', score: '6,800', initials: 'DJ' },
-    { rank: 5, name: 'Emma W.', score: '6,250', initials: 'EW' },
-    { rank: 6, name: 'Michael K.', score: '5,900', initials: 'MK' },
-    { rank: 7, name: 'Sam L.', score: '5,100', initials: 'SL' },
-  ];
-
-  protected podiumHeight(rank: 1 | 2 | 3): string {
-    if (rank === 1) {
-      return 'h-56';
-    }
-
-    if (rank === 2) {
-      return 'h-40';
-    }
-
-    return 'h-32';
-  }
-
-  protected podiumColor(rank: 1 | 2 | 3): string {
-    if (rank === 1) {
-      return 'bg-warning';
-    }
-
-    if (rank === 2) {
-      return 'bg-slate-300';
-    }
-
-    return 'bg-amber-700';
+  /** Medal icon for top 3 ranks. */
+  protected getRankIcon(rank: number): string {
+    if (rank === 1) return '🥇';
+    if (rank === 2) return '🥈';
+    if (rank === 3) return '🥉';
+    return '';
   }
 }

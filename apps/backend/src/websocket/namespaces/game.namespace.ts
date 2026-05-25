@@ -9,12 +9,15 @@ import type { Session, SessionPlayer } from '../../database/schema/session';
 import { RoomEventRateLimiter } from '../rate-limit';
 import {
   emitSocketValidationError,
+  EndSessionMessageSchema,
   JoinGameMessageSchema,
   LeaveGameMessageSchema,
   NextQuestionMessageSchema,
+  SkipQuestionMessageSchema,
   StartGameMessageSchema,
   SubmitAnswerMessageSchema,
 } from '../validation/schemas';
+import { emitSessionEvent } from '../../api/services/session-event.service';
 
 const gameNamespaceLogger = createChildLogger('websocket-game-namespace');
 const MIN_PLAYERS_TO_START = 2;
@@ -91,15 +94,18 @@ interface ServerToClientEvents {
   'leaderboard-update': (payload: LeaderboardUpdateEvent) => void;
   'round-closed': (payload: RoundClosedEvent) => void;
   'game-ended': (payload: GameEndedEvent) => void;
+  'session-closed': (payload: SessionClosedEvent) => void;
   error: (payload: SocketErrorPayload) => void;
 }
 
 interface ClientToServerEvents {
   'join-game': (payload: unknown) => void;
   'leave-game': (payload: unknown) => void;
+  'end-session': (payload: unknown) => void;
   'start-game': (payload: unknown) => void;
   'submit-answer': (payload: unknown) => void;
   'next-question': (payload: unknown) => void;
+  'skip-question': (payload: { pin: string }) => void;
 }
 
 interface SocketData {
@@ -183,7 +189,13 @@ interface RoundClosedEvent {
 interface GameEndedEvent {
   pin: string;
   sessionId: number;
-  leaderboard: LeaderboardPlayer[];
+  leaderboard: LeaderboardPlayerEvent[];
+}
+
+interface SessionClosedEvent {
+  pin: string;
+  sessionId: number;
+  reason: string;
 }
 
 interface SocketErrorPayload {
@@ -214,6 +226,8 @@ export interface GameNamespaceDependencies {
   updatePlayerScore: typeof sessionRepository.updatePlayerScore;
   markPlayerDisconnected: typeof sessionRepository.markPlayerDisconnected;
   createGameEvent: typeof sessionRepository.createGameEvent;
+  deleteSession: typeof sessionRepository.deleteSession;
+  deletePlayersBySession: typeof sessionRepository.deletePlayersBySession;
   rateLimiter: RoomEventRateLimiter;
 }
 
@@ -237,6 +251,8 @@ export function registerGameNamespace(
     updatePlayerScore: sessionRepository.updatePlayerScore,
     markPlayerDisconnected: sessionRepository.markPlayerDisconnected,
     createGameEvent: sessionRepository.createGameEvent,
+    deleteSession: sessionRepository.deleteSession,
+    deletePlayersBySession: sessionRepository.deletePlayersBySession,
     rateLimiter: new RoomEventRateLimiter(100),
     ...dependencies,
   };
@@ -316,6 +332,122 @@ export function registerGameNamespace(
       typedNamespace.to(pin).emit('player-left', { userId: socket.data.userId, reason });
     });
 
+    socket.on('end-session', async (payload) => {
+      const parsed = EndSessionMessageSchema.safeParse(payload);
+
+      if (!parsed.success) {
+        emitSocketValidationError(socket, parsed.error);
+        return;
+      }
+
+      const { pin } = parsed.data;
+      const userId = socket.data.userId;
+
+      if (!pin || !userId) {
+        socket.emit('error', {
+          code: 'NOT_HOST',
+          error: 'Only the host can end the session.',
+        } as const);
+        return;
+      }
+
+      // Case 1: Game already started — close via activeGames
+      const activeGame = activeGames.get(pin);
+      if (activeGame && userId === activeGame.hostUserId) {
+        // Notify all players (NOT the host — they initiated the end)
+        typedNamespace.to(pin).emit('session-closed', {
+          pin,
+          sessionId: activeGame.sessionId,
+          reason: 'Game ended by host',
+        });
+
+        // Immediately end the session in memory
+        activeGame.status = 'ended';
+        if (activeGame.round?.timer) {
+          clearTimeout(activeGame.round.timer);
+          activeGame.round.timer = null;
+        }
+        activeGames.delete(pin);
+
+        // Update DB asynchronously
+        void resolvedDependencies.updateStatus(activeGame.sessionId, 'ended');
+        void logGameEvent(resolvedDependencies, activeGame.sessionId, null, 'session-closed', {
+          pin,
+          reason: 'Host ended session',
+        });
+
+        // Notify SSE subscribers so dashboards update in real-time
+        sessionRepository
+          .listBroadcastGroupIds(activeGame.sessionId)
+          .then((groupIds) => {
+            if (groupIds.length > 0) {
+              emitSessionEvent('ended', activeGame.sessionId, groupIds);
+            }
+          })
+          .catch(() => {
+            /* non-critical — SSE is best-effort */
+          });
+
+        // Clean up host tracking
+        const hostSessions = connectedHosts.get(userId);
+        if (hostSessions) {
+          hostSessions.delete(pin);
+          if (hostSessions.size === 0) {
+            connectedHosts.delete(userId);
+          }
+        }
+
+        gameNamespaceLogger.info({ pin, hostUserId: userId }, 'Session ended by host (active)');
+        return;
+      }
+
+      // Case 2: Host is in lobby (pre-start) — delete session immediately
+      const hostSessions = connectedHosts.get(userId);
+      if (hostSessions?.has(pin)) {
+        const session = await resolvedDependencies.findActiveByPin(pin);
+        if (session) {
+          // Notify all players in the lobby
+          typedNamespace.to(pin).emit('session-closed', {
+            pin,
+            sessionId: session.id,
+            reason: 'Host ended the session',
+          });
+
+          // Fetch group IDs BEFORE hard-deleting (cascade will remove them)
+          const groupIds = await sessionRepository
+            .listBroadcastGroupIds(session.id)
+            .catch(() => []);
+
+          // Hard-delete session and players from DB
+          await resolvedDependencies.deletePlayersBySession(session.id);
+          await resolvedDependencies.deleteSession(session.id);
+
+          // Notify SSE subscribers so dashboards update in real-time
+          if (groupIds.length > 0) {
+            emitSessionEvent('ended', session.id, groupIds);
+          }
+
+          // Clean up host tracking
+          hostSessions.delete(pin);
+          if (hostSessions.size === 0) {
+            connectedHosts.delete(userId);
+          }
+
+          // Disconnect all sockets from the room
+          typedNamespace.in(pin).disconnectSockets(true);
+
+          gameNamespaceLogger.info({ pin, hostUserId: userId }, 'Session ended by host (lobby)');
+        }
+        return;
+      }
+
+      // Not the host — reject
+      socket.emit('error', {
+        code: 'NOT_HOST',
+        error: 'Only the host can end the session.',
+      } as const);
+    });
+
     socket.on('start-game', async (payload) => {
       const parsed = StartGameMessageSchema.safeParse(payload);
 
@@ -381,7 +513,7 @@ export function registerGameNamespace(
         pin,
         questionCount: quiz.questions.length,
       });
-      await startRound(typedNamespace, resolvedDependencies, gameState, 0);
+      await startRound(typedNamespace, resolvedDependencies, gameState, activeGames, 0);
     });
 
     socket.on('submit-answer', async (payload) => {
@@ -493,6 +625,9 @@ export function registerGameNamespace(
         sessionId,
         leaderboard,
       });
+
+      // Auto-advance: close round and advance if all players have answered
+      tryAutoAdvance(gameState, typedNamespace, resolvedDependencies, activeGames);
     });
 
     socket.on('next-question', async (payload) => {
@@ -511,49 +646,81 @@ export function registerGameNamespace(
 
       const gameState = activeGames.get(pin);
       if (!gameState || gameState.status !== 'playing' || !gameState.round) {
-        emitError(socket, 'ROUND_NOT_ACTIVE', 'No active round to advance');
+        emitError(socket, 'ROUND_NOT_ACTIVE', 'No active round to skip');
         return;
       }
 
-      const roundTimedOut = Date.now() - gameState.round.startTimeMs >= gameState.round.timeLimitMs;
-      if (!gameState.round.closed && !roundTimedOut) {
-        emitError(socket, 'ROUND_STILL_ACTIVE', 'Wait for the timer to finish before advancing');
-        return;
-      }
-
-      closeRound(typedNamespace, gameState);
-      const nextIndex = gameState.currentQuestionIndex + 1;
-
-      if (nextIndex >= gameState.questions.length) {
-        gameState.status = 'ended';
-        activeGames.delete(pin);
-        await resolvedDependencies.updateStatus(session.id, 'ended');
-        await logGameEvent(resolvedDependencies, session.id, null, 'session-ended', {
-          pin,
-          leaderboard: buildLeaderboard(gameState),
-        });
-        typedNamespace.to(pin).emit('game-ended', {
-          pin,
-          sessionId: session.id,
-          leaderboard: buildLeaderboard(gameState),
-        });
-        return;
-      }
-
-      await startRound(typedNamespace, resolvedDependencies, gameState, nextIndex);
+      await handleSkipQuestion(
+        socket,
+        pin,
+        gameState,
+        typedNamespace,
+        resolvedDependencies,
+        activeGames
+      );
     });
 
-    socket.on('disconnect', () => {
+    socket.on('skip-question', async (payload) => {
+      const parsed = SkipQuestionMessageSchema.safeParse(payload);
+
+      if (!parsed.success) {
+        emitSocketValidationError(socket, parsed.error);
+        return;
+      }
+
+      const { pin } = parsed.data;
+      const session = await validateHostAction(socket, pin, resolvedDependencies);
+      if (!session) {
+        return;
+      }
+
+      const gameState = activeGames.get(pin);
+      if (!gameState || gameState.status !== 'playing' || !gameState.round) {
+        emitError(socket, 'ROUND_NOT_ACTIVE', 'No active round to skip');
+        return;
+      }
+
+      await handleSkipQuestion(
+        socket,
+        pin,
+        gameState,
+        typedNamespace,
+        resolvedDependencies,
+        activeGames
+      );
+    });
+
+    socket.on('disconnect', async () => {
       const pin = socket.data.joinedPin;
       const userId = socket.data.userId;
       const activeGame = pin ? activeGames.get(pin) : undefined;
 
-      if (pin) {
-        typedNamespace.to(pin).emit('player-left', { userId });
-      }
-
-      // Remove host tracking when the hosting socket disconnects.
+      // Case 1: Host disconnected from active game
       if (pin && userId && activeGame && userId === activeGame.hostUserId) {
+        // Notify all players in the room that the session was closed
+        typedNamespace.to(pin).emit('session-closed', {
+          pin,
+          sessionId: activeGame.sessionId,
+          reason: 'Host left the session',
+        });
+
+        // Immediately end the session in memory
+        activeGame.status = 'ended';
+        // Clear the round timer if running
+        if (activeGame.round?.timer) {
+          clearTimeout(activeGame.round.timer);
+          activeGame.round.timer = null;
+        }
+        activeGames.delete(pin);
+
+        // Update DB asynchronously — fire-and-forget is fine
+        void resolvedDependencies.updateStatus(activeGame.sessionId, 'ended');
+        void logGameEvent(resolvedDependencies, activeGame.sessionId, null, 'session-closed', {
+          pin,
+          reason: 'Host disconnected',
+        });
+
+        // Clean up host tracking
         const hostSessions = connectedHosts.get(userId);
         if (hostSessions) {
           hostSessions.delete(pin);
@@ -561,6 +728,51 @@ export function registerGameNamespace(
             connectedHosts.delete(userId);
           }
         }
+
+        gameNamespaceLogger.info(
+          { pin, hostUserId: userId },
+          'Session closed because host disconnected'
+        );
+        return;
+      }
+
+      // Case 2: Host disconnected from lobby (pre-start) — delete session immediately
+      if (pin && userId) {
+        const hostSessions = connectedHosts.get(userId);
+        if (hostSessions?.has(pin)) {
+          const session = await resolvedDependencies.findActiveByPin(pin);
+          if (session) {
+            typedNamespace.to(pin).emit('session-closed', {
+              pin,
+              sessionId: session.id,
+              reason: 'Host left the session',
+            });
+
+            // Hard-delete session and players from DB
+            await resolvedDependencies.deletePlayersBySession(session.id);
+            await resolvedDependencies.deleteSession(session.id);
+
+            // Clean up host tracking
+            hostSessions.delete(pin);
+            if (hostSessions.size === 0) {
+              connectedHosts.delete(userId);
+            }
+
+            // Disconnect all sockets from the room
+            typedNamespace.in(pin).disconnectSockets(true);
+
+            gameNamespaceLogger.info(
+              { pin, hostUserId: userId },
+              'Session closed because host disconnected (lobby)'
+            );
+          }
+          return;
+        }
+      }
+
+      // Case 3: Regular player disconnect
+      if (pin) {
+        typedNamespace.to(pin).emit('player-left', { userId });
       }
 
       if (activeGame && userId) {
@@ -643,6 +855,7 @@ async function startRound(
   gameNamespace: GameNamespace,
   dependencies: GameNamespaceDependencies,
   gameState: ActiveGameState,
+  activeGames: Map<string, ActiveGameState>,
   index: number
 ): Promise<void> {
   if (gameState.round?.timer) {
@@ -664,7 +877,7 @@ async function startRound(
   };
 
   round.timer = setTimeout(() => {
-    closeRound(gameNamespace, gameState);
+    closeRoundAndAdvance(gameNamespace, dependencies, gameState, activeGames);
   }, timeLimitMs);
 
   gameState.currentQuestionIndex = index;
@@ -707,6 +920,188 @@ function closeRound(gameNamespace: GameNamespace, gameState: ActiveGameState): v
     questionId: round.question.id,
     order: gameState.currentQuestionIndex + 1,
   });
+}
+
+/**
+ * Closes the current round and automatically advances to the next question
+ * or ends the game if no more questions remain.
+ */
+function closeRoundAndAdvance(
+  gameNamespace: GameNamespace,
+  dependencies: GameNamespaceDependencies,
+  gameState: ActiveGameState,
+  activeGames: Map<string, ActiveGameState>
+): void {
+  const round = gameState.round;
+  if (!round || round.closed) {
+    return; // Guard: prevent double-close
+  }
+
+  closeRound(gameNamespace, gameState);
+
+  const nextIndex = gameState.currentQuestionIndex + 1;
+  if (nextIndex < gameState.questions.length) {
+    // More questions — advance after brief delay
+    gameState.currentQuestionIndex = nextIndex;
+    setTimeout(() => {
+      emitNextQuestion(gameNamespace, dependencies, gameState, activeGames);
+    }, 3000);
+  } else {
+    // No more questions — emit game-ended after delay
+    setTimeout(() => {
+      emitGameEnded(gameNamespace, dependencies, gameState, activeGames);
+    }, 3000);
+  }
+}
+
+/**
+ * Emits the next question to the room and starts its round timer.
+ * Sets up round tracking state and schedules auto-advance on timer expiry.
+ */
+function emitNextQuestion(
+  gameNamespace: GameNamespace,
+  dependencies: GameNamespaceDependencies,
+  gameState: ActiveGameState,
+  activeGames: Map<string, ActiveGameState>
+): void {
+  const index = gameState.currentQuestionIndex;
+  const question = gameState.questions[index];
+  if (!question) {
+    return;
+  }
+
+  const startTimeMs = Date.now();
+  const timeLimitMs = Math.max(5, question.time_limit ?? DEFAULT_TIME_LIMIT_SECONDS) * 1000;
+  const publicQuestion = buildPublicQuestion(gameState, question, index, startTimeMs, timeLimitMs);
+
+  const round: ActiveRoundState = {
+    question,
+    publicQuestion,
+    startTimeMs,
+    timeLimitMs,
+    submittedUserIds: new Set<string>(),
+    closed: false,
+    timer: null,
+  };
+
+  round.timer = setTimeout(() => {
+    closeRoundAndAdvance(gameNamespace, dependencies, gameState, activeGames);
+  }, timeLimitMs);
+
+  gameState.round = round;
+
+  void logGameEvent(dependencies, gameState.sessionId, null, 'round-started', {
+    questionId: question.id,
+    order: index + 1,
+    serverStartTimeMs: startTimeMs,
+    timeLimitMs,
+  });
+
+  gameNamespace.to(gameState.pin).emit('round-started', {
+    pin: gameState.pin,
+    sessionId: gameState.sessionId,
+    questionId: question.id,
+    order: index + 1,
+    totalQuestions: gameState.questions.length,
+    serverStartTimeMs: startTimeMs,
+    timeLimitMs,
+  });
+  gameNamespace.to(gameState.pin).emit('question', publicQuestion);
+}
+
+/**
+ * Emits the game-ended event to the room and cleans up the in-memory game state.
+ */
+function emitGameEnded(
+  gameNamespace: GameNamespace,
+  dependencies: GameNamespaceDependencies,
+  gameState: ActiveGameState,
+  activeGames: Map<string, ActiveGameState>
+): void {
+  gameState.status = 'ended';
+  activeGames.delete(gameState.pin);
+
+  void dependencies.updateStatus(gameState.sessionId, 'ended');
+  void logGameEvent(dependencies, gameState.sessionId, null, 'session-ended', {
+    pin: gameState.pin,
+    leaderboard: buildLeaderboard(gameState),
+  });
+
+  gameNamespace.to(gameState.pin).emit('game-ended', {
+    pin: gameState.pin,
+    sessionId: gameState.sessionId,
+    leaderboard: buildLeaderboard(gameState),
+  });
+}
+
+/**
+ * Checks whether all players have answered the current round.
+ * If so, clears the timer and closes the round with auto-advance.
+ */
+function tryAutoAdvance(
+  gameState: ActiveGameState,
+  gameNamespace: GameNamespace,
+  dependencies: GameNamespaceDependencies,
+  activeGames: Map<string, ActiveGameState>
+): void {
+  if (!gameState.round || gameState.round.closed || gameState.status !== 'playing') {
+    return;
+  }
+
+  const totalAnswered = gameState.round.submittedUserIds.size;
+  const totalPlayers = gameState.playersByUserId.size;
+
+  if (totalPlayers > 0 && totalAnswered >= totalPlayers) {
+    // All players answered — clear timer and advance
+    if (gameState.round.timer) {
+      clearTimeout(gameState.round.timer);
+      gameState.round.timer = null;
+    }
+    closeRoundAndAdvance(gameNamespace, dependencies, gameState, activeGames);
+  }
+}
+
+/**
+ * Handles a skip-question request from the host:
+ * 1. Cancels the round timer
+ * 2. Sends answer-ack with 0 points to unanswered players
+ * 3. Closes the round and advances
+ */
+async function handleSkipQuestion(
+  socket: GameSocket,
+  pin: string,
+  gameState: ActiveGameState,
+  gameNamespace: GameNamespace,
+  dependencies: GameNamespaceDependencies,
+  activeGames: Map<string, ActiveGameState>
+): Promise<void> {
+  // Cancel the round timer
+  if (gameState.round?.timer) {
+    clearTimeout(gameState.round.timer);
+    gameState.round.timer = null;
+  }
+
+  // Mark unanswered players as "no answer" (0 points)
+  if (gameState.round) {
+    const socketsInRoom = await gameNamespace.in(pin).fetchSockets();
+    for (const s of socketsInRoom) {
+      const uid = s.data.userId;
+      if (uid && !gameState.round.submittedUserIds.has(uid)) {
+        s.emit('answer-ack', {
+          pin,
+          sessionId: gameState.sessionId,
+          questionId: gameState.round.question.id,
+          selectedAnswer: '',
+          correct: false,
+          scoreDelta: 0,
+          totalScore: gameState.scoresByUserId.get(uid) ?? 0,
+        });
+      }
+    }
+  }
+
+  // Close round and advance
+  closeRoundAndAdvance(gameNamespace, dependencies, gameState, activeGames);
 }
 
 function emitCurrentRound(gameNamespace: GameNamespace, gameState: ActiveGameState): void {
