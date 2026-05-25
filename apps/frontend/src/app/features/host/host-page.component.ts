@@ -6,10 +6,7 @@ import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
 import { SessionApiService } from '../../core/services/session-api.service';
 import { SessionEventBus } from '../../core/services/session-event-bus.service';
-import {
-  LeaderboardPlayerEvent,
-  WebsocketService,
-} from '../../core/services/websocket.service';
+import { LeaderboardPlayerEvent, WebsocketService } from '../../core/services/websocket.service';
 import { buildDisplayName } from '../../shared/utils/display-name';
 import { BubblyModalComponent } from '../../shared/ui/bubbly-modal.component';
 
@@ -65,10 +62,7 @@ interface HostSessionData {
 @Component({
   selector: 'app-host-page',
   standalone: true,
-  imports: [
-    CommonModule,
-    BubblyModalComponent,
-  ],
+  imports: [CommonModule, BubblyModalComponent],
   templateUrl: './host-page.component.html',
 })
 export class HostPageComponent implements OnInit, OnDestroy {
@@ -98,17 +92,17 @@ export class HostPageComponent implements OnInit, OnDestroy {
   protected readonly totalQuestions = computed(() => this.questions().length);
   protected readonly isGameActive = computed(() => this.currentQuestionIndex() >= 0);
   protected readonly isLastQuestion = computed(
-    () => this.currentQuestionIndex() >= this.totalQuestions() - 1 && this.totalQuestions() > 0,
+    () => this.currentQuestionIndex() >= this.totalQuestions() - 1 && this.totalQuestions() > 0
   );
   protected readonly gameEnded = signal(false);
 
   // Players
   protected readonly players = signal<HostPlayerState[]>([]);
   protected readonly answeredCount = computed(
-    () => this.players().filter((p) => p.hasAnswered).length,
+    () => this.players().filter((p) => p.hasAnswered).length
   );
   protected readonly allAnswered = computed(
-    () => this.answeredCount() >= this.playerCount() && this.playerCount() > 0,
+    () => this.answeredCount() >= this.playerCount() && this.playerCount() > 0
   );
 
   // Leaderboard
@@ -124,9 +118,28 @@ export class HostPageComponent implements OnInit, OnDestroy {
   protected readonly sessionClosedReason = signal('');
 
   private readonly emojiPool = [
-    '🦊', '🐼', '🦁', '🐯', '🐸', '🐙', '🦄', '🐧',
-    '🦉', '🐺', '🐱', '🐶', '🐰', '🐭', '🐹', '🐻',
-    '🐲', '👽', '🤖', '👾', '🫅', '🐨',
+    '🦊',
+    '🐼',
+    '🦁',
+    '🐯',
+    '🐸',
+    '🐙',
+    '🦄',
+    '🐧',
+    '🦉',
+    '🐺',
+    '🐱',
+    '🐶',
+    '🐰',
+    '🐭',
+    '🐹',
+    '🐻',
+    '🐲',
+    '👽',
+    '🤖',
+    '👾',
+    '🫅',
+    '🐨',
   ];
 
   private hasJoined = false;
@@ -182,7 +195,7 @@ export class HostPageComponent implements OnInit, OnDestroy {
 
   private async loadHostData(pin: string): Promise<void> {
     const data = (await firstValueFrom(
-      this.sessionApiService.getHostSessionData(pin),
+      this.sessionApiService.getHostSessionData(pin)
     )) as HostSessionData;
     this.sessionId.set(data.session.id);
     this.playerCount.set(data.players.length);
@@ -200,7 +213,7 @@ export class HostPageComponent implements OnInit, OnDestroy {
         orderIndex: q.order_index,
         timeLimit: q.time_limit ?? 30000,
         points: q.points ?? 100,
-      })),
+      }))
     );
 
     this.players.set(
@@ -210,7 +223,7 @@ export class HostPageComponent implements OnInit, OnDestroy {
         hasAnswered: false,
         score: 0,
         rank: 0,
-      })),
+      }))
     );
   }
 
@@ -221,22 +234,18 @@ export class HostPageComponent implements OnInit, OnDestroy {
         this.playerCount.set(event.players.length);
       });
 
-    this.websocketService.roundStarted$
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        // Game has started / next question
-        this.gameEnded.set(false);
-        // Reset answered state
-        this.players.update((list) => list.map((p) => ({ ...p, hasAnswered: false })));
-      });
+    this.websocketService.roundStarted$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      // Game has started / next question
+      this.gameEnded.set(false);
+      // Reset answered state
+      this.players.update((list) => list.map((p) => ({ ...p, hasAnswered: false })));
+    });
 
-    this.websocketService.question$
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((event) => {
-        // Find the question index by looking at the order field (1-based)
-        const idx = event.order - 1;
-        this.currentQuestionIndex.set(idx >= 0 ? idx : 0);
-      });
+    this.websocketService.question$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event) => {
+      // Find the question index by looking at the order field (1-based)
+      const idx = event.order - 1;
+      this.currentQuestionIndex.set(idx >= 0 ? idx : 0);
+    });
 
     // Host receives score-update events when any player answers correctly/incorrectly
     this.websocketService.scoreUpdate$
@@ -244,10 +253,8 @@ export class HostPageComponent implements OnInit, OnDestroy {
       .subscribe((event) => {
         this.players.update((list) =>
           list.map((p) =>
-            p.userId === event.playerId
-              ? { ...p, hasAnswered: true, score: event.totalScore }
-              : p,
-          ),
+            p.userId === event.playerId ? { ...p, hasAnswered: true, score: event.totalScore } : p
+          )
         );
         this.leaderboard.set(event.leaderboard);
       });
@@ -258,11 +265,9 @@ export class HostPageComponent implements OnInit, OnDestroy {
         this.leaderboard.set(event.leaderboard);
       });
 
-    this.websocketService.roundClosed$
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        // Round closed — no special handling needed on host view
-      });
+    this.websocketService.roundClosed$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      // Round closed — no special handling needed on host view
+    });
 
     this.websocketService.gameEnded$
       .pipe(takeUntilDestroyed(this.destroyRef))
