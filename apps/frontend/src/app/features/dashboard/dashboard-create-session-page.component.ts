@@ -5,6 +5,7 @@ import { finalize } from 'rxjs';
 import { GroupApiService, MyGroupSummary } from '../../core/services/group-api.service';
 import { QuizApiService, QuizSummary } from '../../core/services/quiz-api.service';
 import { SessionApiService, SessionBroadcastMode } from '../../core/services/session-api.service';
+import { SessionEventBus } from '../../core/services/session-event-bus.service';
 import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
 import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
 import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
@@ -25,6 +26,7 @@ export class DashboardCreateSessionPageComponent {
   private readonly quizApiService = inject(QuizApiService);
   private readonly groupApiService = inject(GroupApiService);
   private readonly sessionApiService = inject(SessionApiService);
+  private readonly sessionEventBus = inject(SessionEventBus);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
@@ -94,6 +96,7 @@ export class DashboardCreateSessionPageComponent {
       )
       .subscribe({
         next: (response) => {
+          this.sessionEventBus.emit();
           void this.router.navigate(['/game-lobby', response.pin]);
         },
         error: () => {

@@ -62,4 +62,8 @@ export class SessionApiService {
   getMySessions(): Observable<HostSessionSummary[]> {
     return this.apiService.get<HostSessionSummary[]>('/api/sessions/mine');
   }
+
+  getHostSessionData(pin: string): Observable<unknown> {
+    return this.apiService.get<unknown>(`/api/sessions/${pin}/host`);
+  }
 }

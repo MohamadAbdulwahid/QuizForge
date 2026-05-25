@@ -35,17 +35,33 @@ const nextQuestionMessageSchema = z
   })
   .passthrough();
 
+const endSessionMessageSchema = z
+  .object({
+    pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
+  })
+  .passthrough();
+
+const skipQuestionMessageSchema = z
+  .object({
+    pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
+  })
+  .passthrough();
+
 export { joinGameMessageSchema as JoinGameMessageSchema };
 export { leaveGameMessageSchema as LeaveGameMessageSchema };
 export { startGameMessageSchema as StartGameMessageSchema };
 export { submitAnswerMessageSchema as SubmitAnswerMessageSchema };
 export { nextQuestionMessageSchema as NextQuestionMessageSchema };
+export { endSessionMessageSchema as EndSessionMessageSchema };
+export { skipQuestionMessageSchema as SkipQuestionMessageSchema };
 
 export type JoinGameMessage = z.infer<typeof JoinGameMessageSchema>;
 export type LeaveGameMessage = z.infer<typeof LeaveGameMessageSchema>;
 export type StartGameMessage = z.infer<typeof StartGameMessageSchema>;
 export type SubmitAnswerMessage = z.infer<typeof SubmitAnswerMessageSchema>;
 export type NextQuestionMessage = z.infer<typeof NextQuestionMessageSchema>;
+export type EndSessionMessage = z.infer<typeof EndSessionMessageSchema>;
+export type SkipQuestionMessage = z.infer<typeof SkipQuestionMessageSchema>;
 
 /**
  * Emits a standardized socket validation payload.

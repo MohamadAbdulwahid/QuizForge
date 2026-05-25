@@ -2,8 +2,8 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { forkJoin, Observable, of, switchMap } from 'rxjs';
 import { catchError, finalize, map } from 'rxjs/operators';
 import { GroupActiveSessionSummary, GroupApiService, MyGroupSummary } from './group-api.service';
-import { HostSessionSummary, SessionApiService } from './session-api.service';
 import { QuizApiService } from './quiz-api.service';
+import { SessionEventBus } from './session-event-bus.service';
 
 interface JoinableSession extends GroupActiveSessionSummary {
   groupName: string;
@@ -12,9 +12,7 @@ interface JoinableSession extends GroupActiveSessionSummary {
 interface DashboardData {
   groups: MyGroupSummary[];
   joinableSessions: JoinableSession[];
-  recentSessions: HostSessionSummary[];
   quizCount: number;
-  sessionCount: number;
   groupCount: number;
 }
 
@@ -27,12 +25,13 @@ interface GroupsAndSessions {
  * Service-level cache for dashboard data.
  * Persists data across route navigations so the dashboard loads instantly on revisit.
  * Only refreshes after the staleness timeout or on explicit refresh.
+ * Joinable sessions are refreshed reactively via SessionEventBus — no polling needed.
  */
 @Injectable({ providedIn: 'root' })
 export class DashboardCacheService {
   private readonly groupApiService = inject(GroupApiService);
-  private readonly sessionApiService = inject(SessionApiService);
   private readonly quizApiService = inject(QuizApiService);
+  private readonly sessionEventBus = inject(SessionEventBus);
 
   private readonly STALENESS_MS = 5 * 60 * 1000; // 5 minutes
 
@@ -50,14 +49,43 @@ export class DashboardCacheService {
 
   readonly groups = computed(() => this.data()?.groups ?? []);
   readonly joinableSessions = computed(() => this.data()?.joinableSessions ?? []);
-  readonly recentSessions = computed(() => this.data()?.recentSessions ?? []);
   readonly quizCount = computed(() => this.data()?.quizCount ?? 0);
-  readonly sessionCount = computed(() => this.data()?.sessionCount ?? 0);
   readonly groupCount = computed(() => this.data()?.groupCount ?? 0);
 
   readonly hasJoinableSessions = computed(() => this.joinableSessions().length > 0);
-  readonly hasRecentSessions = computed(() => this.recentSessions().length > 0);
   readonly hasGroups = computed(() => this.groups().length > 0);
+
+  constructor() {
+    // Re-fetch joinable sessions whenever a session is created or ended.
+    // This keeps the dashboard signal-driven without polling or WebSocket.
+    this.sessionEventBus.sessionChanges$
+      .pipe(
+        switchMap(() => {
+          const currentGroups = this.groups();
+          if (currentGroups.length === 0) return of(null);
+
+          const sessionRequests: Observable<JoinableSession[]>[] = currentGroups.map((group) =>
+            this.groupApiService.getActiveSessions(group.id).pipe(
+              map((sessions) => sessions.map((s) => ({ ...s, groupName: group.name }))),
+              catchError(() => of<JoinableSession[]>([]))
+            )
+          );
+
+          return forkJoin(sessionRequests).pipe(
+            map((allSessions) => allSessions.flat()),
+            catchError(() => of<JoinableSession[] | null>(null))
+          );
+        })
+      )
+      .subscribe((sessions) => {
+        if (sessions !== null) {
+          const current = this.data();
+          if (current) {
+            this.data.set({ ...current, joinableSessions: sessions });
+          }
+        }
+      });
+  }
 
   /**
    * Returns true if cached data is older than the staleness threshold.
@@ -124,18 +152,21 @@ export class DashboardCacheService {
     groups: MyGroupSummary[],
     sessions: JoinableSession[]
   ): Observable<DashboardData> {
-    return forkJoin({
-      quizzes: this.quizApiService.getMyQuizzes().pipe(catchError(() => of([]))),
-      hostedSessions: this.sessionApiService.getMySessions().pipe(catchError(() => of([]))),
-    }).pipe(
-      map(({ quizzes, hostedSessions }) => ({
+    return this.quizApiService.getMyQuizzes().pipe(
+      map((quizzes) => ({
         groups,
         joinableSessions: sessions,
-        recentSessions: hostedSessions.slice(0, 5),
         quizCount: quizzes.length,
-        sessionCount: hostedSessions.length,
         groupCount: groups.length,
-      }))
+      })),
+      catchError(() =>
+        of({
+          groups,
+          joinableSessions: sessions,
+          quizCount: 0,
+          groupCount: groups.length,
+        })
+      )
     );
   }
 

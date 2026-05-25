@@ -12,6 +12,7 @@ import {
 import { generateUniquePin } from '../../shared/utils/pin';
 import { SessionState, transitionState } from '../../game/engine/game-state';
 import type { CreateSessionRequest, UpdateSessionStatusRequest } from '../dtos/session.dto';
+import { emitSessionEvent } from './session-event.service';
 
 const sessionServiceLogger = createChildLogger('session-service');
 
@@ -64,6 +65,11 @@ export async function createSession(
     { sessionId: session.id, quizId: data.quiz_id, hostId },
     'Session created'
   );
+
+  // Notify SSE subscribers so dashboards update in real-time
+  if (broadcastGroupIds.length > 0) {
+    emitSessionEvent('created', session.id, broadcastGroupIds);
+  }
 
   return {
     session,
@@ -174,6 +180,14 @@ export async function updateSessionStatus(
     },
     'Session status updated'
   );
+
+  // Notify SSE subscribers when a session ends
+  if (nextStatus === 'ended') {
+    const groupIds = await sessionRepository.listBroadcastGroupIds(session.id);
+    if (groupIds.length > 0) {
+      emitSessionEvent('ended', session.id, groupIds);
+    }
+  }
 
   return {
     session: updated,

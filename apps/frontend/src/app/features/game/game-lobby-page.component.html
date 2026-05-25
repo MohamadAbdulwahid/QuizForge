@@ -1,83 +1,219 @@
-<section class="grid gap-6">
-  <app-page-heading
-    eyebrow="Live lobby"
-    title="QuizForge Lobby"
-    description="Gather players, confirm your connection, then launch Forge Classic when everyone is ready."
-    [hasActions]="true"
-  >
-    <div
-      page-actions
-      class="flex flex-wrap gap-3"
-    >
-      <app-bubbly-button
-        tone="ghost"
-        (click)="leaveLobby()"
-      >
-        Back
-      </app-bubbly-button>
+<main
+  class="from-bubbly-primary font-body fixed inset-0 flex flex-col overflow-hidden bg-gradient-to-br via-[#007fb0] to-[#006090]"
+>
+  <!-- Background pattern overlay -->
+  <div
+    class="pointer-events-none absolute inset-0 opacity-30"
+    style="
+      background-image: repeating-conic-gradient(
+        rgba(255, 255, 255, 0.06) 0% 25%,
+        transparent 0% 50%
+      );
+      background-size: 60px 60px;
+    "
+  ></div>
 
+  <!-- Floating decorative shapes (static depth, no animation) -->
+  <div class="pointer-events-none absolute inset-0 overflow-hidden">
+    <div class="absolute top-[15%] left-[10%] h-32 w-32 rotate-12 rounded-3xl bg-white/10"></div>
+    <div class="absolute top-[20%] right-[15%] h-24 w-24 -rotate-6 rounded-2xl bg-white/10"></div>
+    <div class="absolute bottom-[25%] left-[20%] h-28 w-28 rotate-45 rounded-3xl bg-white/10"></div>
+    <div
+      class="absolute right-[10%] bottom-[15%] h-36 w-36 -rotate-12 rounded-3xl bg-white/10"
+    ></div>
+    <div class="absolute top-[10%] left-[50%] h-20 w-20 rotate-6 rounded-2xl bg-white/10"></div>
+    <div class="absolute bottom-[35%] left-[5%] h-16 w-16 -rotate-45 rounded-xl bg-white/10"></div>
+  </div>
+
+  <!-- Top bar -->
+  <div class="relative z-20 flex items-center justify-between px-6 py-4">
+    <button
+      type="button"
+      class="rounded-2xl px-4 py-2 text-sm font-bold text-white/80 transition hover:bg-white/10 hover:text-white"
+      (click)="leaveLobby()"
+    >
+      ← Leave
+    </button>
+    <span class="font-display text-lg font-bold text-white/60">Game Lobby</span>
+    @if (isHost()) {
+      <button
+        type="button"
+        class="rounded-2xl px-4 py-2 text-sm font-bold text-rose-300/80 transition hover:bg-white/10 hover:text-rose-300"
+        (click)="requestEndSession()"
+      >
+        End Session
+      </button>
+    } @else {
+      <div class="w-24"></div>
+    }
+  </div>
+
+  <!-- Scrollable main content -->
+  <div class="relative z-10 flex flex-1 flex-col items-center overflow-y-auto px-4 pt-4 pb-8">
+    <!-- PIN Display -->
+    <div class="mb-6 text-center">
+      <p class="mb-2 text-xs font-bold tracking-[0.3em] text-white/60 uppercase">Join with code</p>
+      <p
+        class="font-display text-6xl font-extrabold tracking-[0.2em] text-white drop-shadow-lg sm:text-8xl"
+      >
+        {{ pin() }}
+      </p>
+    </div>
+
+    <!-- Status badges -->
+    <div class="mb-6 flex flex-wrap items-center justify-center gap-3">
+      <div
+        class="inline-flex items-center gap-2 rounded-2xl bg-white/20 px-4 py-2 backdrop-blur-sm"
+      >
+        <span class="font-display text-lg font-bold text-white">{{ playerCount() }}</span>
+        <span class="text-xs font-bold text-white/70">players</span>
+      </div>
+      <div
+        class="inline-flex items-center gap-2 rounded-2xl bg-white/20 px-4 py-2 backdrop-blur-sm"
+      >
+        <span
+          class="h-2 w-2 rounded-full"
+          [class.bg-emerald-400]="connected()"
+          [class.bg-rose-400]="!connected()"
+        ></span>
+        <span class="text-xs font-bold text-white/70">
+          {{ connected() ? 'Connected' : 'Disconnected' }}
+        </span>
+      </div>
       @if (isHost()) {
-        <app-bubbly-button
-          tone="primary"
+        <div
+          class="inline-flex items-center gap-2 rounded-2xl bg-amber-400/20 px-4 py-2 backdrop-blur-sm"
+        >
+          <span class="text-xs font-bold text-amber-300">Host</span>
+        </div>
+      }
+    </div>
+
+    <!-- Error message -->
+    @if (errorMessage()) {
+      <div
+        class="mb-6 w-full max-w-md rounded-2xl border border-rose-300/50 bg-rose-500/20 px-4 py-3 text-center text-sm font-bold text-white"
+      >
+        {{ errorMessage() }}
+      </div>
+    }
+
+    <!-- Status message -->
+    <p class="mb-8 text-center text-base font-bold text-white/70">
+      {{ statusMessage() }}
+    </p>
+
+    <!-- Players grid -->
+    @if (players().length > 0) {
+      <div class="w-full max-w-4xl">
+        <h3
+          class="font-display mb-5 text-center text-sm font-bold tracking-wider text-white/50 uppercase"
+        >
+          Players in lobby ({{ playerCount() }})
+        </h3>
+        <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+          @for (player of players(); track player.userId) {
+            <div
+              class="rounded-2xl bg-white/15 p-4 text-center backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white/25"
+            >
+              <div
+                class="mx-auto mb-2 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/25 text-3xl shadow-sm"
+              >
+                {{ player.emoji }}
+              </div>
+              <p class="truncate text-sm font-bold text-white/90">{{ player.name }}</p>
+              @if (player.isSelf) {
+                <span
+                  class="mt-1 inline-block rounded-full bg-emerald-400/30 px-2.5 py-0.5 text-xs font-bold text-emerald-300"
+                >
+                  YOU
+                </span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    } @else {
+      <div class="flex flex-1 items-center justify-center">
+        <p class="text-center text-lg font-bold text-white/50">Waiting for players to join...</p>
+      </div>
+    }
+
+    <!-- Host controls -->
+    @if (isHost()) {
+      <div class="mt-10 flex flex-col items-center gap-3">
+        <button
+          type="button"
+          class="font-display text-bubbly-primary rounded-2xl bg-white px-12 py-4 text-xl font-bold shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl active:scale-95 disabled:pointer-events-none disabled:opacity-50"
           [disabled]="!canStartGame()"
           (click)="startGame()"
         >
-          {{ startRequested() ? 'Starting...' : 'Start Game' }}
-        </app-bubbly-button>
-      }
-    </div>
-  </app-page-heading>
-
-  @if (errorMessage()) {
-    <p
-      class="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-bold text-rose-700"
-    >
-      {{ errorMessage() }}
-    </p>
-  }
-
-  <app-bubbly-card class="block text-center">
-    <h2 class="text-xs font-bold tracking-[0.3em] text-slate-500 uppercase">
-      Join at quizforge.com with code
-    </h2>
-    <p
-      class="font-display text-bubbly-primary mt-3 text-5xl font-extrabold tracking-[0.25em] sm:text-7xl"
-    >
-      {{ pin() }}
-    </p>
-
-    <div
-      class="bg-bubbly-accent mx-auto mt-5 inline-flex min-h-12 items-center gap-2 rounded-2xl px-6 text-white shadow-[0_6px_0_0_var(--bubbly-accent-deep)]"
-    >
-      <span class="text-sm font-extrabold">{{ playerCount() }}/30 Players</span>
-    </div>
-
-    <p class="mt-6 text-lg font-bold text-slate-600">{{ statusMessage() }}</p>
-    <p
-      class="mt-2 text-sm font-semibold"
-      [class.text-emerald-600]="connected()"
-      [class.text-rose-600]="!connected()"
-    >
-      {{ connected() ? 'WebSocket connected' : 'WebSocket disconnected' }}
-    </p>
-
-    @if (isHost()) {
-      <p class="mt-2 text-xs font-bold tracking-[0.08em] text-emerald-700 uppercase">
-        Host controls active. Minimum players to start: {{ minPlayersToStart() }}
-      </p>
+          @if (startRequested()) {
+            <span class="flex items-center gap-2">
+              <svg
+                class="h-5 w-5 animate-spin"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                ></path>
+              </svg>
+              Starting...
+            </span>
+          } @else {
+            Start Game
+          }
+        </button>
+        <p class="text-sm font-semibold text-white/50">
+          Minimum {{ minPlayersToStart() }} players needed
+        </p>
+      </div>
     }
-  </app-bubbly-card>
 
-  <section>
-    <h3 class="font-display mb-4 text-xl font-bold text-slate-800">Players In Lobby</h3>
-    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-      @for (player of players(); track player.userId) {
-        <app-player-bubble
-          [name]="player.name"
-          [emoji]="player.emoji"
-          [meta]="player.isHost ? 'Host' : player.isSelf ? 'You' : null"
-        />
-      }
-    </div>
-  </section>
-</section>
+    <!-- Non-host waiting prompt -->
+    @if (!isHost() && players().length > 0) {
+      <div class="mt-10 text-center">
+        <div
+          class="inline-flex items-center gap-2 rounded-2xl bg-white/10 px-5 py-3 backdrop-blur-sm"
+        >
+          <span class="animate-pulse text-lg text-white/60">●</span>
+          <span class="text-sm font-bold text-white/50">Waiting for host to start the game...</span>
+        </div>
+      </div>
+    }
+  </div>
+</main>
+
+<!-- End Session Confirmation Modal -->
+<app-bubbly-modal
+  [visible]="showEndConfirmModal()"
+  title="End Session?"
+  message="All connected players will be kicked and redirected. This action cannot be undone."
+  confirmLabel="End Session"
+  [showCancel]="true"
+  [danger]="true"
+  (confirm)="confirmEndSession()"
+  (dismiss)="cancelEndSession()"
+/>
+
+<!-- Session Closed Modal -->
+<app-bubbly-modal
+  [visible]="showSessionClosedModal()"
+  title="Session Closed"
+  [message]="'The session has ended: ' + sessionClosedReason()"
+  confirmLabel="OK"
+  [showCancel]="false"
+  (confirm)="dismissSessionClosed()"
+  (dismiss)="dismissSessionClosed()"
+/>
