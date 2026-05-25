@@ -58,7 +58,10 @@ function validateQuestion(q: QuestionDraft): FieldError[] {
   if (!q.text.trim()) {
     errors.push({ field: `${q.clientId}-text`, message: 'Question text is required.' });
   } else if (q.text.length > 500) {
-    errors.push({ field: `${q.clientId}-text`, message: 'Question text must be under 500 characters.' });
+    errors.push({
+      field: `${q.clientId}-text`,
+      message: 'Question text must be under 500 characters.',
+    });
   }
 
   if (q.type === 'multiple-choice') {
@@ -67,9 +70,15 @@ function validateQuestion(q: QuestionDraft): FieldError[] {
     }
     q.options.forEach((opt, i) => {
       if (!opt.text.trim()) {
-        errors.push({ field: `${q.clientId}-opt-${i}`, message: `Option ${String.fromCharCode(65 + i)} cannot be empty.` });
+        errors.push({
+          field: `${q.clientId}-opt-${i}`,
+          message: `Option ${String.fromCharCode(65 + i)} cannot be empty.`,
+        });
       } else if (opt.text.length > 500) {
-        errors.push({ field: `${q.clientId}-opt-${i}`, message: `Option ${String.fromCharCode(65 + i)} must be under 500 characters.` });
+        errors.push({
+          field: `${q.clientId}-opt-${i}`,
+          message: `Option ${String.fromCharCode(65 + i)} must be under 500 characters.`,
+        });
       }
     });
     if (!q.correctAnswerId || !q.options.find((o) => o.id === q.correctAnswerId)) {
@@ -77,12 +86,18 @@ function validateQuestion(q: QuestionDraft): FieldError[] {
     }
   } else {
     if (!q.correctAnswerId) {
-      errors.push({ field: `${q.clientId}-correct`, message: 'Select True or False as the correct answer.' });
+      errors.push({
+        field: `${q.clientId}-correct`,
+        message: 'Select True or False as the correct answer.',
+      });
     }
   }
 
   if (q.timeLimit < 5 || q.timeLimit > 120) {
-    errors.push({ field: `${q.clientId}-time`, message: 'Time limit must be between 5 and 120 seconds.' });
+    errors.push({
+      field: `${q.clientId}-time`,
+      message: 'Time limit must be between 5 and 120 seconds.',
+    });
   }
   if (q.points < 0 || q.points > 1000) {
     errors.push({ field: `${q.clientId}-points`, message: 'Points must be between 0 and 1000.' });
@@ -147,9 +162,7 @@ export class QuizBuilderPageComponent {
         next: (quiz) => {
           this.title.set(quiz.title);
           this.description.set(quiz.description ?? '');
-          this.questions.set(
-            quiz.questions.map((q) => this.detailToDraft(q))
-          );
+          this.questions.set(quiz.questions.map((q) => this.detailToDraft(q)));
         },
         error: () => {
           this.errorMessage.set('Failed to load quiz. It may have been deleted.');
@@ -193,9 +206,7 @@ export class QuizBuilderPageComponent {
   }
 
   protected updateQuestionText(clientId: string, text: string): void {
-    this.questions.update((qs) =>
-      qs.map((q) => (q.clientId === clientId ? { ...q, text } : q))
-    );
+    this.questions.update((qs) => qs.map((q) => (q.clientId === clientId ? { ...q, text } : q)));
   }
 
   protected updateQuestionType(clientId: string, type: 'multiple-choice' | 'true-false'): void {
@@ -257,13 +268,17 @@ export class QuizBuilderPageComponent {
 
   protected updateTimeLimit(clientId: string, value: number): void {
     this.questions.update((qs) =>
-      qs.map((q) => (q.clientId === clientId ? { ...q, timeLimit: Math.max(5, Math.min(120, value)) } : q))
+      qs.map((q) =>
+        q.clientId === clientId ? { ...q, timeLimit: Math.max(5, Math.min(120, value)) } : q
+      )
     );
   }
 
   protected updatePoints(clientId: string, value: number): void {
     this.questions.update((qs) =>
-      qs.map((q) => (q.clientId === clientId ? { ...q, points: Math.max(0, Math.min(1000, value)) } : q))
+      qs.map((q) =>
+        q.clientId === clientId ? { ...q, points: Math.max(0, Math.min(1000, value)) } : q
+      )
     );
   }
 
@@ -294,7 +309,9 @@ export class QuizBuilderPageComponent {
 
     if (allErrors.length > 0) {
       // Scroll to first error by focusing the title — user can see red indicators
-      this.errorMessage.set(`${allErrors.length} issue${allErrors.length > 1 ? 's' : ''} need${allErrors.length === 1 ? 's' : ''} fixing.`);
+      this.errorMessage.set(
+        `${allErrors.length} issue${allErrors.length > 1 ? 's' : ''} need${allErrors.length === 1 ? 's' : ''} fixing.`
+      );
       return;
     }
 
@@ -318,11 +335,13 @@ export class QuizBuilderPageComponent {
     const isEdit = this.isEditMode() && this.quizId() !== null;
 
     if (isEdit) {
-      this.quizApi.updateQuiz(this.quizId()!, payload)
+      this.quizApi
+        .updateQuiz(this.quizId()!, payload)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(this.saveHandler('Quiz updated successfully!'));
     } else {
-      this.quizApi.createQuiz(payload)
+      this.quizApi
+        .createQuiz(payload)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(this.saveHandler('Quiz created successfully!'));
     }
