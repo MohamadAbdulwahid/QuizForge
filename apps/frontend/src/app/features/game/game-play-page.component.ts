@@ -8,6 +8,15 @@ import { WebsocketService } from '../../core/services/websocket.service';
 import { BubblyModalComponent } from '../../shared/ui/bubbly-modal.component';
 import { GameStateService } from './services/game-state.service';
 
+interface OptionShape {
+  id: string;
+  shape: 'square' | 'circle' | 'triangle' | 'diamond';
+  colorClass: string;
+  bgClass: string;
+  borderClass: string;
+  label: string;
+}
+
 @Component({
   selector: 'app-game-play-page',
   standalone: true,
@@ -26,19 +35,51 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
   protected readonly showSessionClosedModal = signal(false);
   protected readonly sessionClosedReason = signal('');
 
-  // Animations / visual state
+  // Visual state
   protected readonly selectedAnswerId = signal<string | null>(null);
   protected readonly showCorrect = signal(false);
   protected readonly showIncorrect = signal(false);
 
-  private pin = '';
-  private readonly EMOJI_LIST = ['⚡', '🔥', '💎', '🌟', '🍀', '🎯', '🚀', '💫'];
-  private readonly answerColors = [
-    'bg-bubbly-primary text-white shadow-[0_6px_0_0_var(--bubbly-primary-deep)]',
-    'bg-bubbly-accent text-white shadow-[0_6px_0_0_var(--bubbly-accent-deep)]',
-    'bg-emerald-500 text-white shadow-[0_6px_0_0_rgba(16,185,129,1)]',
-    'bg-violet-500 text-white shadow-[0_6px_0_0_rgba(139,92,246,1)]',
+  // Track entering animation
+  protected readonly optionEntered = signal<Set<string>>(new Set());
+
+  // Blooket-style option shapes — each option gets a color + shape
+  private readonly shapeConfigs = [
+    {
+      shape: 'square' as const,
+      colorClass: 'text-sky-400',
+      bgClass: 'bg-sky-500',
+      borderClass: 'border-sky-500',
+      label: 'A',
+    },
+    {
+      shape: 'circle' as const,
+      colorClass: 'text-rose-400',
+      bgClass: 'bg-rose-500',
+      borderClass: 'border-rose-500',
+      label: 'B',
+    },
+    {
+      shape: 'triangle' as const,
+      colorClass: 'text-emerald-400',
+      bgClass: 'bg-emerald-500',
+      borderClass: 'border-emerald-500',
+      label: 'C',
+    },
+    {
+      shape: 'diamond' as const,
+      colorClass: 'text-violet-400',
+      bgClass: 'bg-violet-500',
+      borderClass: 'border-violet-500',
+      label: 'D',
+    },
   ];
+
+  // Computed: mapped options with shapes
+  protected optionShapes = signal<OptionShape[]>([]);
+
+  private pin = '';
+  private animationTimeouts: ReturnType<typeof setTimeout>[] = [];
 
   async ngOnInit(): Promise<void> {
     this.pin = this.route.snapshot.paramMap.get('pin') ?? '';
@@ -56,8 +97,33 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.clearAnimationTimeouts();
     this.websocketService.leaveGame(this.pin, 'game-page-destroy');
     this.websocketService.disconnect();
+  }
+
+  /** Returns the shape config for a given option index. */
+  protected getShapeForOption(index: number): OptionShape {
+    return {
+      ...this.shapeConfigs[index % this.shapeConfigs.length],
+      id: this.gameState.currentQuestion()?.options[index]?.id ?? '',
+    };
+  }
+
+  /** Build the mapped option shapes from the current question. */
+  private buildOptionShapes(): void {
+    const question = this.gameState.currentQuestion();
+    if (!question) {
+      this.optionShapes.set([]);
+      return;
+    }
+
+    this.optionShapes.set(
+      question.options.map((opt, i) => ({
+        ...this.shapeConfigs[i % this.shapeConfigs.length],
+        id: opt.id,
+      }))
+    );
   }
 
   /** Selects an answer tile — immediately submits (no separate submit button). */
@@ -77,6 +143,15 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
     this.websocketService.submitAnswer(this.pin, question.sessionId, question.questionId, optionId);
   }
 
+  /** Returns CSS classes for an option button based on its shape and selection state. */
+  protected getOptionButtonClass(shape: OptionShape, _index: number): string {
+    const base = `${shape.bgClass} shadow-[0_8px_0_0_rgba(0,0,0,0.3)]`;
+    if (this.selectedAnswerId() === shape.id) {
+      return `${base} player-option-selected`;
+    }
+    return base;
+  }
+
   /** Shows correct/incorrect feedback for 2 seconds after answer ack. */
   protected onAnswerResult(correct: boolean): void {
     if (correct) {
@@ -88,38 +163,46 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  /** Returns color-coded CSS classes for an answer option tile. */
-  protected getAnswerTileClass(optionId: string): string {
+  /**
+   * Triggers staggered entrance animation:
+   * - True/false: both appear at once
+   * - Multiple choice: one by one (68ms per character)
+   */
+  private animateOptionsIn(): void {
+    this.clearAnimationTimeouts();
+
     const question = this.gameState.currentQuestion();
     if (!question) {
-      return '';
-    }
-    const index = question.options.findIndex((o) => o.id === optionId);
-    const base = this.answerColors[index % this.answerColors.length];
-
-    // Selected answer gets a highlighted ring
-    if (this.selectedAnswerId() === optionId) {
-      return `${base} ring-4 ring-white scale-[1.02]`;
+      return;
     }
 
-    // After submission, dim unselected answers
-    if (this.gameState.submissionState() !== 'idle') {
-      return `${base} opacity-60`;
+    this.optionEntered.set(new Set());
+
+    if (question.type === 'true-false') {
+      this.optionEntered.set(new Set(question.options.map((o) => o.id)));
+      return;
     }
 
-    // Idle state: hover lift effect
-    return `${base} hover:scale-[1.02] hover:brightness-110`;
+    // Staggered entry
+    let delay = 0;
+    for (const option of question.options) {
+      const timeout = setTimeout(() => {
+        this.optionEntered.update((prev) => {
+          const next = new Set(prev);
+          next.add(option.id);
+          return next;
+        });
+      }, delay);
+      this.animationTimeouts.push(timeout);
+      delay += 68 * option.text.length;
+    }
   }
 
-  /** Returns a consistent emoji for a user based on their ID hash. */
-  protected getPlayerEmoji(userId: string): string {
-    const hash = Array.from(userId).reduce((s, c) => s + c.charCodeAt(0), 0);
-    return this.EMOJI_LIST[hash % this.EMOJI_LIST.length];
-  }
-
-  /** Converts array index to a letter label (0 → A, 1 → B, etc.). */
-  protected getOptionLabel(index: number): string {
-    return String.fromCharCode(65 + index);
+  private clearAnimationTimeouts(): void {
+    for (const t of this.animationTimeouts) {
+      clearTimeout(t);
+    }
+    this.animationTimeouts = [];
   }
 
   protected dismissSessionClosed(): void {
@@ -136,10 +219,13 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
       .subscribe((event) => this.gameState.setRound(event));
     this.websocketService.question$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event) => {
       this.gameState.setQuestion(event);
-      // Reset visual states for new question
+      // Reset visual states
       this.selectedAnswerId.set(null);
       this.showCorrect.set(false);
       this.showIncorrect.set(false);
+      // Build shape mappings and trigger animation
+      this.buildOptionShapes();
+      this.animateOptionsIn();
     });
     this.websocketService.answerAck$
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -163,7 +249,6 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((event) => {
         this.gameState.endGame(event);
-        // Navigate to leaderboards with real data
         void this.router.navigate(['/leaderboards'], {
           state: {
             leaderboard: event.leaderboard,
