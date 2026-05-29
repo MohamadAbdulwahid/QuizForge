@@ -10,10 +10,11 @@ import { LeaderboardPlayerEvent, WebsocketService } from '../../core/services/we
 import { buildDisplayName } from '../../shared/utils/display-name';
 import { BubblyModalComponent } from '../../shared/ui/bubbly-modal.component';
 
+type QuestionPhase = 'centered' | 'moving' | 'top';
+
 interface OptionPreview {
   id: string;
   text: string;
-  isCorrect: boolean;
 }
 
 interface QuestionPreview {
@@ -24,14 +25,6 @@ interface QuestionPreview {
   orderIndex: number;
   timeLimit: number;
   points: number;
-}
-
-interface HostPlayerState {
-  userId: string;
-  username: string;
-  hasAnswered: boolean;
-  score: number;
-  rank: number;
 }
 
 /** Raw question shape from the GET /api/sessions/:pin/host response. */
@@ -46,16 +39,10 @@ interface RawQuestion {
   points?: number;
 }
 
-/** Raw player shape from the GET /api/sessions/:pin/host response. */
-interface RawPlayer {
-  user_id: string;
-  username?: string;
-}
-
 /** Shape of the GET /api/sessions/:pin/host response body. */
 interface HostSessionData {
   session: { id: number };
-  players: RawPlayer[];
+  players: Array<{ user_id: string; username?: string }>;
   questions: RawQuestion[];
 }
 
@@ -74,7 +61,7 @@ export class HostPageComponent implements OnInit, OnDestroy {
   private readonly sessionEventBus = inject(SessionEventBus);
   private readonly websocketService = inject(WebsocketService);
 
-  // Session state
+  // ── Session state ──
   protected readonly pin = signal('');
   protected readonly sessionId = signal<number | null>(null);
   protected readonly playerCount = signal(0);
@@ -82,8 +69,8 @@ export class HostPageComponent implements OnInit, OnDestroy {
   protected readonly connected = this.websocketService.connected;
   protected readonly errorMessage = signal<string | null>(null);
 
-  // Game state
-  protected readonly currentQuestionIndex = signal(-1); // -1 = lobby, 0+ = game started
+  // ── Game state ──
+  protected readonly currentQuestionIndex = signal(-1);
   protected readonly questions = signal<QuestionPreview[]>([]);
   protected readonly currentQuestion = computed(() => {
     const idx = this.currentQuestionIndex();
@@ -91,58 +78,51 @@ export class HostPageComponent implements OnInit, OnDestroy {
   });
   protected readonly totalQuestions = computed(() => this.questions().length);
   protected readonly isGameActive = computed(() => this.currentQuestionIndex() >= 0);
-  protected readonly isLastQuestion = computed(
-    () => this.currentQuestionIndex() >= this.totalQuestions() - 1 && this.totalQuestions() > 0
-  );
   protected readonly gameEnded = signal(false);
 
-  // Players
-  protected readonly players = signal<HostPlayerState[]>([]);
-  protected readonly answeredCount = computed(
-    () => this.players().filter((p) => p.hasAnswered).length
-  );
-  protected readonly allAnswered = computed(
-    () => this.answeredCount() >= this.playerCount() && this.playerCount() > 0
-  );
+  // ── Timer ──
+  private readonly serverStartTimeMs = signal(0);
+  protected readonly timeLimitMs = signal(0);
+  private readonly nowMsSignal = signal(Date.now());
+  private timerInterval: ReturnType<typeof setInterval> | null = null;
 
-  // Leaderboard
+  protected readonly timeRemainingMs = computed(() => {
+    const limit = this.timeLimitMs();
+    if (limit <= 0) return 0;
+    const elapsed = this.nowMsSignal() - this.serverStartTimeMs();
+    return Math.max(0, limit - elapsed);
+  });
+  protected readonly timeRemainingSeconds = computed(() =>
+    Math.ceil(this.timeRemainingMs() / 1000)
+  );
+  protected readonly timerProgress = computed(() => {
+    const limit = this.timeLimitMs();
+    if (limit <= 0) return 100;
+    return (this.timeRemainingMs() / limit) * 100;
+  });
+  protected readonly timerUrgency = computed<'safe' | 'warning' | 'danger'>(() => {
+    const secs = this.timeRemainingSeconds();
+    if (secs <= 3) return 'danger';
+    if (secs <= 8) return 'warning';
+    return 'safe';
+  });
+
+  // ── Animation state ──
+  protected readonly questionPhase = signal<QuestionPhase>('centered');
+  protected readonly visibleOptionIds = signal<Set<string>>(new Set());
+
+  // ── Players & Leaderboard (kept for data, no longer rendered in sidebar) ──
   protected readonly leaderboard = signal<LeaderboardPlayerEvent[]>([]);
-  protected readonly topPlayers = computed(() => this.leaderboard().slice(0, 5));
+  protected readonly answeredCount = signal(0);
 
-  // Loading
+  // ── Loading & modals ──
   protected readonly initialLoading = signal(true);
-
-  // Modals
   protected readonly showEndConfirmModal = signal(false);
   protected readonly showSessionClosedModal = signal(false);
   protected readonly sessionClosedReason = signal('');
 
-  private readonly emojiPool = [
-    '🦊',
-    '🐼',
-    '🦁',
-    '🐯',
-    '🐸',
-    '🐙',
-    '🦄',
-    '🐧',
-    '🦉',
-    '🐺',
-    '🐱',
-    '🐶',
-    '🐰',
-    '🐭',
-    '🐹',
-    '🐻',
-    '🐲',
-    '👽',
-    '🤖',
-    '👾',
-    '🫅',
-    '🐨',
-  ];
-
   private hasJoined = false;
+  private animationTimeouts: ReturnType<typeof setTimeout>[] = [];
 
   async ngOnInit(): Promise<void> {
     const pin = this.route.snapshot.paramMap.get('pin') ?? '';
@@ -162,11 +142,8 @@ export class HostPageComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Fetch initial session data (questions + players)
     try {
       await this.loadHostData(pin);
-
-      // Connect WebSocket
       this.bindSocketEvents();
       this.websocketService.connect(token);
       this.websocketService.joinGame(pin, buildDisplayName(currentUser, 'Host'));
@@ -179,18 +156,14 @@ export class HostPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.stopTimer();
+    this.clearAnimationTimeouts();
     this.leaveInternal();
   }
 
-  /** Helper to label options A, B, C, D in the template. */
+  /** Option letter label: 0→A, 1→B, … */
   protected getOptionLabel(index: number): string {
     return String.fromCharCode(65 + index);
-  }
-
-  /** Returns a consistent emoji for a user based on their ID hash. */
-  protected getPlayerEmoji(userId: string): string {
-    const hash = Array.from(userId).reduce((sum, char) => sum + char.charCodeAt(0), 0);
-    return this.emojiPool[hash % this.emojiPool.length];
   }
 
   private async loadHostData(pin: string): Promise<void> {
@@ -205,57 +178,39 @@ export class HostPageComponent implements OnInit, OnDestroy {
         id: q.id,
         text: q.text,
         type: q.type,
-        options: (q.options ?? []).map((o) => ({
-          id: o.id,
-          text: o.text,
-          isCorrect: o.id === q.correct_answer,
-        })),
+        options: (q.options ?? []).map((o) => ({ id: o.id, text: o.text })),
         orderIndex: q.order_index,
         timeLimit: q.time_limit ?? 30000,
         points: q.points ?? 100,
       }))
     );
-
-    this.players.set(
-      data.players.map((p: RawPlayer) => ({
-        userId: p.user_id,
-        username: p.username ?? 'Player',
-        hasAnswered: false,
-        score: 0,
-        rank: 0,
-      }))
-    );
   }
 
   private bindSocketEvents(): void {
-    this.websocketService.lobbyState$
+    this.websocketService.roundStarted$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((event) => {
-        this.playerCount.set(event.players.length);
+        this.gameEnded.set(false);
+        // Start timer
+        this.serverStartTimeMs.set(event.serverStartTimeMs);
+        this.timeLimitMs.set(event.timeLimitMs);
+        this.startTimer();
       });
 
-    this.websocketService.roundStarted$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      // Game has started / next question
-      this.gameEnded.set(false);
-      // Reset answered state
-      this.players.update((list) => list.map((p) => ({ ...p, hasAnswered: false })));
-    });
+    this.websocketService.question$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((event) => {
+        const idx = event.order - 1;
+        this.currentQuestionIndex.set(idx >= 0 ? idx : 0);
+        this.answeredCount.set(0);
+        // Kick off entrance animation
+        this.startQuestionAnimation(this.currentQuestion());
+      });
 
-    this.websocketService.question$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event) => {
-      // Find the question index by looking at the order field (1-based)
-      const idx = event.order - 1;
-      this.currentQuestionIndex.set(idx >= 0 ? idx : 0);
-    });
-
-    // Host receives score-update events when any player answers correctly/incorrectly
     this.websocketService.scoreUpdate$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((event) => {
-        this.players.update((list) =>
-          list.map((p) =>
-            p.userId === event.playerId ? { ...p, hasAnswered: true, score: event.totalScore } : p
-          )
-        );
+        this.answeredCount.update((c) => c + 1);
         this.leaderboard.set(event.leaderboard);
       });
 
@@ -265,17 +220,18 @@ export class HostPageComponent implements OnInit, OnDestroy {
         this.leaderboard.set(event.leaderboard);
       });
 
-    this.websocketService.roundClosed$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      // Round closed — no special handling needed on host view
-    });
+    this.websocketService.roundClosed$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.stopTimer();
+      });
 
     this.websocketService.gameEnded$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((event) => {
         this.gameEnded.set(true);
-        this.leaderboard.set(event.leaderboard);
+        this.stopTimer();
         this.currentQuestionIndex.set(-1);
-        // Navigate to leaderboard after brief delay
         setTimeout(() => {
           void this.router.navigate(['/leaderboards'], {
             state: { leaderboard: event.leaderboard, quizTitle: 'Game Complete' },
@@ -299,7 +255,96 @@ export class HostPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  // Host controls
+  // ── Timer ──
+
+  private startTimer(): void {
+    this.stopTimer();
+    this.nowMsSignal.set(Date.now());
+    this.timerInterval = setInterval(() => {
+      this.nowMsSignal.set(Date.now());
+    }, 250);
+  }
+
+  private stopTimer(): void {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+      this.timerInterval = null;
+    }
+  }
+
+  // ── Question entrance animation ──
+
+  private startQuestionAnimation(question: QuestionPreview | null): void {
+    this.clearAnimationTimeouts();
+    if (!question) return;
+
+    this.questionPhase.set('centered');
+    this.visibleOptionIds.set(new Set());
+
+    // Hold centered for 800ms, then start moving
+    const pause = setTimeout(() => {
+      this.questionPhase.set('moving');
+
+      // After the move animation completes (700ms), reveal options
+      const show = setTimeout(() => {
+        this.questionPhase.set('top');
+        this.revealOptions(question);
+      }, 750); // slightly more than the CSS transition duration
+
+      this.animationTimeouts.push(show);
+    }, 800);
+
+    this.animationTimeouts.push(pause);
+  }
+
+  /**
+   * Calculates reading time for an option using the formula:
+   *   delay = 1500ms  (initial pause before reading)
+   *   wpm = 180       (readable words per minute)
+   *   wordLength = 5  (standardized chars per word)
+   *   words = text.length / wordLength
+   *   wordsTime = ((words / wpm) × 60) × 1000
+   *   bonus = 1000ms  (extra time)
+   *   total = delay + wordsTime + bonus
+   */
+  private calculateReadTime(text: string): number {
+    const delay = 1500;
+    const wpm = 180;
+    const wordLength = 5;
+    const words = text.length / wordLength;
+    const wordsTime = ((words / wpm) * 60) * 1000;
+    const bonus = 1000;
+    return delay + wordsTime + bonus;
+  }
+
+  private revealOptions(question: QuestionPreview): void {
+    if (question.type === 'true-false') {
+      this.visibleOptionIds.set(new Set(question.options.map((o) => o.id)));
+      return;
+    }
+
+    // Multiple choice: staggered reveal, each option gets its own reading time
+    let delay = 0;
+    for (const option of question.options) {
+      const readTime = this.calculateReadTime(option.text);
+      const timeout = setTimeout(() => {
+        this.visibleOptionIds.update((prev) => {
+          const next = new Set(prev);
+          next.add(option.id);
+          return next;
+        });
+      }, delay);
+      this.animationTimeouts.push(timeout);
+      delay += readTime;
+    }
+  }
+
+  private clearAnimationTimeouts(): void {
+    for (const t of this.animationTimeouts) clearTimeout(t);
+    this.animationTimeouts = [];
+  }
+
+  // ── Host controls ──
 
   protected skipQuestion(): void {
     this.websocketService.skipQuestion(this.pin());
@@ -327,17 +372,9 @@ export class HostPageComponent implements OnInit, OnDestroy {
   }
 
   private leaveInternal(): void {
-    if (!this.hasJoined) {
-      return;
-    }
-
+    if (!this.hasJoined) return;
     this.hasJoined = false;
     this.websocketService.leaveGame(this.pin(), 'host-page-destroy');
     this.websocketService.disconnect();
-  }
-
-  protected isCorrectAnswer(optionId: string): boolean {
-    const q = this.currentQuestion();
-    return q?.options.some((o) => o.id === optionId && o.isCorrect) ?? false;
   }
 }

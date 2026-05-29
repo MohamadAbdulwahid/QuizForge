@@ -1,32 +1,34 @@
-<!-- Full-screen Kahoot/Blooket-inspired host view -->
-<div
-  class="from-bubbly-primary fixed inset-0 flex flex-col bg-gradient-to-b via-[#007fb0] to-[#006090]"
->
-  <!-- ── Top bar: PIN + HOST badge + player count + controls ── -->
-  <header class="flex shrink-0 items-center justify-between bg-black/20 px-6 py-3 backdrop-blur-sm">
-    <div class="flex items-center gap-4">
-      <span
-        class="rounded-full bg-amber-400 px-3 py-1 text-xs font-bold tracking-wider text-amber-900 uppercase"
-      >
+<!-- Full-screen host view — projector-optimised, no sidebar, big everything -->
+<div class="from-bubbly-primary fixed inset-0 flex flex-col bg-gradient-to-b via-[#007fb0] to-[#006090]">
+  <!-- ── Timer bar at the very top ── -->
+  @if (isGameActive() && !gameEnded() && timeLimitMs() > 0) {
+    <div
+      class="host-timer-bar"
+      [class.host-timer-bar-safe]="timerUrgency() === 'safe'"
+      [class.host-timer-bar-warning]="timerUrgency() === 'warning'"
+      [class.host-timer-bar-danger]="timerUrgency() === 'danger'"
+      [style.width.%]="timerProgress()"
+    ></div>
+  }
+
+  <!-- ── Top bar: PIN + controls ── -->
+  <header class="flex shrink-0 items-center justify-between bg-black/20 px-5 py-2.5 backdrop-blur-sm">
+    <div class="flex items-center gap-3">
+      <span class="rounded-full bg-amber-400 px-2.5 py-0.5 text-xs font-bold tracking-wider text-amber-900 uppercase">
         Host
       </span>
       <span class="font-display text-2xl font-bold tracking-[0.15em] text-white">
         {{ pin() }}
       </span>
-      <div class="flex items-center gap-1.5">
-        <span
-          class="inline-block h-2 w-2 rounded-full"
-          [class.bg-emerald-400]="connected()"
-          [class.bg-rose-400]="!connected()"
-        ></span>
-        <span class="text-xs font-semibold text-white/70">
-          {{ connected() ? 'Connected' : 'Disconnected' }}
-        </span>
-      </div>
+      <span
+        class="inline-block h-2.5 w-2.5 rounded-full"
+        [class.bg-emerald-400]="connected()"
+        [class.bg-rose-400]="!connected()"
+      ></span>
     </div>
 
-    <div class="flex items-center gap-3">
-      <div class="flex items-center gap-1.5 rounded-full bg-white/15 px-4 py-1.5 backdrop-blur-sm">
+    <div class="flex items-center gap-2.5">
+      <div class="flex items-center gap-1 rounded-full bg-white/15 px-3 py-1 backdrop-blur-sm">
         <span class="text-sm font-bold text-white/90">{{ playerCount() }}</span>
         <span class="text-xs font-semibold text-white/60">players</span>
       </div>
@@ -34,7 +36,7 @@
       @if (isGameActive() && !gameEnded()) {
         <button
           type="button"
-          class="rounded-2xl bg-white/15 px-4 py-2 text-sm font-bold text-white/90 backdrop-blur-sm transition-all duration-200 hover:bg-white/25"
+          class="rounded-2xl bg-white/15 px-4 py-1.5 text-sm font-bold text-white/90 backdrop-blur-sm transition-all duration-200 hover:bg-white/25"
           (click)="skipQuestion()"
         >
           Skip
@@ -43,176 +45,112 @@
 
       <button
         type="button"
-        class="rounded-2xl bg-rose-500/40 px-4 py-2 text-sm font-bold text-white backdrop-blur-sm transition-all duration-200 hover:bg-rose-500/60"
+        class="rounded-2xl bg-rose-500/40 px-4 py-1.5 text-sm font-bold text-white backdrop-blur-sm transition-all duration-200 hover:bg-rose-500/60"
         (click)="requestEndSession()"
       >
-        End Session
+        End
       </button>
     </div>
   </header>
 
-  <!-- ── Error message ── -->
+  <!-- ── Error banner ── -->
   @if (errorMessage()) {
-    <div
-      class="mx-6 mt-4 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-bold text-rose-700"
-    >
+    <div class="mx-4 mt-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-2 text-sm font-bold text-rose-700">
       {{ errorMessage() }}
     </div>
   }
 
-  <!-- ── Content ── -->
+  <!-- ── Main content ── -->
   @if (initialLoading()) {
     <div class="flex flex-1 items-center justify-center">
       <p class="font-display text-2xl font-bold text-white/70">Loading session data...</p>
     </div>
   } @else if (gameEnded()) {
     <div class="flex flex-1 items-center justify-center">
-      <div class="text-center">
-        <p class="font-display text-5xl font-bold text-white">Game Complete!</p>
-        <p class="mt-4 text-lg font-semibold text-white/70">Redirecting to leaderboard...</p>
-      </div>
+      <p class="font-display text-5xl font-bold text-white">Game Complete!</p>
+      <p class="mt-4 text-lg font-semibold text-white/70">Redirecting to leaderboard...</p>
     </div>
   } @else if (currentQuestion(); as question) {
-    <!-- ── Active game: question display + player status + leaderboard ── -->
-    <main class="flex flex-1 gap-6 overflow-y-auto px-6 py-6 xl:grid-cols-[1fr_20rem]">
-      <div class="flex flex-1 flex-col gap-6 xl:max-w-[calc(100%-22rem)]">
-        <!-- Question card -->
-        <div class="rounded-3xl bg-white p-6 shadow-lg">
-          <p class="text-xs font-bold tracking-[0.2em] text-slate-500 uppercase">
-            Question {{ question.orderIndex + 1 }} of {{ totalQuestions() }}
-          </p>
-          <h2 class="font-display mt-2 text-2xl font-bold text-slate-900">
-            {{ question.text }}
-          </h2>
-
-          <!-- Options grid -->
-          <div class="mt-6 grid gap-3 sm:grid-cols-2">
-            @for (option of question.options; track option.id) {
-              <div
-                class="rounded-2xl border-2 px-5 py-4 text-left font-semibold transition-all"
-                [class.border-emerald-400]="option.isCorrect"
-                [class.bg-emerald-50]="option.isCorrect"
-                [class.border-slate-200]="!option.isCorrect"
-                [class.bg-white]="!option.isCorrect"
-              >
-                <span class="text-xs font-bold tracking-wider text-slate-400 uppercase">
-                  {{ getOptionLabel($index) }}
-                </span>
-                <span class="mt-1 block text-base text-slate-800">{{ option.text }}</span>
-                @if (option.isCorrect) {
-                  <span
-                    class="mt-2 inline-flex items-center gap-1 rounded-full bg-emerald-200 px-3 py-1 text-xs font-bold text-emerald-800"
-                  >
-                    ✓ Correct
-                  </span>
-                }
-              </div>
-            }
+    <main class="flex flex-1 flex-col overflow-hidden px-4 pb-2">
+      <!-- ── Question stage ── -->
+      <div class="relative flex-1 min-h-[35vh]">
+        <div
+          class="host-question font-display font-bold"
+          [class.host-question-centered]="questionPhase() === 'centered'"
+          [class.host-question-top]="questionPhase() === 'top'"
+        >
+          <div class="text-sm font-bold tracking-[0.15em] text-white/50 uppercase">
+            {{ question.orderIndex + 1 }} / {{ totalQuestions() }}
           </div>
-
-          <!-- Answer progress -->
-          <div class="mt-6">
-            <div class="flex items-center justify-between">
-              <span class="text-sm font-bold text-slate-600">
-                {{ answeredCount() }} / {{ playerCount() }} answered
-              </span>
-              @if (allAnswered()) {
-                <span class="text-sm font-bold text-emerald-600">All players answered!</span>
-              }
-            </div>
-            <div class="mt-2 h-2 overflow-hidden rounded-full bg-slate-200">
-              <div
-                class="h-full rounded-full bg-emerald-400 transition-all duration-300"
-                [style.width.%]="playerCount() > 0 ? (answeredCount() / playerCount()) * 100 : 0"
-              ></div>
-            </div>
+          <div class="mt-1 leading-tight">
+            {{ question.text }}
           </div>
         </div>
       </div>
 
-      <!-- Right sidebar: players + leaderboard -->
-      <div class="flex w-80 shrink-0 flex-col gap-4 max-xl:hidden">
-        <!-- Player list -->
-        <div class="rounded-3xl bg-white/95 p-5 shadow-lg backdrop-blur-sm">
-          <h3 class="font-display mb-4 text-lg font-bold text-slate-800">Players</h3>
-          <div class="grid gap-2">
-            @for (player of players(); track player.userId) {
-              <div
-                class="flex items-center justify-between rounded-2xl px-3 py-2"
-                [class.bg-emerald-50]="player.hasAnswered"
-                [class.bg-slate-50]="!player.hasAnswered"
-              >
-                <div class="flex items-center gap-2.5">
-                  <span class="text-lg">{{ getPlayerEmoji(player.userId) }}</span>
-                  <span class="text-sm font-bold text-slate-800">{{ player.username }}</span>
+      <!-- ── Options grid ── -->
+      <div
+        class="transition-all duration-500 ease-out"
+        [style.opacity]="questionPhase() === 'centered' ? '0' : '1'"
+        [style.pointerEvents]="questionPhase() === 'centered' ? 'none' : 'auto'"
+      >
+        @if (questionPhase() !== 'centered') {
+          <div class="mx-auto grid w-full max-w-5xl flex-1 grid-cols-2 gap-4">
+            @for (option of question.options; track option.id; let i = $index) {
+              @if (visibleOptionIds().has(option.id)) {
+                <div class="host-option-enter">
+                  <div
+                    class="flex min-h-[12vh] items-center rounded-3xl border-2 border-white/20 bg-white/10 px-6 py-5 font-bold text-white backdrop-blur-sm"
+                  >
+                    <span class="mr-4 text-4xl font-black text-white/40">
+                      {{ getOptionLabel(i) }}
+                    </span>
+                    <span class="text-2xl leading-tight sm:text-3xl">
+                      {{ option.text }}
+                    </span>
+                  </div>
                 </div>
-                @if (player.hasAnswered) {
-                  <span class="text-xs font-bold text-emerald-600">✓</span>
-                } @else {
-                  <span class="h-4 w-4 animate-pulse rounded-full bg-slate-300"></span>
-                }
-              </div>
-            } @empty {
-              <p class="text-sm font-semibold text-slate-500">Waiting for players...</p>
-            }
-          </div>
-        </div>
-
-        <!-- Leaderboard -->
-        @if (topPlayers().length > 0) {
-          <div class="rounded-3xl bg-white/95 p-5 shadow-lg backdrop-blur-sm">
-            <h3 class="font-display mb-4 text-lg font-bold text-amber-600">Top Scores</h3>
-            @for (player of topPlayers(); track player.userId) {
-              <div class="mb-2 flex items-center justify-between rounded-2xl bg-slate-50 px-3 py-2">
-                <div class="flex items-center gap-2.5">
-                  <span class="text-xs font-bold text-slate-400">#{{ player.rank }}</span>
-                  <span>{{ getPlayerEmoji(player.userId) }}</span>
-                  <span class="text-sm font-bold text-slate-800">{{ player.username }}</span>
-                </div>
-                <span class="font-display text-lg font-bold text-amber-600">
-                  {{ player.score }}
-                </span>
-              </div>
+              }
             }
           </div>
         }
       </div>
-    </main>
 
-    <!-- Mobile: player count + leaderboard strip -->
-    <div
-      class="flex shrink-0 items-center gap-3 overflow-x-auto border-t border-white/10 bg-black/20 px-4 py-3 xl:hidden"
-    >
-      <div
-        class="flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-bold text-white/90"
-      >
-        {{ answeredCount() }}/{{ playerCount() }} answered
-      </div>
-      @for (player of topPlayers().slice(0, 3); track player.userId) {
-        <div
-          class="flex shrink-0 items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-bold text-white/90"
-        >
-          <span>#{{ player.rank }}</span>
-          <span>{{ getPlayerEmoji(player.userId) }}</span>
-          <span>{{ player.score }}</span>
+      <!-- ── Answer progress ── -->
+      @if (questionPhase() !== 'centered') {
+        <div class="mt-3">
+          <div class="flex items-center justify-between px-1">
+            <span class="text-base font-bold text-white/70">
+              {{ answeredCount() }} / {{ playerCount() }} answered
+            </span>
+            @if (answeredCount() >= playerCount() && playerCount() > 0) {
+              <span class="text-base font-bold text-emerald-300">All answered!</span>
+            }
+          </div>
+          <div class="mt-1 h-3 overflow-hidden rounded-full bg-white/20">
+            <div
+              class="h-full rounded-full bg-emerald-400 transition-all duration-300"
+              [style.width.%]="playerCount() > 0 ? (answeredCount() / playerCount()) * 100 : 0"
+            ></div>
+          </div>
         </div>
       }
-    </div>
+    </main>
   } @else {
     <!-- ── Between questions / pre-game ── -->
-    <div class="flex flex-1 items-center justify-center">
+    <div class="flex flex-1 items-center justify-center px-4">
       <div class="text-center">
         <p class="font-display text-4xl font-bold text-white">
           {{ totalQuestions() > 0 ? 'Get Ready...' : 'Waiting for game to start...' }}
         </p>
-        <p class="mt-4 text-lg font-semibold text-white/70">
+        <p class="mt-3 text-lg font-semibold text-white/70">
           {{ totalQuestions() > 0 ? 'The next question is coming up!' : statusMessage() }}
         </p>
       </div>
     </div>
   }
 
-  <!-- ── End Session Confirmation Modal ── -->
+  <!-- ── Modals ── -->
   <app-bubbly-modal
     [visible]="showEndConfirmModal()"
     title="End Session?"
@@ -223,8 +161,6 @@
     (confirm)="confirmEndSession()"
     (dismiss)="cancelEndSession()"
   />
-
-  <!-- ── Session Closed Modal ── -->
   <app-bubbly-modal
     [visible]="showSessionClosedModal()"
     title="Session Closed"

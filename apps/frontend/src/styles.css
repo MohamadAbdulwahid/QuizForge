@@ -503,6 +503,214 @@ h3,
   }
 }
 
+/* ── Host screen animations ── */
+
+/* Question float-up: centered → top.
+ * Both states use position: absolute + left: 50% so that only
+ * `top` and `transform` change — both are smoothly animatable.
+ */
+.host-question {
+  position: absolute;
+  left: 50%;
+  width: 100%;
+  max-width: 90vw;
+  padding: 0 1rem;
+  text-align: center;
+  transition:
+    top 700ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 700ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    font-size 700ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 300ms ease-out;
+}
+
+.host-question-centered {
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  opacity: 1;
+}
+
+.host-question-top {
+  top: 0.5rem;
+  transform: translateX(-50%);
+  font-size: 2.5rem;
+  opacity: 1;
+}
+
+/* Option bubble-in animation */
+@keyframes host-bubble-in {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(-8deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.15) rotate(3deg);
+  }
+  80% {
+    transform: scale(0.95) rotate(-2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.host-option-enter {
+  animation: host-bubble-in 500ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Timer bar at the very top of the host screen */
+.host-timer-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  z-index: 50;
+  transition: width 250ms linear;
+}
+.host-timer-bar-safe {
+  background: linear-gradient(90deg, #34d399, #22c55e);
+}
+.host-timer-bar-warning {
+  background: linear-gradient(90deg, #fbbf24, #f59e0b);
+}
+.host-timer-bar-danger {
+  background: linear-gradient(90deg, #f87171, #ef4444);
+}
+
+/* ── Player screen (Blooket-style) ── */
+
+/* Fun gradient background for the player game page */
+.player-game-bg {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #334155 100%);
+  position: fixed;
+  inset: 0;
+}
+
+/* Decorative pattern overlay */
+.player-game-pattern {
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(0, 165, 224, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(205, 39, 80, 0.06) 0%, transparent 50%);
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Answer option block (Blooket-style color block) */
+.player-option-btn {
+  position: relative;
+  border: none;
+  cursor: pointer;
+  transition: all 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+.player-option-btn:hover:not(:disabled) {
+  transform: scale(1.04);
+  filter: brightness(1.15);
+}
+
+.player-option-btn:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.player-option-btn:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.player-option-btn:disabled.player-option-selected {
+  opacity: 1;
+}
+
+/* Shape icons inside player option buttons */
+.player-shape {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+}
+
+.player-shape-symbol {
+  display: block;
+  width: 48px;
+  height: 48px;
+  transition: transform 300ms ease;
+}
+
+/* Specific shapes */
+.player-shape-square {
+  border: 4px solid currentColor;
+  border-radius: 8px;
+}
+
+.player-shape-circle {
+  border: 4px solid currentColor;
+  border-radius: 50%;
+}
+
+.player-shape-triangle {
+  width: 0;
+  height: 0;
+  border-left: 26px solid transparent;
+  border-right: 26px solid transparent;
+  border-bottom: 48px solid currentColor;
+  background: transparent !important;
+}
+
+.player-shape-diamond {
+  border: 4px solid currentColor;
+  transform: rotate(45deg);
+  border-radius: 4px;
+  width: 38px;
+  height: 38px;
+  margin: 5px auto;
+}
+
+/* Selected answer highlight */
+.player-option-selected {
+  box-shadow:
+    0 0 0 4px white,
+    0 0 20px rgba(255, 255, 255, 0.4) !important;
+  transform: scale(1.06) !important;
+  z-index: 2;
+}
+
+/* Waiting-for-question pulse */
+@keyframes player-waiting-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+.player-waiting-pulse {
+  animation: player-waiting-pulse 2s ease-in-out infinite;
+}
+
+/* Player option enter animation (staggered) */
+@keyframes player-option-enter {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(30px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.08) translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.player-option-enter {
+  animation: player-option-enter 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

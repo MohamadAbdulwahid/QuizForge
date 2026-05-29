@@ -1,162 +1,166 @@
-<!-- Full-screen Blooket-inspired game layout (no dashboard shell) -->
-<div class="bg-bubbly-background fixed inset-0 flex flex-col">
+<!-- Blooket-inspired player game screen -->
+<div class="player-game-bg flex flex-col">
+  <div class="player-game-pattern"></div>
+
   <!-- ── Top bar: question counter + timer ── -->
-  <header class="flex items-center justify-between px-6 py-4">
+  <header class="relative z-10 flex items-center justify-between px-6 py-4">
     <div class="flex items-center gap-3">
       @if (gameState.currentQuestion(); as q) {
-        <div class="font-display text-bubbly-primary text-sm font-bold">
+        <div class="rounded-full bg-white/15 px-4 py-1.5 text-sm font-bold text-white/90 backdrop-blur-sm">
           {{ q.order }} / {{ q.totalQuestions }}
         </div>
       }
     </div>
 
     @if (gameState.currentQuestion()) {
-      <div class="flex items-center gap-2 rounded-full bg-white px-5 py-2 shadow-sm">
-        <span class="font-display text-bubbly-accent text-2xl font-bold">
+      <div
+        class="flex items-center gap-2 rounded-full px-5 py-2 shadow-lg backdrop-blur-sm"
+        [class.bg-white/20]="gameState.timeRemainingSeconds() > 5"
+        [class.bg-rose-500/40]="gameState.timeRemainingSeconds() <= 5"
+      >
+        <span
+          class="font-display text-2xl font-bold"
+          [class.text-white]="gameState.timeRemainingSeconds() > 5"
+          [class.text-rose-200]="gameState.timeRemainingSeconds() <= 5"
+        >
           {{ gameState.timeRemainingSeconds() }}
         </span>
-        <span class="text-xs font-bold text-slate-500">sec</span>
+        <span
+          class="text-xs font-bold"
+          [class.text-white/70]="gameState.timeRemainingSeconds() > 5"
+          [class.text-rose-200/70]="gameState.timeRemainingSeconds() <= 5"
+        >sec</span>
       </div>
     }
   </header>
 
   <!-- ── Progress bar ── -->
   @if (gameState.currentQuestion()) {
-    <div class="mx-6 h-2 overflow-hidden rounded-full bg-slate-200">
+    <div class="relative z-10 mx-6 h-1.5 overflow-hidden rounded-full bg-white/15">
       <div
-        class="bg-bubbly-accent h-full rounded-full transition-all duration-300 ease-linear"
-        [style.width.%]="gameState.progressPercent()"
+        class="h-full rounded-full transition-all duration-300 ease-linear"
+        [class.bg-emerald-400]="gameState.timeRemainingSeconds() > 5"
+        [class.bg-rose-400]="gameState.timeRemainingSeconds() <= 5"
+        [style.width.%]="gameState.timeRemainingSeconds() > 0 ? (gameState.timeRemainingMs() / (gameState.currentQuestion()?.timeLimitMs ?? 1)) * 100 : 0"
       ></div>
     </div>
   }
 
-  <!-- ── Main content area ── -->
-  <main class="flex flex-1 items-center justify-center px-6 py-4">
+  <!-- ── Main content ── -->
+  <main class="relative z-10 flex flex-1 flex-col items-center justify-center px-6 py-2">
     @if (gameState.ended()) {
-      <!-- Game completed — brief display before redirecting to leaderboards -->
       <div class="text-center">
-        <p class="font-display text-bubbly-primary text-4xl font-bold">Game Complete!</p>
-        <p class="mt-4 text-lg font-semibold text-slate-600">Calculating final scores...</p>
+        <p class="font-display text-5xl font-bold text-white">Game Complete!</p>
+        <p class="mt-3 text-lg font-semibold text-white/60">Calculating final scores...</p>
       </div>
     } @else if (gameState.currentQuestion(); as question) {
-      <div class="w-full max-w-4xl">
+      <div class="flex w-full max-w-5xl flex-1 flex-col items-center justify-center gap-6">
         <!-- Question text -->
-        <div class="mb-6 text-center">
-          <p class="font-display text-bubbly-primary text-2xl font-bold sm:text-3xl">
+        <div class="w-full text-center">
+          <h2
+            class="font-display text-2xl font-bold text-white drop-shadow-lg sm:text-3xl md:text-4xl"
+          >
             {{ question.text }}
-          </p>
-          <p class="mt-2 text-sm font-bold text-slate-500">
-            {{ question.type === 'true-false' ? 'True or False?' : 'Select the correct answer' }}
-          </p>
+          </h2>
         </div>
 
-        <!-- Answer tiles: true-false uses 2 columns, MC uses 2 columns as well -->
-        <div class="grid grid-cols-2 gap-4">
-          @for (option of question.options; track option.id; let i = $index) {
-            <button
-              type="button"
-              class="qf-tactile min-h-28 rounded-3xl px-6 py-5 text-left text-lg font-bold transition-all duration-200"
-              [class.min-h-32]="question.type === 'true-false'"
-              [class.text-center]="question.type === 'true-false'"
-              [class.text-2xl]="question.type === 'true-false'"
-              [class]="getAnswerTileClass(option.id)"
-              [disabled]="gameState.submissionState() !== 'idle'"
-              (click)="selectAnswer(option.id)"
-            >
-              @if (question.type !== 'true-false') {
-                <span class="text-xs font-bold tracking-wider uppercase opacity-60">
-                  {{ getOptionLabel(i) }}
-                </span>
-              }
-              <span
-                [class.mt-1]="question.type !== 'true-false'"
-                class="block"
+        <!-- Answer options: 2x2 grid of colored shape blocks -->
+        <div class="grid w-full max-w-2xl grid-cols-2 gap-4 sm:gap-5">
+          @for (shape of optionShapes(); track shape.id; let i = $index) {
+            @if (optionEntered().has(shape.id)) {
+              <button
+                type="button"
+                class="player-option-btn rounded-3xl px-6 py-8 shadow-2xl sm:py-10"
+                [class.player-option-enter]="true"
+                [class]="getOptionButtonClass(shape, i)"
+                [disabled]="gameState.submissionState() !== 'idle'"
+                (click)="selectAnswer(shape.id)"
               >
-                {{ option.text }}
-              </span>
-            </button>
+                <!-- Shape symbol -->
+                <div class="player-shape">
+                  <span
+                    class="player-shape-symbol"
+                    [class.player-shape-square]="shape.shape === 'square'"
+                    [class.player-shape-circle]="shape.shape === 'circle'"
+                    [class.player-shape-triangle]="shape.shape === 'triangle'"
+                    [class.player-shape-diamond]="shape.shape === 'diamond'"
+                  ></span>
+                </div>
+                <!-- Label -->
+                <span class="mt-3 block text-center text-lg font-bold text-white/80">
+                  {{ shape.label }}
+                </span>
+              </button>
+            }
           }
         </div>
 
-        <!-- Submission feedback -->
-        @if (gameState.submissionState() === 'accepted') {
-          <div class="mt-6 text-center">
-            <div class="inline-flex items-center gap-2 rounded-2xl bg-emerald-100 px-6 py-3">
-              <span class="text-2xl">{{ gameState.lastAnswer()?.correct ? '✅' : '❌' }}</span>
-              <span class="font-bold text-emerald-800">
-                @if (gameState.lastAnswer()?.correct) {
-                  Correct! +{{ gameState.lastAnswer()?.scoreDelta }} points
-                } @else {
-                  Incorrect
-                }
-              </span>
+        <!-- Feedback overlay -->
+        @if (showCorrect()) {
+          <div class="fixed inset-0 z-50 flex items-center justify-center bg-emerald-500/20 backdrop-blur-sm">
+            <div class="animate-bounce rounded-3xl bg-emerald-500 px-10 py-6 text-center shadow-2xl">
+              <span class="text-5xl">✅</span>
+              <p class="font-display mt-2 text-2xl font-bold text-white">Correct!</p>
+              <p class="text-lg font-semibold text-emerald-100">
+                +{{ gameState.lastAnswer()?.scoreDelta ?? 0 }} points
+              </p>
             </div>
           </div>
-        } @else if (gameState.submissionState() === 'pending') {
-          <div class="mt-6 text-center">
-            <div class="inline-flex items-center gap-2 rounded-2xl bg-sky-100 px-6 py-3">
-              <span class="animate-pulse text-xl">⏳</span>
-              <span class="font-bold text-sky-800">Answer submitted...</span>
+        } @else if (showIncorrect()) {
+          <div class="fixed inset-0 z-50 flex items-center justify-center bg-rose-500/20 backdrop-blur-sm">
+            <div class="animate-bounce rounded-3xl bg-rose-500 px-10 py-6 text-center shadow-2xl">
+              <span class="text-5xl">❌</span>
+              <p class="font-display mt-2 text-2xl font-bold text-white">Incorrect</p>
+              <p class="text-lg font-semibold text-rose-100">Better luck next time!</p>
             </div>
           </div>
-        } @else if (gameState.submissionState() === 'closed') {
-          <div class="mt-6 text-center">
-            <div class="inline-flex items-center gap-2 rounded-2xl bg-slate-100 px-6 py-3">
-              <span class="text-xl">⏰</span>
-              <span class="font-bold text-slate-600">Time's up!</span>
-            </div>
+        }
+
+        <!-- Submission feedback (compact) -->
+        @if (gameState.submissionState() === 'pending' && !showCorrect() && !showIncorrect()) {
+          <div class="mt-2 inline-flex items-center gap-2 rounded-full bg-white/15 px-5 py-2 backdrop-blur-sm">
+            <span class="animate-pulse text-lg">⏳</span>
+            <span class="text-sm font-bold text-white/80">Answer submitted...</span>
+          </div>
+        } @else if (gameState.submissionState() === 'closed' && !showCorrect() && !showIncorrect()) {
+          <div class="mt-2 inline-flex items-center gap-2 rounded-full bg-white/15 px-5 py-2 backdrop-blur-sm">
+            <span class="text-lg">⏰</span>
+            <span class="text-sm font-bold text-white/60">Time's up!</span>
           </div>
         }
       </div>
     } @else {
-      <!-- Waiting for question (pre-game, between questions) -->
+      <!-- Waiting for question -->
       <div class="text-center">
-        <div class="mb-4">
+        <div class="player-waiting-pulse mb-4">
           <span class="text-6xl">📋</span>
         </div>
-        <p class="font-display text-bubbly-primary text-3xl font-bold">Waiting for question...</p>
-        <p class="mt-3 text-lg font-semibold text-slate-500">
+        <p class="font-display text-3xl font-bold text-white">Waiting for question...</p>
+        <p class="mt-3 text-lg font-semibold text-white/50">
           The host will start the game shortly.
         </p>
       </div>
     }
   </main>
 
-  <!-- ── Leaderboard sidebar (desktop) ── -->
+  <!-- ── Leaderboard sidebar (desktop only, compact) ── -->
   @if (gameState.currentQuestion() && gameState.leaderboard().length > 0) {
     <aside
-      class="hidden lg:fixed lg:top-0 lg:right-0 lg:block lg:h-full lg:w-72 lg:overflow-y-auto lg:border-l lg:border-slate-200 lg:bg-white lg:p-4"
+      class="hidden lg:fixed lg:top-0 lg:right-0 lg:z-20 lg:block lg:h-full lg:w-64 lg:overflow-y-auto lg:border-l lg:border-white/10 lg:bg-black/40 lg:p-4 lg:backdrop-blur-md"
     >
-      <h3 class="font-display text-bubbly-accent mb-4 text-lg font-bold">Leaderboard</h3>
-      @for (player of gameState.leaderboard(); track player.userId) {
-        <div class="mb-2 flex items-center justify-between rounded-2xl bg-slate-50 px-3 py-2">
+      <h3 class="font-display mb-4 text-base font-bold text-amber-400">Leaderboard</h3>
+      @for (player of gameState.leaderboard().slice(0, 8); track player.userId) {
+        <div class="mb-1.5 flex items-center justify-between rounded-2xl bg-white/10 px-3 py-2">
           <div class="flex items-center gap-2">
-            <span class="text-xs font-bold text-slate-400">#{{ player.rank }}</span>
-            <span class="mr-1">{{ getPlayerEmoji(player.userId) }}</span>
-            <span class="text-sm font-bold text-slate-900">{{ player.username }}</span>
+            <span class="text-xs font-bold text-white/40">#{{ player.rank }}</span>
+            <span class="text-sm font-bold text-white/80">{{ player.username }}</span>
           </div>
-          <span class="font-display text-bubbly-accent text-base font-bold">
+          <span class="font-display text-base font-bold text-amber-400">
             {{ player.score }}
           </span>
         </div>
       }
     </aside>
-  }
-
-  <!-- ── Leaderboard bottom sheet (mobile) ── -->
-  @if (gameState.leaderboard().length > 0) {
-    <div class="fixed right-0 bottom-0 left-0 border-t border-slate-200 bg-white p-3 lg:hidden">
-      <div class="flex gap-2 overflow-x-auto">
-        @for (player of gameState.leaderboard().slice(0, 5); track player.userId) {
-          <div class="flex shrink-0 items-center gap-1 rounded-2xl bg-slate-50 px-3 py-2">
-            <span class="text-xs font-bold text-slate-400">#{{ player.rank }}</span>
-            <span>{{ getPlayerEmoji(player.userId) }}</span>
-            <span class="text-sm font-bold">{{ player.username }}</span>
-            <span class="text-bubbly-accent text-sm font-bold">{{ player.score }}</span>
-          </div>
-        }
-      </div>
-    </div>
   }
 
   <!-- ── Session Closed Modal ── -->
