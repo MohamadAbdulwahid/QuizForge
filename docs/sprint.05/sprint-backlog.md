@@ -22,7 +22,7 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 
 ### PB-46: Start Game Session and Broadcast First Question (Mohamad)
 
-**User Story:** As a **Host**, I want to start a game session so questions are broadcast to all players.
+**User Story:** As a **user**, I want to be able to start the quiz I created, so that my friends and I can begin playing together immediately.
 
 **Story Points:** 3
 **Prerequisites:** PB-29, PB-38
@@ -41,7 +41,7 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 
 ### PB-47: Question Broadcast With Timer (Nishan)
 
-**User Story:** As a **System**, I want questions broadcast via WebSocket with a timer so all players receive them simultaneously.
+**User Story:** As a **user**, I want every question to appear for all players at the exact same time with a synchronized countdown, so that the game feels fair and competitive.
 
 **Story Points:** 3
 **Prerequisites:** PB-46
@@ -60,7 +60,7 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 
 ### PB-48: Answer Submission Within Time Limit (Behrang)
 
-**User Story:** As a **Participant**, I want to submit answers within the time limit so my response is recorded.
+**User Story:** As a **user**, I want to quickly tap my chosen answer before time runs out, so that I can earn points before the round ends.
 
 **Story Points:** 3
 **Prerequisites:** PB-47
@@ -79,7 +79,7 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 
 ### PB-49: Server-Side Answer Validation (Nishan)
 
-**User Story:** As a **System**, I want server-side answer validation for correctness and timestamp so cheating is prevented.
+**User Story:** As a **user**, I want to know the game is fair and secure from hackers, so that my earned score actually reflects my skills accurately.
 
 **Story Points:** 4
 **Prerequisites:** PB-48
@@ -99,7 +99,7 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 
 ### PB-50: Forge Classic Scoring Algorithm (Mohamad)
 
-**User Story:** As a **System**, I want a Forge Classic scoring algorithm so scores are calculated from correctness and speed.
+**User Story:** As a **user**, I want to be rewarded with more points for answering faster than others, so that quick thinking gives me a competitive edge.
 
 **Story Points:** 3
 **Prerequisites:** PB-49
@@ -119,7 +119,7 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 
 ### PB-51: Real-Time Score Updates Broadcast (David)
 
-**User Story:** As a **System**, I want real-time score updates broadcast so the leaderboard is updated.
+**User Story:** As a **user**, I want to see the scoreboard change instantly after every question, so that I know exactly who is winning at all times.
 
 **Story Points:** 2
 **Prerequisites:** PB-50
@@ -138,7 +138,7 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 
 ### PB-52: Game Events Table Logging (David)
 
-**User Story:** As a **System**, we want a game_events table to log all answer submissions for analytics so games can be replayed.
+**User Story:** As a **user**, I want my gameplay safely recorded behind the scenes, so that I can review my historical stats and replays later.
 
 **Story Points:** 2
 **Prerequisites:** PB-48, PB-49
@@ -176,7 +176,7 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 
 ### PB-74: WebSocketService and GameStateService With Signals (Behrang)
 
-**User Story:** As a **Player**, I want WebSocketService and GameStateService with Signals so players, current question, and leaderboard are managed on the frontend. *(merged PB-74 + PB-75)*
+**User Story:** As a **user**, I want the game interface to feel snappy and always up to date, so that there is no lag or confusion when playing.
 
 **Story Points:** 3
 **Prerequisites:** PB-47, PB-51
@@ -195,7 +195,7 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 
 ### PB-42: Player Disconnect/Reconnect Handling (Behrang)
 
-**User Story:** As a **Player**, I want player disconnect/reconnect handling so sessions remain stable.
+**User Story:** As a **user**, I want to seamlessly rejoin my game if my internet drops.
 
 **Story Points:** 3
 **Prerequisites:** PB-47, PB-74
@@ -214,7 +214,7 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 
 ### PB-43: WebSocket Rate Limiting (David)
 
-**User Story:** As a **System**, we want WebSocket rate limiting (100ms throttle) so the server isn't overloaded.
+**User Story:** As a **user**, I want my game to remain smooth and not kick me out even if hundreds of people are playing at once, so that large groups aren't interrupted by server lag.
 
 **Story Points:** 2
 **Prerequisites:** PB-37, PB-38, PB-47
