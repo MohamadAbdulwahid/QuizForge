@@ -478,8 +478,9 @@ export function registerGameNamespace(
       }
 
       const socketsInRoom = await typedNamespace.in(pin).fetchSockets();
-      const activePlayerCount = socketsInRoom.filter((roomSocket) =>
-        Boolean(roomSocket.data.userId) && roomSocket.data.userId !== session.host_id
+      const activePlayerCount = socketsInRoom.filter(
+        (roomSocket) =>
+          Boolean(roomSocket.data.userId) && roomSocket.data.userId !== session.host_id
       ).length;
 
       if (activePlayerCount < MIN_PLAYERS_TO_START) {
