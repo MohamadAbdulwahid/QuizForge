@@ -23,9 +23,14 @@ export function registerRoutes(): Router {
   // Protected quiz/session routes.
   router.use('/groups', groupRouter);
   router.use('/quizzes', authMiddleware, quizRouter);
+
+  // SSE must be registered before sessionRouter.
+  // Otherwise sessionRouter's GET /:pin matches /events first and
+  // rejects "events" as an invalid 6-digit PIN → HTTP 400.
+  router.use('/sessions', sessionEventsRouter);
+
   router.use('/sessions', sessionRouter);
   router.use('/sessions', hostSessionRouter);
-  router.use('/sessions', sessionEventsRouter);
 
   return router;
 }

@@ -52,7 +52,8 @@ export class SessionSseService {
   }
 
   private async startConnection(): Promise<void> {
-    const token = this.authService.accessToken();
+    // Use the async method so we wait for Supabase to finish loading the session
+    const token = await this.authService.getAccessToken();
 
     if (!token) {
       // Not authenticated yet — retry after a short delay
@@ -69,6 +70,9 @@ export class SessionSseService {
       });
 
       if (!response.ok) {
+        console.warn(
+          `[SessionSseService] SSE connection failed (HTTP ${response.status}), will retry.`
+        );
         this.scheduleReconnect(5000);
         return;
       }
@@ -104,6 +108,7 @@ export class SessionSseService {
       if (this.isDestroyed) return;
       // Ignore abort errors (intentional disconnect)
       if (err instanceof DOMException && err.name === 'AbortError') return;
+      console.warn('[SessionSseService] Connection error, will retry.', err);
     }
 
     // Stream ended or error — reconnect unless destroyed

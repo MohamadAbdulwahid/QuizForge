@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, DestroyRef, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { DashboardCacheService } from '../../core/services/dashboard-cache.service';
-import { SessionSseService } from '../../core/services/session-sse.service';
 import { buildDisplayName } from '../../shared/utils/display-name';
 
 @Component({
@@ -15,7 +14,6 @@ import { buildDisplayName } from '../../shared/utils/display-name';
 export class DashboardPageComponent {
   private readonly authService = inject(AuthService);
   private readonly dashboardCache = inject(DashboardCacheService);
-  private readonly sessionSse = inject(SessionSseService);
   private readonly router = inject(Router);
 
   // Delegate to cache service signals
@@ -47,13 +45,10 @@ export class DashboardPageComponent {
   });
 
   constructor() {
-    // Load from cache instantly — only fetches from API if stale or empty
-    this.dashboardCache.load();
-
-    // SSE connection: receives session lifecycle events from the server
-    // so joinable sessions update in real-time across different users.
-    this.sessionSse.connect();
-    inject(DestroyRef).onDestroy(() => this.sessionSse.disconnect());
+    // Always fetch fresh data on entrance — the SSE connection (managed by
+    // DashboardShellComponent) keeps cache current while browsing sub-routes,
+    // but on re-entry we force a refresh in case events were missed.
+    this.dashboardCache.refresh();
   }
 
   protected joinSession(pin: string): void {

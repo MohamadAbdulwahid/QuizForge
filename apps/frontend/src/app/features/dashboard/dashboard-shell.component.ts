@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { SessionSseService } from '../../core/services/session-sse.service';
 import { buildDisplayName } from '../../shared/utils/display-name';
 
 interface AppNavItem {
@@ -19,6 +20,7 @@ interface AppNavItem {
 })
 export class DashboardShellComponent {
   private readonly authService = inject(AuthService);
+  private readonly sessionSse = inject(SessionSseService);
   private readonly router = inject(Router);
 
   protected readonly currentUser = this.authService.currentUser;
@@ -33,6 +35,12 @@ export class DashboardShellComponent {
   ];
 
   protected readonly displayName = () => buildDisplayName(this.currentUser(), 'QuizForger');
+
+  constructor() {
+    // SSE stays alive across all dashboard sub-routes via the shell component.
+    this.sessionSse.connect();
+    inject(DestroyRef).onDestroy(() => this.sessionSse.disconnect());
+  }
 
   protected readonly iconPaths: Record<string, string> = {
     home: 'M12.504 2.036a2.5 2.5 0 0 0-1.008 0L3.29 5.494A2.5 2.5 0 0 0 1.75 7.79v9.72a2.5 2.5 0 0 0 1.54 2.296l8.206 3.458a2.5 2.5 0 0 0 1.008 0l8.206-3.458a2.5 2.5 0 0 0 1.54-2.296v-9.72a2.5 2.5 0 0 0-1.54-2.296L12.504 2.036Z',
