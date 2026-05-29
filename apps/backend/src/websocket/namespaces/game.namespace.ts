@@ -479,7 +479,7 @@ export function registerGameNamespace(
 
       const socketsInRoom = await typedNamespace.in(pin).fetchSockets();
       const activePlayerCount = socketsInRoom.filter((roomSocket) =>
-        Boolean(roomSocket.data.userId)
+        Boolean(roomSocket.data.userId) && roomSocket.data.userId !== session.host_id
       ).length;
 
       if (activePlayerCount < MIN_PLAYERS_TO_START) {
@@ -837,6 +837,10 @@ function createGameState(
   questions: QUESTION[],
   players: SessionPlayer[]
 ): ActiveGameState {
+  // Filter out the host — they are NOT a player and should not appear
+  // in the leaderboard or count toward auto-advance.
+  const nonHostPlayers = players.filter((player) => player.user_id !== session.host_id);
+
   return {
     pin,
     sessionId: session.id,
@@ -844,8 +848,8 @@ function createGameState(
     hostUserId: session.host_id,
     questions,
     currentQuestionIndex: 0,
-    playersByUserId: new Map(players.map((player) => [player.user_id, player])),
-    scoresByUserId: new Map(players.map((player) => [player.user_id, player.score])),
+    playersByUserId: new Map(nonHostPlayers.map((player) => [player.user_id, player])),
+    scoresByUserId: new Map(nonHostPlayers.map((player) => [player.user_id, player.score])),
     round: null,
     status: 'playing',
   };
