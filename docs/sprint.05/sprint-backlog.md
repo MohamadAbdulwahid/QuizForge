@@ -28,14 +28,14 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 **Prerequisites:** PB-29, PB-38
 
 **Definition of Done (DoD):**
-- [ ] Add backend logic that transitions a session from `waiting` to `playing` only when the authenticated host starts the match.
-- [ ] Load the first quiz question and include the session PIN, question order, and round metadata in the start payload.
-- [ ] Prevent duplicate start requests from re-triggering the first question broadcast.
-- [ ] Emit a clear session-start or round-start event before question delivery so clients can prepare their UI state.
-- [ ] Ensure a failed start attempt returns a consistent error when the session is already in progress or the host is invalid.
-- [ ] **Test File:** `apps/backend/tests/integration/game-session-start.spec.ts`
-  - [ ] Test: starting a waiting session transitions it to playing and emits the first question flow.
-  - [ ] Test: starting an already active session returns the expected conflict or validation error.
+- [x] Add backend logic that transitions a session from `waiting` to `playing` only when the authenticated host starts the match.
+- [x] Load the first quiz question and include the session PIN, question order, and round metadata in the start payload.
+- [x] Prevent duplicate start requests from re-triggering the first question broadcast.
+- [x] Emit a clear session-start or round-start event before question delivery so clients can prepare their UI state.
+- [x] Ensure a failed start attempt returns a consistent error when the session is already in progress or the host is invalid.
+- [x] **Test File:** `apps/backend/tests/integration/game-session-start.spec.ts`
+  - [x] Test: starting a waiting session transitions it to playing and emits the first question flow.
+  - [x] Test: starting an already active session returns the expected conflict or validation error.
 
 ---
 
@@ -47,14 +47,14 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 **Prerequisites:** PB-46
 
 **Definition of Done (DoD):**
-- [ ] Emit a `question` WebSocket event to the session room with question text, answer options, question id, points, and time limit.
-- [ ] Stamp the server-side question start time once per round so all players share the same countdown source.
-- [ ] Keep the payload identical for every client in the room so no player receives a different question or timer value.
-- [ ] Guard against late room joiners receiving a stale active question without an explicit resync path.
-- [ ] Make the broadcast logic resilient to missing or malformed room state so the session does not crash on delivery.
-- [ ] **Test File:** `apps/backend/tests/integration/question-broadcast.spec.ts`
-  - [ ] Test: all players in the room receive the same `question` payload.
-  - [ ] Test: the broadcast includes the server-derived time limit and question metadata.
+- [x] Emit a `question` WebSocket event to the session room with question text, answer options, question id, points, and time limit.
+- [x] Stamp the server-side question start time once per round so all players share the same countdown source.
+- [x] Keep the payload identical for every client in the room so no player receives a different question or timer value.
+- [x] Guard against late room joiners receiving a stale active question without an explicit resync path.
+- [x] Make the broadcast logic resilient to missing or malformed room state so the session does not crash on delivery.
+- [x] **Test File:** `apps/backend/tests/integration/question-broadcast.spec.ts`
+  - [x] Test: all players in the room receive the same `question` payload.
+  - [x] Test: the broadcast includes the server-derived time limit and question metadata.
 
 ---
 
@@ -66,14 +66,14 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 **Prerequisites:** PB-47
 
 **Definition of Done (DoD):**
-- [ ] Add the `submit-answer` WebSocket client flow with a stable payload shape for `sessionId`, `questionId`, and selected answer.
-- [ ] Disable duplicate submissions on the client once an answer has been acknowledged or the round has expired.
-- [ ] Show a clear pending/sent state so the player can tell that their answer reached the server.
-- [ ] Handle timeout responses gracefully when the player submits after the active round window has closed.
-- [ ] Keep the submit path compatible with the existing Angular Signals game state so UI updates stay reactive.
-- [ ] **Test File:** `apps/frontend/src/app/features/game/services/game-state.service.spec.ts`
-  - [ ] Test: submitting a valid answer updates local pending state and emits the socket payload.
-  - [ ] Test: submitting after timeout does not overwrite a finalized round state.
+- [x] Add the `submit-answer` WebSocket client flow with a stable payload shape for `sessionId`, `questionId`, and selected answer.
+- [x] Disable duplicate submissions on the client once an answer has been acknowledged or the round has expired.
+- [x] Show a clear pending/sent state so the player can tell that their answer reached the server.
+- [x] Handle timeout responses gracefully when the player submits after the active round window has closed.
+- [x] Keep the submit path compatible with the existing Angular Signals game state so UI updates stay reactive.
+- [x] **Test File:** `apps/frontend/src/app/features/game/services/game-state.service.spec.ts`
+  - [x] Test: submitting a valid answer updates local pending state and emits the socket payload.
+  - [x] Test: submitting after timeout does not overwrite a finalized round state.
 
 ---
 
@@ -85,15 +85,15 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 **Prerequisites:** PB-48
 
 **Definition of Done (DoD):**
-- [ ] Validate that the active question still belongs to the current session round before processing an answer.
-- [ ] Reject late submissions by comparing the server clock against the question start time and the configured time limit.
-- [ ] Confirm the submitted answer belongs to the current question and matches the backend question data.
-- [ ] Block duplicate answers from the same player for the same question before any score is computed.
-- [ ] Return a stable error payload for invalid answers so the client can display a clear rejection state.
-- [ ] **Test File:** `apps/backend/tests/unit/game/answer-validation.spec.ts`
-  - [ ] Test: a correct answer inside the allowed time window is accepted.
-  - [ ] Test: a late answer is rejected even if the selected option is correct.
-  - [ ] Test: a duplicate answer submission for the same question is rejected.
+- [x] Validate that the active question still belongs to the current session round before processing an answer.
+- [x] Reject late submissions by comparing the server clock against the question start time and the configured time limit.
+- [x] Confirm the submitted answer belongs to the current question and matches the backend question data.
+- [x] Block duplicate answers from the same player for the same question before any score is computed.
+- [x] Return a stable error payload for invalid answers so the client can display a clear rejection state.
+- [x] **Test File:** `apps/backend/tests/unit/game/answer-validation.spec.ts`
+  - [x] Test: a correct answer inside the allowed time window is accepted.
+  - [x] Test: a late answer is rejected even if the selected option is correct.
+  - [x] Test: a duplicate answer submission for the same question is rejected.
 
 ---
 
@@ -105,15 +105,15 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 **Prerequisites:** PB-49
 
 **Definition of Done (DoD):**
-- [ ] Calculate base points for a correct answer and apply a time-based multiplier using the remaining time in the round.
-- [ ] Return zero points for incorrect answers while still preserving the answer attempt in the round history.
-- [ ] Keep the formula server-side only so clients cannot influence score values.
-- [ ] Make the scoring function deterministic and reusable for later leaderboard and analytics features.
-- [ ] Clamp edge cases such as negative remaining time or invalid question duration values.
-- [ ] **Test File:** `apps/backend/tests/unit/game/scoring.spec.ts`
-  - [ ] Test: a fast correct answer scores more than a slower correct answer.
-  - [ ] Test: an incorrect answer always scores zero.
-  - [ ] Test: invalid timing data is clamped before score calculation.
+- [x] Calculate base points for a correct answer and apply a time-based multiplier using the remaining time in the round.
+- [x] Return zero points for incorrect answers while still preserving the answer attempt in the round history.
+- [x] Keep the formula server-side only so clients cannot influence score values.
+- [x] Make the scoring function deterministic and reusable for later leaderboard and analytics features.
+- [x] Clamp edge cases such as negative remaining time or invalid question duration values.
+- [x] **Test File:** `apps/backend/tests/unit/game/scoring.spec.ts`
+  - [x] Test: a fast correct answer scores more than a slower correct answer.
+  - [x] Test: an incorrect answer always scores zero.
+  - [x] Test: invalid timing data is clamped before score calculation.
 
 ---
 
@@ -125,14 +125,14 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 **Prerequisites:** PB-50
 
 **Definition of Done (DoD):**
-- [ ] Broadcast a `score-update` event after each validated answer is scored.
-- [ ] Include player id, new score, round delta, and rank-friendly payload fields in the broadcast.
-- [ ] Keep updates room-scoped so only the active session receives the score changes.
-- [ ] Ensure the host and all players receive the same authoritative leaderboard state.
-- [ ] Avoid broadcasting intermediate or speculative scores before validation completes.
-- [ ] **Test File:** `apps/backend/tests/integration/score-broadcast.spec.ts`
-  - [ ] Test: a validated answer triggers a `score-update` event to the session room.
-  - [ ] Test: score broadcasts contain the server-calculated total and delta.
+- [x] Broadcast a `score-update` event after each validated answer is scored.
+- [x] Include player id, new score, round delta, and rank-friendly payload fields in the broadcast.
+- [x] Keep updates room-scoped so only the active session receives the score changes.
+- [x] Ensure the host and all players receive the same authoritative leaderboard state.
+- [x] Avoid broadcasting intermediate or speculative scores before validation completes.
+- [x] **Test File:** `apps/backend/tests/integration/score-broadcast.spec.ts`
+  - [x] Test: a validated answer triggers a `score-update` event to the session room.
+  - [x] Test: score broadcasts contain the server-calculated total and delta.
 
 ---
 
@@ -144,14 +144,14 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 **Prerequisites:** PB-48, PB-49
 
 **Definition of Done (DoD):**
-- [ ] Persist answer attempts with session id, player id, question id, selected answer, correctness, score delta, and timestamp.
-- [ ] Add event records for the start of a round, answer submission, scoring completion, and round advance.
-- [ ] Keep event writes atomic with the gameplay flow where possible so partial state does not leak into analytics.
-- [ ] Surface logging failures clearly without crashing the entire round flow.
-- [ ] Preserve enough metadata for later replay and post-game analysis work.
-- [ ] **Test File:** `apps/backend/tests/integration/game-events.spec.ts`
-  - [ ] Test: a valid answer creates a game event record with the expected metadata.
-  - [ ] Test: a scoring event is logged after the answer is validated and processed.
+- [x] Persist answer attempts with session id, player id, question id, selected answer, correctness, score delta, and timestamp.
+- [x] Add event records for the start of a round, answer submission, scoring completion, and round advance.
+- [x] Keep event writes atomic with the gameplay flow where possible so partial state does not leak into analytics.
+- [x] Surface logging failures clearly without crashing the entire round flow.
+- [x] Preserve enough metadata for later replay and post-game analysis work.
+- [x] **Test File:** `apps/backend/tests/integration/game-events.spec.ts`
+  - [x] Test: a valid answer creates a game event record with the expected metadata.
+  - [x] Test: a scoring event is logged after the answer is validated and processed.
 
 ---
 
@@ -163,14 +163,14 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 **Prerequisites:** PB-50, PB-51
 
 **Definition of Done (DoD):**
-- [ ] Add a host-only command or endpoint to advance the current round to the next question.
-- [ ] Prevent the host from skipping forward while the current question is still actively accepting answers unless the round has timed out.
-- [ ] End the session cleanly after the final question and emit the appropriate finished-state update.
-- [ ] Keep question sequencing aligned with the underlying quiz ordering.
-- [ ] Ensure the control is ignored for non-host users and returns a consistent authorization failure.
-- [ ] **Test File:** `apps/backend/tests/unit/game/host-flow.spec.ts`
-  - [ ] Test: the host can advance to the next question after the round closes.
-  - [ ] Test: a non-host user cannot trigger next-question control.
+- [x] Add a host-only command or endpoint to advance the current round to the next question.
+- [x] Prevent the host from skipping forward while the current question is still actively accepting answers unless the round has timed out.
+- [x] End the session cleanly after the final question and emit the appropriate finished-state update.
+- [x] Keep question sequencing aligned with the underlying quiz ordering.
+- [x] Ensure the control is ignored for non-host users and returns a consistent authorization failure.
+- [x] **Test File:** `apps/backend/tests/unit/game/host-flow.spec.ts`
+  - [x] Test: the host can advance to the next question after the round closes.
+  - [x] Test: a non-host user cannot trigger next-question control.
 
 ---
 
@@ -182,14 +182,14 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 **Prerequisites:** PB-47, PB-51
 
 **Definition of Done (DoD):**
-- [ ] Create a frontend WebSocket service that connects to the active game room and listens for round, score, and completion events.
-- [ ] Track `players`, `currentQuestion`, `leaderboard`, and connection status with Angular Signals.
-- [ ] Keep the game state service responsible for translating socket events into UI-friendly state updates.
-- [ ] Reset state cleanly when the player leaves a session or navigates away from the game route.
-- [ ] Make the service resilient to reconnects so the frontend can resync after brief connection loss.
-- [ ] **Test File:** `apps/frontend/src/app/features/game/services/websocket.service.spec.ts`
-  - [ ] Test: socket events update the current question and leaderboard signals.
-  - [ ] Test: disconnect or leave events clear the active game state.
+- [x] Create a frontend WebSocket service that connects to the active game room and listens for round, score, and completion events.
+- [x] Track `players`, `currentQuestion`, `leaderboard`, and connection status with Angular Signals.
+- [x] Keep the game state service responsible for translating socket events into UI-friendly state updates.
+- [x] Reset state cleanly when the player leaves a session or navigates away from the game route.
+- [x] Make the service resilient to reconnects so the frontend can resync after brief connection loss.
+- [x] **Test File:** `apps/frontend/src/app/features/game/services/websocket.service.spec.ts`
+  - [x] Test: socket events update the current question and leaderboard signals.
+  - [x] Test: disconnect or leave events clear the active game state.
 
 ---
 
@@ -201,14 +201,14 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 **Prerequisites:** PB-47, PB-74
 
 **Definition of Done (DoD):**
-- [ ] Detect abrupt disconnects and preserve the player’s room/session identity long enough to support a short reconnect window.
-- [ ] Rehydrate the player’s game state on reconnect so the current question, active round, and leaderboard can resume cleanly.
-- [ ] Avoid dropping the player into a stale lobby state after a transient network interruption.
-- [ ] Make reconnect behavior consistent across host and participant sessions so the room stays synchronized.
-- [ ] Ensure reconnect logic does not duplicate players or create ghost entries in the session roster.
-- [ ] **Test File:** `apps/frontend-e2e/src/e2e/game-reconnect.spec.ts`
-  - [ ] Test: a player who disconnects briefly can reconnect and regain the current round state.
-  - [ ] Test: a reconnect does not duplicate the player in the active room list.
+- [x] Detect abrupt disconnects and preserve the player’s room/session identity long enough to support a short reconnect window.
+- [x] Rehydrate the player’s game state on reconnect so the current question, active round, and leaderboard can resume cleanly.
+- [x] Avoid dropping the player into a stale lobby state after a transient network interruption.
+- [x] Make reconnect behavior consistent across host and participant sessions so the room stays synchronized.
+- [x] Ensure reconnect logic does not duplicate players or create ghost entries in the session roster.
+- [x] **Test File:** `apps/frontend-e2e/src/e2e/game-reconnect.spec.ts`
+  - [x] Test: a player who disconnects briefly can reconnect and regain the current round state.
+  - [x] Test: a reconnect does not duplicate the player in the active room list.
 
 ---
 
@@ -220,14 +220,14 @@ Sprint 5 assumes the following Sprint 4 deliverables are complete and usable:
 **Prerequisites:** PB-37, PB-38, PB-47
 
 **Definition of Done (DoD):**
-- [ ] Throttle high-frequency room broadcasts so score and state events do not exceed the configured cadence.
-- [ ] Apply the rate limit only where appropriate so answer validation and critical host actions still remain responsive.
-- [ ] Keep the throttle window aligned with the 100ms product expectation and document the behavior clearly in code.
-- [ ] Ensure throttled updates still preserve the latest authoritative score or state snapshot.
-- [ ] Surface a safe fallback when burst traffic is detected instead of dropping the session connection.
-- [ ] **Test File:** `apps/backend/tests/unit/websocket/rate-limit.spec.ts`
-  - [ ] Test: rapid broadcast attempts are throttled to the expected cadence.
-  - [ ] Test: critical events are still delivered even when non-critical traffic is rate limited.
+- [x] Throttle high-frequency room broadcasts so score and state events do not exceed the configured cadence.
+- [x] Apply the rate limit only where appropriate so answer validation and critical host actions still remain responsive.
+- [x] Keep the throttle window aligned with the 100ms product expectation and document the behavior clearly in code.
+- [x] Ensure throttled updates still preserve the latest authoritative score or state snapshot.
+- [x] Surface a safe fallback when burst traffic is detected instead of dropping the session connection.
+- [x] **Test File:** `apps/backend/tests/unit/websocket/rate-limit.spec.ts`
+  - [x] Test: rapid broadcast attempts are throttled to the expected cadence.
+  - [x] Test: critical events are still delivered even when non-critical traffic is rate limited.
 
 ---
 
