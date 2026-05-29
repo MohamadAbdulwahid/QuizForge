@@ -72,7 +72,7 @@ export class DashboardCacheService {
           );
 
           return forkJoin(sessionRequests).pipe(
-            map((allSessions) => allSessions.flat()),
+            map((allSessions) => this.deduplicateBySessionId(allSessions.flat())),
             catchError(() => of<JoinableSession[] | null>(null))
           );
         })
@@ -141,7 +141,10 @@ export class DashboardCacheService {
         );
 
         return forkJoin(sessionRequests).pipe(
-          map((allSessions) => ({ groups, sessions: allSessions.flat() }))
+          map((allSessions) => ({
+            groups,
+            sessions: this.deduplicateBySessionId(allSessions.flat()),
+          }))
         );
       }),
       catchError(() => of<GroupsAndSessions>({ groups: [], sessions: [] }))
@@ -184,5 +187,19 @@ export class DashboardCacheService {
     this.data.set(null);
     this.lastFetchedAt.set(0);
     this.error.set(null);
+  }
+
+  /**
+   * Removes duplicate sessions caused by the same session being broadcast
+   * to multiple groups that the user belongs to.
+   */
+  private deduplicateBySessionId(sessions: JoinableSession[]): JoinableSession[] {
+    const seen = new Map<number, JoinableSession>();
+    for (const s of sessions) {
+      if (!seen.has(s.session_id)) {
+        seen.set(s.session_id, s);
+      }
+    }
+    return Array.from(seen.values());
   }
 }
