@@ -1,5 +1,7 @@
 <!-- Full-screen host view — projector-optimised, no sidebar, big everything -->
-<div class="from-bubbly-primary fixed inset-0 flex flex-col bg-gradient-to-b via-[#007fb0] to-[#006090]">
+<div
+  class="from-bubbly-primary fixed inset-0 flex flex-col bg-gradient-to-b via-[#007fb0] to-[#006090]"
+>
   <!-- ── Timer bar at the very top ── -->
   @if (isGameActive() && !gameEnded() && timeLimitMs() > 0) {
     <div
@@ -12,9 +14,13 @@
   }
 
   <!-- ── Top bar: PIN + controls ── -->
-  <header class="flex shrink-0 items-center justify-between bg-black/20 px-5 py-2.5 backdrop-blur-sm">
+  <header
+    class="flex shrink-0 items-center justify-between bg-black/20 px-5 py-2.5 backdrop-blur-sm"
+  >
     <div class="flex items-center gap-3">
-      <span class="rounded-full bg-amber-400 px-2.5 py-0.5 text-xs font-bold tracking-wider text-amber-900 uppercase">
+      <span
+        class="rounded-full bg-amber-400 px-2.5 py-0.5 text-xs font-bold tracking-wider text-amber-900 uppercase"
+      >
         Host
       </span>
       <span class="font-display text-2xl font-bold tracking-[0.15em] text-white">
@@ -55,7 +61,9 @@
 
   <!-- ── Error banner ── -->
   @if (errorMessage()) {
-    <div class="mx-4 mt-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-2 text-sm font-bold text-rose-700">
+    <div
+      class="mx-4 mt-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-2 text-sm font-bold text-rose-700"
+    >
       {{ errorMessage() }}
     </div>
   }
@@ -73,7 +81,7 @@
   } @else if (currentQuestion(); as question) {
     <main class="flex flex-1 flex-col overflow-hidden px-4 pb-2">
       <!-- ── Question stage ── -->
-      <div class="relative flex-1 min-h-[35vh]">
+      <div class="relative min-h-[35vh] flex-1">
         <div
           class="host-question font-display font-bold"
           [class.host-question-centered]="questionPhase() === 'centered'"

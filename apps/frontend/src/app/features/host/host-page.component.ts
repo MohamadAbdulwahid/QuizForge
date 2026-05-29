@@ -197,15 +197,13 @@ export class HostPageComponent implements OnInit, OnDestroy {
         this.startTimer();
       });
 
-    this.websocketService.question$
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((event) => {
-        const idx = event.order - 1;
-        this.currentQuestionIndex.set(idx >= 0 ? idx : 0);
-        this.answeredCount.set(0);
-        // Kick off entrance animation
-        this.startQuestionAnimation(this.currentQuestion());
-      });
+    this.websocketService.question$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event) => {
+      const idx = event.order - 1;
+      this.currentQuestionIndex.set(idx >= 0 ? idx : 0);
+      this.answeredCount.set(0);
+      // Kick off entrance animation
+      this.startQuestionAnimation(this.currentQuestion());
+    });
 
     this.websocketService.scoreUpdate$
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -220,11 +218,9 @@ export class HostPageComponent implements OnInit, OnDestroy {
         this.leaderboard.set(event.leaderboard);
       });
 
-    this.websocketService.roundClosed$
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        this.stopTimer();
-      });
+    this.websocketService.roundClosed$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.stopTimer();
+    });
 
     this.websocketService.gameEnded$
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -312,7 +308,7 @@ export class HostPageComponent implements OnInit, OnDestroy {
     const wpm = 180;
     const wordLength = 5;
     const words = text.length / wordLength;
-    const wordsTime = ((words / wpm) * 60) * 1000;
+    const wordsTime = (words / wpm) * 60 * 1000;
     const bonus = 1000;
     return delay + wordsTime + bonus;
   }

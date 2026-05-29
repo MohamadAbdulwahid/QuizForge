@@ -6,7 +6,9 @@
   <header class="relative z-10 flex items-center justify-between px-6 py-4">
     <div class="flex items-center gap-3">
       @if (gameState.currentQuestion(); as q) {
-        <div class="rounded-full bg-white/15 px-4 py-1.5 text-sm font-bold text-white/90 backdrop-blur-sm">
+        <div
+          class="rounded-full bg-white/15 px-4 py-1.5 text-sm font-bold text-white/90 backdrop-blur-sm"
+        >
           {{ q.order }} / {{ q.totalQuestions }}
         </div>
       }
@@ -29,7 +31,9 @@
           class="text-xs font-bold"
           [class.text-white/70]="gameState.timeRemainingSeconds() > 5"
           [class.text-rose-200/70]="gameState.timeRemainingSeconds() <= 5"
-        >sec</span>
+        >
+          sec
+        </span>
       </div>
     }
   </header>
@@ -41,7 +45,11 @@
         class="h-full rounded-full transition-all duration-300 ease-linear"
         [class.bg-emerald-400]="gameState.timeRemainingSeconds() > 5"
         [class.bg-rose-400]="gameState.timeRemainingSeconds() <= 5"
-        [style.width.%]="gameState.timeRemainingSeconds() > 0 ? (gameState.timeRemainingMs() / (gameState.currentQuestion()?.timeLimitMs ?? 1)) * 100 : 0"
+        [style.width.%]="
+          gameState.timeRemainingSeconds() > 0
+            ? (gameState.timeRemainingMs() / (gameState.currentQuestion()?.timeLimitMs ?? 1)) * 100
+            : 0
+        "
       ></div>
     </div>
   }
@@ -97,8 +105,12 @@
 
         <!-- Feedback overlay -->
         @if (showCorrect()) {
-          <div class="fixed inset-0 z-50 flex items-center justify-center bg-emerald-500/20 backdrop-blur-sm">
-            <div class="animate-bounce rounded-3xl bg-emerald-500 px-10 py-6 text-center shadow-2xl">
+          <div
+            class="fixed inset-0 z-50 flex items-center justify-center bg-emerald-500/20 backdrop-blur-sm"
+          >
+            <div
+              class="animate-bounce rounded-3xl bg-emerald-500 px-10 py-6 text-center shadow-2xl"
+            >
               <span class="text-5xl">✅</span>
               <p class="font-display mt-2 text-2xl font-bold text-white">Correct!</p>
               <p class="text-lg font-semibold text-emerald-100">
@@ -107,7 +119,9 @@
             </div>
           </div>
         } @else if (showIncorrect()) {
-          <div class="fixed inset-0 z-50 flex items-center justify-center bg-rose-500/20 backdrop-blur-sm">
+          <div
+            class="fixed inset-0 z-50 flex items-center justify-center bg-rose-500/20 backdrop-blur-sm"
+          >
             <div class="animate-bounce rounded-3xl bg-rose-500 px-10 py-6 text-center shadow-2xl">
               <span class="text-5xl">❌</span>
               <p class="font-display mt-2 text-2xl font-bold text-white">Incorrect</p>
@@ -118,12 +132,18 @@
 
         <!-- Submission feedback (compact) -->
         @if (gameState.submissionState() === 'pending' && !showCorrect() && !showIncorrect()) {
-          <div class="mt-2 inline-flex items-center gap-2 rounded-full bg-white/15 px-5 py-2 backdrop-blur-sm">
+          <div
+            class="mt-2 inline-flex items-center gap-2 rounded-full bg-white/15 px-5 py-2 backdrop-blur-sm"
+          >
             <span class="animate-pulse text-lg">⏳</span>
             <span class="text-sm font-bold text-white/80">Answer submitted...</span>
           </div>
-        } @else if (gameState.submissionState() === 'closed' && !showCorrect() && !showIncorrect()) {
-          <div class="mt-2 inline-flex items-center gap-2 rounded-full bg-white/15 px-5 py-2 backdrop-blur-sm">
+        } @else if (
+          gameState.submissionState() === 'closed' && !showCorrect() && !showIncorrect()
+        ) {
+          <div
+            class="mt-2 inline-flex items-center gap-2 rounded-full bg-white/15 px-5 py-2 backdrop-blur-sm"
+          >
             <span class="text-lg">⏰</span>
             <span class="text-sm font-bold text-white/60">Time's up!</span>
           </div>
