@@ -1,0 +1,10 @@
+/home/mohamad/coding/QuizForge/docs/sprint.01/effort-plan.md
+/home/mohamad/coding/QuizForge/docs/sprint.01/sprint-backlog.md
+/home/mohamad/coding/QuizForge/docs/sprint.02/effort-plan.md
+/home/mohamad/coding/QuizForge/docs/sprint.02/sprint-backlog.md
+/home/mohamad/coding/QuizForge/docs/sprint.03/effort-plan.md
+/home/mohamad/coding/QuizForge/docs/sprint.03/sprint-backlog.md
+/home/mohamad/coding/QuizForge/docs/sprint.04/effort-plan.md
+/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md
+/home/mohamad/coding/QuizForge/docs/sprint.05/effort-plan.md
+/home/mohamad/coding/QuizForge/docs/sprint.05/sprint-backlog.md

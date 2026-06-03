@@ -1,0 +1,931 @@
+{
+  "nodes": [
+    {
+      "id": "dashboard_dashboard_shell",
+      "label": "Dashboard Shell Component",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "groups_groups_create_page",
+      "label": "Groups Create Page Component",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/groups/groups-create-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "groups_groups_detail_page",
+      "label": "Groups Detail Page Component",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/groups/groups-detail-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "quizzes_quiz_builder_page",
+      "label": "Quiz Builder Page Component",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "game_game_lobby_page",
+      "label": "Game Lobby Page Component",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "game_game_play_page",
+      "label": "Game Play Page Component",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/game/game-play-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "host_host_page",
+      "label": "Host Page Component",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/host/host-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "landing_landing_page",
+      "label": "Landing Page Component",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/landing/landing-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "leaderboards_leaderboards_page",
+      "label": "Leaderboards Page Component",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/leaderboards/leaderboards-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "play_play_page",
+      "label": "Play Page Component",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/play/play-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stitch_dashboard_ref",
+      "label": "Stitch Dashboard Reference",
+      "file_type": "document",
+      "source_file": "apps/frontend/src/assets/stitch/dashboard.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stitch_game_lobby_ref",
+      "label": "Stitch Game Lobby Reference",
+      "file_type": "document",
+      "source_file": "apps/frontend/src/assets/stitch/game-lobby.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stitch_leaderboards_ref",
+      "label": "Stitch Leaderboards Reference",
+      "file_type": "document",
+      "source_file": "apps/frontend/src/assets/stitch/leaderboards.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stitch_prd_screen_a",
+      "label": "PRD Screen A — Bubbly Minimalism",
+      "file_type": "document",
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stitch_prd_screen_b",
+      "label": "PRD Screen B — Neo-Brutalism Arcade",
+      "file_type": "document",
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-b.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stitch_dashboard_image",
+      "label": "Stitch Dashboard Screenshot",
+      "file_type": "image",
+      "source_file": "apps/frontend/src/assets/stitch/dashboard.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stitch_game_lobby_image",
+      "label": "Stitch Game Lobby Screenshot",
+      "file_type": "image",
+      "source_file": "apps/frontend/src/assets/stitch/game-lobby.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stitch_leaderboards_image",
+      "label": "Stitch Leaderboards Screenshot",
+      "file_type": "image",
+      "source_file": "apps/frontend/src/assets/stitch/leaderboards.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stitch_game_mode_image",
+      "label": "Stitch Game Mode Selection Screenshot",
+      "file_type": "image",
+      "source_file": "apps/frontend/src/assets/stitch/image.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "docs_erd",
+      "label": "Entity Relationship Diagram",
+      "file_type": "image",
+      "source_file": "docs/erd.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "docs_product_backlog",
+      "label": "Product Backlog",
+      "file_type": "document",
+      "source_file": "docs/product-backlog.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "docs_backlog_compression",
+      "label": "Product Backlog Compression Notes",
+      "file_type": "document",
+      "source_file": "docs/what-changed-in-product-backlog.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_bubbly_minimalism",
+      "label": "Bubbly Minimalism Design Language",
+      "file_type": "rationale",
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Design direction combining playful bubbly shapes with minimal layout. Uses DynaPuff headings, Nunito body, rounded-2xl/3xl containers, hard tactile shadows, 60-30-10 color split (background-primary-accent), CSS custom properties (var(--bubbly-*)). Inspired by Blooket, Kahoot, Nintendo Switch UI."
+    },
+    {
+      "id": "concept_arcade_energy",
+      "label": "Arcade Energy Aesthetic",
+      "file_type": "rationale",
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "High-octane visual style: vibrant primary colors, heavy drop shadows mimicking physical arcade buttons, bounce/tactile animations, chunky borders. Makes every interactive element feel pushable. Inspired by 90s arcade cabinets."
+    },
+    {
+      "id": "concept_forge_classic",
+      "label": "Forge Classic Game Mode",
+      "file_type": "concept",
+      "source_file": "docs/product-backlog.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "MVP game mode: host broadcasts questions via WebSocket, players submit answers within time limit, server validates correctness + timestamp, scoring = correctness × speed factor, real-time leaderboard updates. Delivered end-to-end by Sprint 6."
+    },
+    {
+      "id": "concept_six_digit_pin",
+      "label": "6-Digit PIN Game Joining",
+      "file_type": "concept",
+      "source_file": "docs/product-backlog.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Session joining mechanism: host creates session with unique 6-digit PIN, players enter PIN on play page to join lobby. Uniqueness validation ensures no collisions."
+    },
+    {
+      "id": "concept_podium_leaderboard",
+      "label": "Podium-Style Leaderboard",
+      "file_type": "concept",
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Post-game ranking display: 3-step podium with 1st center (highest, gold), 2nd left (silver), 3rd right (bronze). Avatars on top of colored blocks with staggered rise animation. Runner-up list below."
+    },
+    {
+      "id": "concept_session_state_machine",
+      "label": "Session State Machine",
+      "file_type": "concept",
+      "source_file": "docs/product-backlog.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Game session lifecycle: waiting → playing → paused → ended. Controls game flow transitions, host can advance questions, end session broadcasts to all players."
+    },
+    {
+      "id": "concept_tactile_ui",
+      "label": "Tactile UI Pattern",
+      "file_type": "rationale",
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-b.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Neo-Brutalism meets Arcade: 4px solid borders, 8px hard shadows, 16px border radius everywhere. On click, elements translate 4px down-right and shadow reduces to 4px. Creates physical pushable button feel."
+    },
+    {
+      "id": "concept_speed_scoring",
+      "label": "Speed-Based Scoring Algorithm",
+      "file_type": "concept",
+      "source_file": "docs/product-backlog.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Points = Correctness × Speed Factor. Server-side validation with timestamp prevents cheating. Score deltas broadcast to all players in real-time after each question."
+    },
+    {
+      "id": "concept_treasure_forge",
+      "label": "Treasure Forge Game Mode",
+      "file_type": "concept",
+      "source_file": "docs/product-backlog.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Post-MVP game mode: weighted random chest generation after correct answers. Chest contents include gold, multiplier, steal (10% from leader), swap (random player). Gold counter with animations."
+    },
+    {
+      "id": "concept_bubbly_royale",
+      "label": "Bubbly Royale Game Mode",
+      "file_type": "concept",
+      "source_file": "docs/product-backlog.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Post-MVP 1v1 duel mode: matchmaking (random or ELO), split-screen UI, life bubble elimination (3 lives), win condition = correct + faster, spectator mode for eliminated players."
+    },
+    {
+      "id": "concept_bubbly_ui_components",
+      "label": "Bubbly UI Component Library",
+      "file_type": "concept",
+      "source_file": "apps/frontend/src/app/features/dashboard/groups/groups-create-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Shared standalone Angular components: BubblyButton (tone/size/full), BubblyCard (tone/padded/interactive), BubblyInput (CVA form input), BubblySelect (CVA select), BubblyAlert (variant/dismissible), BubblyModal (visible/confirm/danger), PageHeading (eyebrow/title/description), BubblyBadge (count/tone). All use Bubbly Minimalism design tokens."
+    }
+  ],
+  "edges": [
+    {
+      "source": "dashboard_dashboard_shell",
+      "target": "play_play_page",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "dashboard_dashboard_shell",
+      "target": "groups_groups_create_page",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "dashboard_dashboard_shell",
+      "target": "groups_groups_detail_page",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "dashboard_dashboard_shell",
+      "target": "quizzes_quiz_builder_page",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "play_play_page",
+      "target": "dashboard_dashboard_shell",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/play/play-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "landing_landing_page",
+      "target": "dashboard_dashboard_shell",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/landing/landing-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "landing_landing_page",
+      "target": "stitch_dashboard_ref",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/landing/landing-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "landing_landing_page",
+      "target": "stitch_game_lobby_ref",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/landing/landing-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "landing_landing_page",
+      "target": "stitch_leaderboards_ref",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/landing/landing-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "landing_landing_page",
+      "target": "concept_bubbly_minimalism",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/landing/landing-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "landing_landing_page",
+      "target": "concept_arcade_energy",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/landing/landing-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "game_game_lobby_page",
+      "target": "concept_six_digit_pin",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "play_play_page",
+      "target": "concept_six_digit_pin",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/play/play-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "game_game_play_page",
+      "target": "concept_speed_scoring",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/frontend/src/app/features/game/game-play-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "game_game_play_page",
+      "target": "concept_podium_leaderboard",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/game/game-play-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "leaderboards_leaderboards_page",
+      "target": "concept_podium_leaderboard",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/leaderboards/leaderboards-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "host_host_page",
+      "target": "concept_forge_classic",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/frontend/src/app/features/host/host-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "game_game_lobby_page",
+      "target": "concept_session_state_machine",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "game_game_lobby_page",
+      "target": "host_host_page",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "host_host_page",
+      "target": "game_game_play_page",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "apps/frontend/src/app/features/host/host-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_dashboard_ref",
+      "target": "dashboard_dashboard_shell",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/frontend/src/assets/stitch/dashboard.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_game_lobby_ref",
+      "target": "game_game_lobby_page",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/frontend/src/assets/stitch/game-lobby.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_leaderboards_ref",
+      "target": "leaderboards_leaderboards_page",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/frontend/src/assets/stitch/leaderboards.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_a",
+      "target": "stitch_dashboard_ref",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_a",
+      "target": "stitch_game_lobby_ref",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_a",
+      "target": "stitch_leaderboards_ref",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_a",
+      "target": "concept_bubbly_minimalism",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_a",
+      "target": "concept_arcade_energy",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_a",
+      "target": "concept_podium_leaderboard",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_b",
+      "target": "concept_tactile_ui",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-b.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_b",
+      "target": "concept_arcade_energy",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-b.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_dashboard_image",
+      "target": "stitch_dashboard_ref",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/dashboard.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_game_lobby_image",
+      "target": "stitch_game_lobby_ref",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/game-lobby.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_leaderboards_image",
+      "target": "stitch_leaderboards_ref",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/leaderboards.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_game_mode_image",
+      "target": "concept_treasure_forge",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "apps/frontend/src/assets/stitch/image.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "docs_erd",
+      "target": "docs_product_backlog",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "docs/erd.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog",
+      "target": "concept_forge_classic",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/product-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog",
+      "target": "concept_treasure_forge",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/product-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog",
+      "target": "concept_bubbly_royale",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/product-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog",
+      "target": "concept_six_digit_pin",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/product-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog",
+      "target": "concept_session_state_machine",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/product-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog",
+      "target": "concept_speed_scoring",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/product-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog",
+      "target": "docs_erd",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/product-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "docs_backlog_compression",
+      "target": "docs_product_backlog",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/what-changed-in-product-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "quizzes_quiz_builder_page",
+      "target": "game_game_play_page",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "quizzes_quiz_builder_page",
+      "target": "concept_bubbly_ui_components",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "groups_groups_create_page",
+      "target": "concept_bubbly_ui_components",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/dashboard/groups/groups-create-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "groups_groups_detail_page",
+      "target": "concept_bubbly_ui_components",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/dashboard/groups/groups-detail-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "game_game_lobby_page",
+      "target": "concept_bubbly_ui_components",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "game_game_play_page",
+      "target": "concept_bubbly_ui_components",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/game/game-play-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "host_host_page",
+      "target": "concept_bubbly_ui_components",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/host/host-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_a",
+      "target": "stitch_prd_screen_b",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "game_flow_pipeline",
+      "label": "Player Game Flow Pipeline",
+      "nodes": ["play_play_page", "game_game_lobby_page", "game_game_play_page", "leaderboards_leaderboards_page"],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html"
+    },
+    {
+      "id": "realtime_session_triad",
+      "label": "Real-Time WebSocket Session Triad",
+      "nodes": ["game_game_lobby_page", "host_host_page", "game_game_play_page"],
+      "relation": "implement",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.html"
+    },
+    {
+      "id": "design_to_implementation",
+      "label": "Design Reference to Implementation Pipeline",
+      "nodes": ["stitch_dashboard_ref", "stitch_game_lobby_ref", "stitch_leaderboards_ref", "stitch_prd_screen_a", "dashboard_dashboard_shell", "game_game_lobby_page", "leaderboards_leaderboards_page"],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

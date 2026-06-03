@@ -1,0 +1,875 @@
+{
+  "nodes": [
+    {
+      "id": "nx_workspace_affected_nx_affected_command",
+      "label": "Nx Affected Command",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/nx-workspace/references/AFFECTED.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "backend_readme_quizforge_backend",
+      "label": "QuizForge Backend",
+      "file_type": "document",
+      "source_file": "apps/backend/README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "backend_readme_backend_env_vars",
+      "label": "Backend Environment Variables",
+      "file_type": "concept",
+      "source_file": "apps/backend/README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "backend_readme_pino_logging",
+      "label": "Pino Structured Logging",
+      "file_type": "concept",
+      "source_file": "apps/backend/README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "backend_readme_supabase_auth_jwt",
+      "label": "Supabase Auth JWT Validation",
+      "file_type": "concept",
+      "source_file": "apps/backend/README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "backend_readme_idempotent_seed",
+      "label": "Idempotent Seed Script",
+      "file_type": "concept",
+      "source_file": "apps/backend/README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "backend_readme_auth_middleware",
+      "label": "authMiddleware",
+      "file_type": "code",
+      "source_file": "apps/backend/README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "index_html_app_root",
+      "label": "app-root",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "index_html_bubbly_theme",
+      "label": "bubbly Theme",
+      "file_type": "concept",
+      "source_file": "apps/frontend/src/index.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "app_html_router_outlet",
+      "label": "router-outlet",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/app.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "auth_page_auth_page_component",
+      "label": "Auth Page Component",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/auth/auth-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "auth_page_login_signup_toggle",
+      "label": "Login/Signup Mode Toggle",
+      "file_type": "concept",
+      "source_file": "apps/frontend/src/app/features/auth/auth-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "login_login_component",
+      "label": "Login Component",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/auth/login.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "register_register_component",
+      "label": "Register Component",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/auth/register.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dashboard_create_session_create_session_page",
+      "label": "Create Session Page",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dashboard_create_session_broadcast_mode",
+      "label": "Session Broadcast Mode",
+      "file_type": "concept",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dashboard_group_discovery_group_discovery_page",
+      "label": "Group Discovery Page",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-group-discovery-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dashboard_groups_groups_page",
+      "label": "Groups Page",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-groups-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dashboard_dashboard_page",
+      "label": "Dashboard Home Page",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dashboard_joinable_sessions_section",
+      "label": "Joinable Sessions Section",
+      "file_type": "concept",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dashboard_my_groups_section",
+      "label": "My Groups Section",
+      "file_type": "concept",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dashboard_quizzes_quizzes_page",
+      "label": "Quizzes Page",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-quizzes-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dashboard_sessions_sessions_page",
+      "label": "Sessions Page",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-sessions-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stitch_dashboard_stitch_dashboard_mockup",
+      "label": "Stitch Dashboard Mockup",
+      "file_type": "document",
+      "source_file": "apps/frontend/public/assets/stitch/dashboard.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stitch_game_lobby_stitch_game_lobby_mockup",
+      "label": "Stitch Game Lobby Mockup",
+      "file_type": "document",
+      "source_file": "apps/frontend/public/assets/stitch/game-lobby.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stitch_leaderboards_stitch_leaderboards_mockup",
+      "label": "Stitch Leaderboards Mockup",
+      "file_type": "document",
+      "source_file": "apps/frontend/public/assets/stitch/leaderboards.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stitch_prd_screen_a_prd_screen_a",
+      "label": "PRD Screen Specs A",
+      "file_type": "document",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stitch_prd_screen_b_prd_screen_b",
+      "label": "PRD Screen Specs B",
+      "file_type": "document",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-b.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stitch_image_stitch_reference_image",
+      "label": "Stitch Reference Image",
+      "file_type": "image",
+      "source_file": "apps/frontend/public/assets/stitch/image.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prd_screen_a_arcade_energy_design",
+      "label": "Arcade Energy Design Direction",
+      "file_type": "rationale",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prd_screen_a_design_tokens",
+      "label": "Design Tokens (PRD A)",
+      "file_type": "concept",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prd_screen_a_tactile_button_pattern",
+      "label": "Tactile Button Pattern",
+      "file_type": "rationale",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prd_screen_a_quick_join_flow",
+      "label": "Quick Join Game Flow",
+      "file_type": "concept",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prd_screen_a_gold_quest_mode",
+      "label": "Gold Quest Game Mode",
+      "file_type": "concept",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prd_screen_a_game_lobby_spec",
+      "label": "Game Lobby Screen Spec",
+      "file_type": "concept",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prd_screen_a_leaderboards_spec",
+      "label": "Leaderboards Screen Spec",
+      "file_type": "concept",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prd_screen_b_neo_brutalism_arcade",
+      "label": "Neo-Brutalism Arcade Style",
+      "file_type": "rationale",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-b.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prd_screen_b_design_tokens_b",
+      "label": "Design Tokens (PRD B)",
+      "file_type": "concept",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-b.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prd_screen_a_bubbly_minimalism_ref",
+      "label": "Bubbly Minimalism (Stitch)",
+      "file_type": "rationale",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "stitch_image_mascot_character",
+      "label": "Stitch Mascot Character",
+      "file_type": "concept",
+      "source_file": "apps/frontend/public/assets/stitch/image.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "app_html_router_outlet",
+      "target": "index_html_app_root",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/app.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "auth_page_auth_page_component",
+      "target": "auth_page_login_signup_toggle",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/auth/auth-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "login_login_component",
+      "target": "auth_page_auth_page_component",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/frontend/src/app/features/auth/login.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "register_register_component",
+      "target": "auth_page_auth_page_component",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/frontend/src/app/features/auth/register.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "auth_page_auth_page_component",
+      "target": "backend_readme_supabase_auth_jwt",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/auth/auth-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "login_login_component",
+      "target": "backend_readme_supabase_auth_jwt",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/auth/login.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "dashboard_create_session_create_session_page",
+      "target": "dashboard_create_session_broadcast_mode",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "dashboard_dashboard_page",
+      "target": "dashboard_joinable_sessions_section",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "dashboard_dashboard_page",
+      "target": "dashboard_my_groups_section",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "dashboard_groups_groups_page",
+      "target": "dashboard_group_discovery_group_discovery_page",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-groups-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "dashboard_sessions_sessions_page",
+      "target": "dashboard_create_session_create_session_page",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-sessions-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_a_prd_screen_a",
+      "target": "stitch_dashboard_stitch_dashboard_mockup",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_a_prd_screen_a",
+      "target": "stitch_game_lobby_stitch_game_lobby_mockup",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_a_prd_screen_a",
+      "target": "stitch_leaderboards_stitch_leaderboards_mockup",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_b_prd_screen_b",
+      "target": "stitch_dashboard_stitch_dashboard_mockup",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-b.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_b_prd_screen_b",
+      "target": "stitch_game_lobby_stitch_game_lobby_mockup",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-b.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_b_prd_screen_b",
+      "target": "stitch_leaderboards_stitch_leaderboards_mockup",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-b.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "prd_screen_a_arcade_energy_design",
+      "target": "stitch_prd_screen_a_prd_screen_a",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "prd_screen_a_tactile_button_pattern",
+      "target": "prd_screen_a_arcade_energy_design",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "prd_screen_a_design_tokens",
+      "target": "prd_screen_a_arcade_energy_design",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "prd_screen_a_quick_join_flow",
+      "target": "stitch_dashboard_stitch_dashboard_mockup",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "prd_screen_a_gold_quest_mode",
+      "target": "stitch_dashboard_stitch_dashboard_mockup",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "prd_screen_a_game_lobby_spec",
+      "target": "stitch_game_lobby_stitch_game_lobby_mockup",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "prd_screen_a_leaderboards_spec",
+      "target": "stitch_leaderboards_stitch_leaderboards_mockup",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "prd_screen_b_neo_brutalism_arcade",
+      "target": "stitch_prd_screen_b_prd_screen_b",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-b.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "prd_screen_b_design_tokens_b",
+      "target": "prd_screen_b_neo_brutalism_arcade",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-b.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_image_stitch_reference_image",
+      "target": "auth_page_auth_page_component",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/auth/auth-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_image_stitch_reference_image",
+      "target": "stitch_image_mascot_character",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/image.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_image_mascot_character",
+      "target": "prd_screen_a_arcade_energy_design",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/frontend/public/assets/stitch/image.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "index_html_bubbly_theme",
+      "target": "prd_screen_a_design_tokens",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/frontend/src/index.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "prd_screen_a_arcade_energy_design",
+      "target": "prd_screen_b_neo_brutalism_arcade",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "dashboard_joinable_sessions_section",
+      "target": "prd_screen_a_quick_join_flow",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "backend_readme_auth_middleware",
+      "target": "backend_readme_supabase_auth_jwt",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/backend/README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "backend_readme_quizforge_backend",
+      "target": "backend_readme_backend_env_vars",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/backend/README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "backend_readme_quizforge_backend",
+      "target": "backend_readme_pino_logging",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/backend/README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "backend_readme_quizforge_backend",
+      "target": "backend_readme_supabase_auth_jwt",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/backend/README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "backend_readme_quizforge_backend",
+      "target": "backend_readme_idempotent_seed",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/backend/README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "nx_workspace_affected_nx_affected_command",
+      "target": "backend_readme_quizforge_backend",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.65,
+      "source_file": ".opencode/skills/nx-workspace/references/AFFECTED.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "dashboard_page_navigation_flow",
+      "label": "Dashboard Page Navigation Flow",
+      "nodes": [
+        "dashboard_dashboard_page",
+        "dashboard_groups_groups_page",
+        "dashboard_quizzes_quizzes_page",
+        "dashboard_sessions_sessions_page",
+        "dashboard_create_session_create_session_page",
+        "dashboard_group_discovery_group_discovery_page"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html"
+    },
+    {
+      "id": "stitch_prd_to_mockup_pipeline",
+      "label": "Stitch PRD to Mockup Pipeline",
+      "nodes": [
+        "stitch_prd_screen_a_prd_screen_a",
+        "stitch_prd_screen_b_prd_screen_b",
+        "stitch_dashboard_stitch_dashboard_mockup",
+        "stitch_game_lobby_stitch_game_lobby_mockup",
+        "stitch_leaderboards_stitch_leaderboards_mockup"
+      ],
+      "relation": "implement",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html"
+    },
+    {
+      "id": "auth_components_shared_pattern",
+      "label": "Auth Components Shared Pattern",
+      "nodes": [
+        "auth_page_auth_page_component",
+        "login_login_component",
+        "register_register_component",
+        "backend_readme_supabase_auth_jwt"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/frontend/src/app/features/auth/auth-page.component.html"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
