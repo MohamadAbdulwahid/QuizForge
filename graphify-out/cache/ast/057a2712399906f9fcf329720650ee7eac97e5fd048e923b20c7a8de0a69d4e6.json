@@ -1,1 +1,235 @@
-{"nodes": [{"id": "home_mohamad_coding_quizforge_apps_backend_e2e_project_json", "label": "project.json", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L1"}, {"id": "backend_e2e_project_name", "label": "name", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L2"}, {"id": "backend_e2e_project_schema", "label": "$schema", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L3"}, {"id": "backend_e2e_project_projecttype", "label": "projectType", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L4"}, {"id": "backend_e2e_project_implicitdependencies", "label": "implicitDependencies", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L5"}, {"id": "backend_e2e_project_targets", "label": "targets", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L8"}, {"id": "backend_e2e_project_targets_e2e", "label": "e2e", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L9"}, {"id": "backend_e2e_project_e2e_executor", "label": "executor", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L10"}, {"id": "backend_e2e_project_e2e_outputs", "label": "outputs", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L11"}, {"id": "backend_e2e_project_e2e_options", "label": "options", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L14"}, {"id": "backend_e2e_project_options_command", "label": "command", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L15"}, {"id": "backend_e2e_project_options_cwd", "label": "cwd", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L16"}, {"id": "backend_e2e_project_e2e_dependson", "label": "dependsOn", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L18"}], "edges": [{"source": "home_mohamad_coding_quizforge_apps_backend_e2e_project_json", "target": "backend_e2e_project_name", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L2", "weight": 1.0}, {"source": "home_mohamad_coding_quizforge_apps_backend_e2e_project_json", "target": "backend_e2e_project_schema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L3", "weight": 1.0}, {"source": "home_mohamad_coding_quizforge_apps_backend_e2e_project_json", "target": "backend_e2e_project_projecttype", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L4", "weight": 1.0}, {"source": "home_mohamad_coding_quizforge_apps_backend_e2e_project_json", "target": "backend_e2e_project_implicitdependencies", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L5", "weight": 1.0}, {"source": "backend_e2e_project_implicitdependencies", "target": "ref_backend", "relation": "extends", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L5", "weight": 1.0, "context": "import"}, {"source": "home_mohamad_coding_quizforge_apps_backend_e2e_project_json", "target": "backend_e2e_project_targets", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L8", "weight": 1.0}, {"source": "backend_e2e_project_targets", "target": "backend_e2e_project_targets_e2e", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L9", "weight": 1.0}, {"source": "backend_e2e_project_targets_e2e", "target": "backend_e2e_project_e2e_executor", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L10", "weight": 1.0}, {"source": "backend_e2e_project_targets_e2e", "target": "backend_e2e_project_e2e_outputs", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L11", "weight": 1.0}, {"source": "backend_e2e_project_e2e_outputs", "target": "ref_workspaceroot_coverage_projectroot", "relation": "extends", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L11", "weight": 1.0, "context": "import"}, {"source": "backend_e2e_project_targets_e2e", "target": "backend_e2e_project_e2e_options", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L14", "weight": 1.0}, {"source": "backend_e2e_project_e2e_options", "target": "backend_e2e_project_options_command", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L15", "weight": 1.0}, {"source": "backend_e2e_project_e2e_options", "target": "backend_e2e_project_options_cwd", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L16", "weight": 1.0}, {"source": "backend_e2e_project_targets_e2e", "target": "backend_e2e_project_e2e_dependson", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L18", "weight": 1.0}, {"source": "backend_e2e_project_e2e_dependson", "target": "ref_backend_serve", "relation": "extends", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json", "source_location": "L18", "weight": 1.0, "context": "import"}]}
+{
+  "nodes": [
+    {
+      "id": "home_mohamad_coding_quizforge_apps_backend_e2e_project_json",
+      "label": "project.json",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L1"
+    },
+    {
+      "id": "backend_e2e_project_name",
+      "label": "name",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L2"
+    },
+    {
+      "id": "backend_e2e_project_schema",
+      "label": "$schema",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L3"
+    },
+    {
+      "id": "backend_e2e_project_projecttype",
+      "label": "projectType",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L4"
+    },
+    {
+      "id": "backend_e2e_project_implicitdependencies",
+      "label": "implicitDependencies",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L5"
+    },
+    {
+      "id": "backend_e2e_project_targets",
+      "label": "targets",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L8"
+    },
+    {
+      "id": "backend_e2e_project_targets_e2e",
+      "label": "e2e",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L9"
+    },
+    {
+      "id": "backend_e2e_project_e2e_executor",
+      "label": "executor",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L10"
+    },
+    {
+      "id": "backend_e2e_project_e2e_outputs",
+      "label": "outputs",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L11"
+    },
+    {
+      "id": "backend_e2e_project_e2e_options",
+      "label": "options",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L14"
+    },
+    {
+      "id": "backend_e2e_project_options_command",
+      "label": "command",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L15"
+    },
+    {
+      "id": "backend_e2e_project_options_cwd",
+      "label": "cwd",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L16"
+    },
+    {
+      "id": "backend_e2e_project_e2e_dependson",
+      "label": "dependsOn",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L18"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_mohamad_coding_quizforge_apps_backend_e2e_project_json",
+      "target": "backend_e2e_project_name",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_mohamad_coding_quizforge_apps_backend_e2e_project_json",
+      "target": "backend_e2e_project_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_mohamad_coding_quizforge_apps_backend_e2e_project_json",
+      "target": "backend_e2e_project_projecttype",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_mohamad_coding_quizforge_apps_backend_e2e_project_json",
+      "target": "backend_e2e_project_implicitdependencies",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "backend_e2e_project_implicitdependencies",
+      "target": "ref_backend",
+      "relation": "extends",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "home_mohamad_coding_quizforge_apps_backend_e2e_project_json",
+      "target": "backend_e2e_project_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "backend_e2e_project_targets",
+      "target": "backend_e2e_project_targets_e2e",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "backend_e2e_project_targets_e2e",
+      "target": "backend_e2e_project_e2e_executor",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "backend_e2e_project_targets_e2e",
+      "target": "backend_e2e_project_e2e_outputs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "backend_e2e_project_e2e_outputs",
+      "target": "ref_workspaceroot_coverage_projectroot",
+      "relation": "extends",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L11",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "backend_e2e_project_targets_e2e",
+      "target": "backend_e2e_project_e2e_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "backend_e2e_project_e2e_options",
+      "target": "backend_e2e_project_options_command",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "backend_e2e_project_e2e_options",
+      "target": "backend_e2e_project_options_cwd",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "backend_e2e_project_targets_e2e",
+      "target": "backend_e2e_project_e2e_dependson",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "backend_e2e_project_e2e_dependson",
+      "target": "ref_backend_serve",
+      "relation": "extends",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json",
+      "source_location": "L18",
+      "weight": 1.0,
+      "context": "import"
+    }
+  ]
+}

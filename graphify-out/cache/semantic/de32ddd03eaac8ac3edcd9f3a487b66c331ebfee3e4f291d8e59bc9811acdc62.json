@@ -1,1 +1,149 @@
-{"nodes": [{"id": "sprint_02_sprint_backlog", "label": "Sprint 2 Backlog - Quiz & Session Management API", "file_type": "document", "source_file": "docs/sprint.02/sprint-backlog.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "sprints_repository_pattern", "label": "Functional Repository Pattern", "file_type": "concept", "source_file": "docs/sprint.02/sprint-backlog.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null, "rationale": "Exported named functions, not classes. Follows the pattern established by user.repository.ts. Consistent across all entities. Repositories handle data access only \u2014 no business logic."}, {"id": "sprints_zod_validation_schemas", "label": "Zod Validation Schemas", "file_type": "concept", "source_file": "docs/sprint.02/sprint-backlog.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null, "rationale": "Used for DTOs (quiz, session, auth, websocket messages) with conditional validation (superRefine for question options), middleware factories (validateBody, validateParams), and type inference via z.infer."}, {"id": "sprints_share_code_and_pin", "label": "Share Code and PIN Utilities", "file_type": "concept", "source_file": "docs/sprint.02/sprint-backlog.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null, "rationale": "Share codes (8-char uppercase alphanumeric, no ambiguous chars, crypto.getRandomValues) identify quizzes for sharing. PINs (6-digit zero-padded numeric) identify sessions for live gameplay. Both have retry logic on collision."}], "edges": [{"source": "sprint_02_sprint_backlog", "target": "sprint_01_sprint_backlog", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/sprint.02/sprint-backlog.md", "source_location": null, "weight": 1.0}, {"source": "sprints_service_layer_pattern", "target": "sprint_02_sprint_backlog", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/sprint.02/sprint-backlog.md", "source_location": null, "weight": 1.0}, {"source": "sprints_repository_pattern", "target": "sprint_02_sprint_backlog", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/sprint.02/sprint-backlog.md", "source_location": null, "weight": 1.0}, {"source": "sprints_zod_validation_schemas", "target": "sprint_02_sprint_backlog", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/sprint.02/sprint-backlog.md", "source_location": null, "weight": 1.0}, {"source": "sprints_share_code_and_pin", "target": "sprint_02_sprint_backlog", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/sprint.02/sprint-backlog.md", "source_location": null, "weight": 1.0}, {"source": "sprints_service_layer_pattern", "target": "sprints_repository_pattern", "relation": "conceptually_related_to", "confidence": "INFERRED", "confidence_score": 0.95, "source_file": "docs/sprint.02/sprint-backlog.md", "source_location": null, "weight": 1.0}, {"source": "sprints_zod_validation_schemas", "target": "sprints_service_layer_pattern", "relation": "conceptually_related_to", "confidence": "INFERRED", "confidence_score": 0.75, "source_file": "docs/sprint.02/sprint-backlog.md", "source_location": null, "weight": 1.0}, {"source": "sprints_share_code_and_pin", "target": "sprints_socket_io_room_management", "relation": "conceptually_related_to", "confidence": "INFERRED", "confidence_score": 0.75, "source_file": "docs/sprint.02/sprint-backlog.md", "source_location": null, "weight": 1.0}], "hyperedges": [{"id": "backend_architecture_foundation", "label": "Backend Architecture Foundation (Sprint 1-2)", "nodes": ["sprints_service_layer_pattern", "sprints_repository_pattern", "sprints_supabase_auth_integration", "sprints_zod_validation_schemas"], "relation": "form", "confidence": "INFERRED", "confidence_score": 0.9, "source_file": "docs/sprint.02/sprint-backlog.md"}]}
+{
+  "nodes": [
+    {
+      "id": "sprint_02_sprint_backlog",
+      "label": "Sprint 2 Backlog - Quiz & Session Management API",
+      "file_type": "document",
+      "source_file": "docs/sprint.02/sprint-backlog.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sprints_repository_pattern",
+      "label": "Functional Repository Pattern",
+      "file_type": "concept",
+      "source_file": "docs/sprint.02/sprint-backlog.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Exported named functions, not classes. Follows the pattern established by user.repository.ts. Consistent across all entities. Repositories handle data access only \u2014 no business logic."
+    },
+    {
+      "id": "sprints_zod_validation_schemas",
+      "label": "Zod Validation Schemas",
+      "file_type": "concept",
+      "source_file": "docs/sprint.02/sprint-backlog.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Used for DTOs (quiz, session, auth, websocket messages) with conditional validation (superRefine for question options), middleware factories (validateBody, validateParams), and type inference via z.infer."
+    },
+    {
+      "id": "sprints_share_code_and_pin",
+      "label": "Share Code and PIN Utilities",
+      "file_type": "concept",
+      "source_file": "docs/sprint.02/sprint-backlog.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Share codes (8-char uppercase alphanumeric, no ambiguous chars, crypto.getRandomValues) identify quizzes for sharing. PINs (6-digit zero-padded numeric) identify sessions for live gameplay. Both have retry logic on collision."
+    }
+  ],
+  "edges": [
+    {
+      "source": "sprint_02_sprint_backlog",
+      "target": "sprint_01_sprint_backlog",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/sprint.02/sprint-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sprints_service_layer_pattern",
+      "target": "sprint_02_sprint_backlog",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/sprint.02/sprint-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sprints_repository_pattern",
+      "target": "sprint_02_sprint_backlog",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/sprint.02/sprint-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sprints_zod_validation_schemas",
+      "target": "sprint_02_sprint_backlog",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/sprint.02/sprint-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sprints_share_code_and_pin",
+      "target": "sprint_02_sprint_backlog",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/sprint.02/sprint-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sprints_service_layer_pattern",
+      "target": "sprints_repository_pattern",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "docs/sprint.02/sprint-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sprints_zod_validation_schemas",
+      "target": "sprints_service_layer_pattern",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/sprint.02/sprint-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sprints_share_code_and_pin",
+      "target": "sprints_socket_io_room_management",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/sprint.02/sprint-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "backend_architecture_foundation",
+      "label": "Backend Architecture Foundation (Sprint 1-2)",
+      "nodes": [
+        "sprints_service_layer_pattern",
+        "sprints_repository_pattern",
+        "sprints_supabase_auth_integration",
+        "sprints_zod_validation_schemas"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "docs/sprint.02/sprint-backlog.md"
+    }
+  ]
+}

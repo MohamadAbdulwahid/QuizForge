@@ -1,1 +1,17 @@
-{"nodes": [{"id": "reference_vite", "label": "Vite Import Guidance", "file_type": "document", "source_file": ".opencode/skills/nx-import/references/VITE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "reference_vite",
+      "label": "Vite Import Guidance",
+      "file_type": "document",
+      "source_file": ".opencode/skills/nx-import/references/VITE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [],
+  "hyperedges": []
+}

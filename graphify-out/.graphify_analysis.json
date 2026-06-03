@@ -2860,13 +2860,7 @@
       "meta_0002_snapshot_public_profile_uniqueconstraints",
       "meta_0002_snapshot_uniqueconstraints_profile_username_unique"
     ],
-    "188": [
-      "package",
-      "package_author",
-      "package_contributors",
-      "package_license",
-      "package_name"
-    ],
+    "188": ["package", "package_author", "package_contributors", "package_license", "package_name"],
     "189": [
       "services_session_sse_service_sessionsseservice",
       "services_session_sse_service_sessionsseservice_connect",
@@ -2928,12 +2922,7 @@
       "landing_landing_page_component_spec",
       "landing_landing_page_component_stitchscreenpreview"
     ],
-    "199": [
-      "meta_journal",
-      "meta_journal_dialect",
-      "meta_journal_entries",
-      "meta_journal_version"
-    ],
+    "199": ["meta_journal", "meta_journal_dialect", "meta_journal_entries", "meta_journal_version"],
     "200": [
       "namespaces_game_namespace_activegamestate",
       "namespaces_game_namespace_activeroundstate",
@@ -2975,11 +2964,7 @@
       "husky",
       "package_devdependencies_husky"
     ],
-    "208": [
-      "opencode_opencode",
-      "opencode_opencode_plugin",
-      "opencode_opencode_schema"
-    ],
+    "208": ["opencode_opencode", "opencode_opencode_plugin", "opencode_opencode_schema"],
     "209": [
       "opencode_package",
       "opencode_package_dependencies",
@@ -2990,117 +2975,45 @@
       "play_play_page_component_playpagecomponent",
       "play_play_page_component_playpagecomponent_joingame"
     ],
-    "211": [
-      "src_vite_env_d",
-      "src_vite_env_d_importmeta",
-      "src_vite_env_d_importmetaenv"
-    ],
+    "211": ["src_vite_env_d", "src_vite_env_d_importmeta", "src_vite_env_d_importmetaenv"],
     "212": [
       "ui_status_pill_component",
       "ui_status_pill_component_statuspillcomponent",
       "ui_status_pill_component_statustone"
     ],
-    "213": [
-      "app_html_router_outlet",
-      "index_html_app_root"
-    ],
-    "214": [
-      "config_environment_spec",
-      "config_environment_spec_envschema"
-    ],
-    "215": [
-      "dashboard_group_discovery_group_discovery_page",
-      "dashboard_groups_groups_page"
-    ],
-    "216": [
-      "plugins_graphify",
-      "plugins_graphify_graphifyplugin"
-    ],
+    "213": ["app_html_router_outlet", "index_html_app_root"],
+    "214": ["config_environment_spec", "config_environment_spec_envschema"],
+    "215": ["dashboard_group_discovery_group_discovery_page", "dashboard_groups_groups_page"],
+    "216": ["plugins_graphify", "plugins_graphify_graphifyplugin"],
     "217": [
       "repositories_question_repository_spec",
       "repositories_question_repository_spec_mockdb"
     ],
-    "218": [
-      "repositories_quiz_repository_spec",
-      "repositories_quiz_repository_spec_mockdb"
-    ],
-    "219": [
-      "repositories_session_repository_spec",
-      "repositories_session_repository_spec_mockdb"
-    ],
-    "220": [
-      "scripts_test_socket_auth",
-      "scripts_test_socket_auth_connectwithtoken"
-    ],
-    "221": [
-      "services_group_service_spec",
-      "services_group_service_spec_mocks"
-    ],
-    "222": [
-      "services_quiz_service_spec",
-      "services_quiz_service_spec_mocks"
-    ],
-    "223": [
-      "ui_player_bubble_component",
-      "ui_player_bubble_component_playerbubblecomponent"
-    ],
-    "224": [
-      "agents_graphify_integration"
-    ],
-    "225": [
-      "backend_backend_spec"
-    ],
-    "226": [
-      "dashboard_quizzes_quizzes_page"
-    ],
-    "227": [
-      "e2e_app_spec"
-    ],
-    "228": [
-      "frontend_e2e_playwright_config"
-    ],
-    "229": [
-      "frontend_tailwind_config"
-    ],
-    "230": [
-      "frontend_vite_config"
-    ],
-    "231": [
-      "integration_quiz_auth_spec"
-    ],
-    "232": [
-      "integration_quiz_endpoints_spec"
-    ],
-    "233": [
-      "integration_session_endpoints_spec"
-    ],
-    "234": [
-      "memory_project"
-    ],
-    "235": [
-      "middleware_api_version_spec"
-    ],
-    "236": [
-      "middleware_error_handler_spec"
-    ],
-    "237": [
-      "prd_screen_a_bubbly_minimalism_ref"
-    ],
-    "238": [
-      "readme_quizforge"
-    ],
-    "239": [
-      "shared_pin_spec"
-    ],
-    "240": [
-      "shared_share_code_spec"
-    ],
-    "241": [
-      "skill_nx_plugins"
-    ],
-    "242": [
-      "src_test_setup"
-    ]
+    "218": ["repositories_quiz_repository_spec", "repositories_quiz_repository_spec_mockdb"],
+    "219": ["repositories_session_repository_spec", "repositories_session_repository_spec_mockdb"],
+    "220": ["scripts_test_socket_auth", "scripts_test_socket_auth_connectwithtoken"],
+    "221": ["services_group_service_spec", "services_group_service_spec_mocks"],
+    "222": ["services_quiz_service_spec", "services_quiz_service_spec_mocks"],
+    "223": ["ui_player_bubble_component", "ui_player_bubble_component_playerbubblecomponent"],
+    "224": ["agents_graphify_integration"],
+    "225": ["backend_backend_spec"],
+    "226": ["dashboard_quizzes_quizzes_page"],
+    "227": ["e2e_app_spec"],
+    "228": ["frontend_e2e_playwright_config"],
+    "229": ["frontend_tailwind_config"],
+    "230": ["frontend_vite_config"],
+    "231": ["integration_quiz_auth_spec"],
+    "232": ["integration_quiz_endpoints_spec"],
+    "233": ["integration_session_endpoints_spec"],
+    "234": ["memory_project"],
+    "235": ["middleware_api_version_spec"],
+    "236": ["middleware_error_handler_spec"],
+    "237": ["prd_screen_a_bubbly_minimalism_ref"],
+    "238": ["readme_quizforge"],
+    "239": ["shared_pin_spec"],
+    "240": ["shared_share_code_spec"],
+    "241": ["skill_nx_plugins"],
+    "242": ["src_test_setup"]
   },
   "cohesion": {
     "0": 0.034482758620689655,
@@ -3403,10 +3316,7 @@
     {
       "source": "Stitch Game Mode Selection Screenshot",
       "target": "Treasure Forge Game Mode",
-      "source_files": [
-        "apps/frontend/src/assets/stitch/image.png",
-        "docs/product-backlog.md"
-      ],
+      "source_files": ["apps/frontend/src/assets/stitch/image.png", "docs/product-backlog.md"],
       "confidence": "INFERRED",
       "relation": "references",
       "why": "inferred connection - not explicitly stated in source; crosses file types (image ↔ doc); connects across different repos/directories"

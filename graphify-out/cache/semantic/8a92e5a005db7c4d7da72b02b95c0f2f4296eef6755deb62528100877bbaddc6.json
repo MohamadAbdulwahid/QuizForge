@@ -1,1 +1,17 @@
-{"nodes": [{"id": "dashboard_group_discovery_group_discovery_page", "label": "Group Discovery Page", "file_type": "code", "source_file": "apps/frontend/src/app/features/dashboard/dashboard-group-discovery-page.component.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "dashboard_group_discovery_group_discovery_page",
+      "label": "Group Discovery Page",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-group-discovery-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [],
+  "hyperedges": []
+}

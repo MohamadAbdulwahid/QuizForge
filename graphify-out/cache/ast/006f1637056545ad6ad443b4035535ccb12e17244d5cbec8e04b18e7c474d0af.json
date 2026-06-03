@@ -1,1 +1,133 @@
-{"nodes": [{"id": "home_mohamad_coding_quizforge_apps_frontend_tsconfig_spec_json", "label": "tsconfig.spec.json", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json", "source_location": "L1"}, {"id": "frontend_tsconfig_spec_extends", "label": "extends", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json", "source_location": "L2"}, {"id": "frontend_tsconfig_spec_compileroptions", "label": "compilerOptions", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json", "source_location": "L3"}, {"id": "frontend_tsconfig_spec_compileroptions_outdir", "label": "outDir", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json", "source_location": "L4"}, {"id": "frontend_tsconfig_spec_compileroptions_types", "label": "types", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json", "source_location": "L5"}, {"id": "frontend_tsconfig_spec_include", "label": "include", "file_type": "code", "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json", "source_location": "L7"}], "edges": [{"source": "home_mohamad_coding_quizforge_apps_frontend_tsconfig_spec_json", "target": "frontend_tsconfig_spec_extends", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json", "source_location": "L2", "weight": 1.0}, {"source": "home_mohamad_coding_quizforge_apps_frontend_tsconfig_spec_json", "target": "ref_tsconfig_json", "relation": "extends", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json", "source_location": "L2", "weight": 1.0, "context": "import"}, {"source": "home_mohamad_coding_quizforge_apps_frontend_tsconfig_spec_json", "target": "frontend_tsconfig_spec_compileroptions", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json", "source_location": "L3", "weight": 1.0}, {"source": "frontend_tsconfig_spec_compileroptions", "target": "frontend_tsconfig_spec_compileroptions_outdir", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json", "source_location": "L4", "weight": 1.0}, {"source": "frontend_tsconfig_spec_compileroptions", "target": "frontend_tsconfig_spec_compileroptions_types", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json", "source_location": "L5", "weight": 1.0}, {"source": "frontend_tsconfig_spec_compileroptions_types", "target": "ref_vitest_globals", "relation": "extends", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json", "source_location": "L5", "weight": 1.0, "context": "import"}, {"source": "home_mohamad_coding_quizforge_apps_frontend_tsconfig_spec_json", "target": "frontend_tsconfig_spec_include", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json", "source_location": "L7", "weight": 1.0}, {"source": "frontend_tsconfig_spec_include", "target": "ref_src_ts", "relation": "extends", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json", "source_location": "L7", "weight": 1.0, "context": "import"}, {"source": "frontend_tsconfig_spec_include", "target": "ref_src_d_ts", "relation": "extends", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json", "source_location": "L7", "weight": 1.0, "context": "import"}]}
+{
+  "nodes": [
+    {
+      "id": "home_mohamad_coding_quizforge_apps_frontend_tsconfig_spec_json",
+      "label": "tsconfig.spec.json",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json",
+      "source_location": "L1"
+    },
+    {
+      "id": "frontend_tsconfig_spec_extends",
+      "label": "extends",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json",
+      "source_location": "L2"
+    },
+    {
+      "id": "frontend_tsconfig_spec_compileroptions",
+      "label": "compilerOptions",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json",
+      "source_location": "L3"
+    },
+    {
+      "id": "frontend_tsconfig_spec_compileroptions_outdir",
+      "label": "outDir",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json",
+      "source_location": "L4"
+    },
+    {
+      "id": "frontend_tsconfig_spec_compileroptions_types",
+      "label": "types",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json",
+      "source_location": "L5"
+    },
+    {
+      "id": "frontend_tsconfig_spec_include",
+      "label": "include",
+      "file_type": "code",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json",
+      "source_location": "L7"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_mohamad_coding_quizforge_apps_frontend_tsconfig_spec_json",
+      "target": "frontend_tsconfig_spec_extends",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_mohamad_coding_quizforge_apps_frontend_tsconfig_spec_json",
+      "target": "ref_tsconfig_json",
+      "relation": "extends",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "home_mohamad_coding_quizforge_apps_frontend_tsconfig_spec_json",
+      "target": "frontend_tsconfig_spec_compileroptions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_tsconfig_spec_compileroptions",
+      "target": "frontend_tsconfig_spec_compileroptions_outdir",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_tsconfig_spec_compileroptions",
+      "target": "frontend_tsconfig_spec_compileroptions_types",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_tsconfig_spec_compileroptions_types",
+      "target": "ref_vitest_globals",
+      "relation": "extends",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "home_mohamad_coding_quizforge_apps_frontend_tsconfig_spec_json",
+      "target": "frontend_tsconfig_spec_include",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_tsconfig_spec_include",
+      "target": "ref_src_ts",
+      "relation": "extends",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    },
+    {
+      "source": "frontend_tsconfig_spec_include",
+      "target": "ref_src_d_ts",
+      "relation": "extends",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "context": "import"
+    }
+  ]
+}
