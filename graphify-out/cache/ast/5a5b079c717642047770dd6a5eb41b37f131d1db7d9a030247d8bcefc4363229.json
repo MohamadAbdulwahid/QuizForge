@@ -1,1 +1,175 @@
-{"nodes": [{"id": "home_mohamad_coding_quizforge_docs_sprint_04_sprint_backlog_md", "label": "sprint-backlog.md", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L1"}, {"id": "sprint_04_sprint_backlog_sprint_4_backlog_auth_ui_dashboard_quiz_builder", "label": "Sprint 4 Backlog - Auth UI, Dashboard & Quiz Builder", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L1"}, {"id": "sprint_04_sprint_backlog_sprint_backlog_items", "label": "Sprint Backlog Items", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L11"}, {"id": "sprint_04_sprint_backlog_pb_56_authservice_with_signals_mohamad", "label": "PB-56: AuthService with Signals (Mohamad)", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L13"}, {"id": "sprint_04_sprint_backlog_pb_57_login_and_signup_pages_behrang", "label": "PB-57: Login and Signup Pages (Behrang)", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L32"}, {"id": "sprint_04_sprint_backlog_pb_59_auth_guard_mohamad", "label": "PB-59: Auth Guard (Mohamad)", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L52"}, {"id": "sprint_04_sprint_backlog_pb_60_apiservice_with_resource_mohamad", "label": "PB-60: ApiService with `resource()` (Mohamad)", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L71"}, {"id": "sprint_04_sprint_backlog_pb_61_dashboard_component_ssr_with_quiz_list_behrang", "label": "PB-61: Dashboard Component (SSR) with Quiz List (Behrang)", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L87"}, {"id": "sprint_04_sprint_backlog_pb_65_quiz_builder_page_csr_david", "label": "PB-65: Quiz Builder Page (CSR) (David)", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L106"}, {"id": "sprint_04_sprint_backlog_pb_68_question_component_and_form_validation_nishan", "label": "PB-68: Question Component and Form Validation (Nishan)", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L124"}, {"id": "sprint_04_sprint_backlog_pb_115_groups_discovery_admin_management_and_session_broadcasting_nishan", "label": "PB-115: Groups, Discovery, Admin Management, and Session Broadcasting (Nishan)", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L143"}], "edges": [{"source": "home_mohamad_coding_quizforge_docs_sprint_04_sprint_backlog_md", "target": "sprint_04_sprint_backlog_sprint_4_backlog_auth_ui_dashboard_quiz_builder", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L1", "weight": 1.0}, {"source": "sprint_04_sprint_backlog_sprint_4_backlog_auth_ui_dashboard_quiz_builder", "target": "sprint_04_sprint_backlog_sprint_backlog_items", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L11", "weight": 1.0}, {"source": "sprint_04_sprint_backlog_sprint_backlog_items", "target": "sprint_04_sprint_backlog_pb_56_authservice_with_signals_mohamad", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L13", "weight": 1.0}, {"source": "sprint_04_sprint_backlog_sprint_backlog_items", "target": "sprint_04_sprint_backlog_pb_57_login_and_signup_pages_behrang", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L32", "weight": 1.0}, {"source": "sprint_04_sprint_backlog_sprint_backlog_items", "target": "sprint_04_sprint_backlog_pb_59_auth_guard_mohamad", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L52", "weight": 1.0}, {"source": "sprint_04_sprint_backlog_sprint_backlog_items", "target": "sprint_04_sprint_backlog_pb_60_apiservice_with_resource_mohamad", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L71", "weight": 1.0}, {"source": "sprint_04_sprint_backlog_sprint_backlog_items", "target": "sprint_04_sprint_backlog_pb_61_dashboard_component_ssr_with_quiz_list_behrang", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L87", "weight": 1.0}, {"source": "sprint_04_sprint_backlog_sprint_backlog_items", "target": "sprint_04_sprint_backlog_pb_65_quiz_builder_page_csr_david", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L106", "weight": 1.0}, {"source": "sprint_04_sprint_backlog_sprint_backlog_items", "target": "sprint_04_sprint_backlog_pb_68_question_component_and_form_validation_nishan", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L124", "weight": 1.0}, {"source": "sprint_04_sprint_backlog_sprint_backlog_items", "target": "sprint_04_sprint_backlog_pb_115_groups_discovery_admin_management_and_session_broadcasting_nishan", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md", "source_location": "L143", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "home_mohamad_coding_quizforge_docs_sprint_04_sprint_backlog_md",
+      "label": "sprint-backlog.md",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "sprint_04_sprint_backlog_sprint_4_backlog_auth_ui_dashboard_quiz_builder",
+      "label": "Sprint 4 Backlog - Auth UI, Dashboard & Quiz Builder",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "sprint_04_sprint_backlog_sprint_backlog_items",
+      "label": "Sprint Backlog Items",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L11"
+    },
+    {
+      "id": "sprint_04_sprint_backlog_pb_56_authservice_with_signals_mohamad",
+      "label": "PB-56: AuthService with Signals (Mohamad)",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L13"
+    },
+    {
+      "id": "sprint_04_sprint_backlog_pb_57_login_and_signup_pages_behrang",
+      "label": "PB-57: Login and Signup Pages (Behrang)",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L32"
+    },
+    {
+      "id": "sprint_04_sprint_backlog_pb_59_auth_guard_mohamad",
+      "label": "PB-59: Auth Guard (Mohamad)",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L52"
+    },
+    {
+      "id": "sprint_04_sprint_backlog_pb_60_apiservice_with_resource_mohamad",
+      "label": "PB-60: ApiService with `resource()` (Mohamad)",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L71"
+    },
+    {
+      "id": "sprint_04_sprint_backlog_pb_61_dashboard_component_ssr_with_quiz_list_behrang",
+      "label": "PB-61: Dashboard Component (SSR) with Quiz List (Behrang)",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L87"
+    },
+    {
+      "id": "sprint_04_sprint_backlog_pb_65_quiz_builder_page_csr_david",
+      "label": "PB-65: Quiz Builder Page (CSR) (David)",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L106"
+    },
+    {
+      "id": "sprint_04_sprint_backlog_pb_68_question_component_and_form_validation_nishan",
+      "label": "PB-68: Question Component and Form Validation (Nishan)",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L124"
+    },
+    {
+      "id": "sprint_04_sprint_backlog_pb_115_groups_discovery_admin_management_and_session_broadcasting_nishan",
+      "label": "PB-115: Groups, Discovery, Admin Management, and Session Broadcasting (Nishan)",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L143"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_mohamad_coding_quizforge_docs_sprint_04_sprint_backlog_md",
+      "target": "sprint_04_sprint_backlog_sprint_4_backlog_auth_ui_dashboard_quiz_builder",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_04_sprint_backlog_sprint_4_backlog_auth_ui_dashboard_quiz_builder",
+      "target": "sprint_04_sprint_backlog_sprint_backlog_items",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_04_sprint_backlog_sprint_backlog_items",
+      "target": "sprint_04_sprint_backlog_pb_56_authservice_with_signals_mohamad",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_04_sprint_backlog_sprint_backlog_items",
+      "target": "sprint_04_sprint_backlog_pb_57_login_and_signup_pages_behrang",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_04_sprint_backlog_sprint_backlog_items",
+      "target": "sprint_04_sprint_backlog_pb_59_auth_guard_mohamad",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_04_sprint_backlog_sprint_backlog_items",
+      "target": "sprint_04_sprint_backlog_pb_60_apiservice_with_resource_mohamad",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_04_sprint_backlog_sprint_backlog_items",
+      "target": "sprint_04_sprint_backlog_pb_61_dashboard_component_ssr_with_quiz_list_behrang",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L87",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_04_sprint_backlog_sprint_backlog_items",
+      "target": "sprint_04_sprint_backlog_pb_65_quiz_builder_page_csr_david",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L106",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_04_sprint_backlog_sprint_backlog_items",
+      "target": "sprint_04_sprint_backlog_pb_68_question_component_and_form_validation_nishan",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_04_sprint_backlog_sprint_backlog_items",
+      "target": "sprint_04_sprint_backlog_pb_115_groups_discovery_admin_management_and_session_broadcasting_nishan",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md",
+      "source_location": "L143",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

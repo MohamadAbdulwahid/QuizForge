@@ -1,1 +1,127 @@
-{"nodes": [{"id": "home_mohamad_coding_quizforge_opencode_context_project_intelligence_navigation_md", "label": "navigation.md", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md", "source_location": "L1"}, {"id": "project_intelligence_navigation_quizforge_project_context", "label": "QuizForge Project Context", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md", "source_location": "L3"}, {"id": "project_intelligence_navigation_structure", "label": "Structure", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md", "source_location": "L7"}, {"id": "project_intelligence_navigation_quick_routes", "label": "Quick Routes", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md", "source_location": "L16"}, {"id": "project_intelligence_navigation_deep_dives", "label": "Deep Dives", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md", "source_location": "L24"}, {"id": "project_intelligence_navigation_related_documentation", "label": "Related Documentation", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md", "source_location": "L35"}, {"id": "project_intelligence_navigation_key_commands", "label": "Key Commands", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md", "source_location": "L44"}, {"id": "project_intelligence_navigation_maintenance", "label": "Maintenance", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md", "source_location": "L57"}], "edges": [{"source": "home_mohamad_coding_quizforge_opencode_context_project_intelligence_navigation_md", "target": "project_intelligence_navigation_quizforge_project_context", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md", "source_location": "L3", "weight": 1.0}, {"source": "project_intelligence_navigation_quizforge_project_context", "target": "project_intelligence_navigation_structure", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md", "source_location": "L7", "weight": 1.0}, {"source": "project_intelligence_navigation_quizforge_project_context", "target": "project_intelligence_navigation_quick_routes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md", "source_location": "L16", "weight": 1.0}, {"source": "project_intelligence_navigation_quizforge_project_context", "target": "project_intelligence_navigation_deep_dives", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md", "source_location": "L24", "weight": 1.0}, {"source": "project_intelligence_navigation_quizforge_project_context", "target": "project_intelligence_navigation_related_documentation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md", "source_location": "L35", "weight": 1.0}, {"source": "project_intelligence_navigation_quizforge_project_context", "target": "project_intelligence_navigation_key_commands", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md", "source_location": "L44", "weight": 1.0}, {"source": "project_intelligence_navigation_quizforge_project_context", "target": "project_intelligence_navigation_maintenance", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md", "source_location": "L57", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "home_mohamad_coding_quizforge_opencode_context_project_intelligence_navigation_md",
+      "label": "navigation.md",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "project_intelligence_navigation_quizforge_project_context",
+      "label": "QuizForge Project Context",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "project_intelligence_navigation_structure",
+      "label": "Structure",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "project_intelligence_navigation_quick_routes",
+      "label": "Quick Routes",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md",
+      "source_location": "L16"
+    },
+    {
+      "id": "project_intelligence_navigation_deep_dives",
+      "label": "Deep Dives",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md",
+      "source_location": "L24"
+    },
+    {
+      "id": "project_intelligence_navigation_related_documentation",
+      "label": "Related Documentation",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md",
+      "source_location": "L35"
+    },
+    {
+      "id": "project_intelligence_navigation_key_commands",
+      "label": "Key Commands",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md",
+      "source_location": "L44"
+    },
+    {
+      "id": "project_intelligence_navigation_maintenance",
+      "label": "Maintenance",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md",
+      "source_location": "L57"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_mohamad_coding_quizforge_opencode_context_project_intelligence_navigation_md",
+      "target": "project_intelligence_navigation_quizforge_project_context",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "project_intelligence_navigation_quizforge_project_context",
+      "target": "project_intelligence_navigation_structure",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "project_intelligence_navigation_quizforge_project_context",
+      "target": "project_intelligence_navigation_quick_routes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "project_intelligence_navigation_quizforge_project_context",
+      "target": "project_intelligence_navigation_deep_dives",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "project_intelligence_navigation_quizforge_project_context",
+      "target": "project_intelligence_navigation_related_documentation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "project_intelligence_navigation_quizforge_project_context",
+      "target": "project_intelligence_navigation_key_commands",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "project_intelligence_navigation_quizforge_project_context",
+      "target": "project_intelligence_navigation_maintenance",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md",
+      "source_location": "L57",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
