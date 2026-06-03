@@ -1,1 +1,60 @@
-{"nodes": [{"id": "sprint_05_sprint_backlog", "label": "Sprint 5 Backlog - Forge Classic Game Engine & Real-Time Scoring", "file_type": "document", "source_file": "docs/sprint.05/sprint-backlog.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "sprints_forge_classic_scoring", "label": "Forge Classic Scoring Algorithm", "file_type": "concept", "source_file": "docs/sprint.05/sprint-backlog.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null, "rationale": "Points = Correctness x Speed Factor. Server-side only, deterministic, reusable for leaderboard and analytics. Zero for incorrect answers. Clamps edge cases like negative remaining time."}], "edges": [{"source": "sprint_05_sprint_backlog", "target": "sprint_04_sprint_backlog", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/sprint.05/sprint-backlog.md", "source_location": null, "weight": 1.0}, {"source": "sprints_forge_classic_scoring", "target": "sprint_05_sprint_backlog", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/sprint.05/sprint-backlog.md", "source_location": null, "weight": 1.0}, {"source": "sprints_forge_classic_scoring", "target": "sprints_session_state_machine", "relation": "conceptually_related_to", "confidence": "INFERRED", "confidence_score": 0.85, "source_file": "docs/sprint.05/sprint-backlog.md", "source_location": null, "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "sprint_05_sprint_backlog",
+      "label": "Sprint 5 Backlog - Forge Classic Game Engine & Real-Time Scoring",
+      "file_type": "document",
+      "source_file": "docs/sprint.05/sprint-backlog.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sprints_forge_classic_scoring",
+      "label": "Forge Classic Scoring Algorithm",
+      "file_type": "concept",
+      "source_file": "docs/sprint.05/sprint-backlog.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Points = Correctness x Speed Factor. Server-side only, deterministic, reusable for leaderboard and analytics. Zero for incorrect answers. Clamps edge cases like negative remaining time."
+    }
+  ],
+  "edges": [
+    {
+      "source": "sprint_05_sprint_backlog",
+      "target": "sprint_04_sprint_backlog",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/sprint.05/sprint-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sprints_forge_classic_scoring",
+      "target": "sprint_05_sprint_backlog",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/sprint.05/sprint-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "sprints_forge_classic_scoring",
+      "target": "sprints_session_state_machine",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/sprint.05/sprint-backlog.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

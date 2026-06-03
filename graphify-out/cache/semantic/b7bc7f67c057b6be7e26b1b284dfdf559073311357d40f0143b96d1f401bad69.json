@@ -1,1 +1,50 @@
-{"nodes": [{"id": "stitch_prd_screen_b", "label": "PRD Screen B \u2014 Neo-Brutalism Arcade", "file_type": "document", "source_file": "apps/frontend/src/assets/stitch/prd-screen-b.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "concept_tactile_ui", "label": "Tactile UI Pattern", "file_type": "rationale", "source_file": "apps/frontend/src/assets/stitch/prd-screen-b.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null, "rationale": "Neo-Brutalism meets Arcade: 4px solid borders, 8px hard shadows, 16px border radius everywhere. On click, elements translate 4px down-right and shadow reduces to 4px. Creates physical pushable button feel."}], "edges": [{"source": "stitch_prd_screen_b", "target": "concept_tactile_ui", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/src/assets/stitch/prd-screen-b.html", "source_location": null, "weight": 1.0}, {"source": "stitch_prd_screen_b", "target": "concept_arcade_energy", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/src/assets/stitch/prd-screen-b.html", "source_location": null, "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "stitch_prd_screen_b",
+      "label": "PRD Screen B \u2014 Neo-Brutalism Arcade",
+      "file_type": "document",
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-b.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_tactile_ui",
+      "label": "Tactile UI Pattern",
+      "file_type": "rationale",
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-b.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Neo-Brutalism meets Arcade: 4px solid borders, 8px hard shadows, 16px border radius everywhere. On click, elements translate 4px down-right and shadow reduces to 4px. Creates physical pushable button feel."
+    }
+  ],
+  "edges": [
+    {
+      "source": "stitch_prd_screen_b",
+      "target": "concept_tactile_ui",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-b.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_b",
+      "target": "concept_arcade_energy",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-b.html",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

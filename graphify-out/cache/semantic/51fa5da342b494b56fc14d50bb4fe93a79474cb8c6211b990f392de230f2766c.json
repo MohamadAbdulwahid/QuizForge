@@ -1,1 +1,17 @@
-{"nodes": [{"id": "stitch_game_lobby_stitch_game_lobby_mockup", "label": "Stitch Game Lobby Mockup", "file_type": "document", "source_file": "apps/frontend/public/assets/stitch/game-lobby.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "stitch_game_lobby_stitch_game_lobby_mockup",
+      "label": "Stitch Game Lobby Mockup",
+      "file_type": "document",
+      "source_file": "apps/frontend/public/assets/stitch/game-lobby.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [],
+  "hyperedges": []
+}

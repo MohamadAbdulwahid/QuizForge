@@ -1,1 +1,156 @@
-{"nodes": [{"id": "stitch_prd_screen_a", "label": "PRD Screen A \u2014 Bubbly Minimalism", "file_type": "document", "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "concept_bubbly_minimalism", "label": "Bubbly Minimalism Design Language", "file_type": "rationale", "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null, "rationale": "Design direction combining playful bubbly shapes with minimal layout. Uses DynaPuff headings, Nunito body, rounded-2xl/3xl containers, hard tactile shadows, 60-30-10 color split (background-primary-accent), CSS custom properties (var(--bubbly-*)). Inspired by Blooket, Kahoot, Nintendo Switch UI."}, {"id": "concept_arcade_energy", "label": "Arcade Energy Aesthetic", "file_type": "rationale", "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null, "rationale": "High-octane visual style: vibrant primary colors, heavy drop shadows mimicking physical arcade buttons, bounce/tactile animations, chunky borders. Makes every interactive element feel pushable. Inspired by 90s arcade cabinets."}, {"id": "concept_podium_leaderboard", "label": "Podium-Style Leaderboard", "file_type": "concept", "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null, "rationale": "Post-game ranking display: 3-step podium with 1st center (highest, gold), 2nd left (silver), 3rd right (bronze). Avatars on top of colored blocks with staggered rise animation. Runner-up list below."}], "edges": [{"source": "stitch_prd_screen_a", "target": "stitch_dashboard_ref", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html", "source_location": null, "weight": 1.0}, {"source": "stitch_prd_screen_a", "target": "stitch_game_lobby_ref", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html", "source_location": null, "weight": 1.0}, {"source": "stitch_prd_screen_a", "target": "stitch_leaderboards_ref", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html", "source_location": null, "weight": 1.0}, {"source": "stitch_prd_screen_a", "target": "concept_bubbly_minimalism", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html", "source_location": null, "weight": 1.0}, {"source": "stitch_prd_screen_a", "target": "concept_arcade_energy", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html", "source_location": null, "weight": 1.0}, {"source": "stitch_prd_screen_a", "target": "concept_podium_leaderboard", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html", "source_location": null, "weight": 1.0}, {"source": "stitch_prd_screen_a", "target": "stitch_prd_screen_b", "relation": "semantically_similar_to", "confidence": "INFERRED", "confidence_score": 0.85, "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html", "source_location": null, "weight": 1.0}], "hyperedges": [{"id": "game_flow_pipeline", "label": "Player Game Flow Pipeline", "nodes": ["play_play_page", "game_game_lobby_page", "game_game_play_page", "leaderboards_leaderboards_page"], "relation": "participate_in", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html"}, {"id": "design_to_implementation", "label": "Design Reference to Implementation Pipeline", "nodes": ["stitch_dashboard_ref", "stitch_game_lobby_ref", "stitch_leaderboards_ref", "stitch_prd_screen_a", "dashboard_dashboard_shell", "game_game_lobby_page", "leaderboards_leaderboards_page"], "relation": "participate_in", "confidence": "INFERRED", "confidence_score": 0.75, "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html"}]}
+{
+  "nodes": [
+    {
+      "id": "stitch_prd_screen_a",
+      "label": "PRD Screen A \u2014 Bubbly Minimalism",
+      "file_type": "document",
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_bubbly_minimalism",
+      "label": "Bubbly Minimalism Design Language",
+      "file_type": "rationale",
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Design direction combining playful bubbly shapes with minimal layout. Uses DynaPuff headings, Nunito body, rounded-2xl/3xl containers, hard tactile shadows, 60-30-10 color split (background-primary-accent), CSS custom properties (var(--bubbly-*)). Inspired by Blooket, Kahoot, Nintendo Switch UI."
+    },
+    {
+      "id": "concept_arcade_energy",
+      "label": "Arcade Energy Aesthetic",
+      "file_type": "rationale",
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "High-octane visual style: vibrant primary colors, heavy drop shadows mimicking physical arcade buttons, bounce/tactile animations, chunky borders. Makes every interactive element feel pushable. Inspired by 90s arcade cabinets."
+    },
+    {
+      "id": "concept_podium_leaderboard",
+      "label": "Podium-Style Leaderboard",
+      "file_type": "concept",
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Post-game ranking display: 3-step podium with 1st center (highest, gold), 2nd left (silver), 3rd right (bronze). Avatars on top of colored blocks with staggered rise animation. Runner-up list below."
+    }
+  ],
+  "edges": [
+    {
+      "source": "stitch_prd_screen_a",
+      "target": "stitch_dashboard_ref",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_a",
+      "target": "stitch_game_lobby_ref",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_a",
+      "target": "stitch_leaderboards_ref",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_a",
+      "target": "concept_bubbly_minimalism",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_a",
+      "target": "concept_arcade_energy",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_a",
+      "target": "concept_podium_leaderboard",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_a",
+      "target": "stitch_prd_screen_b",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "game_flow_pipeline",
+      "label": "Player Game Flow Pipeline",
+      "nodes": [
+        "play_play_page",
+        "game_game_lobby_page",
+        "game_game_play_page",
+        "leaderboards_leaderboards_page"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html"
+    },
+    {
+      "id": "design_to_implementation",
+      "label": "Design Reference to Implementation Pipeline",
+      "nodes": [
+        "stitch_dashboard_ref",
+        "stitch_game_lobby_ref",
+        "stitch_leaderboards_ref",
+        "stitch_prd_screen_a",
+        "dashboard_dashboard_shell",
+        "game_game_lobby_page",
+        "leaderboards_leaderboards_page"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "apps/frontend/src/assets/stitch/prd-screen-a.html"
+    }
+  ]
+}
