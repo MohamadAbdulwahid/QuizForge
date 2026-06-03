@@ -1,1 +1,106 @@
-{"nodes": [{"id": "skill_nx_import", "label": "Nx Import Skill", "file_type": "document", "source_file": ".opencode/skills/nx-import/SKILL.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "skill_nx_import", "target": "reference_eslint", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/skills/nx-import/SKILL.md", "source_location": null, "weight": 1.0}, {"source": "skill_nx_import", "target": "reference_gradle", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/skills/nx-import/SKILL.md", "source_location": null, "weight": 1.0}, {"source": "skill_nx_import", "target": "reference_jest", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/skills/nx-import/SKILL.md", "source_location": null, "weight": 1.0}, {"source": "skill_nx_import", "target": "reference_next", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/skills/nx-import/SKILL.md", "source_location": null, "weight": 1.0}, {"source": "skill_nx_import", "target": "reference_turborepo", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/skills/nx-import/SKILL.md", "source_location": null, "weight": 1.0}, {"source": "skill_nx_import", "target": "reference_vite", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/skills/nx-import/SKILL.md", "source_location": null, "weight": 1.0}, {"source": "skill_nx_import", "target": "skill_link_workspace_packages", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/skills/nx-import/SKILL.md", "source_location": null, "weight": 1.0}], "hyperedges": [{"id": "nx_import_reference_ecosystem", "label": "Nx Import Technology References", "nodes": ["skill_nx_import", "reference_eslint", "reference_gradle", "reference_jest", "reference_next", "reference_turborepo", "reference_vite"], "relation": "participate_in", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/skills/nx-import/SKILL.md"}]}
+{
+  "nodes": [
+    {
+      "id": "skill_nx_import",
+      "label": "Nx Import Skill",
+      "file_type": "document",
+      "source_file": ".opencode/skills/nx-import/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "skill_nx_import",
+      "target": "reference_eslint",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/nx-import/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_nx_import",
+      "target": "reference_gradle",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/nx-import/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_nx_import",
+      "target": "reference_jest",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/nx-import/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_nx_import",
+      "target": "reference_next",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/nx-import/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_nx_import",
+      "target": "reference_turborepo",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/nx-import/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_nx_import",
+      "target": "reference_vite",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/nx-import/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_nx_import",
+      "target": "skill_link_workspace_packages",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/nx-import/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "nx_import_reference_ecosystem",
+      "label": "Nx Import Technology References",
+      "nodes": [
+        "skill_nx_import",
+        "reference_eslint",
+        "reference_gradle",
+        "reference_jest",
+        "reference_next",
+        "reference_turborepo",
+        "reference_vite"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/nx-import/SKILL.md"
+    }
+  ]
+}

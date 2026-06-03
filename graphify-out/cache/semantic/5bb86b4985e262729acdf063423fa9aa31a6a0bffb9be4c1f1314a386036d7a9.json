@@ -1,1 +1,232 @@
-{"nodes": [{"id": "stitch_prd_screen_a_prd_screen_a", "label": "PRD Screen Specs A", "file_type": "document", "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "prd_screen_a_arcade_energy_design", "label": "Arcade Energy Design Direction", "file_type": "rationale", "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "prd_screen_a_design_tokens", "label": "Design Tokens (PRD A)", "file_type": "concept", "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "prd_screen_a_tactile_button_pattern", "label": "Tactile Button Pattern", "file_type": "rationale", "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "prd_screen_a_quick_join_flow", "label": "Quick Join Game Flow", "file_type": "concept", "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "prd_screen_a_gold_quest_mode", "label": "Gold Quest Game Mode", "file_type": "concept", "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "prd_screen_a_game_lobby_spec", "label": "Game Lobby Screen Spec", "file_type": "concept", "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "prd_screen_a_leaderboards_spec", "label": "Leaderboards Screen Spec", "file_type": "concept", "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "prd_screen_a_bubbly_minimalism_ref", "label": "Bubbly Minimalism (Stitch)", "file_type": "rationale", "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "stitch_prd_screen_a_prd_screen_a", "target": "stitch_dashboard_stitch_dashboard_mockup", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "weight": 1.0}, {"source": "stitch_prd_screen_a_prd_screen_a", "target": "stitch_game_lobby_stitch_game_lobby_mockup", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "weight": 1.0}, {"source": "stitch_prd_screen_a_prd_screen_a", "target": "stitch_leaderboards_stitch_leaderboards_mockup", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "weight": 1.0}, {"source": "prd_screen_a_arcade_energy_design", "target": "stitch_prd_screen_a_prd_screen_a", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "weight": 1.0}, {"source": "prd_screen_a_tactile_button_pattern", "target": "prd_screen_a_arcade_energy_design", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "weight": 1.0}, {"source": "prd_screen_a_design_tokens", "target": "prd_screen_a_arcade_energy_design", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "weight": 1.0}, {"source": "prd_screen_a_quick_join_flow", "target": "stitch_dashboard_stitch_dashboard_mockup", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "weight": 1.0}, {"source": "prd_screen_a_gold_quest_mode", "target": "stitch_dashboard_stitch_dashboard_mockup", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "weight": 1.0}, {"source": "prd_screen_a_game_lobby_spec", "target": "stitch_game_lobby_stitch_game_lobby_mockup", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "weight": 1.0}, {"source": "prd_screen_a_leaderboards_spec", "target": "stitch_leaderboards_stitch_leaderboards_mockup", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "weight": 1.0}, {"source": "prd_screen_a_arcade_energy_design", "target": "prd_screen_b_neo_brutalism_arcade", "relation": "semantically_similar_to", "confidence": "INFERRED", "confidence_score": 0.75, "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html", "source_location": null, "weight": 1.0}], "hyperedges": [{"id": "stitch_prd_to_mockup_pipeline", "label": "Stitch PRD to Mockup Pipeline", "nodes": ["stitch_prd_screen_a_prd_screen_a", "stitch_prd_screen_b_prd_screen_b", "stitch_dashboard_stitch_dashboard_mockup", "stitch_game_lobby_stitch_game_lobby_mockup", "stitch_leaderboards_stitch_leaderboards_mockup"], "relation": "implement", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html"}]}
+{
+  "nodes": [
+    {
+      "id": "stitch_prd_screen_a_prd_screen_a",
+      "label": "PRD Screen Specs A",
+      "file_type": "document",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prd_screen_a_arcade_energy_design",
+      "label": "Arcade Energy Design Direction",
+      "file_type": "rationale",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prd_screen_a_design_tokens",
+      "label": "Design Tokens (PRD A)",
+      "file_type": "concept",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prd_screen_a_tactile_button_pattern",
+      "label": "Tactile Button Pattern",
+      "file_type": "rationale",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prd_screen_a_quick_join_flow",
+      "label": "Quick Join Game Flow",
+      "file_type": "concept",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prd_screen_a_gold_quest_mode",
+      "label": "Gold Quest Game Mode",
+      "file_type": "concept",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prd_screen_a_game_lobby_spec",
+      "label": "Game Lobby Screen Spec",
+      "file_type": "concept",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prd_screen_a_leaderboards_spec",
+      "label": "Leaderboards Screen Spec",
+      "file_type": "concept",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "prd_screen_a_bubbly_minimalism_ref",
+      "label": "Bubbly Minimalism (Stitch)",
+      "file_type": "rationale",
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "stitch_prd_screen_a_prd_screen_a",
+      "target": "stitch_dashboard_stitch_dashboard_mockup",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_a_prd_screen_a",
+      "target": "stitch_game_lobby_stitch_game_lobby_mockup",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "stitch_prd_screen_a_prd_screen_a",
+      "target": "stitch_leaderboards_stitch_leaderboards_mockup",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "prd_screen_a_arcade_energy_design",
+      "target": "stitch_prd_screen_a_prd_screen_a",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "prd_screen_a_tactile_button_pattern",
+      "target": "prd_screen_a_arcade_energy_design",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "prd_screen_a_design_tokens",
+      "target": "prd_screen_a_arcade_energy_design",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "prd_screen_a_quick_join_flow",
+      "target": "stitch_dashboard_stitch_dashboard_mockup",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "prd_screen_a_gold_quest_mode",
+      "target": "stitch_dashboard_stitch_dashboard_mockup",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "prd_screen_a_game_lobby_spec",
+      "target": "stitch_game_lobby_stitch_game_lobby_mockup",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "prd_screen_a_leaderboards_spec",
+      "target": "stitch_leaderboards_stitch_leaderboards_mockup",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "prd_screen_a_arcade_energy_design",
+      "target": "prd_screen_b_neo_brutalism_arcade",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "stitch_prd_to_mockup_pipeline",
+      "label": "Stitch PRD to Mockup Pipeline",
+      "nodes": [
+        "stitch_prd_screen_a_prd_screen_a",
+        "stitch_prd_screen_b_prd_screen_b",
+        "stitch_dashboard_stitch_dashboard_mockup",
+        "stitch_game_lobby_stitch_game_lobby_mockup",
+        "stitch_leaderboards_stitch_leaderboards_mockup"
+      ],
+      "relation": "implement",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/public/assets/stitch/prd-screen-a.html"
+    }
+  ]
+}

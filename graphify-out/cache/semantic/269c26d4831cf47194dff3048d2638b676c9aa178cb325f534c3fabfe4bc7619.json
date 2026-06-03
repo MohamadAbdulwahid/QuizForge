@@ -1,1 +1,90 @@
-{"nodes": [{"id": "skill_monitor_ci", "label": "Monitor CI Skill", "file_type": "document", "source_file": ".opencode/skills/monitor-ci/SKILL.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "concept_self_healing_ci", "label": "Self-Healing CI Pipeline", "file_type": "concept", "source_file": ".opencode/skills/monitor-ci/SKILL.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "concept_nx_cloud_integration", "label": "Nx Cloud Integration", "file_type": "concept", "source_file": ".opencode/skills/monitor-ci/SKILL.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "skill_monitor_ci", "target": "ci_monitor_subagent", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/skills/monitor-ci/SKILL.md", "source_location": null, "weight": 1.0}, {"source": "skill_monitor_ci", "target": "reference_fix_flows", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/skills/monitor-ci/SKILL.md", "source_location": null, "weight": 1.0}, {"source": "skill_monitor_ci", "target": "concept_self_healing_ci", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/skills/monitor-ci/SKILL.md", "source_location": null, "weight": 1.0}, {"source": "skill_monitor_ci", "target": "concept_nx_cloud_integration", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/skills/monitor-ci/SKILL.md", "source_location": null, "weight": 1.0}, {"source": "concept_self_healing_ci", "target": "concept_nx_cloud_integration", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/skills/monitor-ci/SKILL.md", "source_location": null, "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "skill_monitor_ci",
+      "label": "Monitor CI Skill",
+      "file_type": "document",
+      "source_file": ".opencode/skills/monitor-ci/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_self_healing_ci",
+      "label": "Self-Healing CI Pipeline",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/monitor-ci/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_nx_cloud_integration",
+      "label": "Nx Cloud Integration",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/monitor-ci/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "skill_monitor_ci",
+      "target": "ci_monitor_subagent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/monitor-ci/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_monitor_ci",
+      "target": "reference_fix_flows",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/monitor-ci/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_monitor_ci",
+      "target": "concept_self_healing_ci",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/monitor-ci/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_monitor_ci",
+      "target": "concept_nx_cloud_integration",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/monitor-ci/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_self_healing_ci",
+      "target": "concept_nx_cloud_integration",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/monitor-ci/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

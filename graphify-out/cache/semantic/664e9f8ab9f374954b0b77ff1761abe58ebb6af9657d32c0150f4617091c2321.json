@@ -1,1 +1,87 @@
-{"nodes": [{"id": "dashboard_dashboard_page", "label": "Dashboard Home Page", "file_type": "code", "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "dashboard_joinable_sessions_section", "label": "Joinable Sessions Section", "file_type": "concept", "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "dashboard_my_groups_section", "label": "My Groups Section", "file_type": "concept", "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "dashboard_dashboard_page", "target": "dashboard_joinable_sessions_section", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html", "source_location": null, "weight": 1.0}, {"source": "dashboard_dashboard_page", "target": "dashboard_my_groups_section", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html", "source_location": null, "weight": 1.0}, {"source": "dashboard_joinable_sessions_section", "target": "prd_screen_a_quick_join_flow", "relation": "conceptually_related_to", "confidence": "INFERRED", "confidence_score": 0.85, "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html", "source_location": null, "weight": 1.0}], "hyperedges": [{"id": "dashboard_page_navigation_flow", "label": "Dashboard Page Navigation Flow", "nodes": ["dashboard_dashboard_page", "dashboard_groups_groups_page", "dashboard_quizzes_quizzes_page", "dashboard_sessions_sessions_page", "dashboard_create_session_create_session_page", "dashboard_group_discovery_group_discovery_page"], "relation": "participate_in", "confidence": "INFERRED", "confidence_score": 0.9, "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html"}]}
+{
+  "nodes": [
+    {
+      "id": "dashboard_dashboard_page",
+      "label": "Dashboard Home Page",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dashboard_joinable_sessions_section",
+      "label": "Joinable Sessions Section",
+      "file_type": "concept",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dashboard_my_groups_section",
+      "label": "My Groups Section",
+      "file_type": "concept",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "dashboard_dashboard_page",
+      "target": "dashboard_joinable_sessions_section",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "dashboard_dashboard_page",
+      "target": "dashboard_my_groups_section",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "dashboard_joinable_sessions_section",
+      "target": "prd_screen_a_quick_join_flow",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "dashboard_page_navigation_flow",
+      "label": "Dashboard Page Navigation Flow",
+      "nodes": [
+        "dashboard_dashboard_page",
+        "dashboard_groups_groups_page",
+        "dashboard_quizzes_quizzes_page",
+        "dashboard_sessions_sessions_page",
+        "dashboard_create_session_create_session_page",
+        "dashboard_group_discovery_group_discovery_page"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-page.component.html"
+    }
+  ]
+}

@@ -1,1 +1,28 @@
-{"nodes": [{"id": "app_html_router_outlet", "label": "router-outlet", "file_type": "code", "source_file": "apps/frontend/src/app/app.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "app_html_router_outlet", "target": "index_html_app_root", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "apps/frontend/src/app/app.html", "source_location": null, "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "app_html_router_outlet",
+      "label": "router-outlet",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/app.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "app_html_router_outlet",
+      "target": "index_html_app_root",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/frontend/src/app/app.html",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

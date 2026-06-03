@@ -1,1 +1,65 @@
-{"nodes": [{"id": "monitor_ci_command", "label": "Monitor CI Command", "file_type": "document", "source_file": ".opencode/commands/monitor-ci.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "monitor_ci_command", "target": "ci_monitor_subagent", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/commands/monitor-ci.md", "source_location": null, "weight": 1.0}, {"source": "monitor_ci_command", "target": "skill_monitor_ci", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/commands/monitor-ci.md", "source_location": null, "weight": 1.0}, {"source": "monitor_ci_command", "target": "reference_fix_flows", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/commands/monitor-ci.md", "source_location": null, "weight": 1.0}], "hyperedges": [{"id": "monitor_ci_orchestration", "label": "CI Monitoring Orchestration Flow", "nodes": ["monitor_ci_command", "ci_monitor_subagent", "skill_monitor_ci", "reference_fix_flows", "concept_self_healing_ci", "concept_nx_cloud_integration"], "relation": "participate_in", "confidence": "EXTRACTED", "confidence_score": 0.95, "source_file": ".opencode/commands/monitor-ci.md"}]}
+{
+  "nodes": [
+    {
+      "id": "monitor_ci_command",
+      "label": "Monitor CI Command",
+      "file_type": "document",
+      "source_file": ".opencode/commands/monitor-ci.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "monitor_ci_command",
+      "target": "ci_monitor_subagent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/commands/monitor-ci.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "monitor_ci_command",
+      "target": "skill_monitor_ci",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/commands/monitor-ci.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "monitor_ci_command",
+      "target": "reference_fix_flows",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/commands/monitor-ci.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "monitor_ci_orchestration",
+      "label": "CI Monitoring Orchestration Flow",
+      "nodes": [
+        "monitor_ci_command",
+        "ci_monitor_subagent",
+        "skill_monitor_ci",
+        "reference_fix_flows",
+        "concept_self_healing_ci",
+        "concept_nx_cloud_integration"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": ".opencode/commands/monitor-ci.md"
+    }
+  ]
+}

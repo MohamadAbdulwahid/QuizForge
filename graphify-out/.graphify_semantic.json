@@ -3136,11 +3136,7 @@
     {
       "id": "realtime_session_triad",
       "label": "Real-Time WebSocket Session Triad",
-      "nodes": [
-        "game_game_lobby_page",
-        "host_host_page",
-        "game_game_play_page"
-      ],
+      "nodes": ["game_game_lobby_page", "host_host_page", "game_game_play_page"],
       "relation": "implement",
       "confidence": "INFERRED",
       "confidence_score": 0.95,

@@ -1,1 +1,38 @@
-{"nodes": [{"id": "skill_nx_generate", "label": "Nx Generate Skill", "file_type": "document", "source_file": ".opencode/skills/nx-generate/SKILL.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "skill_nx_generate", "target": "skill_link_workspace_packages", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": ".opencode/skills/nx-generate/SKILL.md", "source_location": null, "weight": 1.0}, {"source": "skill_nx_generate", "target": "skill_nx_workspace", "relation": "conceptually_related_to", "confidence": "INFERRED", "confidence_score": 0.75, "source_file": ".opencode/skills/nx-generate/SKILL.md", "source_location": null, "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "skill_nx_generate",
+      "label": "Nx Generate Skill",
+      "file_type": "document",
+      "source_file": ".opencode/skills/nx-generate/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "skill_nx_generate",
+      "target": "skill_link_workspace_packages",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/nx-generate/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_nx_generate",
+      "target": "skill_nx_workspace",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": ".opencode/skills/nx-generate/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

@@ -1,1 +1,28 @@
-{"nodes": [{"id": "stitch_game_mode_image", "label": "Stitch Game Mode Selection Screenshot", "file_type": "image", "source_file": "apps/frontend/src/assets/stitch/image.png", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "stitch_game_mode_image", "target": "concept_treasure_forge", "relation": "references", "confidence": "INFERRED", "confidence_score": 0.75, "source_file": "apps/frontend/src/assets/stitch/image.png", "source_location": null, "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "stitch_game_mode_image",
+      "label": "Stitch Game Mode Selection Screenshot",
+      "file_type": "image",
+      "source_file": "apps/frontend/src/assets/stitch/image.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "stitch_game_mode_image",
+      "target": "concept_treasure_forge",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "apps/frontend/src/assets/stitch/image.png",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}
