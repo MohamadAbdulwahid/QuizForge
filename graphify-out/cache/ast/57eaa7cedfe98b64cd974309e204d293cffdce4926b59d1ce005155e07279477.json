@@ -1,1 +1,271 @@
-{"nodes": [{"id": "home_mohamad_coding_quizforge_docs_sprint_06_effort_plan_md", "label": "effort-plan.md", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L1"}, {"id": "sprint_06_effort_plan_sprint_6_effort_plan", "label": "Sprint 6 Effort Plan", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L1"}, {"id": "sprint_06_effort_plan_team_members_roles", "label": "Team Members & Roles", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L9"}, {"id": "sprint_06_effort_plan_effort_distribution_by_developer", "label": "Effort Distribution by Developer", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L20"}, {"id": "sprint_06_effort_plan_mohamad_10_sp", "label": "Mohamad - 10 SP", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L22"}, {"id": "sprint_06_effort_plan_david_10_sp", "label": "David - 10 SP", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L35"}, {"id": "sprint_06_effort_plan_nishan_10_sp", "label": "Nishan - 10 SP", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L48"}, {"id": "sprint_06_effort_plan_behrang_10_sp", "label": "Behrang - 10 SP", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L61"}, {"id": "sprint_06_effort_plan_sprint_timeline_simplified", "label": "Sprint Timeline (Simplified)", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L74"}, {"id": "sprint_06_effort_plan_week_1_days_1_5_player_flow_gameplay_screen_and_foundations", "label": "Week 1 (Days 1-5): Player Flow, Gameplay Screen, and Foundations", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L76"}, {"id": "sprint_06_effort_plan_week_2_days_6_10_hardening_analytics_optimization_and_final_polish", "label": "Week 2 (Days 6-10): Hardening, Analytics, Optimization, and Final Polish", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L98"}, {"id": "sprint_06_effort_plan_daily_effort_breakdown", "label": "Daily Effort Breakdown", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L125"}, {"id": "sprint_06_effort_plan_risk_mitigation", "label": "Risk Mitigation", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L144"}, {"id": "sprint_06_effort_plan_identified_risks", "label": "Identified Risks", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L146"}, {"id": "sprint_06_effort_plan_contingency_plan", "label": "Contingency Plan", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L156"}, {"id": "sprint_06_effort_plan_definition_of_done_sprint_level", "label": "Definition of Done (Sprint Level)", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L165"}, {"id": "sprint_06_effort_plan_notes", "label": "Notes", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L179"}], "edges": [{"source": "home_mohamad_coding_quizforge_docs_sprint_06_effort_plan_md", "target": "sprint_06_effort_plan_sprint_6_effort_plan", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L1", "weight": 1.0}, {"source": "sprint_06_effort_plan_sprint_6_effort_plan", "target": "sprint_06_effort_plan_team_members_roles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L9", "weight": 1.0}, {"source": "sprint_06_effort_plan_sprint_6_effort_plan", "target": "sprint_06_effort_plan_effort_distribution_by_developer", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L20", "weight": 1.0}, {"source": "sprint_06_effort_plan_effort_distribution_by_developer", "target": "sprint_06_effort_plan_mohamad_10_sp", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L22", "weight": 1.0}, {"source": "sprint_06_effort_plan_effort_distribution_by_developer", "target": "sprint_06_effort_plan_david_10_sp", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L35", "weight": 1.0}, {"source": "sprint_06_effort_plan_effort_distribution_by_developer", "target": "sprint_06_effort_plan_nishan_10_sp", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L48", "weight": 1.0}, {"source": "sprint_06_effort_plan_effort_distribution_by_developer", "target": "sprint_06_effort_plan_behrang_10_sp", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L61", "weight": 1.0}, {"source": "sprint_06_effort_plan_sprint_6_effort_plan", "target": "sprint_06_effort_plan_sprint_timeline_simplified", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L74", "weight": 1.0}, {"source": "sprint_06_effort_plan_sprint_timeline_simplified", "target": "sprint_06_effort_plan_week_1_days_1_5_player_flow_gameplay_screen_and_foundations", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L76", "weight": 1.0}, {"source": "sprint_06_effort_plan_sprint_timeline_simplified", "target": "sprint_06_effort_plan_week_2_days_6_10_hardening_analytics_optimization_and_final_polish", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L98", "weight": 1.0}, {"source": "sprint_06_effort_plan_sprint_6_effort_plan", "target": "sprint_06_effort_plan_daily_effort_breakdown", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L125", "weight": 1.0}, {"source": "sprint_06_effort_plan_sprint_6_effort_plan", "target": "sprint_06_effort_plan_risk_mitigation", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L144", "weight": 1.0}, {"source": "sprint_06_effort_plan_risk_mitigation", "target": "sprint_06_effort_plan_identified_risks", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L146", "weight": 1.0}, {"source": "sprint_06_effort_plan_risk_mitigation", "target": "sprint_06_effort_plan_contingency_plan", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L156", "weight": 1.0}, {"source": "sprint_06_effort_plan_sprint_6_effort_plan", "target": "sprint_06_effort_plan_definition_of_done_sprint_level", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L165", "weight": 1.0}, {"source": "sprint_06_effort_plan_sprint_6_effort_plan", "target": "sprint_06_effort_plan_notes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md", "source_location": "L179", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "home_mohamad_coding_quizforge_docs_sprint_06_effort_plan_md",
+      "label": "effort-plan.md",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "sprint_06_effort_plan_sprint_6_effort_plan",
+      "label": "Sprint 6 Effort Plan",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "sprint_06_effort_plan_team_members_roles",
+      "label": "Team Members & Roles",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "sprint_06_effort_plan_effort_distribution_by_developer",
+      "label": "Effort Distribution by Developer",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L20"
+    },
+    {
+      "id": "sprint_06_effort_plan_mohamad_10_sp",
+      "label": "Mohamad - 10 SP",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L22"
+    },
+    {
+      "id": "sprint_06_effort_plan_david_10_sp",
+      "label": "David - 10 SP",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L35"
+    },
+    {
+      "id": "sprint_06_effort_plan_nishan_10_sp",
+      "label": "Nishan - 10 SP",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L48"
+    },
+    {
+      "id": "sprint_06_effort_plan_behrang_10_sp",
+      "label": "Behrang - 10 SP",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L61"
+    },
+    {
+      "id": "sprint_06_effort_plan_sprint_timeline_simplified",
+      "label": "Sprint Timeline (Simplified)",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L74"
+    },
+    {
+      "id": "sprint_06_effort_plan_week_1_days_1_5_player_flow_gameplay_screen_and_foundations",
+      "label": "Week 1 (Days 1-5): Player Flow, Gameplay Screen, and Foundations",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L76"
+    },
+    {
+      "id": "sprint_06_effort_plan_week_2_days_6_10_hardening_analytics_optimization_and_final_polish",
+      "label": "Week 2 (Days 6-10): Hardening, Analytics, Optimization, and Final Polish",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L98"
+    },
+    {
+      "id": "sprint_06_effort_plan_daily_effort_breakdown",
+      "label": "Daily Effort Breakdown",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L125"
+    },
+    {
+      "id": "sprint_06_effort_plan_risk_mitigation",
+      "label": "Risk Mitigation",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L144"
+    },
+    {
+      "id": "sprint_06_effort_plan_identified_risks",
+      "label": "Identified Risks",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L146"
+    },
+    {
+      "id": "sprint_06_effort_plan_contingency_plan",
+      "label": "Contingency Plan",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L156"
+    },
+    {
+      "id": "sprint_06_effort_plan_definition_of_done_sprint_level",
+      "label": "Definition of Done (Sprint Level)",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L165"
+    },
+    {
+      "id": "sprint_06_effort_plan_notes",
+      "label": "Notes",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L179"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_mohamad_coding_quizforge_docs_sprint_06_effort_plan_md",
+      "target": "sprint_06_effort_plan_sprint_6_effort_plan",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_06_effort_plan_sprint_6_effort_plan",
+      "target": "sprint_06_effort_plan_team_members_roles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_06_effort_plan_sprint_6_effort_plan",
+      "target": "sprint_06_effort_plan_effort_distribution_by_developer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_06_effort_plan_effort_distribution_by_developer",
+      "target": "sprint_06_effort_plan_mohamad_10_sp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_06_effort_plan_effort_distribution_by_developer",
+      "target": "sprint_06_effort_plan_david_10_sp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_06_effort_plan_effort_distribution_by_developer",
+      "target": "sprint_06_effort_plan_nishan_10_sp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_06_effort_plan_effort_distribution_by_developer",
+      "target": "sprint_06_effort_plan_behrang_10_sp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_06_effort_plan_sprint_6_effort_plan",
+      "target": "sprint_06_effort_plan_sprint_timeline_simplified",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L74",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_06_effort_plan_sprint_timeline_simplified",
+      "target": "sprint_06_effort_plan_week_1_days_1_5_player_flow_gameplay_screen_and_foundations",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L76",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_06_effort_plan_sprint_timeline_simplified",
+      "target": "sprint_06_effort_plan_week_2_days_6_10_hardening_analytics_optimization_and_final_polish",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_06_effort_plan_sprint_6_effort_plan",
+      "target": "sprint_06_effort_plan_daily_effort_breakdown",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_06_effort_plan_sprint_6_effort_plan",
+      "target": "sprint_06_effort_plan_risk_mitigation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L144",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_06_effort_plan_risk_mitigation",
+      "target": "sprint_06_effort_plan_identified_risks",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L146",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_06_effort_plan_risk_mitigation",
+      "target": "sprint_06_effort_plan_contingency_plan",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L156",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_06_effort_plan_sprint_6_effort_plan",
+      "target": "sprint_06_effort_plan_definition_of_done_sprint_level",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L165",
+      "weight": 1.0
+    },
+    {
+      "source": "sprint_06_effort_plan_sprint_6_effort_plan",
+      "target": "sprint_06_effort_plan_notes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md",
+      "source_location": "L179",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
