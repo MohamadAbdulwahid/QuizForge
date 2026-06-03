@@ -1,0 +1,866 @@
+{
+  "nodes": [
+    {
+      "id": "agents_nx_configuration",
+      "label": "Nx Workspace Configuration Guidelines",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "agents_backend_key_facts",
+      "label": "Backend Key Facts",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "agents_frontend_key_facts",
+      "label": "Frontend Key Facts",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "agents_code_conventions",
+      "label": "Code Conventions",
+      "file_type": "rationale",
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "agents_shared_components_utils",
+      "label": "Shared Components and Utilities",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "agents_design_bubbly_minimalism",
+      "label": "Bubbly Minimalism Design Language",
+      "file_type": "rationale",
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "agents_graphify_integration",
+      "label": "Graphify Knowledge Graph Integration",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "readme_quizforge",
+      "label": "QuizForge Project Overview",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "ci_monitor_subagent",
+      "label": "CI Monitor Subagent",
+      "file_type": "document",
+      "source_file": ".opencode/agents/ci-monitor-subagent.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "monitor_ci_command",
+      "label": "Monitor CI Command",
+      "file_type": "document",
+      "source_file": ".opencode/commands/monitor-ci.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "navigation_project_context",
+      "label": "QuizForge Project Context Navigation",
+      "file_type": "document",
+      "source_file": ".opencode/context/project-intelligence/navigation.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "technical_domain",
+      "label": "Technical Domain",
+      "file_type": "document",
+      "source_file": ".opencode/context/project-intelligence/technical-domain.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "memory_project",
+      "label": "Project Memory Block",
+      "file_type": "document",
+      "source_file": ".opencode/memory/project.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "memory_sse_real_time_sessions",
+      "label": "SSE Real-Time Session Updates",
+      "file_type": "concept",
+      "source_file": ".opencode/memory/sse-real-time-sessions.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "skill_link_workspace_packages",
+      "label": "Link Workspace Packages Skill",
+      "file_type": "document",
+      "source_file": ".opencode/skills/link-workspace-packages/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "skill_monitor_ci",
+      "label": "Monitor CI Skill",
+      "file_type": "document",
+      "source_file": ".opencode/skills/monitor-ci/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "reference_fix_flows",
+      "label": "Detailed Status Handling and Fix Flows",
+      "file_type": "document",
+      "source_file": ".opencode/skills/monitor-ci/references/fix-flows.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "skill_nx_generate",
+      "label": "Nx Generate Skill",
+      "file_type": "document",
+      "source_file": ".opencode/skills/nx-generate/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "skill_nx_import",
+      "label": "Nx Import Skill",
+      "file_type": "document",
+      "source_file": ".opencode/skills/nx-import/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "reference_eslint",
+      "label": "ESLint Import Guidance",
+      "file_type": "document",
+      "source_file": ".opencode/skills/nx-import/references/ESLINT.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "reference_gradle",
+      "label": "Gradle Import Guidance",
+      "file_type": "document",
+      "source_file": ".opencode/skills/nx-import/references/GRADLE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "reference_jest",
+      "label": "Jest Import Guidance",
+      "file_type": "document",
+      "source_file": ".opencode/skills/nx-import/references/JEST.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "reference_next",
+      "label": "Next.js Import Guidance",
+      "file_type": "document",
+      "source_file": ".opencode/skills/nx-import/references/NEXT.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "reference_turborepo",
+      "label": "Turborepo Import Guidance",
+      "file_type": "document",
+      "source_file": ".opencode/skills/nx-import/references/TURBOREPO.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "reference_vite",
+      "label": "Vite Import Guidance",
+      "file_type": "document",
+      "source_file": ".opencode/skills/nx-import/references/VITE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "skill_nx_plugins",
+      "label": "Nx Plugins Skill",
+      "file_type": "document",
+      "source_file": ".opencode/skills/nx-plugins/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "skill_nx_run_tasks",
+      "label": "Nx Run Tasks Skill",
+      "file_type": "document",
+      "source_file": ".opencode/skills/nx-run-tasks/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "skill_nx_workspace",
+      "label": "Nx Workspace Exploration Skill",
+      "file_type": "document",
+      "source_file": ".opencode/skills/nx-workspace/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_zoneless_angular",
+      "label": "Zoneless Angular",
+      "file_type": "rationale",
+      "source_file": ".opencode/context/project-intelligence/technical-domain.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_stateless_auth",
+      "label": "Stateless JWT Authentication",
+      "file_type": "rationale",
+      "source_file": ".opencode/context/project-intelligence/technical-domain.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_hybrid_rendering",
+      "label": "Hybrid Rendering Strategy",
+      "file_type": "rationale",
+      "source_file": ".opencode/context/project-intelligence/technical-domain.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_header_api_versioning",
+      "label": "Header-Based API Versioning",
+      "file_type": "rationale",
+      "source_file": ".opencode/context/project-intelligence/technical-domain.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_supavisor_transaction_mode",
+      "label": "Supavisor Transaction Mode",
+      "file_type": "rationale",
+      "source_file": ".opencode/context/project-intelligence/technical-domain.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_sse_architecture",
+      "label": "SSE Real-Time Architecture",
+      "file_type": "concept",
+      "source_file": ".opencode/memory/sse-real-time-sessions.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_self_healing_ci",
+      "label": "Self-Healing CI Pipeline",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/monitor-ci/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_nx_cloud_integration",
+      "label": "Nx Cloud Integration",
+      "file_type": "concept",
+      "source_file": ".opencode/skills/monitor-ci/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "concept_monorepo_workspace",
+      "label": "Monorepo Workspace Pattern",
+      "file_type": "concept",
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "monitor_ci_command",
+      "target": "ci_monitor_subagent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/commands/monitor-ci.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "monitor_ci_command",
+      "target": "skill_monitor_ci",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/commands/monitor-ci.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "monitor_ci_command",
+      "target": "reference_fix_flows",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/commands/monitor-ci.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_monitor_ci",
+      "target": "ci_monitor_subagent",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/monitor-ci/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_monitor_ci",
+      "target": "reference_fix_flows",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/monitor-ci/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_monitor_ci",
+      "target": "concept_self_healing_ci",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/monitor-ci/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_monitor_ci",
+      "target": "concept_nx_cloud_integration",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/monitor-ci/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_self_healing_ci",
+      "target": "concept_nx_cloud_integration",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/monitor-ci/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_nx_import",
+      "target": "reference_eslint",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/nx-import/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_nx_import",
+      "target": "reference_gradle",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/nx-import/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_nx_import",
+      "target": "reference_jest",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/nx-import/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_nx_import",
+      "target": "reference_next",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/nx-import/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_nx_import",
+      "target": "reference_turborepo",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/nx-import/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_nx_import",
+      "target": "reference_vite",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/nx-import/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_nx_import",
+      "target": "skill_link_workspace_packages",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/nx-import/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_nx_generate",
+      "target": "skill_link_workspace_packages",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/nx-generate/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agents_nx_configuration",
+      "target": "skill_nx_workspace",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agents_nx_configuration",
+      "target": "skill_nx_generate",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agents_nx_configuration",
+      "target": "concept_monorepo_workspace",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "navigation_project_context",
+      "target": "technical_domain",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/context/project-intelligence/navigation.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "navigation_project_context",
+      "target": "agents_nx_configuration",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/context/project-intelligence/navigation.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "technical_domain",
+      "target": "concept_zoneless_angular",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/context/project-intelligence/technical-domain.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "technical_domain",
+      "target": "concept_stateless_auth",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/context/project-intelligence/technical-domain.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "technical_domain",
+      "target": "concept_hybrid_rendering",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/context/project-intelligence/technical-domain.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "technical_domain",
+      "target": "concept_header_api_versioning",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/context/project-intelligence/technical-domain.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "technical_domain",
+      "target": "concept_supavisor_transaction_mode",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/context/project-intelligence/technical-domain.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agents_frontend_key_facts",
+      "target": "concept_zoneless_angular",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agents_frontend_key_facts",
+      "target": "concept_hybrid_rendering",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agents_backend_key_facts",
+      "target": "concept_stateless_auth",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agents_backend_key_facts",
+      "target": "concept_header_api_versioning",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agents_backend_key_facts",
+      "target": "concept_supavisor_transaction_mode",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agents_design_bubbly_minimalism",
+      "target": "agents_shared_components_utils",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agents_code_conventions",
+      "target": "agents_shared_components_utils",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "memory_sse_real_time_sessions",
+      "target": "concept_sse_architecture",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/memory/sse-real-time-sessions.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_nx_generate",
+      "target": "skill_nx_workspace",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": ".opencode/skills/nx-generate/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_nx_run_tasks",
+      "target": "skill_nx_workspace",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".opencode/skills/nx-run-tasks/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "skill_nx_run_tasks",
+      "target": "skill_nx_generate",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": ".opencode/skills/nx-run-tasks/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "concept_sse_architecture",
+      "target": "concept_stateless_auth",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": ".opencode/memory/sse-real-time-sessions.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "reference_jest",
+      "target": "reference_vite",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.65,
+      "source_file": ".opencode/skills/nx-import/references/JEST.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "reference_next",
+      "target": "reference_vite",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.65,
+      "source_file": ".opencode/skills/nx-import/references/NEXT.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "monitor_ci_orchestration",
+      "label": "CI Monitoring Orchestration Flow",
+      "nodes": [
+        "monitor_ci_command",
+        "ci_monitor_subagent",
+        "skill_monitor_ci",
+        "reference_fix_flows",
+        "concept_self_healing_ci",
+        "concept_nx_cloud_integration"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": ".opencode/commands/monitor-ci.md"
+    },
+    {
+      "id": "nx_import_reference_ecosystem",
+      "label": "Nx Import Technology References",
+      "nodes": [
+        "skill_nx_import",
+        "reference_eslint",
+        "reference_gradle",
+        "reference_jest",
+        "reference_next",
+        "reference_turborepo",
+        "reference_vite"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".opencode/skills/nx-import/SKILL.md"
+    },
+    {
+      "id": "quizforge_architecture_decisions",
+      "label": "QuizForge Core Architecture Decisions",
+      "nodes": [
+        "concept_zoneless_angular",
+        "concept_stateless_auth",
+        "concept_hybrid_rendering",
+        "concept_header_api_versioning",
+        "concept_supavisor_transaction_mode",
+        "agents_design_bubbly_minimalism"
+      ],
+      "relation": "implement",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".opencode/context/project-intelligence/technical-domain.md"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
