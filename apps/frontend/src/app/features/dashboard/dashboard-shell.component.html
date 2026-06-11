@@ -37,7 +37,7 @@
 
       <!-- Navigation -->
       <nav class="mt-5 grid gap-2 text-sm font-bold">
-        @for (item of navItems; track item.route) {
+        @for (item of navItems(); track item.route) {
           <a
             [routerLink]="item.route"
             [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
@@ -188,7 +188,7 @@
 
         @if (mobileNavOpen()) {
           <nav class="mt-4 grid grid-cols-2 gap-2 text-xs font-bold">
-            @for (item of navItems; track item.route) {
+            @for (item of navItems(); track item.route) {
               <a
                 [routerLink]="item.route"
                 [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
