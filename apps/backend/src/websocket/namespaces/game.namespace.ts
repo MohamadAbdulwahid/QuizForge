@@ -222,6 +222,7 @@ export interface GameNamespaceDependencies {
   updateStatus: typeof sessionRepository.updateStatus;
   findQuizByIdWithQuestions: typeof quizRepository.findByIdWithQuestions;
   upsertSessionPlayer: typeof sessionRepository.upsertSessionPlayer;
+  findActivePlayerByUsername: typeof sessionRepository.findActivePlayerByUsername;
   listPlayersBySession: typeof sessionRepository.listPlayersBySession;
   updatePlayerScore: typeof sessionRepository.updatePlayerScore;
   markPlayerDisconnected: typeof sessionRepository.markPlayerDisconnected;
@@ -247,6 +248,7 @@ export function registerGameNamespace(
     updateStatus: sessionRepository.updateStatus,
     findQuizByIdWithQuestions: quizRepository.findByIdWithQuestions,
     upsertSessionPlayer: sessionRepository.upsertSessionPlayer,
+    findActivePlayerByUsername: sessionRepository.findActivePlayerByUsername,
     listPlayersBySession: sessionRepository.listPlayersBySession,
     updatePlayerScore: sessionRepository.updatePlayerScore,
     markPlayerDisconnected: sessionRepository.markPlayerDisconnected,
@@ -279,8 +281,26 @@ export function registerGameNamespace(
         return;
       }
 
+      // Post-game restriction: reject joins on ended sessions
+      if (session.status === 'ended') {
+        emitError(socket, 'SESSION_ENDED', 'This session has already ended');
+        return;
+      }
+
       const userId = socket.data.userId;
       const username = parsed.data.username ?? formatUsername(userId);
+
+      // Check for duplicate username in the session (skip if same user reconnecting)
+      if (userId) {
+        const existingPlayer = await resolvedDependencies.findActivePlayerByUsername(
+          session.id,
+          username
+        );
+        if (existingPlayer && existingPlayer.user_id !== userId) {
+          emitError(socket, 'DUPLICATE_USERNAME', 'That username is already taken in this session');
+          return;
+        }
+      }
 
       if (userId) {
         await resolvedDependencies.upsertSessionPlayer({ sessionId: session.id, userId, username });
@@ -539,6 +559,18 @@ export function registerGameNamespace(
         return;
       }
 
+      // Post-game restriction: reject answers on ended games
+      if (gameState.status === 'ended') {
+        emitRejection(socket, 'GAME_ENDED', 'This game has ended');
+        return;
+      }
+
+      // Host cannot submit answers — only players can
+      if (gameState.hostUserId === userId) {
+        emitRejection(socket, 'HOST_CANNOT_ANSWER', 'The host cannot submit answers');
+        return;
+      }
+
       const round = gameState.round;
       const validation = validateAnswerSubmission({
         sessionId,
@@ -778,6 +810,38 @@ export function registerGameNamespace(
 
       if (activeGame && userId) {
         void resolvedDependencies.markPlayerDisconnected(activeGame.sessionId, userId);
+
+        // Remove from in-memory player pool so auto-advance doesn't wait for them
+        activeGame.playersByUserId.delete(userId);
+
+        // If no players remain, end the game immediately
+        if (activeGame.playersByUserId.size === 0) {
+          activeGame.status = 'ended';
+          if (activeGame.round?.timer) {
+            clearTimeout(activeGame.round.timer);
+            activeGame.round.timer = null;
+          }
+          activeGames.delete(pin);
+
+          typedNamespace.to(pin).emit('game-ended', {
+            pin,
+            sessionId: activeGame.sessionId,
+            leaderboard: buildLeaderboard(activeGame),
+          });
+
+          void resolvedDependencies.updateStatus(activeGame.sessionId, 'ended');
+          void logGameEvent(resolvedDependencies, activeGame.sessionId, null, 'game-ended', {
+            pin,
+            reason: 'All players left',
+          });
+
+          gameNamespaceLogger.info({ pin }, 'Game ended — all players disconnected');
+          return;
+        }
+
+        // Players remain — try auto-advance in case the disconnected player
+        // was the last one we were waiting on
+        tryAutoAdvance(activeGame, typedNamespace, resolvedDependencies, activeGames);
       }
 
       gameNamespaceLogger.debug({ socketId: socket.id, userId, pin }, 'Game socket disconnected');
