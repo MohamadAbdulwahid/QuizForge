@@ -39,6 +39,9 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
   protected readonly selectedAnswerId = signal<string | null>(null);
   protected readonly showCorrect = signal(false);
   protected readonly showIncorrect = signal(false);
+  protected readonly showRoundSummary = signal(false);
+  protected readonly reconnecting = this.websocketService.reconnecting;
+  private roundSummaryTimeout: ReturnType<typeof setTimeout> | null = null;
 
   // Track entering animation
   protected readonly optionEntered = signal<Set<string>>(new Set());
@@ -98,6 +101,7 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.clearAnimationTimeouts();
+    this.clearRoundSummaryTimeout();
     this.websocketService.leaveGame(this.pin, 'game-page-destroy');
     this.websocketService.disconnect();
   }
@@ -150,6 +154,10 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
       return `${base} player-option-selected`;
     }
     return base;
+  }
+
+  protected abs(value: number | undefined): number {
+    return value ? Math.abs(value) : 0;
   }
 
   /** Shows correct/incorrect feedback for 2 seconds after answer ack. */
@@ -205,6 +213,13 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
     this.animationTimeouts = [];
   }
 
+  private clearRoundSummaryTimeout(): void {
+    if (this.roundSummaryTimeout) {
+      clearTimeout(this.roundSummaryTimeout);
+      this.roundSummaryTimeout = null;
+    }
+  }
+
   protected dismissSessionClosed(): void {
     this.showSessionClosedModal.set(false);
     void this.router.navigateByUrl('/dashboard');
@@ -223,6 +238,8 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
       this.selectedAnswerId.set(null);
       this.showCorrect.set(false);
       this.showIncorrect.set(false);
+      this.showRoundSummary.set(false);
+      this.clearRoundSummaryTimeout();
       // Build shape mappings and trigger animation
       this.buildOptionShapes();
       this.animateOptionsIn();
@@ -244,7 +261,14 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
       .subscribe((event) => this.gameState.setLeaderboard(event));
     this.websocketService.roundClosed$
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((event) => this.gameState.closeRound(event));
+      .subscribe((event) => {
+        this.gameState.closeRound(event);
+        this.showRoundSummary.set(true);
+        this.clearRoundSummaryTimeout();
+        this.roundSummaryTimeout = setTimeout(() => {
+          this.showRoundSummary.set(false);
+        }, 3000);
+      });
     this.websocketService.gameEnded$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((event) => {
@@ -253,6 +277,7 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
           state: {
             leaderboard: event.leaderboard,
             quizTitle: 'Game Complete',
+            pin: this.pin,
           },
         });
       });

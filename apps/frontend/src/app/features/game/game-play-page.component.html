@@ -56,6 +56,15 @@
 
   <!-- ── Main content ── -->
   <main class="relative z-10 flex flex-1 flex-col items-center justify-center px-6 py-2">
+    @if (reconnecting()) {
+      <div
+        class="mb-4 w-full max-w-md rounded-2xl border border-amber-300/50 bg-amber-500/20 px-4 py-3 text-center text-sm font-bold text-amber-200"
+      >
+        <span class="mr-2 inline-block animate-spin">⟳</span>
+        Connection lost — reconnecting...
+      </div>
+    }
+
     @if (gameState.ended()) {
       <div class="text-center">
         <p class="font-display text-5xl font-bold text-white">Game Complete!</p>
@@ -130,6 +139,49 @@
           </div>
         }
 
+        <!-- Round summary overlay -->
+        @if (showRoundSummary() && !showCorrect() && !showIncorrect()) {
+          <div
+            class="fixed inset-0 z-40 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+          >
+            <div class="rounded-3xl bg-white/15 px-8 py-6 text-center shadow-2xl backdrop-blur-md">
+              <p class="font-display text-2xl font-bold text-white">Round Complete!</p>
+
+              @if (gameState.lastRoundResult(); as result) {
+                <div class="mt-4">
+                  @if (result.correct) {
+                    <p class="text-lg font-bold text-emerald-300">
+                      ✓ Correct — +{{ result.scoreDelta }} pts
+                    </p>
+                  } @else {
+                    <p class="text-lg font-bold text-rose-300">✗ Incorrect</p>
+                  }
+                  <p class="mt-1 text-sm text-white/60">Total: {{ result.totalScore }} pts</p>
+                </div>
+              } @else {
+                <p class="mt-3 text-lg font-semibold text-white/60">Time's up!</p>
+              }
+
+              @if (gameState.leaderboard().length > 0) {
+                <div class="mt-4 border-t border-white/20 pt-3">
+                  <p class="mb-2 text-xs font-bold tracking-wider text-white/50 uppercase">Top 3</p>
+                  @for (player of gameState.leaderboard().slice(0, 3); track player.userId) {
+                    <div class="flex items-center justify-between px-2 py-1">
+                      <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-white/40">#{{ player.rank }}</span>
+                        <span class="text-sm font-bold text-white/80">{{ player.username }}</span>
+                      </div>
+                      <span class="font-display text-sm font-bold text-amber-400">
+                        {{ player.score }}
+                      </span>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        }
+
         <!-- Submission feedback (compact) -->
         @if (gameState.submissionState() === 'pending' && !showCorrect() && !showIncorrect()) {
           <div
@@ -173,11 +225,21 @@
         <div class="mb-1.5 flex items-center justify-between rounded-2xl bg-white/10 px-3 py-2">
           <div class="flex items-center gap-2">
             <span class="text-xs font-bold text-white/40">#{{ player.rank }}</span>
+            @if (player.rankDelta && player.rankDelta > 0) {
+              <span class="text-xs font-bold text-emerald-400">▲{{ player.rankDelta }}</span>
+            } @else if (player.rankDelta && player.rankDelta < 0) {
+              <span class="text-xs font-bold text-rose-400">▼{{ abs(player.rankDelta) }}</span>
+            }
             <span class="text-sm font-bold text-white/80">{{ player.username }}</span>
           </div>
-          <span class="font-display text-base font-bold text-amber-400">
-            {{ player.score }}
-          </span>
+          <div class="text-right">
+            <span class="font-display text-base font-bold text-amber-400">
+              {{ player.score }}
+            </span>
+            @if (player.scoreDelta && player.scoreDelta > 0) {
+              <span class="ml-1 text-xs font-bold text-emerald-400">+{{ player.scoreDelta }}</span>
+            }
+          </div>
         </div>
       }
     </aside>
