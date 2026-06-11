@@ -40,10 +40,18 @@ const mockDependencies = {
     return mockPlayers.get(params.userId);
   },
   findSessionPlayer: async () => null,
-  updatePlayerStatus: async () => { /* no-op for mock */ },
-  updatePlayerScore: async () => { /* no-op for mock */ },
-  createGameEvent: async () => { /* no-op for mock */ },
-  updateSessionStatus: async () => { /* no-op for mock */ },
+  updatePlayerStatus: async () => {
+    /* no-op for mock */
+  },
+  updatePlayerScore: async () => {
+    /* no-op for mock */
+  },
+  createGameEvent: async () => {
+    /* no-op for mock */
+  },
+  updateSessionStatus: async () => {
+    /* no-op for mock */
+  },
   getSessionWithQuiz: async () => mockSession,
   findQuestionsByQuiz: async () => [],
   getLeaderboard: async () => [],

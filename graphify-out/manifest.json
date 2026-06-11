@@ -1420,8 +1420,8 @@
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/integration/admin-dashboard.spec.ts": {
-    "mtime": 1781160622.2659588,
-    "ast_hash": "8db015bf1a6b096fd84856f1eff44e7b",
+    "mtime": 1781161064.5560193,
+    "ast_hash": "6ca30d695483263cdefd34c4df1f2aa1",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/integration/leaderboard-sync.spec.ts": {
@@ -1430,8 +1430,8 @@
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/integration/session-join.spec.ts": {
-    "mtime": 1781160629.9990375,
-    "ast_hash": "358df4da5b8f39d7e5be4a9947e827e0",
+    "mtime": 1781161064.773022,
+    "ast_hash": "2cbcf81ba9b7d9fc57e1c0f77c085629",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/database/optimization.spec.ts": {
@@ -1490,13 +1490,23 @@
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts": {
-    "mtime": 1781160689.8925767,
-    "ast_hash": "6f10e4fb84c2693f78ffdfbd571c5b69",
+    "mtime": 1781161065.7220323,
+    "ast_hash": "f3c2c269515c8150b9f088b13226ec0c",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/docs/performance.md": {
     "mtime": 1781109436.8801315,
     "ast_hash": "19a4e2ebdcaf595d2c8324e27f7e79fa",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/.husky/pre-commit": {
+    "mtime": 1781034551.7507412,
+    "ast_hash": "d9327fbdb05fc26c816e538e21b98c11",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/.husky/pre-push": {
+    "mtime": 1781034551.7507412,
+    "ast_hash": "01aaec34c54611b1a62176f218a7cc9c",
     "semantic_hash": ""
   }
 }
