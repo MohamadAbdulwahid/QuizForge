@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { finalize } from 'rxjs';
 import {
@@ -25,6 +26,7 @@ import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
 })
 export class DashboardGroupDiscoveryPageComponent {
   private readonly groupApiService = inject(GroupApiService);
+  private readonly destroyRef = inject(DestroyRef);
 
   protected readonly searchQuery = signal('');
   protected readonly loading = signal(false);
@@ -51,21 +53,24 @@ export class DashboardGroupDiscoveryPageComponent {
     this.errorMessage.set(null);
     this.successMessage.set(null);
 
-    this.groupApiService.requestJoin(groupId).subscribe({
-      next: (result: unknown) => {
-        const typedResult = result as { joined?: boolean; status?: string };
-        this.successMessage.set(
-          typedResult.joined
-            ? 'You joined the group.'
-            : typedResult.status === 'pending'
-              ? 'Join request sent.'
-              : 'Request processed.'
-        );
-      },
-      error: () => {
-        this.errorMessage.set('Could not join or request this group.');
-      },
-    });
+    this.groupApiService
+      .requestJoin(groupId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (result: unknown) => {
+          const typedResult = result as { joined?: boolean; status?: string };
+          this.successMessage.set(
+            typedResult.joined
+              ? 'You joined the group.'
+              : typedResult.status === 'pending'
+                ? 'Join request sent.'
+                : 'Request processed.'
+          );
+        },
+        error: () => {
+          this.errorMessage.set('Could not join or request this group.');
+        },
+      });
   }
 
   protected groupJoinPolicyLabel(policy: GroupJoinPolicy): string {
@@ -89,7 +94,8 @@ export class DashboardGroupDiscoveryPageComponent {
       .pipe(
         finalize(() => {
           this.loading.set(false);
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({
         next: (groups) => {
