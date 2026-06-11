@@ -18,6 +18,11 @@ sessionRouter.post(
 );
 sessionRouter.get('/mine', authMiddleware, sessionController.getMySessions);
 sessionRouter.get('/:pin', validateParams(PinParamSchema), sessionController.getSessionByPin);
+sessionRouter.get(
+  '/:pin/leaderboard',
+  validateParams(PinParamSchema),
+  sessionController.getLeaderboard
+);
 sessionRouter.patch(
   '/:pin/status',
   authMiddleware,
