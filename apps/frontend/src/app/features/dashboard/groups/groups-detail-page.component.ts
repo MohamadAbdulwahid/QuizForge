@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import {
@@ -33,6 +34,7 @@ export class GroupsDetailPageComponent {
   private readonly authService = inject(AuthService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
 
   protected readonly group = signal<GroupDetail | null>(null);
   protected readonly joinRequests = signal<GroupJoinRequestSummary[]>([]);
@@ -45,14 +47,18 @@ export class GroupsDetailPageComponent {
   protected readonly groupId = signal<number | null>(null);
 
   constructor() {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
-      const id = Number(idParam);
-      this.groupId.set(id);
-      this.loadData(id);
-    } else {
-      this.errorMessage.set('No group ID provided.');
-    }
+    // Use paramMap observable to react to same-pattern navigation
+    // (e.g., /dashboard/groups/1 → /dashboard/groups/2)
+    this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
+      const idParam = params.get('id');
+      if (idParam) {
+        const id = Number(idParam);
+        this.groupId.set(id);
+        this.loadData(id);
+      } else {
+        this.errorMessage.set('No group ID provided.');
+      }
+    });
   }
 
   /** Navigate back to the groups list. */
@@ -65,16 +71,19 @@ export class GroupsDetailPageComponent {
     const gid = this.groupId();
     if (!gid) return;
 
-    this.groupApiService.respondToJoinRequest(gid, requestId, 'approve').subscribe({
-      next: () => {
-        this.successMessage.set('Join request accepted.');
-        this.loadJoinRequests(gid);
-        this.loadGroupDetails(gid);
-      },
-      error: () => {
-        this.errorMessage.set('Could not accept join request.');
-      },
-    });
+    this.groupApiService
+      .respondToJoinRequest(gid, requestId, 'approve')
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.successMessage.set('Join request accepted.');
+          this.loadJoinRequests(gid);
+          this.loadGroupDetails(gid);
+        },
+        error: () => {
+          this.errorMessage.set('Could not accept join request.');
+        },
+      });
   }
 
   /** Reject a join request. */
@@ -82,15 +91,18 @@ export class GroupsDetailPageComponent {
     const gid = this.groupId();
     if (!gid) return;
 
-    this.groupApiService.respondToJoinRequest(gid, requestId, 'reject').subscribe({
-      next: () => {
-        this.successMessage.set('Join request rejected.');
-        this.loadJoinRequests(gid);
-      },
-      error: () => {
-        this.errorMessage.set('Could not reject join request.');
-      },
-    });
+    this.groupApiService
+      .respondToJoinRequest(gid, requestId, 'reject')
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.successMessage.set('Join request rejected.');
+          this.loadJoinRequests(gid);
+        },
+        error: () => {
+          this.errorMessage.set('Could not reject join request.');
+        },
+      });
   }
 
   /** Remove a member from the group. */
@@ -98,15 +110,18 @@ export class GroupsDetailPageComponent {
     const gid = this.groupId();
     if (!gid) return;
 
-    this.groupApiService.removeMember(gid, userId).subscribe({
-      next: () => {
-        this.successMessage.set('Member removed.');
-        this.loadGroupDetails(gid);
-      },
-      error: () => {
-        this.errorMessage.set('Could not remove member.');
-      },
-    });
+    this.groupApiService
+      .removeMember(gid, userId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.successMessage.set('Member removed.');
+          this.loadGroupDetails(gid);
+        },
+        error: () => {
+          this.errorMessage.set('Could not remove member.');
+        },
+      });
   }
 
   /** Promote a member to admin. */
@@ -114,15 +129,18 @@ export class GroupsDetailPageComponent {
     const gid = this.groupId();
     if (!gid) return;
 
-    this.groupApiService.updateMemberRole(gid, userId, 'admin').subscribe({
-      next: () => {
-        this.successMessage.set('Member promoted to admin.');
-        this.loadGroupDetails(gid);
-      },
-      error: () => {
-        this.errorMessage.set('Could not promote member.');
-      },
-    });
+    this.groupApiService
+      .updateMemberRole(gid, userId, 'admin')
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.successMessage.set('Member promoted to admin.');
+          this.loadGroupDetails(gid);
+        },
+        error: () => {
+          this.errorMessage.set('Could not promote member.');
+        },
+      });
   }
 
   /** Demote an admin to member. */
@@ -130,15 +148,18 @@ export class GroupsDetailPageComponent {
     const gid = this.groupId();
     if (!gid) return;
 
-    this.groupApiService.updateMemberRole(gid, userId, 'member').subscribe({
-      next: () => {
-        this.successMessage.set('Admin demoted to member.');
-        this.loadGroupDetails(gid);
-      },
-      error: () => {
-        this.errorMessage.set('Could not demote admin.');
-      },
-    });
+    this.groupApiService
+      .updateMemberRole(gid, userId, 'member')
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.successMessage.set('Admin demoted to member.');
+          this.loadGroupDetails(gid);
+        },
+        error: () => {
+          this.errorMessage.set('Could not demote admin.');
+        },
+      });
   }
 
   private loadData(groupId: number): void {
@@ -154,7 +175,8 @@ export class GroupsDetailPageComponent {
       .pipe(
         finalize(() => {
           this.loading.set(false);
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({
         next: (detail) => {
@@ -173,15 +195,18 @@ export class GroupsDetailPageComponent {
   }
 
   private loadJoinRequests(groupId: number): void {
-    this.groupApiService.getJoinRequests(groupId).subscribe({
-      next: (requests) => {
-        this.joinRequests.set(requests);
-      },
-      error: () => {
-        // Non-admin users may not have access — silently ignore
-        this.joinRequests.set([]);
-      },
-    });
+    this.groupApiService
+      .getJoinRequests(groupId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (requests) => {
+          this.joinRequests.set(requests);
+        },
+        error: () => {
+          // Non-admin users may not have access — silently ignore
+          this.joinRequests.set([]);
+        },
+      });
   }
 
   /** Format a role label for display. */
