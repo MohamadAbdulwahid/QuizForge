@@ -94,7 +94,8 @@
     "tspec": "^0.2.11",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.54.0",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.8",
+    "wrangler": "^4.100.0"
   },
   "scripts": {
     "prepare": "husky",
@@ -113,10 +114,10 @@
     "_comment:frontend": "==================== FRONTEND ====================",
     "lint:frontend": "nx lint frontend",
     "test:frontend": "nx test frontend",
-    "test:question-editor": "bun test apps/frontend/src/app/features/quiz-builder/components/question-editor/question-editor.component.spec.ts",
     "build:frontend": "nx build frontend",
     "start:frontend": "nx serve frontend",
     "dev:frontend": "nx serve frontend --configuration=development",
+    "deploy:frontend": "nx build frontend && bunx wrangler pages deploy dist/apps/frontend/browser --branch=main --commit-dirty=true --project-name=quizforge",
     "e2e:frontend": "nx run frontend-e2e:e2e",
     "e2e:backend": "nx run backend-e2e:e2e",
     "e2e": "nx run-many -t e2e",
