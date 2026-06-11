@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { catchError, of } from 'rxjs';
+import { AdminApiService } from '../../core/services/admin-api.service';
 import { AuthService } from '../../core/services/auth.service';
 import { SessionSseService } from '../../core/services/session-sse.service';
 import { buildDisplayName } from '../../shared/utils/display-name';
@@ -21,18 +24,27 @@ interface AppNavItem {
 export class DashboardShellComponent {
   private readonly authService = inject(AuthService);
   private readonly sessionSse = inject(SessionSseService);
+  private readonly adminApi = inject(AdminApiService);
   private readonly router = inject(Router);
 
   protected readonly currentUser = this.authService.currentUser;
   protected readonly mobileNavOpen = signal(false);
   protected readonly profileDropdownOpen = signal(false);
-  protected readonly navItems: AppNavItem[] = [
-    { label: 'Home', route: '/dashboard', exact: true, icon: 'home' },
-    { label: 'My Quizzes', route: '/dashboard/quizzes', icon: 'quizzes' },
-    { label: 'Groups', route: '/dashboard/groups', icon: 'groups' },
-    { label: 'Discover', route: '/dashboard/groups/discover', icon: 'discover' },
-    { label: 'Create Session', route: '/dashboard/create-session', icon: 'create-session' },
-  ];
+  protected readonly isAdmin = signal(false);
+
+  protected readonly navItems = computed<AppNavItem[]>(() => {
+    const items: AppNavItem[] = [
+      { label: 'Home', route: '/dashboard', exact: true, icon: 'home' },
+      { label: 'My Quizzes', route: '/dashboard/quizzes', icon: 'quizzes' },
+      { label: 'Groups', route: '/dashboard/groups', icon: 'groups' },
+      { label: 'Discover', route: '/dashboard/groups/discover', icon: 'discover' },
+      { label: 'Create Session', route: '/dashboard/create-session', icon: 'create-session' },
+    ];
+    if (this.isAdmin()) {
+      items.push({ label: 'Admin', route: '/dashboard/admin', icon: 'admin' });
+    }
+    return items;
+  });
 
   protected readonly displayName = () => buildDisplayName(this.currentUser(), 'QuizForger');
 
@@ -40,6 +52,17 @@ export class DashboardShellComponent {
     // SSE stays alive across all dashboard sub-routes via the shell component.
     this.sessionSse.connect();
     inject(DestroyRef).onDestroy(() => this.sessionSse.disconnect());
+
+    // Check admin status (non-blocking)
+    this.adminApi
+      .getStats()
+      .pipe(
+        takeUntilDestroyed(),
+        catchError(() => of(null))
+      )
+      .subscribe((stats) => {
+        if (stats) this.isAdmin.set(true);
+      });
   }
 
   protected readonly iconPaths: Record<string, string> = {
@@ -53,6 +76,8 @@ export class DashboardShellComponent {
     discover: 'M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z',
     'create-session':
       'M12 4.5a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Zm-1.5 7.5h-3a.75.75 0 0 1 0-1.5h3v-3a.75.75 0 0 1 1.5 0v3h3a.75.75 0 0 1 0 1.5h-3v3a.75.75 0 0 1-1.5 0v-3Z',
+    admin:
+      'M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m0 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75',
   };
 
   protected closeMobileNav(): void {
@@ -74,9 +99,6 @@ export class DashboardShellComponent {
 
   protected openSettings(): void {
     this.profileDropdownOpen.set(false);
-    // Navigate to settings if route exists, otherwise show placeholder
-    this.router.navigateByUrl('/dashboard/settings').catch(() => {
-      // Settings route may not exist yet
-    });
+    // Settings page not yet implemented — close dropdown only
   }
 }
