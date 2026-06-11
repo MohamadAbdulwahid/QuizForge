@@ -1,4 +1,4 @@
-import { bigint, jsonb, pgEnum, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
+import { bigint, index, jsonb, pgEnum, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
 import { USER } from './auth/user';
 import { GROUP } from './group';
 import { QUIZ } from './quiz';
@@ -24,19 +24,27 @@ export type PlayerStatus = 'active' | 'disconnected' | 'eliminated';
 export type SessionBroadcastMode = 'private' | 'selected-groups' | 'all-my-groups';
 
 // Session and related tables
-export const SESSION = pgTable('session', {
-  id: bigint('id', { mode: 'number' }).primaryKey().generatedAlwaysAsIdentity(),
-  quiz_id: bigint('quiz_id', { mode: 'number' })
-    .notNull()
-    .references(() => QUIZ.id, { onDelete: 'cascade' }),
-  pin: text('pin').notNull(),
-  status: text('status').notNull().default('pending'),
-  host_id: uuid('host_id')
-    .notNull()
-    .references(() => USER.id, { onDelete: 'cascade' }),
-  broadcast_mode: SESSION_BROADCAST_MODE('broadcast_mode').notNull().default('private'),
-  started_at: timestamp('started_at', { withTimezone: true }).notNull().defaultNow(),
-});
+export const SESSION = pgTable(
+  'session',
+  {
+    id: bigint('id', { mode: 'number' }).primaryKey().generatedAlwaysAsIdentity(),
+    quiz_id: bigint('quiz_id', { mode: 'number' })
+      .notNull()
+      .references(() => QUIZ.id, { onDelete: 'cascade' }),
+    pin: text('pin').notNull(),
+    status: text('status').notNull().default('pending'),
+    host_id: uuid('host_id')
+      .notNull()
+      .references(() => USER.id, { onDelete: 'cascade' }),
+    broadcast_mode: SESSION_BROADCAST_MODE('broadcast_mode').notNull().default('private'),
+    started_at: timestamp('started_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index('session_pin_idx').on(table.pin),
+    index('session_status_idx').on(table.status),
+    index('session_host_idx').on(table.host_id),
+  ]
+);
 
 export const SESSION_BROADCAST_GROUP = pgTable('session_broadcast_group', {
   id: bigint('id', { mode: 'number' }).primaryKey().generatedAlwaysAsIdentity(),
@@ -48,33 +56,44 @@ export const SESSION_BROADCAST_GROUP = pgTable('session_broadcast_group', {
     .references(() => GROUP.id, { onDelete: 'cascade' }),
 });
 
-export const SESSION_PLAYER = pgTable('session_player', {
-  id: bigint('id', { mode: 'number' }).primaryKey().generatedAlwaysAsIdentity(),
-  session_id: bigint('session_id', { mode: 'number' })
-    .notNull()
-    .references(() => SESSION.id, { onDelete: 'cascade' }),
-  user_id: uuid('user_id')
-    .notNull()
-    .references(() => USER.id, { onDelete: 'cascade' }),
-  username: text('username').notNull(),
-  score: bigint('score', { mode: 'number' }).notNull().default(0),
-  lives: bigint('lives', { mode: 'number' }),
-  status: text('status').notNull().default('active'),
-});
+export const SESSION_PLAYER = pgTable(
+  'session_player',
+  {
+    id: bigint('id', { mode: 'number' }).primaryKey().generatedAlwaysAsIdentity(),
+    session_id: bigint('session_id', { mode: 'number' })
+      .notNull()
+      .references(() => SESSION.id, { onDelete: 'cascade' }),
+    user_id: uuid('user_id')
+      .notNull()
+      .references(() => USER.id, { onDelete: 'cascade' }),
+    username: text('username').notNull(),
+    score: bigint('score', { mode: 'number' }).notNull().default(0),
+    lives: bigint('lives', { mode: 'number' }),
+    status: text('status').notNull().default('active'),
+  },
+  (table) => [
+    index('session_player_session_idx').on(table.session_id),
+    index('session_player_user_idx').on(table.user_id),
+  ]
+);
 
-export const GAME_EVENT = pgTable('game_event', {
-  id: bigint('id', { mode: 'number' }).primaryKey().generatedAlwaysAsIdentity(),
-  session_id: bigint('session_id', { mode: 'number' })
-    .notNull()
-    .references(() => SESSION.id, { onDelete: 'cascade' }),
-  session_player_id: bigint('session_player_id', { mode: 'number' }).references(
-    () => SESSION_PLAYER.id,
-    { onDelete: 'set null' }
-  ),
-  event_type: text('event_type').notNull(),
-  data: jsonb('data'),
-  created_at: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
-});
+export const GAME_EVENT = pgTable(
+  'game_event',
+  {
+    id: bigint('id', { mode: 'number' }).primaryKey().generatedAlwaysAsIdentity(),
+    session_id: bigint('session_id', { mode: 'number' })
+      .notNull()
+      .references(() => SESSION.id, { onDelete: 'cascade' }),
+    session_player_id: bigint('session_player_id', { mode: 'number' }).references(
+      () => SESSION_PLAYER.id,
+      { onDelete: 'set null' }
+    ),
+    event_type: text('event_type').notNull(),
+    data: jsonb('data'),
+    created_at: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [index('game_event_session_idx').on(table.session_id)]
+);
 
 // Type exports for tables
 export type Session = typeof SESSION.$inferSelect;
