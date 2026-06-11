@@ -26,6 +26,8 @@
   </div>
 
   <!-- Top bar -->
+  <!-- Note: Lobby uses custom button styling instead of BubblyButton because the dark gradient
+       background makes BubblyButton tones (primary=blue on blue, ghost=white bg) look wrong. -->
   <div class="relative z-20 flex items-center justify-between px-6 py-4">
     <button
       type="button"
@@ -95,6 +97,16 @@
         class="mb-6 w-full max-w-md rounded-2xl border border-rose-300/50 bg-rose-500/20 px-4 py-3 text-center text-sm font-bold text-white"
       >
         {{ errorMessage() }}
+      </div>
+    }
+
+    <!-- Reconnecting indicator -->
+    @if (reconnecting()) {
+      <div
+        class="mb-6 w-full max-w-md rounded-2xl border border-amber-300/50 bg-amber-500/20 px-4 py-3 text-center text-sm font-bold text-amber-200"
+      >
+        <span class="mr-2 inline-block animate-spin">⟳</span>
+        Reconnecting to lobby...
       </div>
     }
 
