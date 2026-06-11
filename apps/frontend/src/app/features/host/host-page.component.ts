@@ -67,6 +67,7 @@ export class HostPageComponent implements OnInit, OnDestroy {
   protected readonly playerCount = signal(0);
   protected readonly statusMessage = signal('Connecting...');
   protected readonly connected = this.websocketService.connected;
+  protected readonly reconnecting = this.websocketService.reconnecting;
   protected readonly errorMessage = signal<string | null>(null);
 
   // ── Game state ──
@@ -120,9 +121,11 @@ export class HostPageComponent implements OnInit, OnDestroy {
   protected readonly showEndConfirmModal = signal(false);
   protected readonly showSessionClosedModal = signal(false);
   protected readonly sessionClosedReason = signal('');
+  protected readonly showRoundSummary = signal(false);
 
   private hasJoined = false;
   private animationTimeouts: ReturnType<typeof setTimeout>[] = [];
+  private roundSummaryTimeout: ReturnType<typeof setTimeout> | null = null;
 
   async ngOnInit(): Promise<void> {
     const pin = this.route.snapshot.paramMap.get('pin') ?? '';
@@ -158,6 +161,7 @@ export class HostPageComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.stopTimer();
     this.clearAnimationTimeouts();
+    this.clearRoundSummaryTimeout();
     this.leaveInternal();
   }
 
@@ -201,6 +205,8 @@ export class HostPageComponent implements OnInit, OnDestroy {
       const idx = event.order - 1;
       this.currentQuestionIndex.set(idx >= 0 ? idx : 0);
       this.answeredCount.set(0);
+      this.showRoundSummary.set(false);
+      this.clearRoundSummaryTimeout();
       // Kick off entrance animation
       this.startQuestionAnimation(this.currentQuestion());
     });
@@ -220,6 +226,11 @@ export class HostPageComponent implements OnInit, OnDestroy {
 
     this.websocketService.roundClosed$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.stopTimer();
+      this.showRoundSummary.set(true);
+      this.clearRoundSummaryTimeout();
+      this.roundSummaryTimeout = setTimeout(() => {
+        this.showRoundSummary.set(false);
+      }, 3000);
     });
 
     this.websocketService.gameEnded$
@@ -230,7 +241,7 @@ export class HostPageComponent implements OnInit, OnDestroy {
         this.currentQuestionIndex.set(-1);
         setTimeout(() => {
           void this.router.navigate(['/leaderboards'], {
-            state: { leaderboard: event.leaderboard, quizTitle: 'Game Complete' },
+            state: { leaderboard: event.leaderboard, quizTitle: 'Game Complete', pin: this.pin() },
           });
         }, 3000);
       });
@@ -338,6 +349,13 @@ export class HostPageComponent implements OnInit, OnDestroy {
   private clearAnimationTimeouts(): void {
     for (const t of this.animationTimeouts) clearTimeout(t);
     this.animationTimeouts = [];
+  }
+
+  private clearRoundSummaryTimeout(): void {
+    if (this.roundSummaryTimeout) {
+      clearTimeout(this.roundSummaryTimeout);
+      this.roundSummaryTimeout = null;
+    }
   }
 
   // ── Host controls ──
