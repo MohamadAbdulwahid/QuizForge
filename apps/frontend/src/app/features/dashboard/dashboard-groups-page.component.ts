@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
+import { catchError, finalize, map } from 'rxjs/operators';
 import {
   GroupActiveSessionSummary,
   GroupApiService,
@@ -28,6 +30,7 @@ import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
 export class DashboardGroupsPageComponent {
   private readonly groupApiService = inject(GroupApiService);
   private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
 
   protected readonly groups = signal<MyGroupSummary[]>([]);
   protected readonly invites = signal<GroupInviteSummary[]>([]);
@@ -53,15 +56,18 @@ export class DashboardGroupsPageComponent {
   }
 
   protected respondToInvite(inviteId: number, action: 'accept' | 'decline'): void {
-    this.groupApiService.respondToInvite(inviteId, action).subscribe({
-      next: () => {
-        this.loadInvites();
-        this.loadGroups();
-      },
-      error: () => {
-        this.errorMessage.set('Could not respond to invite.');
-      },
-    });
+    this.groupApiService
+      .respondToInvite(inviteId, action)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.loadInvites();
+          this.loadGroups();
+        },
+        error: () => {
+          this.errorMessage.set('Could not respond to invite.');
+        },
+      });
   }
 
   private loadData(): void {
@@ -77,13 +83,13 @@ export class DashboardGroupsPageComponent {
       .pipe(
         finalize(() => {
           this.loading.set(false);
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({
         next: (groups) => {
           this.groups.set(groups);
-          this.loadJoinRequestCounts(groups);
-          this.loadAllActiveSessions(groups);
+          this.loadSubdata(groups);
         },
         error: () => {
           this.errorMessage.set('Could not load your groups.');
@@ -92,70 +98,62 @@ export class DashboardGroupsPageComponent {
   }
 
   private loadInvites(): void {
-    this.groupApiService.getMyInvites().subscribe({
-      next: (invites) => {
-        this.invites.set(invites);
-      },
-      error: () => {
-        this.errorMessage.set('Could not load your invites.');
-      },
-    });
-  }
-
-  /** Fetch join request counts for admin groups only. */
-  private loadJoinRequestCounts(groups: MyGroupSummary[]): void {
-    const counts = new Map<number, number>();
-    const adminGroups = groups.filter((g) => g.role === 'admin');
-
-    if (adminGroups.length === 0) {
-      this.joinRequestCounts.set(counts);
-      return;
-    }
-
-    const requests = adminGroups.map((group) =>
-      this.groupApiService.getJoinRequests(group.id).subscribe({
-        next: (requests) => {
-          counts.set(group.id, requests.length);
-          this.joinRequestCounts.set(new Map(counts));
+    this.groupApiService
+      .getMyInvites()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (invites) => {
+          this.invites.set(invites);
         },
         error: () => {
-          counts.set(group.id, 0);
-          this.joinRequestCounts.set(new Map(counts));
+          this.errorMessage.set('Could not load your invites.');
         },
-      })
-    );
-
-    // Cleanup subscriptions is not critical for this short-lived request,
-    // but we track them in case needed later.
-    void requests;
+      });
   }
 
-  /** Aggregate active sessions across all groups. */
-  private loadAllActiveSessions(groups: MyGroupSummary[]): void {
+  /**
+   * Batch-load join request counts and active sessions for all groups
+   * using forkJoin instead of N+1 individual subscriptions.
+   */
+  private loadSubdata(groups: MyGroupSummary[]): void {
+    const adminGroups = groups.filter((g) => g.role === 'admin');
+
+    // Batch join request counts
+    if (adminGroups.length > 0) {
+      const requests$ = adminGroups.map((group) =>
+        this.groupApiService.getJoinRequests(group.id).pipe(
+          map((reqs) => ({ groupId: group.id, count: reqs.length })),
+          catchError(() => of({ groupId: group.id, count: 0 }))
+        )
+      );
+
+      forkJoin(requests$)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((results) => {
+          const counts = new Map<number, number>();
+          for (const r of results) {
+            counts.set(r.groupId, r.count);
+          }
+          this.joinRequestCounts.set(counts);
+        });
+    }
+
+    // Batch active sessions
     if (groups.length === 0) {
       this.activeSessions.set([]);
       return;
     }
 
-    const allSessions: GroupActiveSessionSummary[] = [];
-    let completed = 0;
+    const sessions$ = groups.map((group) =>
+      this.groupApiService
+        .getActiveSessions(group.id)
+        .pipe(catchError(() => of([] as GroupActiveSessionSummary[])))
+    );
 
-    for (const group of groups) {
-      this.groupApiService.getActiveSessions(group.id).subscribe({
-        next: (sessions) => {
-          allSessions.push(...sessions);
-          completed++;
-          if (completed === groups.length) {
-            this.activeSessions.set(allSessions);
-          }
-        },
-        error: () => {
-          completed++;
-          if (completed === groups.length) {
-            this.activeSessions.set(allSessions);
-          }
-        },
+    forkJoin(sessions$)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((results) => {
+        this.activeSessions.set(results.flat());
       });
-    }
   }
 }
