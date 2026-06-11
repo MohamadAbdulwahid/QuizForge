@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 import { GroupApiService, MyGroupSummary } from '../../core/services/group-api.service';
@@ -29,6 +30,7 @@ export class DashboardCreateSessionPageComponent {
   private readonly sessionEventBus = inject(SessionEventBus);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
 
   protected readonly loadingQuizzes = signal(false);
   protected readonly creatingSession = signal(false);
@@ -37,7 +39,13 @@ export class DashboardCreateSessionPageComponent {
   protected readonly selectedQuizId = signal<number | null>(null);
   protected readonly broadcastMode = signal<SessionBroadcastMode>('private');
   protected readonly selectedBroadcastGroupIds = signal<number[]>([]);
-  protected readonly errorMessage = signal<string | null>(null);
+  protected readonly quizzesError = signal<string | null>(null);
+  protected readonly groupsError = signal<string | null>(null);
+  protected readonly createError = signal<string | null>(null);
+
+  protected readonly errorMessage = computed(
+    () => this.createError() ?? this.quizzesError() ?? this.groupsError()
+  );
 
   protected readonly selectedQuiz = computed(() => {
     const selectedId = this.selectedQuizId();
@@ -68,7 +76,7 @@ export class DashboardCreateSessionPageComponent {
     const quizId = this.selectedQuizId();
 
     if (!quizId) {
-      this.errorMessage.set('Select a quiz first.');
+      this.createError.set('Select a quiz first.');
       return;
     }
 
@@ -76,11 +84,11 @@ export class DashboardCreateSessionPageComponent {
       this.broadcastMode() === 'selected-groups' &&
       this.selectedBroadcastGroupIds().length === 0
     ) {
-      this.errorMessage.set('Select at least one group when broadcasting to selected groups.');
+      this.createError.set('Select at least one group when broadcasting to selected groups.');
       return;
     }
 
-    this.errorMessage.set(null);
+    this.createError.set(null);
     this.creatingSession.set(true);
 
     this.sessionApiService
@@ -92,7 +100,8 @@ export class DashboardCreateSessionPageComponent {
       .pipe(
         finalize(() => {
           this.creatingSession.set(false);
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({
         next: (response) => {
@@ -100,7 +109,7 @@ export class DashboardCreateSessionPageComponent {
           void this.router.navigate(['/game-lobby', response.pin]);
         },
         error: () => {
-          this.errorMessage.set(
+          this.createError.set(
             'Could not create session. You may already have an active one for this quiz.'
           );
         },
@@ -125,14 +134,15 @@ export class DashboardCreateSessionPageComponent {
 
   private loadQuizzes(): void {
     this.loadingQuizzes.set(true);
-    this.errorMessage.set(null);
+    this.quizzesError.set(null);
 
     this.quizApiService
       .getMyQuizzes()
       .pipe(
         finalize(() => {
           this.loadingQuizzes.set(false);
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({
         next: (quizzes) => {
@@ -152,19 +162,22 @@ export class DashboardCreateSessionPageComponent {
           }
         },
         error: () => {
-          this.errorMessage.set('Could not load your quizzes.');
+          this.quizzesError.set('Could not load your quizzes.');
         },
       });
   }
 
   private loadGroups(): void {
-    this.groupApiService.getMyGroups().subscribe({
-      next: (groups) => {
-        this.groups.set(groups);
-      },
-      error: () => {
-        this.errorMessage.set('Could not load your groups.');
-      },
-    });
+    this.groupApiService
+      .getMyGroups()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (groups) => {
+          this.groups.set(groups);
+        },
+        error: () => {
+          this.groupsError.set('Could not load your groups.');
+        },
+      });
   }
 }
