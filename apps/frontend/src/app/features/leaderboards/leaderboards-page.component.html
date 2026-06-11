@@ -23,7 +23,7 @@
               <div
                 class="mb-2 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/25 text-2xl shadow-lg sm:h-16 sm:w-16 sm:text-3xl"
               >
-                {{ getPlayerEmoji(second.userId) }}
+                {{ getPlayerEmoji(second.username) }}
               </div>
               <p class="max-w-full truncate text-sm font-bold text-white/90">
                 {{ second.username }}
@@ -40,7 +40,7 @@
             <div
               class="mb-2 flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-400/30 text-3xl shadow-lg ring-2 ring-amber-400/50 sm:h-20 sm:w-20 sm:text-4xl"
             >
-              {{ getPlayerEmoji(gold.userId) }}
+              {{ getPlayerEmoji(gold.username) }}
             </div>
             <p class="max-w-full truncate text-base font-bold text-white">{{ gold.username }}</p>
             <p class="text-sm font-bold text-amber-300">🥇 {{ gold.score }} pts</p>
@@ -54,7 +54,7 @@
               <div
                 class="mb-2 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/25 text-2xl shadow-lg sm:h-16 sm:w-16 sm:text-3xl"
               >
-                {{ getPlayerEmoji(third.userId) }}
+                {{ getPlayerEmoji(third.username) }}
               </div>
               <p class="max-w-full truncate text-sm font-bold text-white/90">
                 {{ third.username }}
@@ -73,7 +73,7 @@
     @if (chasers().length > 0) {
       <div class="shrink-0 px-6 pb-6">
         <div class="mx-auto max-w-lg space-y-2">
-          @for (player of chasers(); track player.userId) {
+          @for (player of chasers(); track player.username) {
             <div
               class="flex items-center justify-between rounded-2xl bg-white/15 px-4 py-3 backdrop-blur-sm transition-all hover:bg-white/25"
             >
@@ -81,7 +81,7 @@
                 <span class="w-6 text-center text-xs font-bold text-white/50">
                   #{{ player.rank }}
                 </span>
-                <span class="text-xl">{{ getPlayerEmoji(player.userId) }}</span>
+                <span class="text-xl">{{ getPlayerEmoji(player.username) }}</span>
                 <span class="text-sm font-bold text-white/90">{{ player.username }}</span>
               </div>
               <span class="font-display text-lg font-bold text-white">{{ player.score }}</span>
@@ -100,6 +100,31 @@
       >
         Back to Dashboard
       </button>
+    </div>
+  } @else if (loadingSignal()) {
+    <!-- ── Loading state ── -->
+    <div class="flex flex-1 items-center justify-center">
+      <div class="text-center">
+        <p class="mb-4 text-5xl">🏆</p>
+        <h1 class="font-display text-4xl font-bold text-white">Leaderboards</h1>
+        <p class="mt-4 text-lg font-semibold text-white/70">Loading results...</p>
+      </div>
+    </div>
+  } @else if (errorSignal()) {
+    <!-- ── Error state ── -->
+    <div class="flex flex-1 items-center justify-center">
+      <div class="text-center">
+        <p class="mb-4 text-5xl">🏆</p>
+        <h1 class="font-display text-4xl font-bold text-white">Leaderboards</h1>
+        <p class="mt-4 text-lg font-semibold text-white/70">{{ errorSignal() }}</p>
+        <button
+          type="button"
+          class="mt-8 rounded-2xl bg-white/20 px-8 py-3 font-bold text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/30"
+          (click)="goToDashboard()"
+        >
+          Go to Dashboard
+        </button>
+      </div>
     </div>
   } @else {
     <!-- ── Empty state ── -->
