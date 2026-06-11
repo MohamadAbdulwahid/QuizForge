@@ -120,9 +120,9 @@
     "hash": "4159bbe99e994ab8da472852367b8b532bdc2236c264fcbad1410e47a4337458"
   },
   "/home/mohamad/coding/QuizForge/package.json": {
-    "size": 4797,
-    "mtime_ns": 1779738562182891085,
-    "hash": "e31cda3e6b9dc9cae6f3fc8ee632a435e573e5f876e382e25d301be5d205378c"
+    "size": 4864,
+    "mtime_ns": 1781109266835487332,
+    "hash": "43f23c1dbcafb48327cdcf36cc846001d0e7c6041501741f32b3e720df35e951"
   },
   "/home/mohamad/coding/QuizForge/tsconfig.base.json": {
     "size": 467,
@@ -1403,5 +1403,10 @@
     "size": 10626,
     "mtime_ns": 1780485810624996823,
     "hash": "aea59bb80c3c8c5b09fc9c2918dcbe000273d152e44462bd264e7ad7b8b86653"
+  },
+  "/home/mohamad/coding/QuizForge/docs/performance.md": {
+    "size": 5364,
+    "mtime_ns": 1781109436880131562,
+    "hash": "aa2102f98710e678e836a4492dace1fa3ede082664dd9e3b19cb4b20e5aca17f"
   }
 }
