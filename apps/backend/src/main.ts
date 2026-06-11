@@ -3,13 +3,16 @@ import cors from 'cors';
 import { existsSync, readFileSync } from 'node:fs';
 import swaggerUi from 'swagger-ui-express';
 import { config } from './config/config';
+import { initSentry } from './config/sentry';
 import { logger } from './config/logger';
+
+// Initialize Sentry before any other imports that might capture errors
+initSentry();
 import { errorHandler } from './api/middleware/error-handler';
 import { registerRoutes } from './api/routes';
 import { apiVersionMiddleware } from './api/middleware/api-version';
 import { setupWebsocketServer } from './websocket/server';
-// Cleanup now happens immediately on end/disconnect instead of on a timer.
-// import { startCleanupScheduler } from './websocket/namespaces/game.namespace';
+import { startCleanupScheduler } from './websocket/namespaces/game.namespace';
 
 const app = express();
 
@@ -82,13 +85,16 @@ const server = app.listen(config.PORT, () => {
 });
 const io = setupWebsocketServer(server);
 
-// Session cleanup now happens immediately on end/disconnect instead of on a timer.
-// See game.namespace.ts end-session and disconnect handlers.
+// Start periodic cleanup: removes ended sessions and orphaned sessions
+// whose host has disconnected. Runs every 5 minutes as a safety net
+// alongside the immediate cleanup on end/disconnect.
+const stopCleanup = startCleanupScheduler();
 
 server.on('error', (err) => {
   logger.error({ err }, 'Server error');
 });
 server.on('close', () => {
+  stopCleanup();
   io.close();
 });
 
