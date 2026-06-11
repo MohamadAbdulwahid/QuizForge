@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
+import { adminGuard } from './core/guards/admin.guard';
 
 export const appRoutes: Route[] = [
   {
@@ -104,6 +105,14 @@ export const appRoutes: Route[] = [
                 (m) => m.GroupsDetailPageComponent
               ),
           },
+          {
+            path: 'admin',
+            canActivate: [adminGuard],
+            loadComponent: () =>
+              import('./features/dashboard/admin-dashboard.component').then(
+                (m) => m.AdminDashboardComponent
+              ),
+          },
         ],
       },
       // Game routes — standalone, no dashboard shell wrapper
@@ -119,7 +128,6 @@ export const appRoutes: Route[] = [
       },
       {
         path: 'host/:pin',
-        // TODO: Create HostPageComponent in subtask 06 — this lazy import will fail until the file exists
         loadComponent: () =>
           import('./features/host/host-page.component').then((m) => m.HostPageComponent),
       },
