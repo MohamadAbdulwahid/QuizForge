@@ -19,7 +19,7 @@
         You have no quizzes yet.
         <a
           routerLink="/dashboard/quizzes"
-          class="ml-2 text-[#1e88e5] underline"
+          class="ml-2 text-[var(--bubbly-primary)] underline"
         >
           Go to My Quizzes
         </a>
@@ -51,7 +51,7 @@
         </h4>
 
         <div class="qf-soft-surface mt-5 rounded-3xl p-4">
-          <p class="text-sm font-bold text-[#0f172a]">Session Visibility</p>
+          <p class="text-sm font-bold text-[var(--bubbly-text)]">Session Visibility</p>
           <p class="qf-muted mt-1 text-sm font-semibold">
             Keep the session private, broadcast it to selected groups, or share it with all your
             groups.
@@ -61,8 +61,8 @@
             <button
               type="button"
               class="rounded-xl border px-4 py-2 text-sm font-bold"
-              [class.border-[#1e88e5]]="broadcastMode() === 'private'"
-              [class.bg-[#e3f2fd]]="broadcastMode() === 'private'"
+              [class.border-[var(--bubbly-primary)]]="broadcastMode() === 'private'"
+              [class.bg-[var(--bubbly-surface-soft)]]="broadcastMode() === 'private'"
               (click)="updateBroadcastMode('private')"
             >
               Private
@@ -70,8 +70,8 @@
             <button
               type="button"
               class="rounded-xl border px-4 py-2 text-sm font-bold"
-              [class.border-[#1e88e5]]="broadcastMode() === 'selected-groups'"
-              [class.bg-[#e3f2fd]]="broadcastMode() === 'selected-groups'"
+              [class.border-[var(--bubbly-primary)]]="broadcastMode() === 'selected-groups'"
+              [class.bg-[var(--bubbly-surface-soft)]]="broadcastMode() === 'selected-groups'"
               (click)="updateBroadcastMode('selected-groups')"
             >
               Selected Groups
@@ -79,8 +79,8 @@
             <button
               type="button"
               class="rounded-xl border px-4 py-2 text-sm font-bold"
-              [class.border-[#1e88e5]]="broadcastMode() === 'all-my-groups'"
-              [class.bg-[#e3f2fd]]="broadcastMode() === 'all-my-groups'"
+              [class.border-[var(--bubbly-primary)]]="broadcastMode() === 'all-my-groups'"
+              [class.bg-[var(--bubbly-surface-soft)]]="broadcastMode() === 'all-my-groups'"
               (click)="updateBroadcastMode('all-my-groups')"
             >
               All My Groups
