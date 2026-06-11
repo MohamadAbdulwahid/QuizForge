@@ -5,6 +5,7 @@ import {
   createSession,
   getSessionByPin,
   getSessionsByHost,
+  getSessionLeaderboard,
   updateSessionStatus,
 } from '../services/session.service';
 import type { PinParam, UpdateSessionStatusRequest } from '../dtos/session.dto';
@@ -36,9 +37,12 @@ export class SessionController {
 
   /**
    * Gets an active session by pin (public endpoint).
+   * Returns a safe view — no host_id or broadcast_mode exposed.
+   * If authenticated, includes isHost flag.
    */
   async getSessionByPin(req: Request<PinParam>, res: Response): Promise<void> {
-    const result = await getSessionByPin(req.params.pin);
+    const userId = (req as AuthenticatedRequest).user?.id;
+    const result = await getSessionByPin(req.params.pin, userId);
     res.status(StatusCodes.OK).json(result);
   }
 
@@ -54,6 +58,15 @@ export class SessionController {
       req.body as UpdateSessionStatusRequest
     );
 
+    res.status(StatusCodes.OK).json(result);
+  }
+
+  /**
+   * Gets the leaderboard for a session by PIN (public endpoint).
+   * Returns public-safe data — no internal user IDs exposed.
+   */
+  async getLeaderboard(req: Request<PinParam>, res: Response): Promise<void> {
+    const result = await getSessionLeaderboard(req.params.pin);
     res.status(StatusCodes.OK).json(result);
   }
 }
