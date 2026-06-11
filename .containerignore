@@ -1,0 +1,45 @@
+# dependencies installed inside the image
+node_modules
+
+# secrets / local config
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# git data
+.git
+.gitignore
+**/.gitkeep
+
+# CI / local tooling
+.github
+.husky
+.opencode
+
+# build/test output
+dist
+coverage
+.nx/cache
+.nx/workspace-data
+
+# editor / OS files
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+npm-debug.log*
+bun-error.log
+
+# apps not needed for backend runtime
+apps/frontend
+apps/frontend-e2e
+apps/backend-e2e
+
+# docs / generated
+docs
+graphify-out
+apps/backend/src/assets/swagger.json
