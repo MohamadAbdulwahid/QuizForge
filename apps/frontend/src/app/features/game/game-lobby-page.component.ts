@@ -45,6 +45,7 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
   protected readonly minPlayersToStart = signal(2);
   protected readonly startRequested = signal(false);
   protected readonly connected = this.websocketService.connected;
+  protected readonly reconnecting = this.websocketService.reconnecting;
   protected readonly isHost = computed(
     () => this.authService.currentUser()?.id === this.hostUserId()
   );
@@ -106,6 +107,10 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // Read username from router state (set by play page)
+    const state = history.state as { username?: string };
+    const username = state?.username?.trim() || buildDisplayName(currentUser, 'Player');
+
     this.bindSocketEvents();
 
     this.sessionApiService
@@ -113,15 +118,14 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (session) => {
-          this.hostUserId.set(session.host_id);
           this.sessionStatus.set(this.normalizeStatus(session.status));
           this.statusMessage.set(this.buildStatusMessage(this.normalizeStatus(session.status)));
 
           this.websocketService.connect(token);
-          if (currentUser.id !== session.host_id) {
-            this.upsertPlayer(currentUser.id, buildDisplayName(currentUser, 'Player'), true);
+          if (!session.isHost) {
+            this.upsertPlayer(currentUser.id, username, true);
           }
-          this.websocketService.joinGame(pin, buildDisplayName(currentUser, 'Player'));
+          this.websocketService.joinGame(pin, username);
           this.hasJoined = true;
         },
         error: (error: unknown) => {
@@ -325,6 +329,14 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
       if (details?.currentPlayers !== undefined && details?.minPlayersToStart !== undefined) {
         return `Need at least ${details.minPlayersToStart} players to start. Current: ${details.currentPlayers}.`;
       }
+    }
+
+    if (error.code === 'DUPLICATE_USERNAME') {
+      return 'That username is already taken. Please go back and choose a different name.';
+    }
+
+    if (error.code === 'SESSION_ENDED') {
+      return 'This session has already ended.';
     }
 
     return error.error;
