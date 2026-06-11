@@ -1,51 +1,37 @@
 import { z } from 'zod';
 
-const joinGameMessageSchema = z
-  .object({
-    pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
-    username: z.string().min(1).max(60).optional(),
-  })
-  .passthrough();
+const joinGameMessageSchema = z.object({
+  pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
+  username: z.string().min(1).max(60).optional(),
+});
 
-const leaveGameMessageSchema = z
-  .object({
-    pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
-    reason: z.string().max(120).optional(),
-  })
-  .passthrough();
+const leaveGameMessageSchema = z.object({
+  pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
+  reason: z.string().max(120).optional(),
+});
 
-const startGameMessageSchema = z
-  .object({
-    pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
-  })
-  .passthrough();
+const startGameMessageSchema = z.object({
+  pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
+});
 
-const submitAnswerMessageSchema = z
-  .object({
-    pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
-    sessionId: z.coerce.number().int().positive(),
-    questionId: z.coerce.number().int().positive(),
-    selectedAnswer: z.string().min(1).max(200),
-  })
-  .passthrough();
+const submitAnswerMessageSchema = z.object({
+  pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
+  sessionId: z.coerce.number().int().positive(),
+  questionId: z.coerce.number().int().positive(),
+  selectedAnswer: z.string().min(1).max(200),
+});
 
-const nextQuestionMessageSchema = z
-  .object({
-    pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
-  })
-  .passthrough();
+const nextQuestionMessageSchema = z.object({
+  pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
+});
 
-const endSessionMessageSchema = z
-  .object({
-    pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
-  })
-  .passthrough();
+const endSessionMessageSchema = z.object({
+  pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
+});
 
-const skipQuestionMessageSchema = z
-  .object({
-    pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
-  })
-  .passthrough();
+const skipQuestionMessageSchema = z.object({
+  pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
+});
 
 export { joinGameMessageSchema as JoinGameMessageSchema };
 export { leaveGameMessageSchema as LeaveGameMessageSchema };
