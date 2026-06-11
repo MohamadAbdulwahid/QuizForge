@@ -1,0 +1,303 @@
+{
+  "nodes": [
+    {
+      "id": "home_mohamad_coding_quizforge_docs_performance_md",
+      "label": "performance.md",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_performance_performance_tuning_decisions",
+      "label": "Performance & Tuning Decisions",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_performance_overview",
+      "label": "Overview",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L3"
+    },
+    {
+      "id": "docs_performance_performance_targets",
+      "label": "Performance Targets",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "docs_performance_tuning_decisions",
+      "label": "Tuning Decisions",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L20"
+    },
+    {
+      "id": "docs_performance_websocket_rate_limiting",
+      "label": "WebSocket Rate Limiting",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L22"
+    },
+    {
+      "id": "docs_performance_session_cleanup_scheduler",
+      "label": "Session Cleanup Scheduler",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L30"
+    },
+    {
+      "id": "docs_performance_database_indexes",
+      "label": "Database Indexes",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L38"
+    },
+    {
+      "id": "docs_performance_frontend_cache_staleness",
+      "label": "Frontend Cache Staleness",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L46"
+    },
+    {
+      "id": "docs_performance_timer_resolution",
+      "label": "Timer Resolution",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L54"
+    },
+    {
+      "id": "docs_performance_reconnection_strategy",
+      "label": "Reconnection Strategy",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L62"
+    },
+    {
+      "id": "docs_performance_lighthouse_setup",
+      "label": "Lighthouse Setup",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L70"
+    },
+    {
+      "id": "docs_performance_install_lighthouse_ci",
+      "label": "Install Lighthouse CI",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L72"
+    },
+    {
+      "id": "docs_performance_configuration",
+      "label": "Configuration",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L78"
+    },
+    {
+      "id": "docs_performance_run",
+      "label": "Run",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L106"
+    },
+    {
+      "id": "docs_performance_bundle_analysis",
+      "label": "Bundle Analysis",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L112"
+    },
+    {
+      "id": "docs_performance_monitoring",
+      "label": "Monitoring",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L119"
+    },
+    {
+      "id": "docs_performance_sentry_integration",
+      "label": "Sentry Integration",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L121"
+    },
+    {
+      "id": "docs_performance_error_reporting",
+      "label": "Error Reporting",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L130"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_mohamad_coding_quizforge_docs_performance_md",
+      "target": "docs_performance_performance_tuning_decisions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_performance_performance_tuning_decisions",
+      "target": "docs_performance_overview",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_performance_performance_tuning_decisions",
+      "target": "docs_performance_performance_targets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_performance_performance_tuning_decisions",
+      "target": "docs_performance_tuning_decisions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_performance_tuning_decisions",
+      "target": "docs_performance_websocket_rate_limiting",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_performance_tuning_decisions",
+      "target": "docs_performance_session_cleanup_scheduler",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_performance_tuning_decisions",
+      "target": "docs_performance_database_indexes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_performance_tuning_decisions",
+      "target": "docs_performance_frontend_cache_staleness",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_performance_tuning_decisions",
+      "target": "docs_performance_timer_resolution",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_performance_tuning_decisions",
+      "target": "docs_performance_reconnection_strategy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_performance_performance_tuning_decisions",
+      "target": "docs_performance_lighthouse_setup",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_performance_lighthouse_setup",
+      "target": "docs_performance_install_lighthouse_ci",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_performance_lighthouse_setup",
+      "target": "docs_performance_configuration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L78",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_performance_lighthouse_setup",
+      "target": "docs_performance_run",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L106",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_performance_performance_tuning_decisions",
+      "target": "docs_performance_bundle_analysis",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L112",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_performance_performance_tuning_decisions",
+      "target": "docs_performance_monitoring",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L119",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_performance_monitoring",
+      "target": "docs_performance_sentry_integration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L121",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_performance_monitoring",
+      "target": "docs_performance_error_reporting",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/performance.md",
+      "source_location": "L130",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
