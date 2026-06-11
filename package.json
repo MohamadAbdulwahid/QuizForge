@@ -19,6 +19,8 @@
     "@angular/ssr": "~21.2.0",
     "@fontsource/dynapuff": "^5.2.8",
     "@fontsource/nunito": "^5.2.7",
+    "@sentry/angular": "^10.57.0",
+    "@sentry/node": "^10.57.0",
     "@supabase/supabase-js": "^2.98.0",
     "axios": "^1.13.4",
     "cors": "^2.8.6",

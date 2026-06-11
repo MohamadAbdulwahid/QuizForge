@@ -13,6 +13,7 @@ const envSchema = z.object({
   DATABASE_URL: z.string().min(1),
   FRONTEND_URL: z.url(),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']).default('info'),
+  SENTRY_DSN: z.string().optional(),
 });
 
 type Config = z.infer<typeof envSchema>;
