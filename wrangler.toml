@@ -1,0 +1,18 @@
+# Cloudflare Pages deployment configuration for QuizForge frontend
+# Build output: dist/apps/frontend/browser
+#
+# Required environment variables (set in Cloudflare dashboard):
+#   VITE_SUPABASE_URL
+#   VITE_SUPABASE_PUBLISHABLE_KEY
+#   VITE_API_BASE_URL
+#   VITE_WEBSOCKET_URL
+#   VITE_SENTRY_DSN
+#
+# For local preview:
+#   wrangler pages dev dist/apps/frontend/browser
+
+name = "quizforge"
+pages_build_output_dir = "dist/apps/frontend/browser"
+
+[build]
+command = "bun run build:frontend"
