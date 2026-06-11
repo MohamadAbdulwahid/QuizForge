@@ -1,6 +1,13 @@
 # Cloudflare Pages deployment configuration for QuizForge frontend
 # Build output: dist/apps/frontend/browser
 #
+# NOTE: Build is handled by Nx (not Wrangler). Wrangler's auto-detection
+# doesn't support Nx integrated executors (@angular/build:application).
+# Always build first, then deploy:
+#
+#   bun run build:frontend
+#   bunx wrangler pages deploy dist/apps/frontend/browser --branch=main
+#
 # Required environment variables (set in Cloudflare dashboard):
 #   VITE_SUPABASE_URL
 #   VITE_SUPABASE_PUBLISHABLE_KEY
@@ -13,6 +20,3 @@
 
 name = "quizforge"
 pages_build_output_dir = "dist/apps/frontend/browser"
-
-[build]
-command = "bun run build:frontend"
