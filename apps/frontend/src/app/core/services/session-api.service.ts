@@ -5,12 +5,14 @@ import { ApiService } from './api.service';
 export type SessionStatus = 'pending' | 'waiting' | 'playing' | 'paused' | 'ended' | 'in-progress';
 export type SessionAction = 'start' | 'pause' | 'resume' | 'finish';
 
+/** Public-facing session — no host_id or broadcast_mode exposed. */
 export interface SessionDto {
   id: number;
   quiz_id: number;
-  host_id: string;
   pin: string;
   status: SessionStatus;
+  started_at: string | null;
+  isHost: boolean;
 }
 
 export interface CreateSessionResponse {
@@ -41,6 +43,18 @@ export interface HostSessionSummary {
   started_at: string;
 }
 
+/** Public leaderboard entry — no internal user IDs. */
+export interface LeaderboardEntry {
+  username: string;
+  score: number;
+  rank: number;
+}
+
+export interface SessionLeaderboardResponse {
+  quizTitle: string;
+  leaderboard: LeaderboardEntry[];
+}
+
 @Injectable({ providedIn: 'root' })
 export class SessionApiService {
   private readonly apiService = inject(ApiService);
@@ -65,5 +79,9 @@ export class SessionApiService {
 
   getHostSessionData(pin: string): Observable<unknown> {
     return this.apiService.get<unknown>(`/api/sessions/${pin}/host`);
+  }
+
+  getLeaderboard(pin: string): Observable<SessionLeaderboardResponse> {
+    return this.apiService.get<SessionLeaderboardResponse>(`/api/sessions/${pin}/leaderboard`);
   }
 }
