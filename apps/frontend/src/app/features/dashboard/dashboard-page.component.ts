@@ -45,10 +45,10 @@ export class DashboardPageComponent {
   });
 
   constructor() {
-    // Always fetch fresh data on entrance — the SSE connection (managed by
-    // DashboardShellComponent) keeps cache current while browsing sub-routes,
-    // but on re-entry we force a refresh in case events were missed.
-    this.dashboardCache.refresh();
+    // Use load() instead of refresh() — the SSE connection (managed by
+    // DashboardShellComponent) keeps cache current while browsing sub-routes.
+    // load() respects the 5-minute staleness window; only fetches if stale.
+    this.dashboardCache.load();
   }
 
   protected joinSession(pin: string): void {
