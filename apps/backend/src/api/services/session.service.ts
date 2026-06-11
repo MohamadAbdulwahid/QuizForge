@@ -16,6 +16,15 @@ import { emitSessionEvent } from './session-event.service';
 
 const sessionServiceLogger = createChildLogger('session-service');
 
+/** Public-facing session type — omits internal identifiers. */
+export type PublicSession = Omit<Session, 'host_id' | 'broadcast_mode'>;
+
+/** Public-facing session with host flag for authenticated callers. */
+export type PublicSessionView = PublicSession & { isHost: boolean };
+
+/** Public-facing leaderboard entry — no internal user IDs. */
+export type PublicLeaderboardEntry = { username: string; score: number; rank: number };
+
 /**
  * Creates a session for a quiz with ownership and uniqueness checks.
  * @param hostId - Authenticated host id.
@@ -126,17 +135,26 @@ export async function getSessionsByHost(
 
 /**
  * Gets an active session by PIN.
+ * Returns a public-safe view that omits host_id and broadcast_mode.
+ * If userId is provided, includes an isHost flag.
  * @param pin - Session pin.
- * @returns Active session.
+ * @param userId - Optional authenticated user ID.
+ * @returns Public session view.
  */
-export async function getSessionByPin(pin: string): Promise<Session> {
+export async function getSessionByPin(pin: string, userId?: string): Promise<PublicSessionView> {
   const session = await sessionRepository.findActiveByPin(pin);
 
   if (!session) {
     throw new NotFoundError('Session not found', 'SESSION_NOT_FOUND');
   }
 
-  return session;
+  const { host_id: hostId, broadcast_mode: broadcastMode, ...publicSession } = session;
+  void hostId;
+  void broadcastMode;
+  return {
+    ...publicSession,
+    isHost: userId ? session.host_id === userId : false,
+  };
 }
 
 /**
@@ -223,4 +241,37 @@ function toSessionState(status: SessionStatus): SessionState {
  */
 function fromSessionState(state: SessionState): SessionStatus {
   return state;
+}
+
+/**
+ * Gets the leaderboard for a session by PIN.
+ * Returns public-safe player scores from the database, ordered by rank.
+ * Works for both active and ended sessions.
+ * @param pin - Session pin.
+ * @returns Leaderboard data with ranked players and quiz title (no internal IDs).
+ */
+export async function getSessionLeaderboard(
+  pin: string
+): Promise<{ quizTitle: string; leaderboard: PublicLeaderboardEntry[] }> {
+  const session = await sessionRepository.getSessionByPin(pin);
+
+  if (!session) {
+    throw new NotFoundError('Session not found', 'SESSION_NOT_FOUND');
+  }
+
+  const quiz = await quizRepository.findById(session.quiz_id);
+  const players = await sessionRepository.listPlayersBySession(session.id);
+
+  const leaderboard = players
+    .sort((a, b) => Number(b.score) - Number(a.score))
+    .map((player, index) => ({
+      username: player.username,
+      score: Number(player.score),
+      rank: index + 1,
+    }));
+
+  return {
+    quizTitle: quiz?.title ?? 'Quiz',
+    leaderboard,
+  };
 }
