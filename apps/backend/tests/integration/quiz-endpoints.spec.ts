@@ -43,6 +43,8 @@ mock.module('../../src/api/controllers/session.controller', () => ({
       res.status(200).json({ id: 1, pin: '123456', status: 'waiting' }),
     updateSessionStatus: (_req: express.Request, res: express.Response) =>
       res.status(200).json({ id: 1, pin: '123456', status: 'playing' }),
+    getLeaderboard: (_req: express.Request, res: express.Response) =>
+      res.status(200).json({ quizTitle: 'Quiz', leaderboard: [] }),
   },
 }));
 
