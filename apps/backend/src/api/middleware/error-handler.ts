@@ -4,6 +4,7 @@ import { createChildLogger } from '../../config/logger';
 import { StatusCodes } from 'http-status-codes';
 import { AppError } from '../../shared/errors';
 import { AuthServiceError } from '../services/auth.service';
+import { reportError } from '../../config/sentry';
 
 const errorLogger = createChildLogger('error-handler');
 
@@ -83,6 +84,7 @@ export function errorHandler(
 
   // Unknown / unexpected errors → 500
   errorLogger.error({ err }, 'Unhandled error');
+  reportError(err, { path: _req.path, method: _req.method });
   res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
     error: 'Internal server error',
     code: 'INTERNAL_ERROR',
