@@ -5,12 +5,21 @@
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
+<<<<<<< HEAD
 - 3242 nodes · 4014 edges · 301 communities (256 shown, 45 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 30 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
 - Built from commit: `3e06a81b`
+=======
+- 3124 nodes · 3919 edges · 298 communities (258 shown, 40 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 39 edges (avg confidence: 0.82)
+- Token cost: 0 input · 0 output
+
+## Graph Freshness
+- Built from commit: `d68c922d`
+>>>>>>> 56b992e (chore(graphify): update graph files)
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -245,10 +254,18 @@
 - [[_COMMUNITY_Community 244|Community 244]]
 - [[_COMMUNITY_Community 245|Community 245]]
 - [[_COMMUNITY_Community 246|Community 246]]
+<<<<<<< HEAD
+=======
+- [[_COMMUNITY_Community 247|Community 247]]
+>>>>>>> 56b992e (chore(graphify): update graph files)
 - [[_COMMUNITY_Community 248|Community 248]]
 - [[_COMMUNITY_Community 249|Community 249]]
 - [[_COMMUNITY_Community 250|Community 250]]
 - [[_COMMUNITY_Community 251|Community 251]]
+<<<<<<< HEAD
+=======
+- [[_COMMUNITY_Community 252|Community 252]]
+>>>>>>> 56b992e (chore(graphify): update graph files)
 - [[_COMMUNITY_Community 253|Community 253]]
 - [[_COMMUNITY_Community 254|Community 254]]
 - [[_COMMUNITY_Community 255|Community 255]]
@@ -257,6 +274,10 @@
 - [[_COMMUNITY_Community 258|Community 258]]
 - [[_COMMUNITY_Community 259|Community 259]]
 - [[_COMMUNITY_Community 260|Community 260]]
+<<<<<<< HEAD
+=======
+- [[_COMMUNITY_Community 261|Community 261]]
+>>>>>>> 56b992e (chore(graphify): update graph files)
 - [[_COMMUNITY_Community 262|Community 262]]
 - [[_COMMUNITY_Community 263|Community 263]]
 - [[_COMMUNITY_Community 264|Community 264]]
@@ -288,16 +309,25 @@
 - [[_COMMUNITY_Community 290|Community 290]]
 - [[_COMMUNITY_Community 291|Community 291]]
 - [[_COMMUNITY_Community 292|Community 292]]
+<<<<<<< HEAD
 - [[_COMMUNITY_Community 297|Community 297]]
 - [[_COMMUNITY_Community 298|Community 298]]
 - [[_COMMUNITY_Community 299|Community 299]]
 - [[_COMMUNITY_Community 300|Community 300]]
 - [[_COMMUNITY_Community 307|Community 307]]
+=======
+- [[_COMMUNITY_Community 293|Community 293]]
+- [[_COMMUNITY_Community 294|Community 294]]
+- [[_COMMUNITY_Community 295|Community 295]]
+- [[_COMMUNITY_Community 296|Community 296]]
+- [[_COMMUNITY_Community 297|Community 297]]
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ## God Nodes (most connected - your core abstractions)
 1. `scripts` - 35 edges
 2. `AuthenticatedRequest` - 30 edges
 3. `QuizBuilderPageComponent` - 27 edges
+<<<<<<< HEAD
 4. `AuthService` - 25 edges
 5. `createChildLogger()` - 21 edges
 6. `GroupApiService` - 21 edges
@@ -305,18 +335,34 @@
 8. `HostPageComponent` - 19 edges
 9. `GameStateService` - 18 edges
 10. `Common Issues` - 18 edges
+=======
+4. `AuthService` - 26 edges
+5. `GroupApiService` - 21 edges
+6. `createChildLogger()` - 19 edges
+7. `GameLobbyPageComponent` - 19 edges
+8. `HostPageComponent` - 18 edges
+9. `Common Issues` - 18 edges
+10. `GameStateService` - 17 edges
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ## Surprising Connections (you probably didn't know these)
+- `Game Lobby Page Component` --references--> `Session State Machine`  [INFERRED]
+  apps/frontend/src/app/features/game/game-lobby-page.component.html → docs/product-backlog.md
+- `Game Play Page Component` --references--> `Speed-Based Scoring Algorithm`  [INFERRED]
+  apps/frontend/src/app/features/game/game-play-page.component.html → docs/product-backlog.md
 - `Stitch Game Mode Selection Screenshot` --references--> `Treasure Forge Game Mode`  [INFERRED]
   apps/frontend/src/assets/stitch/image.png → docs/product-backlog.md
 - `Nx Affected Command` --conceptually_related_to--> `QuizForge Backend`  [INFERRED]
   .opencode/skills/nx-workspace/references/AFFECTED.md → apps/backend/README.md
 - `Stitch Mascot Character` --conceptually_related_to--> `Arcade Energy Design Direction`  [INFERRED]
   apps/frontend/public/assets/stitch/image.png → apps/frontend/public/assets/stitch/prd-screen-a.html
+<<<<<<< HEAD
 - `Backend Key Facts` --references--> `Header-Based API Versioning`  [EXTRACTED]
   AGENTS.md → .opencode/context/project-intelligence/technical-domain.md
 - `Backend Key Facts` --references--> `Supavisor Transaction Mode`  [EXTRACTED]
   AGENTS.md → .opencode/context/project-intelligence/technical-domain.md
+=======
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ## Import Cycles
 - None detected.
@@ -335,7 +381,11 @@
 - **Real-Time Game Infrastructure (Sprint 3+)** — sprints_socket_io_room_management, sprints_session_state_machine, sprints_forge_classic_scoring, sprints_share_code_and_pin [INFERRED 0.85]
 - **Angular Frontend Stack (Sprint 3-4)** — sprints_zoneless_change_detection, sprints_bubbly_minimalism, sprints_zod_validation_schemas [INFERRED 0.80]
 
+<<<<<<< HEAD
 ## Communities (301 total, 45 thin omitted)
+=======
+## Communities (298 total, 40 thin omitted)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.03
@@ -346,14 +396,15 @@ Cohesion: 0.06
 Nodes (23): addGroupMember(), DiscoverableGroupSummary, findGroupMember(), GroupActiveSessionSummary, GroupInviteSummary, GroupJoinRequestSummary, GroupMemberSummary, listGroupIdsByMember() (+15 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.05
-Nodes (43): created_by, is_discoverable, join_policy, name, name, notNull, primaryKey, type (+35 more)
+Cohesion: 0.18
+Nodes (11): created_by, name, name, notNull, primaryKey, type, name, notNull (+3 more)
 
 ### Community 3 - "Community 3"
 Cohesion: 0.20
 Nodes (10): group_created_by_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, schemaTo, tableFrom (+2 more)
 
 ### Community 4 - "Community 4"
+<<<<<<< HEAD
 Cohesion: 0.10
 Nodes (21): creator_id, description, share_code, title, name, notNull, primaryKey, type (+13 more)
 
@@ -364,6 +415,18 @@ Nodes (16): creator_id, share_code, title, name, notNull, primaryKey, type, colu
 ### Community 6 - "Community 6"
 Cohesion: 0.10
 Nodes (7): ACTIVE_STATUSES, findActiveByPin(), findByPin(), findPlayerBySessionAndUser(), HostSessionSummary, markPlayerDisconnected(), upsertSessionPlayer()
+=======
+Cohesion: 0.18
+Nodes (11): creator_id, share_code, name, notNull, primaryKey, type, columns, name (+3 more)
+
+### Community 5 - "Community 5"
+Cohesion: 0.18
+Nodes (11): creator_id, title, name, notNull, primaryKey, type, columns, name (+3 more)
+
+### Community 6 - "Community 6"
+Cohesion: 0.07
+Nodes (24): ACTIVE_STATUSES, findActiveByPin(), findByPin(), findPlayerBySessionAndUser(), HostSessionSummary, markPlayerDisconnected(), upsertSessionPlayer(), GAME_EVENT (+16 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.08
@@ -371,19 +434,29 @@ Nodes (21): AnswerSubmissionState, GamePlayerState, GameStateService, Leaderboar
 
 ### Community 8 - "Community 8"
 Cohesion: 0.06
+<<<<<<< HEAD
 Nodes (30): AnswerAckEvent, ClientToServerEvents, closeRound(), closeRoundAndAdvance(), connectedHosts, emitError(), ensureGamePlayer(), formatUsername() (+22 more)
+=======
+Nodes (29): ActiveGameState, ActiveRoundState, AnswerAckEvent, ClientToServerEvents, connectedHosts, emitError(), ensureGamePlayer(), formatUsername() (+21 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 9 - "Community 9"
 Cohesion: 0.06
 Nodes (35): scripts, build:frontend, _comment:backend, _comment:frontend, _comment:general, db:generate, db:init, db:link (+27 more)
 
 ### Community 10 - "Community 10"
+<<<<<<< HEAD
 Cohesion: 0.22
 Nodes (13): Arcade Energy Aesthetic, Bubbly Minimalism Design Language, Podium-Style Leaderboard, Tactile UI Pattern, Landing Page Component, Stitch Dashboard Screenshot, Stitch Dashboard Reference, Stitch Game Lobby Screenshot (+5 more)
+=======
+Cohesion: 0.21
+Nodes (14): Arcade Energy Aesthetic, Bubbly Minimalism Design Language, Podium-Style Leaderboard, Tactile UI Pattern, Landing Page Component, Leaderboards Page Component, Stitch Dashboard Screenshot, Stitch Dashboard Reference (+6 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 11 - "Community 11"
 Cohesion: 0.06
 Nodes (39): Auth Page Component, Login/Signup Mode Toggle, Auth, authMiddleware, Backend Environment Variables, Endpoints, Environment Variables, Idempotent Seed Script (+31 more)
+<<<<<<< HEAD
 
 ### Community 12 - "Community 12"
 Cohesion: 0.11
@@ -392,12 +465,19 @@ Nodes (3): GameLobbyPageComponent, SessionStatus, SessionClosedEvent
 ### Community 13 - "Community 13"
 Cohesion: 0.17
 Nodes (14): CreateGroupPayload, DiscoverableGroupSummary, GroupDetail, GroupInviteSummary, GroupJoinRequestSummary, GroupMemberRole, GroupMemberSummary, UpdateGroupPayload (+6 more)
+=======
+
+### Community 13 - "Community 13"
+Cohesion: 0.18
+Nodes (9): SessionAction, SessionState, transitionState(), VALID_TRANSITIONS, AppError, ConflictError, ForbiddenError, InvalidStateTransitionError (+1 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 14 - "Community 14"
 Cohesion: 0.07
 Nodes (29): CreateGroupHandler, CreateQuizHandler, CreateSessionHandler, DeleteQuizHandler, ErrorResponse, GetGroupByIdHandler, GetMyQuizzesHandler, GetQuizByIdHandler (+21 more)
 
 ### Community 15 - "Community 15"
+<<<<<<< HEAD
 Cohesion: 0.15
 Nodes (9): LoginComponent, RegisterComponent, BubblyAlertComponent, BubblyAlertVariant, BubblyButtonComponent, BubblyButtonSize, BubblyButtonTone, BubblyInputType (+1 more)
 
@@ -408,22 +488,44 @@ Nodes (22): supabaseClient, pinParamSchema, ADMIN_USER_IDS, adminLogger, adminMi
 ### Community 17 - "Community 17"
 Cohesion: 0.22
 Nodes (9): checkConstraints, compositePrimaryKeys, indexes, isRLSEnabled, name, policies, schema, uniqueConstraints (+1 more)
+=======
+Cohesion: 0.10
+Nodes (9): AuthMode, AuthPageComponent, LoginComponent, RegisterComponent, BubblyAlertComponent, BubblyAlertVariant, BubblyInputComponent, BubblyInputType (+1 more)
+
+### Community 16 - "Community 16"
+Cohesion: 0.21
+Nodes (8): authLogger, authMiddleware(), mockGetUser, authRoutes, groupRouter, hostSessionRouter, sessionRouter, syncProfileForAuthUser()
+
+### Community 17 - "Community 17"
+Cohesion: 0.20
+Nodes (13): shareCodeExists(), createQuiz(), createQuizWithCollisionGuard(), deleteQuiz(), getQuizById(), getQuizByShareCode(), getQuizzesByCreator(), PublicQuestion (+5 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 18 - "Community 18"
 Cohesion: 0.09
 Nodes (24): args, backoff(), buildOutput(), categorizeTasks(), classify(), envRerunCount, expectedSha, formatMessage() (+16 more)
 
 ### Community 19 - "Community 19"
+<<<<<<< HEAD
 Cohesion: 0.07
 Nodes (27): session_host_id_users_id_fk, session_quiz_id_quiz_id_fk, checkConstraints, compositePrimaryKeys, foreignKeys, indexes, isRLSEnabled, name (+19 more)
+=======
+Cohesion: 0.20
+Nodes (9): dialect, id, policies, prevId, roles, schemas, sequences, version (+1 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 20 - "Community 20"
 Cohesion: 0.07
 Nodes (27): group_invite_group_id_group_id_fk, group_invite_invited_by_user_id_users_id_fk, group_invite_invited_user_id_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate (+19 more)
 
 ### Community 21 - "Community 21"
+<<<<<<< HEAD
 Cohesion: 0.07
 Nodes (27): group_join_request_group_id_group_id_fk, group_join_request_requester_user_id_users_id_fk, group_join_request_responded_by_user_id_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate (+19 more)
+=======
+Cohesion: 0.11
+Nodes (18): group_join_request_group_id_group_id_fk, group_join_request_requester_user_id_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, tableFrom (+10 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 22 - "Community 22"
 Cohesion: 0.07
@@ -450,12 +552,17 @@ Cohesion: 0.19
 Nodes (3): adminGuard(), authGuard(), AuthService
 
 ### Community 29 - "Community 29"
+<<<<<<< HEAD
 Cohesion: 0.11
 Nodes (5): GroupController, QuizController, SessionController, AuthenticatedRequest, mockGetUser
 
 ### Community 30 - "Community 30"
 Cohesion: 0.14
 Nodes (8): ACTIVE_STATUSES, RecentSessionSummary, SessionAnalytics, SessionStats, StaleSession, GAME_EVENT, Session, SESSION_PLAYER
+=======
+Cohesion: 0.15
+Nodes (3): GroupController, QuizController, AuthenticatedRequest
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 31 - "Community 31"
 Cohesion: 0.10
@@ -466,32 +573,55 @@ Cohesion: 0.18
 Nodes (24): CreateGroupRequest, InviteActionRequest, InviteMemberRequest, JoinRequestActionRequest, SearchGroupsQuery, UpdateGroupRequest, UpdateMemberRoleRequest, createGroup() (+16 more)
 
 ### Community 33 - "Community 33"
+<<<<<<< HEAD
 Cohesion: 0.11
 Nodes (13): initSentry(), reportError(), apiVersionMiddleware(), SUPPORTED_VERSIONS, versionLogger, errorHandler(), errorLogger, ErrorResponse (+5 more)
 
 ### Community 34 - "Community 34"
 Cohesion: 0.15
 Nodes (4): GroupsCreatePageComponent, JOIN_POLICY_OPTIONS, BubblySelectComponent, BubblySelectOption
+=======
+Cohesion: 0.16
+Nodes (13): server, createChildLogger(), authLogger, dbLogger, logger, apiVersionMiddleware(), SUPPORTED_VERSIONS, versionLogger (+5 more)
+
+### Community 34 - "Community 34"
+Cohesion: 0.10
+Nodes (18): DashboardQuizzesPageComponent, QuizSortMode, ActionCapableStatus, DiscoverableGroupSummary, QuizSummary, CreateSessionPayload, CreateSessionResponse, HostSessionSummary (+10 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 35 - "Community 35"
 Cohesion: 0.11
 Nodes (9): DashboardQuizzesPageComponent, QuizSortMode, QuizApiService, QuizDetailDto, QuizOptionDto, QuizQuestionPayload, QuizSavePayload, QuizSaveResponse (+1 more)
 
 ### Community 36 - "Community 36"
+<<<<<<< HEAD
 Cohesion: 0.39
 Nodes (4): Functional Repository Pattern, Service Layer Pattern, Supabase Auth Integration, Zod Validation Schemas
 
 ### Community 37 - "Community 37"
 Cohesion: 0.13
 Nodes (9): CreateSessionPayload, CreateSessionResponse, HostSessionSummary, LeaderboardEntry, SessionAction, SessionApiService, SessionDto, SessionLeaderboardResponse (+1 more)
+=======
+Cohesion: 0.48
+Nodes (4): Functional Repository Pattern, Service Layer Pattern, Supabase Auth Integration, Zod Validation Schemas
+
+### Community 37 - "Community 37"
+Cohesion: 0.22
+Nodes (3): DashboardSessionsPageComponent, SessionAction, SessionStatus
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 38 - "Community 38"
 Cohesion: 0.13
 Nodes (11): activePins, sessionPlayers, sessionStatuses, sockets, createSocketAuthMiddleware(), socketAuthMiddleware, VerifySocketToken, websocketLogger (+3 more)
 
 ### Community 39 - "Community 39"
+<<<<<<< HEAD
 Cohesion: 0.20
 Nodes (7): App, appConfig, config, serverConfig, appRoutes, serverRoutes, initSentry()
+=======
+Cohesion: 0.09
+Nodes (12): env, environment, environment, authInterceptor(), AuthService, SignInPayload, SignUpPayload, AuthChangePayload (+4 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 41 - "Community 41"
 Cohesion: 0.07
@@ -502,8 +632,13 @@ Cohesion: 0.11
 Nodes (17): compileOnSave, compilerOptions, baseUrl, declaration, emitDecoratorMetadata, experimentalDecorators, importHelpers, lib (+9 more)
 
 ### Community 43 - "Community 43"
+<<<<<<< HEAD
 Cohesion: 0.27
 Nodes (9): CreateQuizRequest, createQuizRequestSchema, QuestionInput, questionOptionSchema, questionSchema, quizIdParamSchema, shareCodeParamSchema, UpdateQuizRequest (+1 more)
+=======
+Cohesion: 0.13
+Nodes (6): authSchema, User, insertQuestion, insertQuiz, questionType, QUIZ
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 45 - "Community 45"
 Cohesion: 0.22
@@ -514,8 +649,13 @@ Cohesion: 0.13
 Nodes (15): emitSocketValidationError(), EndSessionMessage, endSessionMessageSchema, JoinGameMessage, joinGameMessageSchema, LeaveGameMessage, leaveGameMessageSchema, NextQuestionMessage (+7 more)
 
 ### Community 47 - "Community 47"
+<<<<<<< HEAD
 Cohesion: 0.17
 Nodes (8): Config, envSchema, parsedEnv, client, db, dbLogger, InsertProfile, PROFILE
+=======
+Cohesion: 0.18
+Nodes (16): createGroupRequestSchema, groupIdParamSchema, groupJoinPolicySchema, groupMemberRoleSchema, inviteActionSchema, inviteIdParamSchema, inviteMemberRequestSchema, joinRequestActionSchema (+8 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 48 - "Community 48"
 Cohesion: 0.12
@@ -523,7 +663,11 @@ Nodes (16): creator_id, description, title, name, notNull, primaryKey, type, nam
 
 ### Community 49 - "Community 49"
 Cohesion: 0.12
+<<<<<<< HEAD
 Nodes (16): data, session_id, session_player_id, name, notNull, primaryKey, type, columns (+8 more)
+=======
+Nodes (16): data, event_type, session_player_id, name, notNull, primaryKey, type, name (+8 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 50 - "Community 50"
 Cohesion: 0.12
@@ -566,12 +710,21 @@ Cohesion: 0.15
 Nodes (12): dependsOn, executor, options, outputs, implicitDependencies, name, command, cwd (+4 more)
 
 ### Community 61 - "Community 61"
+<<<<<<< HEAD
 Cohesion: 0.20
 Nodes (13): shareCodeExists(), createQuiz(), createQuizWithCollisionGuard(), deleteQuiz(), getQuizById(), getQuizByShareCode(), getQuizzesByCreator(), PublicQuestion (+5 more)
 
 ### Community 62 - "Community 62"
 Cohesion: 0.07
 Nodes (29): Application vs Library Detection, Common Issues, Dependency Version Conflicts, Directory Conventions, ESLint Config Handling, ESLint Version Pinning (Critical), Explicit Executor Path Fixups, Frontend tsconfig Base Settings (Critical) (+21 more)
+=======
+Cohesion: 0.22
+Nodes (11): CreateQuizRequest, createQuizRequestSchema, QuestionInput, questionOptionSchema, questionSchema, quizIdParamSchema, shareCodeParamSchema, UpdateQuizRequest (+3 more)
+
+### Community 62 - "Community 62"
+Cohesion: 0.17
+Nodes (14): DashboardData, GroupsAndSessions, JoinableSession, GroupActiveSessionSummary, GroupDetail, GroupInviteSummary, GroupJoinRequestSummary, GroupMemberRole (+6 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 63 - "Community 63"
 Cohesion: 0.15
@@ -590,8 +743,13 @@ Cohesion: 0.53
 Nodes (5): DashboardData, GroupsAndSessions, JoinableSession, GroupActiveSessionSummary, MyGroupSummary
 
 ### Community 67 - "Community 67"
+<<<<<<< HEAD
 Cohesion: 0.22
 Nodes (9): game_event_session_id_session_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, tableFrom, tableTo (+1 more)
+=======
+Cohesion: 0.12
+Nodes (17): group_id, joined_at, user_id, name, notNull, primaryKey, type, default (+9 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 68 - "Community 68"
 Cohesion: 0.11
@@ -650,8 +808,13 @@ Cohesion: 0.22
 Nodes (9): include, runner, runnerConfig, setupFiles, tsConfig, watch, test, executor (+1 more)
 
 ### Community 85 - "Community 85"
+<<<<<<< HEAD
 Cohesion: 0.22
 Nodes (9): checkConstraints, compositePrimaryKeys, indexes, isRLSEnabled, name, policies, schema, uniqueConstraints (+1 more)
+=======
+Cohesion: 0.25
+Nodes (8): game_event_session_player_id_session_player_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, tableFrom, tableTo
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 86 - "Community 86"
 Cohesion: 0.22
@@ -662,12 +825,21 @@ Cohesion: 0.11
 Nodes (18): Bundle Analysis, Configuration, Database Indexes, Error Reporting, Frontend Cache Staleness, Install Lighthouse CI, Lighthouse Setup, Monitoring (+10 more)
 
 ### Community 88 - "Community 88"
+<<<<<<< HEAD
 Cohesion: 0.14
 Nodes (13): GROUP, GameEvent, InsertGameEvent, InsertSession, InsertSessionBroadcastGroup, InsertSessionPlayer, PLAYER_STATUS, PlayerStatus (+5 more)
 
 ### Community 89 - "Community 89"
 Cohesion: 0.18
 Nodes (8): SessionAction, SessionState, VALID_TRANSITIONS, AppError, ConflictError, ForbiddenError, InvalidStateTransitionError, NotFoundError
+=======
+Cohesion: 0.07
+Nodes (27): session_player_session_id_session_id_fk, session_player_user_id_users_id_fk, checkConstraints, compositePrimaryKeys, foreignKeys, indexes, isRLSEnabled, name (+19 more)
+
+### Community 89 - "Community 89"
+Cohesion: 0.04
+Nodes (42): Behrang - 8 SP, David - 8 SP, Effort Distribution by Developer, Mohamad - 8 SP, Nishan - 14 SP, Sprint 4 Effort Plan, Team Members & Roles, PB-115: Groups, Discovery, Admin Management, and Session Broadcasting (Nishan) (+34 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 90 - "Community 90"
 Cohesion: 0.24
@@ -682,12 +854,21 @@ Cohesion: 0.40
 Nodes (5): group_id, name, notNull, primaryKey, type
 
 ### Community 93 - "Community 93"
+<<<<<<< HEAD
 Cohesion: 0.17
 Nodes (12): PB-15: QuizRepository with Drizzle Queries (David), PB-16: QuestionRepository for Managing Quiz Questions (David), PB-17.5: Quiz Service Layer (Nishan), PB-17: Create and Edit Quiz Endpoints (Nishan), PB-19: Delete Quiz Endpoint (Nishan), PB-20: View My Quizzes Endpoint (Mohamad), PB-21: Zod Validation Schemas for Quiz Operations (Behrang), PB-23: Quiz Endpoints Enforce AuthMiddleware (Mohamad) (+4 more)
 
 ### Community 94 - "Community 94"
 Cohesion: 0.29
 Nodes (7): role, default, name, notNull, primaryKey, type, typeSchema
+=======
+Cohesion: 0.07
+Nodes (29): Application vs Library Detection, Common Issues, Dependency Version Conflicts, Directory Conventions, ESLint Config Handling, ESLint Version Pinning (Critical), Explicit Executor Path Fixups, Frontend tsconfig Base Settings (Critical) (+21 more)
+
+### Community 94 - "Community 94"
+Cohesion: 0.14
+Nodes (19): SessionController, CreateSessionRequest, createSessionRequestSchema, PinParam, pinParamSchema, UpdateSessionStatusRequest, updateSessionStatusSchema, pinExists() (+11 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 95 - "Community 95"
 Cohesion: 0.22
@@ -702,8 +883,13 @@ Cohesion: 0.29
 Nodes (7): Integration Tests, Manual Testing Checklist, Notes, Sprint 1 Backlog - Database & Authentication Foundation, Sprint 1 Success Metrics, Sprint 1 Test Plan, Unit Tests (Bun Test Runner)
 
 ### Community 98 - "Community 98"
+<<<<<<< HEAD
 Cohesion: 0.11
 Nodes (18): Apply Locally + Enhance Flow, Apply via MCP, cipe_no_tasks, Commit Message Format, Detailed Status Handling & Fix Flows, environment_issue, Environment vs Code Failure Recognition, Fix Action Flows (+10 more)
+=======
+Cohesion: 0.07
+Nodes (26): ESLint: Self-Contained `eslint-config-next`, Fix Order — Non-Nx Source (create-next-app), Fix Order — Nx Source (Subdirectory Import), Iteration Log, Mixed Next.js + Vite Coexistence, `next.config.js` Lint Warning, `next-env.d.ts`, Next.js (+18 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 99 - "Community 99"
 Cohesion: 0.22
@@ -714,8 +900,17 @@ Cohesion: 0.07
 Nodes (27): group_invite_group_id_group_id_fk, group_invite_invited_by_user_id_users_id_fk, group_invite_invited_user_id_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate (+19 more)
 
 ### Community 101 - "Community 101"
+<<<<<<< HEAD
 Cohesion: 0.07
 Nodes (26): dialect, enums, public.PLAYER_STATUS, public.question_type, public.SESSION_STATUS, id, _meta, columns (+18 more)
+=======
+Cohesion: 0.08
+Nodes (25): 2a. Spawn subagent (FETCH_STATUS), 2b. Run decision script, 2c. Process script output, Anti-Patterns, Architecture Overview, Configuration Defaults, Context, Default Behaviors by Status (+17 more)
+
+### Community 102 - "Community 102"
+Cohesion: 0.22
+Nodes (9): group_join_request_responded_by_user_id_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, schemaTo, tableFrom (+1 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 103 - "Community 103"
 Cohesion: 0.22
@@ -742,8 +937,13 @@ Cohesion: 0.22
 Nodes (9): checkConstraints, compositePrimaryKeys, indexes, isRLSEnabled, name, policies, schema, uniqueConstraints (+1 more)
 
 ### Community 109 - "Community 109"
+<<<<<<< HEAD
 Cohesion: 0.47
 Nodes (4): sessionEventsRouter, sseLogger, sessionEventEmitter, SessionLifecycleEvent
+=======
+Cohesion: 0.15
+Nodes (13): columns, name, nullsNotDistinct, checkConstraints, compositePrimaryKeys, indexes, isRLSEnabled, name (+5 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 110 - "Community 110"
 Cohesion: 0.22
@@ -782,8 +982,13 @@ Cohesion: 0.25
 Nodes (8): buildTarget, port, spa, staticFilePath, continuous, executor, options, serve-static
 
 ### Community 119 - "Community 119"
+<<<<<<< HEAD
 Cohesion: 0.33
 Nodes (6): created_at, default, name, notNull, primaryKey, type
+=======
+Cohesion: 0.22
+Nodes (9): game_event_session_id_session_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, tableFrom, tableTo (+1 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 120 - "Community 120"
 Cohesion: 0.12
@@ -862,8 +1067,13 @@ Cohesion: 0.20
 Nodes (10): quiz_creator_id_users_id_fk, foreignKeys, columnsFrom, columnsTo, name, onDelete, onUpdate, schemaTo (+2 more)
 
 ### Community 140 - "Community 140"
+<<<<<<< HEAD
 Cohesion: 0.22
 Nodes (9): checkConstraints, compositePrimaryKeys, indexes, isRLSEnabled, name, policies, schema, uniqueConstraints (+1 more)
+=======
+Cohesion: 0.19
+Nodes (5): client, db, dbLogger, InsertProfile, PROFILE
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 141 - "Community 141"
 Cohesion: 0.33
@@ -886,8 +1096,13 @@ Cohesion: 0.33
 Nodes (5): compilerOptions, outDir, types, extends, include
 
 ### Community 146 - "Community 146"
+<<<<<<< HEAD
 Cohesion: 0.20
 Nodes (10): profile_user_id_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, schemaTo, tableFrom (+2 more)
+=======
+Cohesion: 0.08
+Nodes (25): 2a. Spawn subagent (FETCH_STATUS), 2b. Run decision script, 2c. Process script output, Anti-Patterns, Architecture Overview, Configuration Defaults, Context, Default Behaviors by Status (+17 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 147 - "Community 147"
 Cohesion: 0.12
@@ -914,8 +1129,13 @@ Cohesion: 0.24
 Nodes (3): findById(), findByIdWithQuestions(), update()
 
 ### Community 153 - "Community 153"
+<<<<<<< HEAD
 Cohesion: 0.22
 Nodes (9): checkConstraints, compositePrimaryKeys, indexes, isRLSEnabled, name, policies, schema, uniqueConstraints (+1 more)
+=======
+Cohesion: 0.10
+Nodes (20): Integration Tests, Manual Testing Checklist, Notes, PB-15: QuizRepository with Drizzle Queries (David), PB-16: QuestionRepository for Managing Quiz Questions (David), PB-17.5: Quiz Service Layer (Nishan), PB-17: Create and Edit Quiz Endpoints (Nishan), PB-19: Delete Quiz Endpoint (Nishan) (+12 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 154 - "Community 154"
 Cohesion: 0.33
@@ -1006,8 +1226,13 @@ Cohesion: 0.40
 Nodes (5): correct_answer, name, notNull, primaryKey, type
 
 ### Community 182 - "Community 182"
+<<<<<<< HEAD
 Cohesion: 0.25
 Nodes (8): game_event_session_player_id_session_player_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, tableFrom, tableTo
+=======
+Cohesion: 0.11
+Nodes (18): Apply Locally + Enhance Flow, Apply via MCP, cipe_no_tasks, Commit Message Format, Detailed Status Handling & Fix Flows, environment_issue, Environment vs Code Failure Recognition, Fix Action Flows (+10 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 183 - "Community 183"
 Cohesion: 0.40
@@ -1026,8 +1251,13 @@ Cohesion: 0.40
 Nodes (5): time_limit, name, notNull, primaryKey, type
 
 ### Community 187 - "Community 187"
+<<<<<<< HEAD
 Cohesion: 0.20
 Nodes (10): PB-28: Session State Machine (David), PB-29: Session Endpoints with Tspec Docs (David), PB-31: Angular v21 Frontend Scaffolded (Mohamad), PB-32: Tailwind & DaisyUI Config (Bubbly Minimalism) (Behrang), PB-33: Zoneless Change Detection and Hybrid Rendering Config (Mohamad), PB-37: Socket.IO Server Config With Auth (Nishan), PB-38: WebSocket Event Handlers & Room Management (Nishan), PB-45: Zod Validation Schemas for WebSocket Messages (Behrang) (+2 more)
+=======
+Cohesion: 0.11
+Nodes (18): CI Atomization, Common Post-Import Issues, Core (always needed), Environment-specific, Fix Order, How `@nx/jest` Works, Jest, Jest Preset (+10 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 188 - "Community 188"
 Cohesion: 0.40
@@ -1046,8 +1276,13 @@ Cohesion: 0.50
 Nodes (4): info, description, title, version
 
 ### Community 192 - "Community 192"
+<<<<<<< HEAD
 Cohesion: 0.13
 Nodes (11): env, environment, environment, authInterceptor(), SignInPayload, SignUpPayload, AuthChangePayload, createClientMock (+3 more)
+=======
+Cohesion: 0.18
+Nodes (7): App, appConfig, config, serverConfig, appRoutes, serverRoutes, authGuard()
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 193 - "Community 193"
 Cohesion: 0.50
@@ -1081,6 +1316,10 @@ Nodes (13): 1. Discover Available Generators, 2. Match Generator to User Request
 Cohesion: 0.11
 Nodes (18): Behrang - 5 SP, Contingency Plan, Daily Effort Breakdown, David - 9 SP, Definition of Done (Sprint Level), Dependency Graph, Effort Distribution by Developer, Identified Risks (+10 more)
 
+### Community 201 - "Community 201"
+Cohesion: 0.11
+Nodes (17): Affected Projects, "Cannot find configuration for task X:target", Common Exploration Patterns, "How do I build/test/lint project X?", Listing Projects, Listing Projects, Nx Workspace Exploration, Programmatic Answers (+9 more)
+
 ### Community 202 - "Community 202"
 Cohesion: 0.67
 Nodes (3): executor, options, db:push
@@ -1101,7 +1340,12 @@ Nodes (8): checkConstraints, compositePrimaryKeys, isRLSEnabled, name, policies,
 Cohesion: 0.22
 Nodes (9): checkConstraints, compositePrimaryKeys, indexes, isRLSEnabled, name, policies, schema, uniqueConstraints (+1 more)
 
+### Community 224 - "Community 224"
+Cohesion: 0.12
+Nodes (17): Behrang - 5 SP, Contingency Plan, Daily Effort Breakdown, David - 9 SP, Definition of Done (Sprint Level), Effort Distribution by Developer, Identified Risks, Mohamad - 14 SP (+9 more)
+
 ### Community 243 - "Community 243"
+<<<<<<< HEAD
 Cohesion: 0.06
 Nodes (32): Bubbly Royale Game Mode, Forge Classic Game Mode, Session State Machine, 6-Digit PIN Game Joining, Speed-Based Scoring Algorithm, Treasure Forge Game Mode, Product Backlog Compression Notes, Entity Relationship Diagram (+24 more)
 
@@ -1212,6 +1456,22 @@ Nodes (6): created_at, default, name, notNull, primaryKey, type
 ### Community 277 - "Community 277"
 Cohesion: 0.40
 Nodes (5): Integration / E2E, Prerequisites from Sprint 2, Sprint 3 Backlog - Frontend Foundation & WebSocket Infrastructure, Sprint 3 Test Plan, Unit Tests (Vitest + Bun)
+=======
+Cohesion: 0.12
+Nodes (17): PB-00: Git repository & CI basics (Mohamad), PB-01: Nx monorepo with Bun backend scaffold (Mohamad), PB-02: Tech stack research & selection (Mohamad), PB-03: Entity-Relationship Diagram (ERD) Design (Behrang), PB-04: Supabase Project Setup (Mohamad), PB-05: Drizzle ORM Configuration (David), PB-06.5: Auth Service Layer (David), PB-06: Drizzle Database Schema Definition (David) (+9 more)
+
+### Community 244 - "Community 244"
+Cohesion: 0.12
+Nodes (15): API Route (Backend), Architecture Pattern, Code Patterns, Code Standards, 📂 Codebase References, Component (Frontend), Key Design Decisions, Naming Conventions (+7 more)
+
+### Community 245 - "Community 245"
+Cohesion: 0.13
+Nodes (15): Integration / E2E, PB-28: Session State Machine (David), PB-29: Session Endpoints with Tspec Docs (David), PB-31: Angular v21 Frontend Scaffolded (Mohamad), PB-32: Tailwind & DaisyUI Config (Bubbly Minimalism) (Behrang), PB-33: Zoneless Change Detection and Hybrid Rendering Config (Mohamad), PB-37: Socket.IO Server Config With Auth (Nishan), PB-38: WebSocket Event Handlers & Room Management (Nishan) (+7 more)
+
+### Community 246 - "Community 246"
+Cohesion: 0.13
+Nodes (15): Integration / E2E, PB-28: Session State Machine (David), PB-29: Session Endpoints with Tspec Docs (David), PB-31: Angular v21 Frontend Scaffolded (Mohamad), PB-32: Tailwind & DaisyUI Config (Bubbly Minimalism) (Behrang), PB-33: Zoneless Change Detection and Hybrid Rendering Config (Mohamad), PB-37: Socket.IO Server Config With Auth (Nishan), PB-38: WebSocket Event Handlers & Room Management (Nishan) (+7 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
 
 ### Community 278 - "Community 278"
 Cohesion: 0.38
@@ -1269,8 +1529,196 @@ Nodes (4): Bubbly UI Component Library, Groups Create Page Component, Groups Det
 Cohesion: 0.12
 Nodes (16): requester_user_id, responded_at, responded_by_user_id, columns, name, notNull, primaryKey, type (+8 more)
 
+### Community 248 - "Community 248"
+Cohesion: 0.14
+Nodes (13): 1. Discover Available Generators, 2. Match Generator to User Request, 3. Get Generator Options, 4. Read Generator Source Code, 5. Examine Existing Patterns, 6. Dry-Run to Verify File Placement, 7. Run the Generator, 8. Modify Generated Code (If Needed) (+5 more)
+
+### Community 249 - "Community 249"
+Cohesion: 0.14
+Nodes (13): Contingency Plan, Daily Effort Breakdown, Definition of Done (Sprint Level), Dependency Graph, Identified Risks, Notes, Risk Mitigation, Sprint 2 Effort Plan (+5 more)
+
+### Community 250 - "Community 250"
+Cohesion: 0.17
+Nodes (12): Backend (13 SP), Backlog Summary, Consolidation Notes, Frontend (12 SP), QuizForge Product Backlog, Sprint 1 - Database & Authentication Foundation (Backend), Sprint 2 - Quiz & Session Management API (Backend), Sprint 3 - Frontend Foundation & WebSocket Infrastructure (+4 more)
+
+### Community 251 - "Community 251"
+Cohesion: 0.18
+Nodes (11): Additional Game Modes (Future), Advanced Features, Analytics & Monitoring, API Documentation & Polish, Future Sprints (Backlog), Game Modes - Bubbly Royale, Game Modes - Treasure Forge, Mobile & Multi-Platform (+3 more)
+
+### Community 252 - "Community 252"
+Cohesion: 0.33
+Nodes (10): Bubbly UI Component Library, 6-Digit PIN Game Joining, Dashboard Shell Component, Game Lobby Page Component, Game Play Page Component, Groups Create Page Component, Groups Detail Page Component, Host Page Component (+2 more)
+
+### Community 253 - "Community 253"
+Cohesion: 0.20
+Nodes (9): bun, Detect Package Manager, Examples, Link Workspace Packages, Notes, npm, pnpm, Workflow (+1 more)
+
+### Community 254 - "Community 254"
+Cohesion: 0.20
+Nodes (10): quiz_creator_id_users_id_fk, foreignKeys, columnsFrom, columnsTo, name, onDelete, onUpdate, schemaTo (+2 more)
+
+### Community 255 - "Community 255"
+Cohesion: 0.20
+Nodes (10): group_created_by_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, schemaTo, tableFrom (+2 more)
+
+### Community 256 - "Community 256"
+Cohesion: 0.20
+Nodes (10): quiz_creator_id_users_id_fk, foreignKeys, columnsFrom, columnsTo, name, onDelete, onUpdate, schemaTo (+2 more)
+
+### Community 257 - "Community 257"
+Cohesion: 0.20
+Nodes (10): quiz_creator_id_users_id_fk, foreignKeys, columnsFrom, columnsTo, name, onDelete, onUpdate, schemaTo (+2 more)
+
+### Community 258 - "Community 258"
+Cohesion: 0.22
+Nodes (8): Bubbly Royale Game Mode, Forge Classic Game Mode, Session State Machine, Speed-Based Scoring Algorithm, Treasure Forge Game Mode, Product Backlog Compression Notes, Entity Relationship Diagram, Stitch Game Mode Selection Screenshot
+
+### Community 259 - "Community 259"
+Cohesion: 0.22
+Nodes (9): checkConstraints, compositePrimaryKeys, indexes, isRLSEnabled, name, policies, schema, uniqueConstraints (+1 more)
+
+### Community 260 - "Community 260"
+Cohesion: 0.22
+Nodes (9): checkConstraints, compositePrimaryKeys, indexes, isRLSEnabled, name, policies, schema, uniqueConstraints (+1 more)
+
+### Community 261 - "Community 261"
+Cohesion: 0.22
+Nodes (9): checkConstraints, compositePrimaryKeys, indexes, isRLSEnabled, name, policies, schema, uniqueConstraints (+1 more)
+
+### Community 262 - "Community 262"
+Cohesion: 0.22
+Nodes (9): checkConstraints, compositePrimaryKeys, indexes, isRLSEnabled, name, policies, schema, uniqueConstraints (+1 more)
+
+### Community 263 - "Community 263"
+Cohesion: 0.22
+Nodes (9): checkConstraints, compositePrimaryKeys, indexes, isRLSEnabled, name, policies, schema, uniqueConstraints (+1 more)
+
+### Community 264 - "Community 264"
+Cohesion: 0.25
+Nodes (7): CI Monitor Subagent, Commands, FETCH_HEAVY, FETCH_STATUS, FETCH_THROTTLE_INFO, Important, UPDATE_FIX
+
+### Community 265 - "Community 265"
+Cohesion: 0.25
+Nodes (7): Deep Dives, Key Commands, Maintenance, Quick Routes, QuizForge Project Context, Related Documentation, Structure
+
+### Community 266 - "Community 266"
+Cohesion: 0.25
+Nodes (7): Duplicate `lint` and `eslint:lint` Targets, ESLint, Flat Config `.cjs` Files Self-Linting, How `@nx/eslint/plugin` Works, Legacy `.eslintrc.*` Configs Linting Generated Files, Mixed ESLint v8 and v9 in One Workspace, `typescript-eslint` Version Conflict With ESLint 9
+
+### Community 267 - "Community 267"
+Cohesion: 0.25
+Nodes (7): Check for Root Config Files First, General Cleanup, Key Pitfalls, Merging ESLint Config (Only When Root eslint.config Exists), Merging TypeScript Config (Only When Root tsconfig.base.json Exists), The Config-as-Package Pattern, Turborepo
+
+### Community 268 - "Community 268"
+Cohesion: 0.25
+Nodes (8): Fix Orders, Multiple-Source Imports, Non-Nx Source (additional steps), Non-Nx Source: React Router 7, Non-Nx Source: TanStack Start, Nx Source, Quick Reference: React vs Vue, Quick Reference: Vite-Based React Frameworks
+
+### Community 269 - "Community 269"
+Cohesion: 0.25
+Nodes (7): Behrang - 6 SP, David - 5 SP, Effort Distribution by Developer, Mohamad - 6 SP, Nishan - 8 SP, Sprint 3 Effort Plan, Team Members & Roles
+
+### Community 270 - "Community 270"
+Cohesion: 0.29
+Nodes (7): join_policy, default, name, notNull, primaryKey, type, typeSchema
+
+### Community 271 - "Community 271"
+Cohesion: 0.29
+Nodes (7): join_policy, default, name, notNull, primaryKey, type, typeSchema
+
+### Community 272 - "Community 272"
+Cohesion: 0.29
+Nodes (6): Iteration Log, React Router 7 — Keep ALL scripts, Redundant npm Scripts After Import, Scenario 6: Multiple non-Nx React apps (CRA, Next.js, React Router 7, TanStack Start, Vite) → TS preset (PASS), Standalone Vite App (`create-vite`), TanStack Start
+
+### Community 273 - "Community 273"
+Cohesion: 0.29
+Nodes (7): Dependency Version Conflicts, Missing TypeScript `types` (Non-Nx Sources), `noEmit` Fix: Vite-Specific Notes, @nx/vite Plugin Install Failure, `@nx/vite/plugin` Typecheck Target, Vite, Vite `resolve.alias` and `__dirname` (Non-Nx Sources)
+
+### Community 274 - "Community 274"
+Cohesion: 0.29
+Nodes (7): ESLint Plugin Installation Order (Critical), Vue Dependencies, Vue ESLint Config Pattern, `vue-shims.d.ts`, Vue-Specific, `vue-tsc` Auto-Detection, Vue TypeScript Configuration
+
+### Community 275 - "Community 275"
+Cohesion: 0.29
+Nodes (7): Integration Tests, Manual Testing Checklist, Notes, Sprint 1 Backlog - Database & Authentication Foundation, Sprint 1 Success Metrics, Sprint 1 Test Plan, Unit Tests (Bun Test Runner)
+
+### Community 276 - "Community 276"
+Cohesion: 0.38
+Nodes (6): Bubbly Minimalism Design Language, Forge Classic Scoring Algorithm, Session State Machine, Share Code and PIN Utilities, Socket.IO Room Management, Zoneless Change Detection
+
+### Community 277 - "Community 277"
+Cohesion: 0.33
+Nodes (6): created_at, default, name, notNull, primaryKey, type
+
+### Community 278 - "Community 278"
+Cohesion: 0.33
+Nodes (6): is_discoverable, default, name, notNull, primaryKey, type
+
+### Community 279 - "Community 279"
+Cohesion: 0.33
+Nodes (6): created_by, name, notNull, primaryKey, type, columns
+
+### Community 280 - "Community 280"
+Cohesion: 0.33
+Nodes (6): is_discoverable, default, name, notNull, primaryKey, type
+
+### Community 281 - "Community 281"
+Cohesion: 0.33
+Nodes (5): Run a single task, Run multiple tasks, Run tasks for affected projects, Understand which tasks can be run, Useful flags
+
+### Community 282 - "Community 282"
+Cohesion: 0.33
+Nodes (6): Generated and Build Directories, `paths` Aliases, TanStack Start (Vite-Based), Targets, tsconfig Notes, Uncommitted Source Repo
+
+### Community 283 - "Community 283"
+Cohesion: 0.33
+Nodes (6): React Dependencies, React ESLint Config, React-Specific, React TypeScript Configuration, React Version Conflicts, `@testing-library/jest-dom` with Vitest
+
+### Community 284 - "Community 284"
+Cohesion: 0.40
+Nodes (5): share_code, name, notNull, primaryKey, type
+
+### Community 285 - "Community 285"
+Cohesion: 0.40
+Nodes (5): description, name, notNull, primaryKey, type
+
+### Community 286 - "Community 286"
+Cohesion: 0.40
+Nodes (5): title, name, notNull, primaryKey, type
+
+### Community 287 - "Community 287"
+Cohesion: 0.40
+Nodes (5): description, name, notNull, primaryKey, type
+
+### Community 288 - "Community 288"
+Cohesion: 0.40
+Nodes (5): name, name, notNull, primaryKey, type
+
+### Community 289 - "Community 289"
+Cohesion: 0.40
+Nodes (5): share_code, name, notNull, primaryKey, type
+
+### Community 290 - "Community 290"
+Cohesion: 0.40
+Nodes (5): Build Output, Generated Types Directory, React Router 7 (Vite-Based), Targets, tsconfig Notes
+
+### Community 291 - "Community 291"
+Cohesion: 0.40
+Nodes (5): Behrang - 5 SP, David - 9 SP, Effort Distribution by Developer, Mohamad - 6 SP + reviews, Nishan - 6 SP
+
+### Community 292 - "Community 292"
+Cohesion: 0.50
+Nodes (4): _meta, columns, schemas, tables
+
+### Community 293 - "Community 293"
+Cohesion: 0.50
+Nodes (4): ESLint — Three-Tier Config, Mixed React + Vue, tsconfig `jsx` — Per-Project Only, Typecheck — Auto-Detects Framework
+
 ## Knowledge Gaps
+<<<<<<< HEAD
 - **1864 isolated node(s):** `Overview`, `Performance Targets`, `WebSocket Rate Limiting`, `Session Cleanup Scheduler`, `Database Indexes` (+1859 more)
+=======
+- **1800 isolated node(s):** `husky.sh script`, `$schema`, `plugin`, `@opencode-ai/plugin`, `args` (+1795 more)
+>>>>>>> 56b992e (chore(graphify): update graph files)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **45 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -1278,6 +1726,7 @@ Nodes (16): requester_user_id, responded_at, responded_by_user_id, columns, name
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `WebsocketService` connect `Community 71` to `Community 27`, `Community 7`?**
+<<<<<<< HEAD
   _High betweenness centrality (0.050) - this node is a cross-community bridge._
 - **Why does `io` connect `Community 71` to `Community 33`?**
   _High betweenness centrality (0.050) - this node is a cross-community bridge._
@@ -1291,3 +1740,18 @@ _Questions this graph is uniquely positioned to answer:_
   _Cohesion score 0.05656565656565657 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.046511627906976744 - nodes in this community are weakly interconnected._
+=======
+  _High betweenness centrality (0.040) - this node is a cross-community bridge._
+- **Why does `io` connect `Community 71` to `Community 33`?**
+  _High betweenness centrality (0.040) - this node is a cross-community bridge._
+- **Why does `AuthService` connect `Community 39` to `Community 192`, `Community 27`, `Community 62`, `Community 15`?**
+  _High betweenness centrality (0.019) - this node is a cross-community bridge._
+- **What connects `husky.sh script`, `$schema`, `plugin` to the rest of the system?**
+  _1803 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `Community 0` be split into smaller, more focused modules?**
+  _Cohesion score 0.034482758620689655 - nodes in this community are weakly interconnected._
+- **Should `Community 1` be split into smaller, more focused modules?**
+  _Cohesion score 0.05757575757575758 - nodes in this community are weakly interconnected._
+- **Should `Community 6` be split into smaller, more focused modules?**
+  _Cohesion score 0.07017543859649122 - nodes in this community are weakly interconnected._
+>>>>>>> 56b992e (chore(graphify): update graph files)
