@@ -20,6 +20,21 @@ export interface GamePlayerState {
   isHost: boolean;
 }
 
+export interface RoundResult {
+  correct: boolean;
+  scoreDelta: number;
+  totalScore: number;
+}
+
+export interface LeaderboardEntry {
+  userId: string;
+  username: string;
+  score: number;
+  rank: number;
+  rankDelta?: number;
+  scoreDelta?: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class GameStateService {
   private readonly pinState = signal<string | null>(null);
@@ -27,10 +42,13 @@ export class GameStateService {
   private readonly hostUserIdState = signal<string | null>(null);
   private readonly playersState = signal<GamePlayerState[]>([]);
   private readonly currentQuestionState = signal<GameQuestionEvent | null>(null);
-  private readonly leaderboardState = signal<LeaderboardPlayerEvent[]>([]);
+  private readonly leaderboardState = signal<LeaderboardEntry[]>([]);
+  private readonly previousRankMap = new Map<string, number>();
+  private readonly previousScoreMap = new Map<string, number>();
   private readonly selectedAnswerState = signal<string | null>(null);
   private readonly submissionStateSignal = signal<AnswerSubmissionState>('idle');
   private readonly lastAnswerState = signal<AnswerAckEvent | null>(null);
+  private readonly lastRoundResultState = signal<RoundResult | null>(null);
   private readonly errorState = signal<string | null>(null);
   private readonly endedState = signal(false);
   private readonly nowMs = signal(Date.now());
@@ -45,6 +63,7 @@ export class GameStateService {
   readonly selectedAnswer = this.selectedAnswerState.asReadonly();
   readonly submissionState = this.submissionStateSignal.asReadonly();
   readonly lastAnswer = this.lastAnswerState.asReadonly();
+  readonly lastRoundResult = this.lastRoundResultState.asReadonly();
   readonly errorMessage = this.errorState.asReadonly();
   readonly ended = this.endedState.asReadonly();
   readonly timeRemainingMs = computed(() => {
@@ -99,6 +118,7 @@ export class GameStateService {
     this.selectedAnswerState.set(null);
     this.submissionStateSignal.set('idle');
     this.lastAnswerState.set(null);
+    this.lastRoundResultState.set(null);
     this.errorState.set(null);
     this.startClock();
   }
@@ -129,6 +149,11 @@ export class GameStateService {
 
     this.submissionStateSignal.set('accepted');
     this.lastAnswerState.set(event);
+    this.lastRoundResultState.set({
+      correct: event.correct,
+      scoreDelta: event.scoreDelta,
+      totalScore: event.totalScore,
+    });
     this.errorState.set(null);
   }
 
@@ -138,21 +163,22 @@ export class GameStateService {
   }
 
   setScoreUpdate(event: ScoreUpdateEvent): void {
-    this.leaderboardState.set(event.leaderboard);
+    this.leaderboardState.set(this.computeRankDeltas(event.leaderboard));
   }
 
   setLeaderboard(event: LeaderboardUpdateEvent): void {
-    this.leaderboardState.set(event.leaderboard);
+    this.leaderboardState.set(this.computeRankDeltas(event.leaderboard));
   }
 
   closeRound(_event: RoundClosedEvent): void {
     if (this.submissionStateSignal() === 'idle') {
       this.submissionStateSignal.set('closed');
+      this.lastRoundResultState.set(null);
     }
   }
 
   endGame(event: GameEndedEvent): void {
-    this.leaderboardState.set(event.leaderboard);
+    this.leaderboardState.set(this.computeRankDeltas(event.leaderboard));
     this.endedState.set(true);
     this.currentQuestionState.set(null);
     this.stopClock();
@@ -165,12 +191,47 @@ export class GameStateService {
     this.playersState.set([]);
     this.currentQuestionState.set(null);
     this.leaderboardState.set([]);
+    this.previousRankMap.clear();
+    this.previousScoreMap.clear();
     this.selectedAnswerState.set(null);
     this.submissionStateSignal.set('idle');
     this.lastAnswerState.set(null);
+    this.lastRoundResultState.set(null);
     this.errorState.set(null);
     this.endedState.set(false);
     this.stopClock();
+  }
+
+  private computeRankDeltas(raw: LeaderboardPlayerEvent[]): LeaderboardEntry[] {
+    const entries: LeaderboardEntry[] = raw.map((player) => {
+      const prevRank = this.previousRankMap.get(player.userId);
+      const rankDelta = prevRank !== undefined ? prevRank - player.rank : 0;
+      return {
+        userId: player.userId,
+        username: player.username,
+        score: player.score,
+        rank: player.rank,
+        rankDelta,
+      };
+    });
+
+    // Compute score deltas by comparing with previous scores
+    for (const entry of entries) {
+      const prevScore = this.previousScoreMap.get(entry.userId);
+      if (prevScore !== undefined) {
+        entry.scoreDelta = entry.score - prevScore;
+      }
+    }
+
+    // Store current state for next round comparison
+    this.previousRankMap.clear();
+    this.previousScoreMap.clear();
+    for (const entry of entries) {
+      this.previousRankMap.set(entry.userId, entry.rank);
+      this.previousScoreMap.set(entry.userId, entry.score);
+    }
+
+    return entries;
   }
 
   private startClock(): void {
