@@ -150,9 +150,17 @@ type ClientToServerEvents = {
   'skip-question': (payload: { pin: string }) => void;
 };
 
+const RECONNECT_BASE_DELAY = 1000;
+const RECONNECT_MAX_DELAY = 30000;
+const RECONNECT_MAX_ATTEMPTS = 20;
+
 @Injectable({ providedIn: 'root' })
 export class WebsocketService {
   private socket: Socket<ServerToClientEvents, ClientToServerEvents> | null = null;
+  private token = '';
+  private lastJoinPin = '';
+  private lastJoinUsername = '';
+  private intentionalDisconnect = false;
 
   private readonly playerJoinedSubject = new Subject<PlayerJoinedEvent>();
   private readonly playerLeftSubject = new Subject<PlayerLeftEvent>();
@@ -188,27 +196,47 @@ export class WebsocketService {
   readonly socketError$: Observable<SocketErrorPayload> = this.socketErrorSubject.asObservable();
 
   readonly connected = signal(false);
+  readonly reconnecting = signal(false);
 
   connect(token: string): void {
     if (this.socket?.connected) {
       return;
     }
 
+    this.token = token;
+    this.intentionalDisconnect = false;
     this.disposeSocket();
 
     this.socket = io(`${environment.websocketUrl}/game`, {
-      auth: {
-        token,
-      },
+      auth: { token },
       transports: ['websocket'],
+      reconnection: true,
+      reconnectionDelay: RECONNECT_BASE_DELAY,
+      reconnectionDelayMax: RECONNECT_MAX_DELAY,
+      reconnectionAttempts: RECONNECT_MAX_ATTEMPTS,
     }) as Socket<ServerToClientEvents, ClientToServerEvents>;
 
     this.socket.on('connect', () => {
       this.connected.set(true);
+      this.reconnecting.set(false);
+
+      if (this.lastJoinPin) {
+        this.socket?.emit('join-game', {
+          pin: this.lastJoinPin,
+          username: this.lastJoinUsername || undefined,
+        });
+      }
     });
 
-    this.socket.on('disconnect', () => {
+    this.socket.on('disconnect', (reason) => {
       this.connected.set(false);
+      if (!this.intentionalDisconnect && reason !== 'io client disconnect') {
+        this.reconnecting.set(true);
+      }
+    });
+
+    this.socket.io.on('reconnect_failed', () => {
+      this.reconnecting.set(false);
     });
 
     this.socket.on('player-joined', (payload) => {
@@ -269,10 +297,14 @@ export class WebsocketService {
   }
 
   joinGame(pin: string, username?: string): void {
+    this.lastJoinPin = pin;
+    this.lastJoinUsername = username ?? '';
     this.socket?.emit('join-game', { pin, username });
   }
 
   leaveGame(pin: string, reason?: string): void {
+    this.lastJoinPin = '';
+    this.lastJoinUsername = '';
     this.socket?.emit('leave-game', { pin, reason });
   }
 
@@ -297,8 +329,12 @@ export class WebsocketService {
   }
 
   disconnect(): void {
+    this.intentionalDisconnect = true;
+    this.lastJoinPin = '';
+    this.lastJoinUsername = '';
     this.disposeSocket();
     this.connected.set(false);
+    this.reconnecting.set(false);
   }
 
   private disposeSocket(): void {
