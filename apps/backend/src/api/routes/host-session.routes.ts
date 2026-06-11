@@ -1,6 +1,8 @@
 import { Router, type Response, type NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { authMiddleware, type AuthenticatedRequest } from '../middleware/auth';
+import { validateParams } from '../middleware/validation';
+import { PinParamSchema } from '../dtos/session.dto';
 import * as sessionRepository from '../../database/repositories/session.repository';
 import * as quizRepository from '../../database/repositories/quiz.repository';
 
@@ -16,6 +18,7 @@ export const hostSessionRouter = Router();
 hostSessionRouter.get(
   '/:pin/host',
   authMiddleware,
+  validateParams(PinParamSchema),
   async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { pin } = req.params;
