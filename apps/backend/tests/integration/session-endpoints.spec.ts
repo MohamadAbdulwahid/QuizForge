@@ -92,6 +92,8 @@ mock.module('../../src/api/controllers/session.controller', () => ({
         nextStatus,
       });
     },
+    getLeaderboard: (_req: express.Request, res: express.Response) =>
+      res.status(200).json({ quizTitle: 'Quiz', leaderboard: [] }),
   },
 }));
 
