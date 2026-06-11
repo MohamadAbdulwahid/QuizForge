@@ -161,6 +161,32 @@ export async function findPlayerBySessionAndUser(
 }
 
 /**
+ * Finds a session player row by session and username (for uniqueness checks).
+ * Excludes disconnected players so reconnecting users can reclaim their name.
+ * @param sessionId - Session id.
+ * @param username - Player display name.
+ * @returns Session player or null.
+ */
+export async function findActivePlayerByUsername(
+  sessionId: number,
+  username: string
+): Promise<SessionPlayer | null> {
+  const result = await db
+    .select()
+    .from(SESSION_PLAYER)
+    .where(
+      and(
+        eq(SESSION_PLAYER.session_id, sessionId),
+        eq(SESSION_PLAYER.username, username),
+        eq(SESSION_PLAYER.status, 'active')
+      )
+    )
+    .limit(1);
+
+  return result[0] ?? null;
+}
+
+/**
  * Creates or reactivates a session player for reconnect-safe room membership.
  * @param data - Player data.
  * @param data.sessionId - Session id.
