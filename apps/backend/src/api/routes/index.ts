@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { authMiddleware } from '../middleware/auth';
+import { adminRouter } from './admin.routes';
 import { authRoutes } from './auth.routes';
 import { groupRouter } from './group.routes';
 import { quizPublicRouter, quizRouter } from './quiz.routes';
@@ -31,6 +32,9 @@ export function registerRoutes(): Router {
 
   router.use('/sessions', sessionRouter);
   router.use('/sessions', hostSessionRouter);
+
+  // Admin routes — require auth + admin role
+  router.use('/admin', adminRouter);
 
   return router;
 }
