@@ -62,6 +62,16 @@
         </div>
       }
 
+      <!-- Username input -->
+      <input
+        [(ngModel)]="username"
+        maxlength="60"
+        class="play-input mb-3 w-full rounded-2xl border-2 border-white/30 bg-white/20 px-4 py-3 text-center text-lg font-bold text-white backdrop-blur-sm placeholder:text-white/50"
+        placeholder="Your display name"
+        (keydown.enter)="joinGame()"
+      />
+
+      <!-- PIN input + join button -->
       <div class="flex gap-3">
         <input
           [(ngModel)]="gameId"

@@ -13,6 +13,7 @@ export class PlayPageComponent {
   private readonly router = inject(Router);
 
   protected gameId = '';
+  protected username = '';
   protected readonly busy = signal(false);
   protected readonly errorMessage = signal<string | null>(null);
 
@@ -24,9 +25,23 @@ export class PlayPageComponent {
       return;
     }
 
+    const trimmedUsername = this.username.trim();
+    if (trimmedUsername.length < 1) {
+      this.errorMessage.set('Please enter a username.');
+      return;
+    }
+    if (trimmedUsername.length > 60) {
+      this.errorMessage.set('Username must be 60 characters or less.');
+      return;
+    }
+
     this.busy.set(true);
-    void this.router.navigate(['/game-lobby', this.gameId]).finally(() => {
-      this.busy.set(false);
-    });
+    void this.router
+      .navigate(['/game-lobby', this.gameId], {
+        state: { username: trimmedUsername },
+      })
+      .finally(() => {
+        this.busy.set(false);
+      });
   }
 }
