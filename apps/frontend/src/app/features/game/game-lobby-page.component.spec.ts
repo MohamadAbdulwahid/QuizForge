@@ -40,7 +40,11 @@ describe('GameLobbyPageComponent', () => {
 
   describe('error handling', () => {
     it('resolveSocketError handles DUPLICATE_USERNAME', () => {
-      const errorMsg = (component as unknown as { resolveSocketError: (e: { code: string; error: string }) => string }).resolveSocketError({
+      const errorMsg = (
+        component as unknown as {
+          resolveSocketError: (e: { code: string; error: string }) => string;
+        }
+      ).resolveSocketError({
         code: 'DUPLICATE_USERNAME',
         error: 'Username taken',
       });
@@ -50,7 +54,11 @@ describe('GameLobbyPageComponent', () => {
     });
 
     it('resolveSocketError handles SESSION_ENDED', () => {
-      const errorMsg = (component as unknown as { resolveSocketError: (e: { code: string; error: string }) => string }).resolveSocketError({
+      const errorMsg = (
+        component as unknown as {
+          resolveSocketError: (e: { code: string; error: string }) => string;
+        }
+      ).resolveSocketError({
         code: 'SESSION_ENDED',
         error: 'Session ended',
       });
@@ -59,7 +67,11 @@ describe('GameLobbyPageComponent', () => {
     });
 
     it('resolveSocketError handles SESSION_NOT_FOUND', () => {
-      const errorMsg = (component as unknown as { resolveSocketError: (e: { code: string; error: string }) => string }).resolveSocketError({
+      const errorMsg = (
+        component as unknown as {
+          resolveSocketError: (e: { code: string; error: string }) => string;
+        }
+      ).resolveSocketError({
         code: 'SESSION_NOT_FOUND',
         error: 'Not found',
       });
@@ -68,7 +80,11 @@ describe('GameLobbyPageComponent', () => {
     });
 
     it('resolveSocketError returns fallback for unknown errors', () => {
-      const errorMsg = (component as unknown as { resolveSocketError: (e: { code: string; error: string }) => string }).resolveSocketError({
+      const errorMsg = (
+        component as unknown as {
+          resolveSocketError: (e: { code: string; error: string }) => string;
+        }
+      ).resolveSocketError({
         code: 'UNKNOWN',
         error: 'Something broke',
       });
@@ -79,7 +95,9 @@ describe('GameLobbyPageComponent', () => {
 
   describe('emoji generation', () => {
     it('selectEmoji returns a string from the emoji pool', () => {
-      const emoji = (component as unknown as { selectEmoji: (id: string) => string }).selectEmoji('test-user-id');
+      const emoji = (component as unknown as { selectEmoji: (id: string) => string }).selectEmoji(
+        'test-user-id'
+      );
       expect(typeof emoji).toBe('string');
       expect(emoji.length).toBeGreaterThan(0);
     });

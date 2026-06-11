@@ -49,7 +49,10 @@ mock.module('../../src/api/services/admin.service', () => ({
     })),
   getSessionAnalytics: async (sessionId: number) => {
     if (sessionId === 999) {
-      throw Object.assign(new Error('Session not found'), { code: 'SESSION_NOT_FOUND', statusCode: 404 });
+      throw Object.assign(new Error('Session not found'), {
+        code: 'SESSION_NOT_FOUND',
+        statusCode: 404,
+      });
     }
     return {
       sessionId,
