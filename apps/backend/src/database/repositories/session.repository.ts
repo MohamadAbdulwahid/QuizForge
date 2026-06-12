@@ -10,9 +10,13 @@ import {
   SESSION_BROADCAST_GROUP,
   SESSION_PLAYER,
   GAME_EVENT,
+  CHEST_PICK,
   SessionPlayer,
   GameEvent,
   InsertGameEvent,
+  ChestPick,
+  InsertChestPick,
+  GameMode,
 } from '../schema/session';
 import { QUIZ } from '../schema/quiz';
 
@@ -35,6 +39,10 @@ export type HostSessionSummary = {
  * @param data.hostId - Host user id.
  * @param data.status - Optional session status.
  * @param data.broadcastMode - Session discovery mode.
+ * @param data.gameMode - Game mode (forge-classic or treasure-forge).
+ * @param data.tfEndMode - Treasure Forge end condition mode.
+ * @param data.tfTimerMinutes - Treasure Forge timer in minutes.
+ * @param data.tfGoldGoal - Treasure Forge gold goal.
  * @param data.groupIds - Broadcast group ids snapshot.
  * @returns Created session row.
  */
@@ -44,7 +52,11 @@ export async function createSession(data: {
   hostId: string;
   status?: SessionStatus;
   broadcastMode?: SessionBroadcastMode;
+  gameMode?: GameMode;
   groupIds?: number[];
+  tfEndMode?: string | null;
+  tfTimerMinutes?: number | null;
+  tfGoldGoal?: number | null;
 }): Promise<Session> {
   const payload: InsertSession = {
     quiz_id: data.quizId,
@@ -52,6 +64,10 @@ export async function createSession(data: {
     host_id: data.hostId,
     status: data.status ?? 'waiting',
     broadcast_mode: data.broadcastMode ?? 'private',
+    game_mode: data.gameMode ?? 'forge-classic',
+    tf_end_mode: data.tfEndMode ?? null,
+    tf_timer_minutes: data.tfTimerMinutes ?? null,
+    tf_gold_goal: data.tfGoldGoal ?? null,
   };
 
   const result = await db.insert(SESSION).values(payload).returning();
@@ -121,6 +137,22 @@ export async function updateStatus(
   const result = await db
     .update(SESSION)
     .set({ status })
+    .where(eq(SESSION.id, sessionId))
+    .returning();
+
+  return result[0] ?? null;
+}
+
+/**
+ * Updates the session's started_at timestamp to the current time.
+ * Used by Treasure Forge to set the baseline for the global timer.
+ * @param sessionId - Session id.
+ * @returns Updated session or null.
+ */
+export async function updateSessionStartTime(sessionId: number): Promise<Session | null> {
+  const result = await db
+    .update(SESSION)
+    .set({ started_at: new Date() })
     .where(eq(SESSION.id, sessionId))
     .returning();
 
@@ -387,4 +419,56 @@ export async function deleteSession(id: number): Promise<void> {
  */
 export async function deletePlayersBySession(sessionId: number): Promise<void> {
   await db.delete(SESSION_PLAYER).where(eq(SESSION_PLAYER.session_id, sessionId));
+}
+
+/**
+ * Creates a chest pick record for Treasure Forge audit trail.
+ * @param data - Chest pick insert data.
+ * @returns Created chest pick row.
+ */
+export async function createChestPick(data: InsertChestPick): Promise<ChestPick> {
+  const result = await db.insert(CHEST_PICK).values(data).returning();
+  return result[0];
+}
+
+/**
+ * Checks whether a player has already picked a chest for a given round.
+ * Prevents duplicate chest picks per round.
+ * @param sessionId - Session id.
+ * @param playerId - Session player id.
+ * @param roundNumber - Round number (1-indexed).
+ * @returns True when a pick already exists.
+ */
+export async function hasPlayerPickedChest(
+  sessionId: number,
+  playerId: number,
+  roundNumber: number
+): Promise<boolean> {
+  const result = await db
+    .select({ id: CHEST_PICK.id })
+    .from(CHEST_PICK)
+    .where(
+      and(
+        eq(CHEST_PICK.session_id, sessionId),
+        eq(CHEST_PICK.session_player_id, playerId),
+        eq(CHEST_PICK.round_number, roundNumber)
+      )
+    )
+    .limit(1);
+
+  return result.length > 0;
+}
+
+/**
+ * Lists all chest picks for a session, ordered by creation time.
+ * Used for post-game analytics and replay.
+ * @param sessionId - Session id.
+ * @returns Chest picks for the session.
+ */
+export async function listChestPicksBySession(sessionId: number): Promise<ChestPick[]> {
+  return db
+    .select()
+    .from(CHEST_PICK)
+    .where(eq(CHEST_PICK.session_id, sessionId))
+    .orderBy(CHEST_PICK.created_at);
 }
