@@ -1,122 +1,389 @@
 <div class="qf-page-stack">
-  <app-bubbly-card>
-    <app-page-heading
-      eyebrow="Host"
-      title="Create Session"
-      description="Select one of your quizzes and spin up a lobby instantly."
-    />
-  </app-bubbly-card>
+  <!-- Sticky header: page heading + 3-step stepper -->
+  <header
+    class="sticky top-0 z-20 -mt-6 bg-[var(--bubbly-background)]/85 pt-2 pb-4 backdrop-blur-sm"
+  >
+    <app-bubbly-card>
+      <app-page-heading
+        eyebrow="Host"
+        title="Create Session"
+        description="Set up a new quiz lobby in three quick steps."
+      />
+    </app-bubbly-card>
 
-  @if (errorMessage()) {
-    <div class="qf-alert-error">{{ errorMessage() }}</div>
+    <ol class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-3 px-1">
+      @for (item of stepList; track item.id) {
+        <li class="flex items-center gap-2">
+          <span
+            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold transition-colors"
+            [ngClass]="stepCircleClass(item.id)"
+          >
+            @if (currentStep() > item.id) {
+              <span aria-hidden="true">✓</span>
+            } @else {
+              {{ item.id }}
+            }
+          </span>
+          <span
+            class="text-sm font-bold transition-colors"
+            [ngClass]="stepLabelClass(item.id)"
+          >
+            {{ item.label }}
+          </span>
+        </li>
+        @if (!$last) {
+          <li
+            aria-hidden="true"
+            class="hidden h-0.5 w-12 transition-colors sm:block"
+            [ngClass]="
+              currentStep() > item.id ? 'bg-[var(--bubbly-primary)]' : 'bg-[var(--bubbly-border)]'
+            "
+          ></li>
+        }
+      }
+    </ol>
+  </header>
+
+  @if (pageError()) {
+    <div class="qf-alert-error">{{ pageError() }}</div>
   }
 
   @if (loadingQuizzes()) {
     <div class="qf-empty-state">Loading your quizzes...</div>
+  } @else if (quizzes().length === 0) {
+    <div class="qf-empty-state">
+      You have no quizzes yet.
+      <a
+        routerLink="/dashboard/quizzes"
+        class="ml-2 text-[var(--bubbly-primary)] underline"
+      >
+        Go to My Quizzes
+      </a>
+    </div>
   } @else {
-    @if (quizzes().length === 0) {
-      <div class="qf-empty-state">
-        You have no quizzes yet.
-        <a
-          routerLink="/dashboard/quizzes"
-          class="ml-2 text-[var(--bubbly-primary)] underline"
-        >
-          Go to My Quizzes
-        </a>
-      </div>
-    } @else {
-      <section class="grid gap-4">
-        @for (quiz of quizzes(); track quiz.id) {
-          <button
-            type="button"
-            class="qf-choice qf-tactile"
-            [class.qf-choice-selected]="selectedQuizId() === quiz.id"
-            (click)="selectQuiz(quiz.id)"
-          >
-            <h4 class="qf-panel-title text-lg">{{ quiz.title }}</h4>
-            <p class="qf-muted mt-1 text-sm font-semibold">
-              {{ quiz.description || 'No description yet.' }}
-            </p>
-            <p class="qf-muted mt-2 text-xs font-bold tracking-[0.08em] uppercase">
-              {{ quiz.questionCount }} questions
-            </p>
-          </button>
-        }
-      </section>
-
-      <app-bubbly-card>
-        <p class="qf-muted text-sm font-semibold">Selected quiz</p>
-        <h4 class="qf-panel-title text-xl">
-          {{ selectedQuiz()?.title || 'None' }}
-        </h4>
-
-        <div class="qf-soft-surface mt-5 rounded-3xl p-4">
-          <p class="text-sm font-bold text-[var(--bubbly-text)]">Session Visibility</p>
-          <p class="qf-muted mt-1 text-sm font-semibold">
-            Keep the session private, broadcast it to selected groups, or share it with all your
-            groups.
+    <app-bubbly-card>
+      <!-- ── Step 1: Pick a Quiz ── -->
+      @if (currentStep() === 1) {
+        <div>
+          <p class="qf-eyebrow">Step 1 of 3</p>
+          <h2 class="qf-h2 mt-1">Pick a Quiz</h2>
+          <p class="qf-muted mt-1 text-sm">
+            Choose the quiz you want to host. Players will answer its questions once the session
+            starts.
           </p>
 
-          <div class="mt-4 flex flex-wrap gap-3">
-            <button
-              type="button"
-              class="rounded-xl border px-4 py-2 text-sm font-bold"
-              [class.border-[var(--bubbly-primary)]]="broadcastMode() === 'private'"
-              [class.bg-[var(--bubbly-surface-soft)]]="broadcastMode() === 'private'"
-              (click)="updateBroadcastMode('private')"
-            >
-              Private
-            </button>
-            <button
-              type="button"
-              class="rounded-xl border px-4 py-2 text-sm font-bold"
-              [class.border-[var(--bubbly-primary)]]="broadcastMode() === 'selected-groups'"
-              [class.bg-[var(--bubbly-surface-soft)]]="broadcastMode() === 'selected-groups'"
-              (click)="updateBroadcastMode('selected-groups')"
-            >
-              Selected Groups
-            </button>
-            <button
-              type="button"
-              class="rounded-xl border px-4 py-2 text-sm font-bold"
-              [class.border-[var(--bubbly-primary)]]="broadcastMode() === 'all-my-groups'"
-              [class.bg-[var(--bubbly-surface-soft)]]="broadcastMode() === 'all-my-groups'"
-              (click)="updateBroadcastMode('all-my-groups')"
-            >
-              All My Groups
-            </button>
+          <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            @for (quiz of quizzes(); track quiz.id) {
+              <button
+                type="button"
+                class="qf-choice qf-tactile relative flex flex-col items-start gap-3 border-2 p-5 text-left"
+                [class.qf-choice-selected]="selectedQuizId() === quiz.id"
+                (click)="selectQuiz(quiz.id)"
+              >
+                @if (selectedQuizId() === quiz.id) {
+                  <span
+                    class="bg-bubbly-primary absolute top-3 right-3 flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold text-white"
+                    aria-hidden="true"
+                  >
+                    ✓
+                  </span>
+                }
+                <span
+                  class="flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--bubbly-surface-soft)] text-2xl font-bold text-[var(--bubbly-primary-deep)]"
+                >
+                  {{ quiz.title.charAt(0).toUpperCase() }}
+                </span>
+                <h3
+                  class="font-display text-lg leading-tight font-bold text-[var(--bubbly-primary-deep)]"
+                >
+                  {{ quiz.title }}
+                </h3>
+                <p class="qf-muted line-clamp-2 text-sm">
+                  {{ quiz.description || 'No description yet.' }}
+                </p>
+                <span class="qf-chip mt-auto">{{ quiz.questionCount }} questions</span>
+              </button>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- ── Step 2: Choose Visibility ── -->
+      @if (currentStep() === 2) {
+        <div>
+          <p class="qf-eyebrow">Step 2 of 3</p>
+          <h2 class="qf-h2 mt-1">Choose Visibility</h2>
+          <p class="qf-muted mt-1 text-sm">Decide who can find and join this session.</p>
+
+          <div class="mt-5 grid gap-3 md:grid-cols-3">
+            @for (option of visibilityOptions; track option.id) {
+              <button
+                type="button"
+                class="qf-choice qf-tactile flex items-start gap-3 border-2 p-4 text-left"
+                [class.qf-choice-selected]="broadcastMode() === option.id"
+                (click)="updateBroadcastMode(option.id)"
+              >
+                <span
+                  class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--bubbly-surface-soft)] text-2xl"
+                  aria-hidden="true"
+                >
+                  {{ option.icon }}
+                </span>
+                <div class="min-w-0 flex-1">
+                  <h3 class="font-display text-base font-bold text-[var(--bubbly-primary-deep)]">
+                    {{ option.label }}
+                  </h3>
+                  <p class="qf-muted mt-1 text-xs">{{ option.description }}</p>
+                </div>
+                <span
+                  class="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2"
+                  [ngClass]="{
+                    'border-bubbly-primary bg-bubbly-primary': broadcastMode() === option.id,
+                    'border-[var(--bubbly-border-strong)] bg-transparent':
+                      broadcastMode() !== option.id,
+                  }"
+                  aria-hidden="true"
+                >
+                  @if (broadcastMode() === option.id) {
+                    <span class="h-2 w-2 rounded-full bg-white"></span>
+                  }
+                </span>
+              </button>
+            }
           </div>
 
           @if (broadcastMode() === 'selected-groups') {
-            <div class="mt-4 grid gap-3">
-              @for (group of groups(); track group.id) {
-                <label class="qf-choice flex items-center gap-3 text-sm font-bold text-slate-600">
-                  <input
-                    type="checkbox"
-                    [checked]="selectedBroadcastGroupIds().includes(group.id)"
-                    (change)="toggleBroadcastGroup(group.id)"
-                  />
-                  <span>{{ group.name }}</span>
-                </label>
-              }
+            <div class="qf-soft-surface mt-5 rounded-3xl p-5">
+              <p class="text-sm font-bold text-[var(--bubbly-text)]">Select Groups</p>
+              <p class="qf-muted mt-1 text-xs">
+                Pick at least one group to broadcast this session to.
+              </p>
 
-              @if (groups().length === 0) {
-                <div class="qf-empty-state">
-                  You need to join or create a group before you can broadcast to selected groups.
-                </div>
-              }
+              <div class="mt-4 grid gap-2">
+                @for (group of groups(); track group.id) {
+                  <label
+                    class="qf-tactile flex cursor-pointer items-center gap-3 rounded-2xl border-2 bg-[var(--bubbly-surface)] p-4"
+                    [ngClass]="{
+                      'border-bubbly-primary': selectedBroadcastGroupIds().includes(group.id),
+                      'border-[var(--bubbly-border)]': !selectedBroadcastGroupIds().includes(
+                        group.id
+                      ),
+                    }"
+                  >
+                    <input
+                      type="checkbox"
+                      class="accent-bubbly-primary h-5 w-5 rounded"
+                      [checked]="selectedBroadcastGroupIds().includes(group.id)"
+                      (change)="toggleBroadcastGroup(group.id)"
+                    />
+                    <span class="flex-1 text-sm font-bold text-[var(--bubbly-text)]">
+                      {{ group.name }}
+                    </span>
+                    <span class="qf-chip">{{ group.member_count }} members</span>
+                  </label>
+                }
+
+                @if (groups().length === 0) {
+                  <div class="qf-empty-state">
+                    You need to join or create a group before you can broadcast to selected groups.
+                  </div>
+                }
+              </div>
             </div>
           }
         </div>
+      }
 
-        <app-bubbly-button
-          class="mt-4 inline-flex"
-          [disabled]="creatingSession()"
-          (click)="createSession()"
+      <!-- ── Step 3: Game Mode ── -->
+      @if (currentStep() === 3) {
+        <div>
+          <p class="qf-eyebrow">Step 3 of 3</p>
+          <h2 class="qf-h2 mt-1">Game Mode</h2>
+          <p class="qf-muted mt-1 text-sm">Choose how players compete and score points.</p>
+
+          <div class="mt-5 grid gap-4 md:grid-cols-3">
+            @for (mode of gameModeOptions; track mode.id) {
+              <button
+                type="button"
+                class="qf-choice qf-tactile relative flex flex-col items-center gap-3 border-2 p-6 text-center"
+                [class.qf-choice-selected]="gameMode() === mode.id"
+                (click)="selectGameMode(mode.id)"
+              >
+                @if (gameMode() === mode.id) {
+                  <span
+                    class="bg-bubbly-primary absolute top-3 right-3 flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold text-white"
+                    aria-hidden="true"
+                  >
+                    ✓
+                  </span>
+                }
+                <span
+                  class="text-4xl"
+                  aria-hidden="true"
+                >
+                  {{ mode.icon }}
+                </span>
+                <h3 class="font-display text-lg font-bold text-[var(--bubbly-primary-deep)]">
+                  {{ mode.label }}
+                </h3>
+                <p class="qf-muted text-sm">{{ mode.description }}</p>
+              </button>
+            }
+
+            <!-- Coming Soon card -->
+            <div
+              aria-disabled="true"
+              class="flex flex-col items-center gap-3 rounded-2xl border-2 border-dashed border-[var(--bubbly-border)] bg-[var(--bubbly-surface)] p-6 text-center opacity-60"
+            >
+              <span
+                class="text-4xl"
+                aria-hidden="true"
+              >
+                🏆
+              </span>
+              <h3 class="font-display text-lg font-bold text-[var(--bubbly-text)]">
+                Bubbly Royale
+              </h3>
+              <p class="qf-muted text-sm">Coming Soon</p>
+            </div>
+          </div>
+
+          @if (gameMode() === 'treasure-forge') {
+            <div class="qf-tint-surface mt-5 rounded-3xl p-5">
+              <p class="text-sm font-bold text-[var(--bubbly-text)]">Treasure Forge Settings</p>
+              <p class="qf-muted mt-1 text-xs">Configure how the Treasure Forge game ends.</p>
+
+              <div class="mt-4 grid gap-4 sm:grid-cols-3">
+                <div>
+                  <p class="qf-eyebrow">End Mode</p>
+                  <div class="mt-2 flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      class="qf-tactile rounded-xl border-2 px-3 py-1.5 text-xs font-bold"
+                      [ngClass]="{
+                        'border-bubbly-primary bg-bubbly-primary/10 text-[var(--bubbly-primary-deep)]':
+                          tfEndMode() === null,
+                        'border-[var(--bubbly-border)] bg-[var(--bubbly-surface)] text-[var(--bubbly-text)]':
+                          tfEndMode() !== null,
+                      }"
+                      (click)="tfEndMode.set(null)"
+                    >
+                      No Limit
+                    </button>
+                    <button
+                      type="button"
+                      class="qf-tactile rounded-xl border-2 px-3 py-1.5 text-xs font-bold"
+                      [ngClass]="{
+                        'border-bubbly-primary bg-bubbly-primary/10 text-[var(--bubbly-primary-deep)]':
+                          tfEndMode() === 'timer',
+                        'border-[var(--bubbly-border)] bg-[var(--bubbly-surface)] text-[var(--bubbly-text)]':
+                          tfEndMode() !== 'timer',
+                      }"
+                      (click)="tfEndMode.set('timer')"
+                    >
+                      Timer
+                    </button>
+                    <button
+                      type="button"
+                      class="qf-tactile rounded-xl border-2 px-3 py-1.5 text-xs font-bold"
+                      [ngClass]="{
+                        'border-bubbly-primary bg-bubbly-primary/10 text-[var(--bubbly-primary-deep)]':
+                          tfEndMode() === 'gold_goal',
+                        'border-[var(--bubbly-border)] bg-[var(--bubbly-surface)] text-[var(--bubbly-text)]':
+                          tfEndMode() !== 'gold_goal',
+                      }"
+                      (click)="tfEndMode.set('gold_goal')"
+                    >
+                      Gold Goal
+                    </button>
+                  </div>
+                </div>
+
+                @if (tfEndMode() === 'timer') {
+                  <div>
+                    <label
+                      for="tf-timer"
+                      class="qf-eyebrow block"
+                    >
+                      Timer (minutes)
+                    </label>
+                    <input
+                      id="tf-timer"
+                      type="number"
+                      class="qf-input mt-2 w-full"
+                      [value]="tfTimerMinutes()"
+                      min="1"
+                      max="30"
+                      (input)="onTfTimerMinutesInput($event)"
+                    />
+                  </div>
+                }
+
+                @if (tfEndMode() === 'gold_goal') {
+                  <div>
+                    <label
+                      for="tf-gold"
+                      class="qf-eyebrow block"
+                    >
+                      Gold Goal
+                    </label>
+                    <input
+                      id="tf-gold"
+                      type="number"
+                      class="qf-input mt-2 w-full"
+                      [value]="tfGoldGoal()"
+                      min="1"
+                      (input)="onTfGoldGoalInput($event)"
+                    />
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Inline validation / API error message -->
+      @if (createError()) {
+        <p
+          class="mt-5 rounded-2xl border border-[var(--bubbly-error-border)] bg-[var(--bubbly-error-bg)] px-4 py-3 text-sm font-bold text-[var(--bubbly-error-text)]"
+          role="alert"
         >
-          {{ creatingSession() ? 'Creating...' : 'Create Session and Open Lobby' }}
+          {{ createError() }}
+        </p>
+      }
+
+      <!-- Footer: Back / Next or Create -->
+      <div
+        class="mt-5 flex items-center justify-between gap-3 border-t border-[var(--bubbly-border)] pt-4"
+      >
+        <app-bubbly-button
+          tone="ghost"
+          [disabled]="currentStep() === 1"
+          (click)="previousStep()"
+        >
+          Back
         </app-bubbly-button>
-      </app-bubbly-card>
-    }
+
+        @if (currentStep() < 3) {
+          <app-bubbly-button
+            tone="primary"
+            [disabled]="!canAdvance()"
+            (click)="nextStep()"
+          >
+            Next
+            <span aria-hidden="true">→</span>
+          </app-bubbly-button>
+        } @else {
+          <app-bubbly-button
+            tone="primary"
+            [disabled]="creatingSession()"
+            (click)="createSession()"
+          >
+            {{ creatingSession() ? 'Creating...' : 'Create Session and Open Lobby' }}
+          </app-bubbly-button>
+        }
+      </div>
+    </app-bubbly-card>
   }
 </div>
