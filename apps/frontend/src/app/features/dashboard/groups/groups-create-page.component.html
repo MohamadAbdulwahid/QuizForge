@@ -1,11 +1,37 @@
 <div class="qf-page-stack">
-  <app-bubbly-card tone="soft">
-    <app-page-heading
-      eyebrow="Classrooms"
-      title="Create New Group"
-      description="Set up a new classroom group for your students."
-    />
-  </app-bubbly-card>
+  <!-- ── Back button ── -->
+  <div>
+    <app-bubbly-button
+      tone="ghost"
+      size="md"
+      (click)="cancel()"
+    >
+      <svg
+        class="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2.5"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M15.75 19.5L8.25 12l7.5-7.5"
+        />
+      </svg>
+      Back
+    </app-bubbly-button>
+  </div>
+
+  <!-- ── Hero header ── -->
+  <header>
+    <p class="qf-eyebrow">Classrooms</p>
+    <h1 class="qf-h1 mt-2">Create New Group</h1>
+    <p class="qf-muted mt-3 max-w-2xl text-base md:text-lg">
+      Set up a new classroom group for your students.
+    </p>
+  </header>
 
   @if (errorMessage()) {
     <div class="qf-alert-error">{{ errorMessage() }}</div>
@@ -38,31 +64,23 @@
       />
 
       <!-- Discoverable Toggle -->
-      <div class="grid gap-2">
-        <span
-          class="text-sm font-bold"
-          style="color: var(--bubbly-text)"
-        >
-          Discoverable
-        </span>
+      <div class="grid gap-2.5">
+        <span class="qf-eyebrow">Discoverable</span>
         <div class="flex items-center gap-3">
           <button
             type="button"
-            class="qf-tactile h-6 w-12 rounded-full transition-colors"
+            class="qf-tactile h-7 w-14 rounded-full transition-colors"
             [style.background]="isDiscoverable() ? 'var(--bubbly-primary)' : 'var(--bubbly-border)'"
             (click)="isDiscoverable.update((v) => !v)"
             [attr.aria-checked]="isDiscoverable()"
             role="switch"
           >
             <span
-              class="block h-5 w-5 rounded-full bg-white shadow-sm transition-transform"
-              [style.transform]="isDiscoverable() ? 'translateX(26px)' : 'translateX(2px)'"
+              class="block h-6 w-6 rounded-full bg-white shadow-sm transition-transform"
+              [style.transform]="isDiscoverable() ? 'translateX(30px)' : 'translateX(2px)'"
             ></span>
           </button>
-          <span
-            class="text-sm font-semibold"
-            style="color: var(--bubbly-muted)"
-          >
+          <span class="qf-muted text-base">
             {{ isDiscoverable() ? 'Visible in group discovery' : 'Hidden from group discovery' }}
           </span>
         </div>
@@ -78,11 +96,11 @@
       />
 
       <!-- Actions -->
-      <div class="flex items-center gap-3 pt-2">
+      <div class="flex flex-wrap items-center gap-3 pt-2">
         <app-bubbly-button
           type="submit"
           tone="primary"
-          size="md"
+          size="lg"
           [disabled]="submitting()"
         >
           @if (submitting()) {
