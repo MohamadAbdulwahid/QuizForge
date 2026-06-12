@@ -1,1 +1,367 @@
-{"nodes": [{"id": "home_mohamad_coding_quizforge_docs_product_backlog_md", "label": "product-backlog.md", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L1"}, {"id": "docs_product_backlog_quizforge_product_backlog", "label": "QuizForge Product Backlog", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L1"}, {"id": "docs_product_backlog_sprint_1_database_authentication_foundation_backend", "label": "Sprint 1 - Database & Authentication Foundation (Backend)", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L6"}, {"id": "docs_product_backlog_sprint_2_quiz_session_management_api_backend", "label": "Sprint 2 - Quiz & Session Management API (Backend)", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L32"}, {"id": "docs_product_backlog_sprint_3_frontend_foundation_websocket_infrastructure", "label": "Sprint 3 - Frontend Foundation & WebSocket Infrastructure", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L53"}, {"id": "docs_product_backlog_backend_13_sp", "label": "Backend (13 SP)", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L57"}, {"id": "docs_product_backlog_frontend_12_sp", "label": "Frontend (12 SP)", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L66"}, {"id": "docs_product_backlog_sprint_4_auth_ui_dashboard_quiz_builder", "label": "Sprint 4 - Auth UI, Dashboard & Quiz Builder", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L80"}, {"id": "docs_product_backlog_sprint_5_forge_classic_game_engine_real_time_scoring", "label": "Sprint 5 - Forge Classic Game Engine & Real-Time Scoring", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L98"}, {"id": "docs_product_backlog_sprint_6_forge_classic_mvp_completion_treasure_forge", "label": "Sprint 6 - Forge Classic MVP Completion & Treasure Forge", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L118"}, {"id": "docs_product_backlog_future_sprints_backlog", "label": "Future Sprints (Backlog)", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L146"}, {"id": "docs_product_backlog_game_modes_bubbly_royale", "label": "Game Modes - Bubbly Royale", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L148"}, {"id": "docs_product_backlog_testing_quality", "label": "Testing & Quality", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L162"}, {"id": "docs_product_backlog_api_documentation_polish", "label": "API Documentation & Polish", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L168"}, {"id": "docs_product_backlog_stability_optimization", "label": "Stability & Optimization", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L176"}, {"id": "docs_product_backlog_performance_optimization", "label": "Performance & Optimization", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L183"}, {"id": "docs_product_backlog_analytics_monitoring", "label": "Analytics & Monitoring", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L192"}, {"id": "docs_product_backlog_advanced_features", "label": "Advanced Features", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L200"}, {"id": "docs_product_backlog_additional_game_modes_future", "label": "Additional Game Modes (Future)", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L209"}, {"id": "docs_product_backlog_mobile_multi_platform", "label": "Mobile & Multi-Platform", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L216"}, {"id": "docs_product_backlog_backlog_summary", "label": "Backlog Summary", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L225"}, {"id": "docs_product_backlog_sprint_velocity_overview", "label": "Sprint Velocity Overview", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L231"}, {"id": "docs_product_backlog_consolidation_notes", "label": "Consolidation Notes", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L242"}], "edges": [{"source": "home_mohamad_coding_quizforge_docs_product_backlog_md", "target": "docs_product_backlog_quizforge_product_backlog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L1", "weight": 1.0}, {"source": "docs_product_backlog_quizforge_product_backlog", "target": "docs_product_backlog_sprint_1_database_authentication_foundation_backend", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L6", "weight": 1.0}, {"source": "docs_product_backlog_quizforge_product_backlog", "target": "docs_product_backlog_sprint_2_quiz_session_management_api_backend", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L32", "weight": 1.0}, {"source": "docs_product_backlog_quizforge_product_backlog", "target": "docs_product_backlog_sprint_3_frontend_foundation_websocket_infrastructure", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L53", "weight": 1.0}, {"source": "docs_product_backlog_sprint_3_frontend_foundation_websocket_infrastructure", "target": "docs_product_backlog_backend_13_sp", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L57", "weight": 1.0}, {"source": "docs_product_backlog_sprint_3_frontend_foundation_websocket_infrastructure", "target": "docs_product_backlog_frontend_12_sp", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L66", "weight": 1.0}, {"source": "docs_product_backlog_quizforge_product_backlog", "target": "docs_product_backlog_sprint_4_auth_ui_dashboard_quiz_builder", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L80", "weight": 1.0}, {"source": "docs_product_backlog_quizforge_product_backlog", "target": "docs_product_backlog_sprint_5_forge_classic_game_engine_real_time_scoring", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L98", "weight": 1.0}, {"source": "docs_product_backlog_quizforge_product_backlog", "target": "docs_product_backlog_sprint_6_forge_classic_mvp_completion_treasure_forge", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L118", "weight": 1.0}, {"source": "docs_product_backlog_quizforge_product_backlog", "target": "docs_product_backlog_future_sprints_backlog", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L146", "weight": 1.0}, {"source": "docs_product_backlog_future_sprints_backlog", "target": "docs_product_backlog_game_modes_bubbly_royale", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L148", "weight": 1.0}, {"source": "docs_product_backlog_future_sprints_backlog", "target": "docs_product_backlog_testing_quality", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L162", "weight": 1.0}, {"source": "docs_product_backlog_future_sprints_backlog", "target": "docs_product_backlog_api_documentation_polish", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L168", "weight": 1.0}, {"source": "docs_product_backlog_future_sprints_backlog", "target": "docs_product_backlog_stability_optimization", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L176", "weight": 1.0}, {"source": "docs_product_backlog_future_sprints_backlog", "target": "docs_product_backlog_performance_optimization", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L183", "weight": 1.0}, {"source": "docs_product_backlog_future_sprints_backlog", "target": "docs_product_backlog_analytics_monitoring", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L192", "weight": 1.0}, {"source": "docs_product_backlog_future_sprints_backlog", "target": "docs_product_backlog_advanced_features", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L200", "weight": 1.0}, {"source": "docs_product_backlog_future_sprints_backlog", "target": "docs_product_backlog_additional_game_modes_future", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L209", "weight": 1.0}, {"source": "docs_product_backlog_future_sprints_backlog", "target": "docs_product_backlog_mobile_multi_platform", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L216", "weight": 1.0}, {"source": "docs_product_backlog_quizforge_product_backlog", "target": "docs_product_backlog_backlog_summary", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L225", "weight": 1.0}, {"source": "docs_product_backlog_backlog_summary", "target": "docs_product_backlog_sprint_velocity_overview", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L231", "weight": 1.0}, {"source": "docs_product_backlog_backlog_summary", "target": "docs_product_backlog_consolidation_notes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md", "source_location": "L242", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+{
+  "nodes": [
+    {
+      "id": "home_mohamad_coding_quizforge_docs_product_backlog_md",
+      "label": "product-backlog.md",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_product_backlog_quizforge_product_backlog",
+      "label": "QuizForge Product Backlog",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_product_backlog_sprint_1_database_authentication_foundation_backend",
+      "label": "Sprint 1 - Database & Authentication Foundation (Backend)",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L6"
+    },
+    {
+      "id": "docs_product_backlog_sprint_2_quiz_session_management_api_backend",
+      "label": "Sprint 2 - Quiz & Session Management API (Backend)",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L32"
+    },
+    {
+      "id": "docs_product_backlog_sprint_3_frontend_foundation_websocket_infrastructure",
+      "label": "Sprint 3 - Frontend Foundation & WebSocket Infrastructure",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L53"
+    },
+    {
+      "id": "docs_product_backlog_backend_13_sp",
+      "label": "Backend (13 SP)",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L57"
+    },
+    {
+      "id": "docs_product_backlog_frontend_12_sp",
+      "label": "Frontend (12 SP)",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L66"
+    },
+    {
+      "id": "docs_product_backlog_sprint_4_auth_ui_dashboard_quiz_builder",
+      "label": "Sprint 4 - Auth UI, Dashboard & Quiz Builder",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L80"
+    },
+    {
+      "id": "docs_product_backlog_sprint_5_forge_classic_game_engine_real_time_scoring",
+      "label": "Sprint 5 - Forge Classic Game Engine & Real-Time Scoring",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L98"
+    },
+    {
+      "id": "docs_product_backlog_sprint_6_forge_classic_mvp_completion_treasure_forge",
+      "label": "Sprint 6 - Forge Classic MVP Completion & Treasure Forge",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L118"
+    },
+    {
+      "id": "docs_product_backlog_future_sprints_backlog",
+      "label": "Future Sprints (Backlog)",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L146"
+    },
+    {
+      "id": "docs_product_backlog_game_modes_bubbly_royale",
+      "label": "Game Modes - Bubbly Royale",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L148"
+    },
+    {
+      "id": "docs_product_backlog_testing_quality",
+      "label": "Testing & Quality",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L162"
+    },
+    {
+      "id": "docs_product_backlog_api_documentation_polish",
+      "label": "API Documentation & Polish",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L168"
+    },
+    {
+      "id": "docs_product_backlog_stability_optimization",
+      "label": "Stability & Optimization",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L176"
+    },
+    {
+      "id": "docs_product_backlog_performance_optimization",
+      "label": "Performance & Optimization",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L183"
+    },
+    {
+      "id": "docs_product_backlog_analytics_monitoring",
+      "label": "Analytics & Monitoring",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L192"
+    },
+    {
+      "id": "docs_product_backlog_advanced_features",
+      "label": "Advanced Features",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L200"
+    },
+    {
+      "id": "docs_product_backlog_additional_game_modes_future",
+      "label": "Additional Game Modes (Future)",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L209"
+    },
+    {
+      "id": "docs_product_backlog_mobile_multi_platform",
+      "label": "Mobile & Multi-Platform",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L216"
+    },
+    {
+      "id": "docs_product_backlog_backlog_summary",
+      "label": "Backlog Summary",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L225"
+    },
+    {
+      "id": "docs_product_backlog_sprint_velocity_overview",
+      "label": "Sprint Velocity Overview",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L231"
+    },
+    {
+      "id": "docs_product_backlog_consolidation_notes",
+      "label": "Consolidation Notes",
+      "file_type": "document",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L242"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_mohamad_coding_quizforge_docs_product_backlog_md",
+      "target": "docs_product_backlog_quizforge_product_backlog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_quizforge_product_backlog",
+      "target": "docs_product_backlog_sprint_1_database_authentication_foundation_backend",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_quizforge_product_backlog",
+      "target": "docs_product_backlog_sprint_2_quiz_session_management_api_backend",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_quizforge_product_backlog",
+      "target": "docs_product_backlog_sprint_3_frontend_foundation_websocket_infrastructure",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_sprint_3_frontend_foundation_websocket_infrastructure",
+      "target": "docs_product_backlog_backend_13_sp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_sprint_3_frontend_foundation_websocket_infrastructure",
+      "target": "docs_product_backlog_frontend_12_sp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_quizforge_product_backlog",
+      "target": "docs_product_backlog_sprint_4_auth_ui_dashboard_quiz_builder",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L80",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_quizforge_product_backlog",
+      "target": "docs_product_backlog_sprint_5_forge_classic_game_engine_real_time_scoring",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_quizforge_product_backlog",
+      "target": "docs_product_backlog_sprint_6_forge_classic_mvp_completion_treasure_forge",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L118",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_quizforge_product_backlog",
+      "target": "docs_product_backlog_future_sprints_backlog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L146",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_future_sprints_backlog",
+      "target": "docs_product_backlog_game_modes_bubbly_royale",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L148",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_future_sprints_backlog",
+      "target": "docs_product_backlog_testing_quality",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L162",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_future_sprints_backlog",
+      "target": "docs_product_backlog_api_documentation_polish",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L168",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_future_sprints_backlog",
+      "target": "docs_product_backlog_stability_optimization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L176",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_future_sprints_backlog",
+      "target": "docs_product_backlog_performance_optimization",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L183",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_future_sprints_backlog",
+      "target": "docs_product_backlog_analytics_monitoring",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L192",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_future_sprints_backlog",
+      "target": "docs_product_backlog_advanced_features",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L200",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_future_sprints_backlog",
+      "target": "docs_product_backlog_additional_game_modes_future",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L209",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_future_sprints_backlog",
+      "target": "docs_product_backlog_mobile_multi_platform",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L216",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_quizforge_product_backlog",
+      "target": "docs_product_backlog_backlog_summary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L225",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_backlog_summary",
+      "target": "docs_product_backlog_sprint_velocity_overview",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L231",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_product_backlog_backlog_summary",
+      "target": "docs_product_backlog_consolidation_notes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/mohamad/coding/QuizForge/docs/product-backlog.md",
+      "source_location": "L242",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}
