@@ -15,7 +15,6 @@ import {
   BubblySelectComponent,
   BubblySelectOption,
 } from '../../../shared/ui/bubbly-select.component';
-import { PageHeadingComponent } from '../../../shared/ui/page-heading.component';
 
 const JOIN_POLICY_OPTIONS: BubblySelectOption[] = [
   { value: 'admin-controlled', label: 'Admin controlled — only admins can add members' },
@@ -33,7 +32,6 @@ const JOIN_POLICY_OPTIONS: BubblySelectOption[] = [
     BubblyCardComponent,
     BubblyInputComponent,
     BubblySelectComponent,
-    PageHeadingComponent,
   ],
   templateUrl: './groups-create-page.component.html',
 })
