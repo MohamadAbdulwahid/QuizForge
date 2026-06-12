@@ -1,7 +1,7 @@
 import { config } from '../config/config';
 import { createChildLogger } from '../config/logger';
-import { drizzle } from 'drizzle-orm/bun-sql';
-import { SQL } from 'bun';
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
 
 const dbLogger = createChildLogger('database');
 const CONNECTION_STRING = config.DATABASE_URL;
@@ -10,36 +10,39 @@ if (!CONNECTION_STRING) {
   throw new Error('DATABASE_URL is not defined in the environment variables');
 }
 
-// Bun SQL client instance with prepared statements disabled (supabase pooling)
-const client = new SQL(CONNECTION_STRING, {
-  prepare: false,
-  onconnect(err) {
-    if (err) {
-      throw err;
-    } else {
-      dbLogger.info('Database connection established successfully');
-    }
-  },
-  onclose(err) {
-    if (err) {
-      dbLogger.error({ err }, 'Database connection closed with error');
-    } else {
-      dbLogger.info('Database connection closed gracefully');
+// postgres-js client with connection pool settings for Supavisor Transaction mode.
+// Must use port 6543 (Transaction mode pooler), NOT port 5432 (Session mode).
+// Transaction mode multiplexes connections — essential for Supabase free tier
+// which limits Session mode to 15 concurrent connections.
+const queryClient = postgres(CONNECTION_STRING, {
+  prepare: false, // Required for Supavisor Transaction mode
+  max: 10, // Max connections in pool (well within free tier's 15 for session mode)
+  idle_timeout: 20, // Close idle connections after 20 seconds
+  connect_timeout: 10, // Connection timeout in seconds
+  debug: (connection, query, parameters) => {
+    if (process.env.NODE_ENV === 'development') {
+      dbLogger.debug({ query, parameters }, 'Database query');
     }
   },
 });
 
 // Export the Drizzle ORM instance
-export const db = drizzle({ client });
+export const db = drizzle(queryClient);
 
-// Handle graceful shutdown on SIGTERM
-process.on('SIGTERM', async () => {
+dbLogger.info({ max: 10, idle_timeout: 20 }, 'Database client initialized');
+
+// Graceful shutdown: close the connection pool on termination signals.
+async function gracefulShutdown(signal: string): Promise<void> {
   try {
-    dbLogger.info('Closing database client on SIGTERM...');
-    await client.end();
+    dbLogger.info({ signal }, 'Closing database connection pool...');
+    await queryClient.end({ timeout: 5 });
+    dbLogger.info('Database connection pool closed gracefully');
   } catch (err) {
-    dbLogger.error({ err }, 'Error closing database client on SIGTERM');
+    dbLogger.error({ err, signal }, 'Error closing database connection pool');
   } finally {
     process.exit(0);
   }
-});
+}
+
+process.on('SIGTERM', () => void gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => void gracefulShutdown('SIGINT'));
