@@ -4,6 +4,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 - 263 files · ~220,656 words
 - Verdict: corpus is large enough that graph structure adds value.
 
@@ -22,6 +23,9 @@
 =======
 - 284 files · ~257,750 words
 >>>>>>> 5514abe (style: final formatting and graphify sync)
+=======
+- 284 files · ~257,779 words
+>>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -32,6 +36,7 @@
 ## Graph Freshness
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 - Built from commit: `650d952f`
 >>>>>>> 4bf98b3 (chore(graphify): update labels, cache, and manifest)
 =======
@@ -40,6 +45,9 @@
 =======
 - Built from commit: `f0b43980`
 >>>>>>> 5514abe (style: final formatting and graphify sync)
+=======
+- Built from commit: `5514abe2`
+>>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
