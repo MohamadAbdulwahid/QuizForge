@@ -126,6 +126,34 @@ export interface QuizSavePayload {
   questions: QuizQuestionPayload[];
 }
 
+// ---------------------------------------------------------------------------
+// AI Quiz Generation
+// ---------------------------------------------------------------------------
+
+export interface AiGenerateRequest {
+  title: string;
+  notes: string;
+  instructions?: string;
+}
+
+export interface AiGeneratedQuestion {
+  text: string;
+  type: QuestionType;
+  options: unknown;
+  correct_answer: string;
+  time_limit?: number;
+  points?: number;
+}
+
+export interface AiGenerateResponse {
+  data: {
+    questions: AiGeneratedQuestion[];
+  };
+  meta: {
+    count: number;
+  };
+}
+
 @Injectable({ providedIn: 'root' })
 export class QuizApiService {
   private readonly apiService = inject(ApiService);
@@ -148,5 +176,9 @@ export class QuizApiService {
 
   deleteQuiz(quizId: number): Observable<void> {
     return this.apiService.delete<void>(`/api/quizzes/${quizId}`);
+  }
+
+  aiGenerateQuiz(payload: AiGenerateRequest): Observable<AiGenerateResponse> {
+    return this.apiService.post<AiGenerateResponse>('/api/quizzes/ai-generate', payload);
   }
 }

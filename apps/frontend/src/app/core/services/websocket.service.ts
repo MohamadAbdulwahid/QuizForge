@@ -231,7 +231,7 @@ const RECONNECT_MAX_ATTEMPTS = 20;
 @Injectable({ providedIn: 'root' })
 export class WebsocketService {
   private socket: Socket<ServerToClientEvents, ClientToServerEvents> | null = null;
-  private token = '';
+  private token: string | null = null;
   private lastJoinPin = '';
   private lastJoinUsername = '';
   private intentionalDisconnect = false;
@@ -302,7 +302,47 @@ export class WebsocketService {
       reconnectionAttempts: RECONNECT_MAX_ATTEMPTS,
     }) as Socket<ServerToClientEvents, ClientToServerEvents>;
 
-    this.socket.on('connect', () => {
+    this.setupSocketListeners(this.socket);
+  }
+
+  /**
+   * Connects as an unauthenticated guest with a display name. The handshake
+   * carries `auth.guest = true` and `auth.username` instead of a JWT. The
+   * server mints an ephemeral `guest:<uuid>` userId; no DB row is written.
+   * @param username - Display name shown in the lobby and leaderboard.
+   */
+  connectAsGuest(username: string): void {
+    if (this.socket?.connected) {
+      return;
+    }
+
+    this.token = null;
+    this.intentionalDisconnect = false;
+    this.disposeSocket();
+
+    this.socket = io(`${environment.websocketUrl}/game`, {
+      auth: { guest: true, username },
+      transports: ['websocket'],
+      reconnection: true,
+      reconnectionDelay: RECONNECT_BASE_DELAY,
+      reconnectionDelayMax: RECONNECT_MAX_DELAY,
+      reconnectionAttempts: RECONNECT_MAX_ATTEMPTS,
+    }) as Socket<ServerToClientEvents, ClientToServerEvents>;
+
+    this.setupSocketListeners(this.socket);
+  }
+
+  /**
+   * Wires all server-event listeners onto the given socket. Shared by
+   * `connect` (authenticated) and `connectAsGuest` (guest) — the event
+   * surface is identical for both, the only difference is the handshake
+   * `auth` payload.
+   * @param socket - The freshly created socket to bind listeners to.
+   */
+  private setupSocketListeners(
+    socket: Socket<ServerToClientEvents, ClientToServerEvents>
+  ): void {
+    socket.on('connect', () => {
       this.connected.set(true);
       this.reconnecting.set(false);
 
@@ -314,90 +354,90 @@ export class WebsocketService {
       }
     });
 
-    this.socket.on('disconnect', (reason) => {
+    socket.on('disconnect', (reason) => {
       this.connected.set(false);
       if (!this.intentionalDisconnect && reason !== 'io client disconnect') {
         this.reconnecting.set(true);
       }
     });
 
-    this.socket.io.on('reconnect_failed', () => {
+    socket.io.on('reconnect_failed', () => {
       this.reconnecting.set(false);
     });
 
-    this.socket.on('player-joined', (payload) => {
+    socket.on('player-joined', (payload) => {
       this.playerJoinedSubject.next(payload);
     });
 
-    this.socket.on('player-left', (payload) => {
+    socket.on('player-left', (payload) => {
       this.playerLeftSubject.next(payload);
     });
 
-    this.socket.on('lobby-state', (payload) => {
+    socket.on('lobby-state', (payload) => {
       this.lobbyStateSubject.next(payload);
     });
 
-    this.socket.on('game-started', (payload) => {
+    socket.on('game-started', (payload) => {
       this.gameStartedSubject.next(payload);
     });
 
-    this.socket.on('round-started', (payload) => {
+    socket.on('round-started', (payload) => {
       this.roundStartedSubject.next(payload);
     });
 
-    this.socket.on('question', (payload) => {
+    socket.on('question', (payload) => {
       this.questionSubject.next(payload);
     });
 
-    this.socket.on('answer-ack', (payload) => {
+    socket.on('answer-ack', (payload) => {
       this.answerAckSubject.next(payload);
     });
 
-    this.socket.on('answer-rejected', (payload) => {
+    socket.on('answer-rejected', (payload) => {
       this.answerRejectedSubject.next(payload);
     });
 
-    this.socket.on('score-update', (payload) => {
+    socket.on('score-update', (payload) => {
       this.scoreUpdateSubject.next(payload);
     });
 
-    this.socket.on('leaderboard-update', (payload) => {
+    socket.on('leaderboard-update', (payload) => {
       this.leaderboardUpdateSubject.next(payload);
     });
 
-    this.socket.on('round-closed', (payload) => {
+    socket.on('round-closed', (payload) => {
       this.roundClosedSubject.next(payload);
     });
 
-    this.socket.on('game-ended', (payload) => {
+    socket.on('game-ended', (payload) => {
       this.gameEndedSubject.next(payload);
     });
 
-    this.socket.on('session-closed', (payload) => {
+    socket.on('session-closed', (payload) => {
       this.sessionClosedSubject.next(payload);
     });
 
-    this.socket.on('error', (payload) => {
+    socket.on('error', (payload) => {
       this.socketErrorSubject.next(payload);
     });
 
-    this.socket.on('chests-revealed', (payload) => {
+    socket.on('chests-revealed', (payload) => {
       this.chestsRevealedSubject.next(payload);
     });
 
-    this.socket.on('chest-effect', (payload) => {
+    socket.on('chest-effect', (payload) => {
       this.chestEffectSubject.next(payload);
     });
 
-    this.socket.on('gold-update', (payload) => {
+    socket.on('gold-update', (payload) => {
       this.goldUpdateSubject.next(payload);
     });
 
-    this.socket.on('target-needed', (payload) => {
+    socket.on('target-needed', (payload) => {
       this.targetNeededSubject.next(payload);
     });
 
-    this.socket.on('forge-activity', (payload) => {
+    socket.on('forge-activity', (payload) => {
       this.forgeActivitySubject.next(payload);
     });
   }

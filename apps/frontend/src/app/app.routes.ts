@@ -23,11 +23,28 @@ export const appRoutes: Route[] = [
     redirectTo: 'login',
     pathMatch: 'full',
   },
+  // Public guest-play routes — anyone with a PIN can join, no account required.
   {
     path: 'play',
-    canActivate: [authGuard],
     loadComponent: () =>
       import('./features/play/play-page.component').then((m) => m.PlayPageComponent),
+  },
+  {
+    path: 'game-lobby/:pin',
+    loadComponent: () =>
+      import('./features/game/game-lobby-page.component').then((m) => m.GameLobbyPageComponent),
+  },
+  {
+    path: 'game/:pin',
+    loadComponent: () =>
+      import('./features/game/game-play-page.component').then((m) => m.GamePlayPageComponent),
+  },
+  {
+    path: 'leaderboards',
+    loadComponent: () =>
+      import('./features/leaderboards/leaderboards-page.component').then(
+        (m) => m.LeaderboardsPageComponent
+      ),
   },
   // Protected routes — no shell wrapper, auth guard applied to all children
   {
@@ -68,6 +85,13 @@ export const appRoutes: Route[] = [
             loadComponent: () =>
               import('./features/dashboard/quizzes/quiz-builder-page.component').then(
                 (m) => m.QuizBuilderPageComponent
+              ),
+          },
+          {
+            path: 'quizzes/ai',
+            loadComponent: () =>
+              import('./features/dashboard/quizzes/ai-quiz-page.component').then(
+                (m) => m.AiQuizPageComponent
               ),
           },
           {
@@ -115,28 +139,11 @@ export const appRoutes: Route[] = [
           },
         ],
       },
-      // Game routes — standalone, no dashboard shell wrapper
-      {
-        path: 'game-lobby/:pin',
-        loadComponent: () =>
-          import('./features/game/game-lobby-page.component').then((m) => m.GameLobbyPageComponent),
-      },
-      {
-        path: 'game/:pin',
-        loadComponent: () =>
-          import('./features/game/game-play-page.component').then((m) => m.GamePlayPageComponent),
-      },
+      // Host route — hosts always have an account.
       {
         path: 'host/:pin',
         loadComponent: () =>
           import('./features/host/host-page.component').then((m) => m.HostPageComponent),
-      },
-      {
-        path: 'leaderboards',
-        loadComponent: () =>
-          import('./features/leaderboards/leaderboards-page.component').then(
-            (m) => m.LeaderboardsPageComponent
-          ),
       },
     ],
   },
