@@ -6,17 +6,19 @@
 @import 'tailwindcss';
 
 :root {
-  --bubbly-background: #f9fafb;
+  --bubbly-background: #f3f7fb;
   --bubbly-primary: #00a5e0;
   --bubbly-primary-deep: #007fb0;
   --bubbly-secondary: #93c1eb;
   --bubbly-accent: #cd2750;
   --bubbly-accent-deep: #9f1d3d;
   --bubbly-text: #070f18;
-  --bubbly-muted: #64748b;
+  --bubbly-muted: #4a5b6e;
   --bubbly-surface: #ffffff;
-  --bubbly-surface-soft: #eaf1f8;
-  --bubbly-border: #dbe3ea;
+  --bubbly-surface-soft: #e3eef7;
+  --bubbly-surface-tint: #f5f9fd;
+  --bubbly-border: #cfdbe6;
+  --bubbly-border-strong: #b5c4d3;
   --bubbly-shadow: rgba(7, 15, 24, 0.14);
   --bubbly-focus: rgba(0, 165, 224, 0.32);
 
@@ -72,11 +74,13 @@ body {
 
 body {
   background:
-    radial-gradient(circle at 10% 10%, rgba(0, 165, 224, 0.14), transparent 30%),
-    radial-gradient(circle at 90% 0%, rgba(205, 39, 80, 0.12), transparent 35%),
+    radial-gradient(circle at 10% 10%, rgba(0, 165, 224, 0.16), transparent 30%),
+    radial-gradient(circle at 90% 0%, rgba(205, 39, 80, 0.13), transparent 35%),
     var(--bubbly-background);
   color: var(--bubbly-text);
   font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
 }
 
 a,
@@ -130,6 +134,11 @@ h3,
     background: var(--bubbly-surface-soft);
   }
 
+  .qf-tint-surface {
+    border: 1px solid var(--bubbly-border);
+    background: var(--bubbly-surface-tint);
+  }
+
   .qf-tactile {
     transition:
       transform 160ms ease,
@@ -167,15 +176,24 @@ h3,
   }
 
   .qf-input {
-    min-height: 3rem;
+    min-height: 3.25rem;
     border: 1px solid var(--bubbly-border);
     border-radius: var(--bubbly-radius-md);
     background: var(--bubbly-surface);
     color: var(--bubbly-text);
+    font-size: 1rem;
+    font-weight: 600;
+    padding-inline: 1rem;
   }
 
   .qf-input::placeholder {
-    color: color-mix(in srgb, var(--bubbly-muted) 72%, white);
+    color: color-mix(in srgb, var(--bubbly-muted) 65%, white);
+    font-weight: 500;
+  }
+
+  textarea.qf-input {
+    padding-block: 0.85rem;
+    line-height: 1.5;
   }
 
   .qf-page-stack {
@@ -210,10 +228,14 @@ h3,
     color: var(--bubbly-primary-deep);
     font-family: 'DynaPuff', cursive;
     font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
   }
 
   .qf-muted {
     color: var(--bubbly-muted);
+    font-weight: 600;
   }
 
   .qf-chip {
@@ -221,12 +243,11 @@ h3,
     align-items: center;
     border-radius: 9999px;
     background: var(--bubbly-surface-soft);
-    color: var(--bubbly-muted);
-    font-size: 0.75rem;
+    color: var(--bubbly-text);
+    font-size: 0.8125rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
-    padding: 0.25rem 0.75rem;
-    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.3rem 0.85rem;
   }
 
   .qf-alert-error {
@@ -234,9 +255,10 @@ h3,
     border-radius: var(--bubbly-radius-md);
     background: var(--bubbly-error-bg);
     color: var(--bubbly-error-text);
-    font-size: 0.875rem;
-    font-weight: var(--bubbly-font-weight-bold);
-    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 0.9rem 1.15rem;
+    line-height: 1.4;
   }
 
   .qf-alert-info {
@@ -244,9 +266,10 @@ h3,
     border-radius: var(--bubbly-radius-md);
     background: var(--bubbly-info-bg);
     color: var(--bubbly-info-text);
-    font-size: 0.875rem;
-    font-weight: var(--bubbly-font-weight-bold);
-    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 0.9rem 1.15rem;
+    line-height: 1.4;
   }
 
   .qf-alert-success {
@@ -254,9 +277,10 @@ h3,
     border-radius: var(--bubbly-radius-md);
     background: var(--bubbly-success-bg);
     color: var(--bubbly-success-text);
-    font-size: 0.875rem;
-    font-weight: var(--bubbly-font-weight-bold);
-    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 0.9rem 1.15rem;
+    line-height: 1.4;
   }
 
   .qf-alert-warning {
@@ -264,9 +288,10 @@ h3,
     border-radius: var(--bubbly-radius-md);
     background: var(--bubbly-warning-bg);
     color: var(--bubbly-warning-text);
-    font-size: 0.875rem;
-    font-weight: var(--bubbly-font-weight-bold);
-    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 0.9rem 1.15rem;
+    line-height: 1.4;
   }
 
   .qf-empty-state {
@@ -274,18 +299,20 @@ h3,
     border-radius: var(--bubbly-radius-lg);
     background: var(--bubbly-surface);
     color: var(--bubbly-muted);
-    font-size: 0.875rem;
-    font-weight: var(--bubbly-font-weight-semibold);
-    padding: 1.5rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 2rem 1.25rem;
     text-align: center;
+    line-height: 1.5;
   }
 
   .qf-choice {
     border: 1px solid var(--bubbly-border);
-    border-radius: 1.5rem;
+    border-radius: 1.25rem;
     background: var(--bubbly-surface);
-    padding: 1rem;
+    padding: 1.1rem 1.25rem;
     text-align: left;
+    font-size: 1rem;
   }
 
   .qf-choice-selected {
@@ -452,6 +479,71 @@ h3,
   .active-nav:hover {
     background: var(--bubbly-primary);
     color: white;
+  }
+
+  /* Sidebar nav item (inactive) */
+  .nav-item {
+    color: var(--bubbly-text);
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .nav-item:hover {
+    background: var(--bubbly-surface-soft);
+    color: var(--bubbly-primary-deep);
+  }
+
+  /* Profile section in sidebar — matches sidebar surface, not a different colour */
+  .qf-profile-card {
+    background: var(--bubbly-surface-soft);
+    border: 1px solid var(--bubbly-border);
+  }
+
+  .qf-profile-card:hover {
+    background: var(--bubbly-surface-tint);
+  }
+
+  /* Profile menu buttons — match the sidebar surface for visual cohesion */
+  .qf-profile-menu-btn {
+    background: var(--bubbly-surface);
+    color: var(--bubbly-primary-deep);
+    border: 1px solid var(--bubbly-border);
+  }
+
+  .qf-profile-menu-btn:hover {
+    background: var(--bubbly-surface-soft);
+  }
+
+  .qf-profile-menu-btn.danger:hover {
+    background: var(--bubbly-error-bg);
+    color: var(--bubbly-error-text);
+  }
+
+  /* Page header eyebrow + bigger titles */
+  .qf-eyebrow {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--bubbly-muted);
+  }
+
+  .qf-h1 {
+    font-family: 'DynaPuff', cursive;
+    font-weight: 700;
+    color: var(--bubbly-primary-deep);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  .qf-h2 {
+    font-family: 'DynaPuff', cursive;
+    font-weight: 700;
+    color: var(--bubbly-primary-deep);
+    font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
   }
 
   /* Profile dropdown slide-out animation */
