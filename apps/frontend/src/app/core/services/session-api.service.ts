@@ -13,6 +13,7 @@ export interface SessionDto {
   status: SessionStatus;
   started_at: string | null;
   isHost: boolean;
+  game_mode: GameMode;
 }
 
 export interface CreateSessionResponse {
@@ -21,11 +22,16 @@ export interface CreateSessionResponse {
 }
 
 export type SessionBroadcastMode = 'private' | 'selected-groups' | 'all-my-groups';
+export type GameMode = 'forge-classic' | 'treasure-forge';
 
 export interface CreateSessionPayload {
   quiz_id: number;
   broadcast_mode?: SessionBroadcastMode;
   group_ids?: number[];
+  game_mode?: GameMode;
+  tf_end_mode?: 'timer' | 'gold_goal' | null;
+  tf_timer_minutes?: number;
+  tf_gold_goal?: number;
 }
 
 export interface UpdateSessionStatusResponse {
