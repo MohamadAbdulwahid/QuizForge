@@ -161,12 +161,36 @@
             viewBox="0 0 24 24"
             aria-hidden="true"
           >
-            <circle cx="9" cy="6" r="1.5" />
-            <circle cx="15" cy="6" r="1.5" />
-            <circle cx="9" cy="12" r="1.5" />
-            <circle cx="15" cy="12" r="1.5" />
-            <circle cx="9" cy="18" r="1.5" />
-            <circle cx="15" cy="18" r="1.5" />
+            <circle
+              cx="9"
+              cy="6"
+              r="1.5"
+            />
+            <circle
+              cx="15"
+              cy="6"
+              r="1.5"
+            />
+            <circle
+              cx="9"
+              cy="12"
+              r="1.5"
+            />
+            <circle
+              cx="15"
+              cy="12"
+              r="1.5"
+            />
+            <circle
+              cx="9"
+              cy="18"
+              r="1.5"
+            />
+            <circle
+              cx="15"
+              cy="18"
+              r="1.5"
+            />
           </svg>
 
           <!-- Question number circle -->
@@ -207,9 +231,21 @@
             viewBox="0 0 24 24"
             aria-hidden="true"
           >
-            <circle cx="5" cy="12" r="1.5" />
-            <circle cx="12" cy="12" r="1.5" />
-            <circle cx="19" cy="12" r="1.5" />
+            <circle
+              cx="5"
+              cy="12"
+              r="1.5"
+            />
+            <circle
+              cx="12"
+              cy="12"
+              r="1.5"
+            />
+            <circle
+              cx="19"
+              cy="12"
+              r="1.5"
+            />
           </svg>
         </button>
       }
@@ -268,12 +304,13 @@
                 class="rounded-xl px-3 py-2 text-sm font-bold transition sm:px-4"
                 [ngClass]="
                   active.type === qt.id
-                    ? 'bg-white text-bubbly-primary-deep shadow-sm'
+                    ? 'text-bubbly-primary-deep bg-white shadow-sm'
                     : 'text-slate-500 hover:text-slate-700'
                 "
                 (click)="onTypeSelect(active.clientId, qt.id)"
               >
-                <span class="mr-1.5">{{ qt.icon }}</span>{{ qt.label }}
+                <span class="mr-1.5">{{ qt.icon }}</span>
+                {{ qt.label }}
               </button>
             }
           </div>
@@ -361,7 +398,11 @@
                             d="M4.5 12.75l6 6 9-13.5"
                           />
                         } @else {
-                          <circle cx="12" cy="12" r="9" />
+                          <circle
+                            cx="12"
+                            cy="12"
+                            r="9"
+                          />
                         }
                       </svg>
                     </button>
@@ -471,7 +512,11 @@
                             d="M4.5 12.75l6 6 9-13.5"
                           />
                         } @else {
-                          <circle cx="12" cy="12" r="9" />
+                          <circle
+                            cx="12"
+                            cy="12"
+                            r="9"
+                          />
                         }
                       </svg>
                     </button>
@@ -496,7 +541,7 @@
                   <div class="qf-surface flex items-center gap-2.5 rounded-2xl p-3">
                     <!-- Position badge -->
                     <span
-                      class="font-display flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-bubbly-primary text-sm font-black text-white"
+                      class="font-display bg-bubbly-primary flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-black text-white"
                     >
                       {{ ordIdx + 1 }}
                     </span>
@@ -620,7 +665,9 @@
 
               <div class="flex flex-col gap-2">
                 @for (left of active.options; track left.id; let leftIdx = $index) {
-                  <div class="qf-surface flex flex-col gap-2 rounded-2xl p-3 sm:flex-row sm:items-center">
+                  <div
+                    class="qf-surface flex flex-col gap-2 rounded-2xl p-3 sm:flex-row sm:items-center"
+                  >
                     <!-- Letter badge with optional paired checkmark -->
                     <div class="flex items-center gap-2 sm:flex-1">
                       <span
@@ -659,13 +706,22 @@
                     <select
                       class="qf-input min-h-0 w-full px-3 py-2.5 text-sm font-semibold sm:w-48"
                       [ngClass]="
-                        isPaired(left) ? '!border-bubbly-accent text-bubbly-accent' : 'text-slate-600'
+                        isPaired(left)
+                          ? '!border-bubbly-accent text-bubbly-accent'
+                          : 'text-slate-600'
                       "
                       [value]="left.matchId ?? ''"
-                      (change)="updateMatchingPairing(active.clientId, leftIdx, $any($event.target).value)"
+                      (change)="
+                        updateMatchingPairing(active.clientId, leftIdx, $any($event.target).value)
+                      "
                       [attr.aria-label]="'Pair prompt ' + optionLabel(leftIdx) + ' with an answer'"
                     >
-                      <option value="" disabled>Pair with…</option>
+                      <option
+                        value=""
+                        disabled
+                      >
+                        Pair with…
+                      </option>
                       @for (right of active.rightOptions ?? []; track right.id; let rIdx = $index) {
                         <option [value]="right.id">
                           {{ rIdx + 1 }}. {{ right.text || 'Answer ' + (rIdx + 1) }}
@@ -683,7 +739,7 @@
                   @for (right of active.rightOptions ?? []; track right.id; let rIdx = $index) {
                     <div class="qf-surface flex items-center gap-2.5 rounded-2xl p-3">
                       <span
-                        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-bubbly-primary/15 text-sm font-bold text-bubbly-primary-deep"
+                        class="bg-bubbly-primary/15 text-bubbly-primary-deep flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold"
                       >
                         {{ rIdx + 1 }}
                       </span>
@@ -692,7 +748,9 @@
                         class="qf-input flex-1 px-4 py-2.5 text-base font-semibold"
                         [placeholder]="'Answer ' + (rIdx + 1)"
                         [value]="right.text"
-                        (input)="updateMatchingRightText(active.clientId, rIdx, $any($event.target).value)"
+                        (input)="
+                          updateMatchingRightText(active.clientId, rIdx, $any($event.target).value)
+                        "
                       />
 
                       @if ((active.rightOptions ?? []).length > 2) {
@@ -759,7 +817,7 @@
                   <div class="qf-surface flex items-center gap-2.5 rounded-2xl p-3">
                     <!-- Number badge -->
                     <span
-                      class="font-display flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-bubbly-primary text-sm font-black text-white"
+                      class="font-display bg-bubbly-primary flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-black text-white"
                     >
                       {{ fIdx + 1 }}
                     </span>
@@ -768,7 +826,9 @@
                       class="qf-input flex-1 px-4 py-2.5 text-base font-semibold"
                       [placeholder]="'Accepted answer ' + (fIdx + 1)"
                       [value]="opt.answer ?? ''"
-                      (input)="updateFibAnswerText(active.clientId, fIdx, $any($event.target).value)"
+                      (input)="
+                        updateFibAnswerText(active.clientId, fIdx, $any($event.target).value)
+                      "
                     />
 
                     <!-- Case-sensitivity toggle (small switch) -->
@@ -782,7 +842,10 @@
                       "
                       (click)="toggleFibCaseSensitive(active.clientId, fIdx)"
                       [attr.aria-label]="
-                        'Case-sensitive for answer ' + (fIdx + 1) + ': ' + (opt.caseSensitive ? 'on' : 'off')
+                        'Case-sensitive for answer ' +
+                        (fIdx + 1) +
+                        ': ' +
+                        (opt.caseSensitive ? 'on' : 'off')
                       "
                     >
                       <span

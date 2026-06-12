@@ -997,14 +997,6 @@ export class QuizBuilderPageComponent {
     return String.fromCharCode(65 + index);
   }
 
-  /**
-   * Tracks-by helper for `@for` on the right column of a matching question.
-   * Falls back to the index string if `rightOptions` is somehow empty.
-   */
-  protected rightOptionId(_index: number, option: QuestionOption): string {
-    return option.id;
-  }
-
   /** True if the given left option has a non-empty matchId (UI: shows a checkmark). */
   protected isPaired(option: QuestionOption): boolean {
     return !!option.matchId;
