@@ -53,10 +53,10 @@ function generateQuestions(count: number) {
       text: questionText,
       type: 'true-false' as const,
       options: [
-        { id: 'T', text: 'True' },
-        { id: 'F', text: 'False' },
+        { id: 'true', text: 'True' },
+        { id: 'false', text: 'False' },
       ],
-      correct_answer: Math.random() > 0.5 ? 'T' : 'F',
+      correct_answer: Math.random() > 0.5 ? 'true' : 'false',
       time_limit: 20,
       points: 50,
       order_index: i,
