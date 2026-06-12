@@ -7,6 +7,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 - 263 files · ~220,656 words
 - Verdict: corpus is large enough that graph structure adds value.
 
@@ -34,14 +35,18 @@
 =======
 - 288 files · ~263,891 words
 >>>>>>> 6117afa (chore(graphify): update graph data files)
+=======
+- 288 files · ~263,925 words
+>>>>>>> 2eee43f (chore(graphify-out): update manifest.json with new mtime and ast_hash values for modified files)
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1524 nodes · 1745 edges · 98 communities (82 shown, 16 thin omitted)
+- 1524 nodes · 1749 edges · 100 communities (83 shown, 17 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -64,6 +69,9 @@
 =======
 - Built from commit: `1b30c308`
 >>>>>>> 6117afa (chore(graphify): update graph data files)
+=======
+- Built from commit: `9d37438f`
+>>>>>>> 2eee43f (chore(graphify-out): update manifest.json with new mtime and ast_hash values for modified files)
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -173,6 +181,7 @@
 - [[_COMMUNITY_Community 97|Community 97]]
 - [[_COMMUNITY_Community 98|Community 98]]
 - [[_COMMUNITY_Community 99|Community 99]]
+<<<<<<< HEAD
 - [[_COMMUNITY_Community 100|Community 100]]
 - [[_COMMUNITY_Community 101|Community 101]]
 - [[_COMMUNITY_Community 102|Community 102]]
@@ -367,6 +376,8 @@
 =======
 - [[_COMMUNITY_Community 97|Community 97]]
 >>>>>>> 6117afa (chore(graphify): update graph data files)
+=======
+>>>>>>> 2eee43f (chore(graphify-out): update manifest.json with new mtime and ast_hash values for modified files)
 
 ## God Nodes (most connected - your core abstractions)
 1. `QuizBuilderPageComponent` - 46 edges
@@ -398,6 +409,7 @@
 ## Import Cycles
 - None detected.
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -944,6 +956,9 @@ Nodes (8): installation, version, plugins, $schema, tui, autoExit, useDaemonProc
 =======
 ## Communities (98 total, 16 thin omitted)
 >>>>>>> 6117afa (chore(graphify): update graph data files)
+=======
+## Communities (100 total, 17 thin omitted)
+>>>>>>> 2eee43f (chore(graphify-out): update manifest.json with new mtime and ast_hash values for modified files)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.18
@@ -987,7 +1002,7 @@ Nodes (43): group_invite_group_id_group_id_fk, group_invite_invited_by_user_id_u
 
 ### Community 10 - "Community 10"
 Cohesion: 0.05
-Nodes (31): QuizController, AiGenerateRequest, aiGenerateRequestSchema, baseFields, CreateQuizRequest, createQuizRequestSchema, fillInBlankOptionSchema, fillInBlankSchema (+23 more)
+Nodes (34): Config, envSchema, parsedEnv, QuizController, AiGenerateRequest, aiGenerateRequestSchema, baseFields, CreateQuizRequest (+26 more)
 
 ### Community 11 - "Community 11"
 Cohesion: 0.10
@@ -1050,8 +1065,8 @@ Cohesion: 0.09
 Nodes (23): profile_user_id_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, schemaTo, tableFrom (+15 more)
 
 ### Community 29 - "Community 29"
-Cohesion: 0.20
-Nodes (10): profile_user_id_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, schemaTo, tableFrom (+2 more)
+Cohesion: 0.09
+Nodes (23): profile_user_id_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, schemaTo, tableFrom (+15 more)
 
 ### Community 31 - "Community 31"
 Cohesion: 0.22
@@ -1118,12 +1133,12 @@ Cohesion: 0.25
 Nodes (6): Feature, FeatureIcon, FeatureTone, LandingPageComponent, Step, TILE_CLASSES
 
 ### Community 48 - "Community 48"
-Cohesion: 0.18
-Nodes (11): invited_by_user_id, invited_user_id, name, notNull, primaryKey, type, name, notNull (+3 more)
+Cohesion: 0.33
+Nodes (6): invited_by_user_id, name, notNull, primaryKey, type, columns
 
 ### Community 49 - "Community 49"
-Cohesion: 0.18
-Nodes (11): requester_user_id, responded_by_user_id, columns, name, notNull, primaryKey, type, name (+3 more)
+Cohesion: 0.33
+Nodes (6): requester_user_id, columns, name, notNull, primaryKey, type
 
 ### Community 50 - "Community 50"
 Cohesion: 0.11
@@ -1150,8 +1165,8 @@ Cohesion: 0.40
 Nodes (5): responded_at, name, notNull, primaryKey, type
 
 ### Community 58 - "Community 58"
-Cohesion: 0.18
-Nodes (11): group_id, user_id, name, notNull, primaryKey, type, columns, name (+3 more)
+Cohesion: 0.33
+Nodes (6): user_id, columns, name, notNull, primaryKey, type
 
 ### Community 59 - "Community 59"
 Cohesion: 0.25
@@ -1162,8 +1177,8 @@ Cohesion: 0.40
 Nodes (5): responded_at, name, notNull, primaryKey, type
 
 ### Community 61 - "Community 61"
-Cohesion: 0.50
-Nodes (3): Config, envSchema, parsedEnv
+Cohesion: 0.33
+Nodes (6): username, columns, name, notNull, primaryKey, type
 
 ### Community 62 - "Community 62"
 Cohesion: 0.40
@@ -1172,10 +1187,6 @@ Nodes (3): ChestPickValidationInput, ChestPickValidationResult, validateChestPic
 ### Community 63 - "Community 63"
 Cohesion: 0.50
 Nodes (3): dialect, entries, version
-
-### Community 64 - "Community 64"
-Cohesion: 0.17
-Nodes (5): LobbyPlayer, SessionApiService, SessionStatus, SessionClosedEvent, SocketErrorPayload
 
 ### Community 65 - "Community 65"
 Cohesion: 0.20
@@ -1186,8 +1197,8 @@ Cohesion: 0.20
 Nodes (9): dialect, id, prevId, columns, name, schema, tables, public.quiz (+1 more)
 
 ### Community 67 - "Community 67"
-Cohesion: 0.17
-Nodes (12): updated_at, username, columns, default, name, notNull, primaryKey, type (+4 more)
+Cohesion: 0.33
+Nodes (6): updated_at, default, name, notNull, primaryKey, type
 
 ### Community 68 - "Community 68"
 Cohesion: 0.20
@@ -1218,8 +1229,8 @@ Cohesion: 0.09
 Nodes (22): Additional Game Modes (Future), Advanced Features, Analytics & Monitoring, API Documentation & Polish, Backend (13 SP), Backlog Summary, Consolidation Notes, Frontend (12 SP) (+14 more)
 
 ### Community 80 - "Community 80"
-Cohesion: 0.25
-Nodes (8): checkConstraints, compositePrimaryKeys, indexes, isRLSEnabled, name, policies, schema, public.profile
+Cohesion: 0.40
+Nodes (4): LobbyPlayer, SessionStatus, SessionClosedEvent, SocketErrorPayload
 
 ### Community 82 - "Community 82"
 Cohesion: 0.13
@@ -1240,6 +1251,7 @@ Nodes (11): group_id, user_id, name, notNull, primaryKey, type, columns, name (+
 ### Community 88 - "Community 88"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 4bf98b3 (chore(graphify): update labels, cache, and manifest)
 Cohesion: 0.25
 Nodes (7): QuestionType, QuizDetailDto, QuizOptionDto, QuizOptions, QuizQuestionPayload, QuizSavePayload, QuizSaveResponse
@@ -1249,6 +1261,9 @@ Nodes (12): FieldError, QuestionDraft, QuestionOption, QuestionType, QuizDetailD
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
 =======
 Cohesion: 0.05
+=======
+Cohesion: 0.06
+>>>>>>> 2eee43f (chore(graphify-out): update manifest.json with new mtime and ast_hash values for modified files)
 Nodes (22): AiQuizPageComponent, createDefaultQuestion(), createFibOption(), createOption(), defaultOptionsForType(), FieldError, QuestionDraft, QuestionOption (+14 more)
 >>>>>>> 6117afa (chore(graphify): update graph data files)
 
@@ -1660,9 +1675,18 @@ Nodes (6): joined_at, default, name, notNull, primaryKey, type
 
 ### Community 97 - "Community 97"
 Cohesion: 0.40
-Nodes (5): columns, name, nullsNotDistinct, uniqueConstraints, profile_username_unique
+Nodes (5): group_id, name, notNull, primaryKey, type
+
+### Community 98 - "Community 98"
+Cohesion: 0.40
+Nodes (5): invited_user_id, name, notNull, primaryKey, type
+
+### Community 99 - "Community 99"
+Cohesion: 0.40
+Nodes (5): responded_by_user_id, name, notNull, primaryKey, type
 
 ## Knowledge Gaps
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1688,6 +1712,11 @@ Nodes (5): columns, name, nullsNotDistinct, uniqueConstraints, profile_username_
   These have ≤1 connection - possible missing edges or undocumented components.
 - **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 >>>>>>> 6117afa (chore(graphify): update graph data files)
+=======
+- **825 isolated node(s):** `logger`, `AiGenerateResponse`, `gameNamespaceLogger`, `connectedHosts`, `QuestionOption` (+820 more)
+  These have ≤1 connection - possible missing edges or undocumented components.
+- **17 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+>>>>>>> 2eee43f (chore(graphify-out): update manifest.json with new mtime and ast_hash values for modified files)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -1722,6 +1751,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `tables` connect `Community 34` to `Community 9`, `Community 75`, `Community 16`, `Community 21`, `Community 25`, `Community 28`?**
   _High betweenness centrality (0.029) - this node is a cross-community bridge._
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 5514abe (style: final formatting and graphify sync)
 - **Why does `columns` connect `Community 8` to `Community 25`, `Community 54`?**
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
@@ -1735,6 +1765,14 @@ _Questions this graph is uniquely positioned to answer:_
 - **What connects `LobbyPlayer`, `FeatureIcon`, `FeatureTone` to the rest of the system?**
 >>>>>>> 6117afa (chore(graphify): update graph data files)
   _829 weakly-connected nodes found - possible documentation gaps or missing edges._
+=======
+- **Why does `SessionApiService` connect `Community 64` to `Community 32`, `Community 65`, `Community 80`?**
+  _High betweenness centrality (0.026) - this node is a cross-community bridge._
+- **Why does `tables` connect `Community 66` to `Community 76`, `Community 18`, `Community 19`, `Community 22`, `Community 27`, `Community 29`?**
+  _High betweenness centrality (0.024) - this node is a cross-community bridge._
+- **What connects `logger`, `AiGenerateResponse`, `gameNamespaceLogger` to the rest of the system?**
+  _825 weakly-connected nodes found - possible documentation gaps or missing edges._
+>>>>>>> 2eee43f (chore(graphify-out): update manifest.json with new mtime and ast_hash values for modified files)
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.11231884057971014 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
