@@ -17,9 +17,9 @@
       "norm_label": "husky.sh"
     },
     {
-      "label": "husky.sh script",
-      "file_type": "code",
-      "source_file": ".husky/_/husky.sh",
+      "label": "Sprint 6 Backlog - End-to-End Gameplay, Stability & Admin Polish",
+      "file_type": "document",
+      "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L1",
       "metadata": {
         "language": "bash",
@@ -25421,7 +25421,7 @@
     {
       "label": "Typecheck \u2014 Auto-Detects Framework",
       "file_type": "document",
-      "source_file": ".opencode/skills/nx-import/references/VITE.md",
+      "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L229",
       "id": "references_vite_typecheck_auto_detects_framework",
       "community": 237,
@@ -66303,8 +66303,8 @@
       "source_file": "docs/performance.md",
       "source_location": "L1",
       "weight": 1.0,
-      "source": "docs_performance",
-      "target": "docs_performance_performance_tuning_decisions",
+      "source": "sprint_06_sprint_backlog",
+      "target": "sprint_06_sprint_backlog_sprint_6_backlog_end_to_end_gameplay_stability_admin_polish",
       "confidence_score": 1.0
     },
     {
@@ -68318,29 +68318,32 @@
       "confidence_score": 1.0
     },
     {
-      "relation": "contains",
+      "relation": "calls",
+      "context": "call",
       "confidence": "EXTRACTED",
-      "source_file": "docs/sprint.06/effort-plan.md",
-      "source_location": "L20",
+      "source_file": "apps/backend/src/game/engine/answer-grading.ts",
+      "source_location": "L140",
       "weight": 1.0,
       "source": "sprint_06_effort_plan_sprint_6_effort_plan",
       "target": "sprint_06_effort_plan_effort_distribution_by_developer",
       "confidence_score": 1.0
     },
     {
-      "relation": "contains",
+      "relation": "calls",
+      "context": "call",
       "confidence": "EXTRACTED",
-      "source_file": "docs/sprint.06/effort-plan.md",
-      "source_location": "L179",
+      "source_file": "apps/backend/src/game/engine/answer-grading.ts",
+      "source_location": "L142",
       "weight": 1.0,
       "source": "sprint_06_effort_plan_sprint_6_effort_plan",
       "target": "sprint_06_effort_plan_notes",
       "confidence_score": 1.0
     },
     {
-      "relation": "contains",
+      "relation": "calls",
+      "context": "call",
       "confidence": "EXTRACTED",
-      "source_file": "docs/sprint.06/effort-plan.md",
+      "source_file": "apps/backend/src/game/engine/answer-grading.ts",
       "source_location": "L144",
       "weight": 1.0,
       "source": "sprint_06_effort_plan_sprint_6_effort_plan",
@@ -68348,7 +68351,8 @@
       "confidence_score": 1.0
     },
     {
-      "relation": "contains",
+      "relation": "calls",
+      "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "docs/sprint.06/effort-plan.md",
       "source_location": "L74",
@@ -68448,40 +68452,44 @@
       "confidence_score": 1.0
     },
     {
-      "relation": "contains",
+      "relation": "calls",
+      "context": "call",
       "confidence": "EXTRACTED",
-      "source_file": "docs/sprint.06/sprint-backlog.md",
-      "source_location": "L1",
+      "source_file": "apps/backend/src/game/engine/answer-grading.ts",
+      "source_location": "L82",
       "weight": 1.0,
       "source": "sprint_06_sprint_backlog",
       "target": "sprint_06_sprint_backlog_sprint_6_backlog_end_to_end_gameplay_stability_admin_polish",
       "confidence_score": 1.0
     },
     {
-      "relation": "contains",
+      "relation": "calls",
+      "context": "call",
       "confidence": "EXTRACTED",
-      "source_file": "docs/sprint.06/sprint-backlog.md",
-      "source_location": "L11",
+      "source_file": "apps/backend/src/game/engine/answer-grading.ts",
+      "source_location": "L148",
       "weight": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_6_backlog_end_to_end_gameplay_stability_admin_polish",
       "target": "sprint_06_sprint_backlog_prerequisites_from_sprint_5",
       "confidence_score": 1.0
     },
     {
-      "relation": "contains",
+      "relation": "calls",
+      "context": "call",
       "confidence": "EXTRACTED",
-      "source_file": "docs/sprint.06/sprint-backlog.md",
-      "source_location": "L132",
+      "source_file": "apps/backend/src/game/engine/answer-grading.ts",
+      "source_location": "L101",
       "weight": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_6_backlog_end_to_end_gameplay_stability_admin_polish",
       "target": "sprint_06_sprint_backlog_sprint_6_test_plan",
       "confidence_score": 1.0
     },
     {
-      "relation": "contains",
+      "relation": "calls",
+      "context": "call",
       "confidence": "EXTRACTED",
-      "source_file": "docs/sprint.06/sprint-backlog.md",
-      "source_location": "L26",
+      "source_file": "apps/backend/src/game/engine/answer-grading.ts",
+      "source_location": "L171",
       "weight": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_6_backlog_end_to_end_gameplay_stability_admin_polish",
       "target": "sprint_06_sprint_backlog_sprint_backlog_items",
@@ -68530,8 +68538,8 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "docs/sprint.06/sprint-backlog.md",
-      "source_location": "L151",
+      "source_file": "apps/backend/src/game/engine/gold-calculation.ts",
+      "source_location": "L13",
       "weight": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_6_test_plan",
       "target": "sprint_06_sprint_backlog_e2e_tests",
@@ -68540,8 +68548,8 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "docs/sprint.06/sprint-backlog.md",
-      "source_location": "L145",
+      "source_file": "apps/backend/src/game/engine/gold-calculation.ts",
+      "source_location": "L80",
       "weight": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_6_test_plan",
       "target": "sprint_06_sprint_backlog_integration_tests",
@@ -68550,7 +68558,97 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "docs/sprint.06/sprint-backlog.md",
+      "source_file": "apps/backend/src/game/engine/gold-calculation.ts",
+      "source_location": "L67",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "engine_gold_calculation",
+      "target": "engine_gold_calculation_multiplygold"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/game/engine/gold-calculation.ts",
+      "source_location": "L95",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "engine_gold_calculation",
+      "target": "engine_gold_calculation_stealgold"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/game/engine/gold-calculation.ts",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "engine_gold_calculation",
+      "target": "engine_gold_calculation_stealinput"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/game/engine/gold-calculation.ts",
+      "source_location": "L29",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "engine_gold_calculation",
+      "target": "engine_gold_calculation_stealresult"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/game/engine/gold-calculation.ts",
+      "source_location": "L115",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "engine_gold_calculation",
+      "target": "engine_gold_calculation_swapgold"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/game/engine/gold-calculation.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "engine_gold_calculation",
+      "target": "engine_gold_calculation_swapresult"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/game/engine/chest-validation.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "engine_chest_validation",
+      "target": "engine_chest_validation_chestpickvalidationinput"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/game/engine/chest-validation.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "engine_chest_validation",
+      "target": "engine_chest_validation_chestpickvalidationresult"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/game/engine/chest-validation.ts",
+      "source_location": "L45",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "engine_chest_validation",
+      "target": "engine_chest_validation_validatechestpick"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/game/engine/chest-generation.ts",
       "source_location": "L134",
       "weight": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_6_test_plan",
@@ -68560,8 +68658,8 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "docs/what-changed-in-product-backlog.md",
-      "source_location": "L1",
+      "source_file": "apps/backend/src/game/engine/chest-generation.ts",
+      "source_location": "L40",
       "weight": 1.0,
       "source": "docs_what_changed_in_product_backlog",
       "target": "docs_what_changed_in_product_backlog_product_backlog_compression_10_sprints_to_6",

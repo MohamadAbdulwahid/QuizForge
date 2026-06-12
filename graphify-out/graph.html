@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -93427,93 +93427,69 @@
         { cid: 283, color: '#76B7B2', label: 'Community 283', count: 1 },
       ];
 
-      // HTML-escape helper — prevents XSS when injecting graph data into innerHTML
-      function esc(s) {
-        return String(s)
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
-          .replace(/'/g, '&#39;');
-      }
+// HTML-escape helper — prevents XSS when injecting graph data into innerHTML
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
 
-      // Build vis datasets
-      const nodesDS = new vis.DataSet(
-        RAW_NODES.map((n) => ({
-          id: n.id,
-          label: n.label,
-          color: n.color,
-          size: n.size,
-          font: n.font,
-          title: n.title,
-          _community: n.community,
-          _community_name: n.community_name,
-          _source_file: n.source_file,
-          _file_type: n.file_type,
-          _degree: n.degree,
-        }))
-      );
+// Build vis datasets
+const nodesDS = new vis.DataSet(RAW_NODES.map(n => ({
+  id: n.id, label: n.label, color: n.color, size: n.size,
+  font: n.font, title: n.title,
+  _community: n.community, _community_name: n.community_name,
+  _source_file: n.source_file, _file_type: n.file_type, _degree: n.degree,
+})));
 
-      const edgesDS = new vis.DataSet(
-        RAW_EDGES.map((e, i) => ({
-          id: i,
-          from: e.from,
-          to: e.to,
-          label: '',
-          title: e.title,
-          dashes: e.dashes,
-          width: e.width,
-          color: e.color,
-          arrows: { to: { enabled: true, scaleFactor: 0.5 } },
-        }))
-      );
+const edgesDS = new vis.DataSet(RAW_EDGES.map((e, i) => ({
+  id: i, from: e.from, to: e.to,
+  label: '',
+  title: e.title,
+  dashes: e.dashes,
+  width: e.width,
+  color: e.color,
+  arrows: { to: { enabled: true, scaleFactor: 0.5 } },
+})));
 
-      const container = document.getElementById('graph');
-      const network = new vis.Network(
-        container,
-        { nodes: nodesDS, edges: edgesDS },
-        {
-          physics: {
-            enabled: true,
-            solver: 'forceAtlas2Based',
-            forceAtlas2Based: {
-              gravitationalConstant: -60,
-              centralGravity: 0.005,
-              springLength: 120,
-              springConstant: 0.08,
-              damping: 0.4,
-              avoidOverlap: 0.8,
-            },
-            stabilization: { iterations: 200, fit: true },
-          },
-          interaction: {
-            hover: true,
-            tooltipDelay: 100,
-            hideEdgesOnDrag: true,
-            navigationButtons: false,
-            keyboard: false,
-          },
-          nodes: { shape: 'dot', borderWidth: 1.5 },
-          edges: { smooth: { type: 'continuous', roundness: 0.2 }, selectionWidth: 3 },
-        }
-      );
+const container = document.getElementById('graph');
+const network = new vis.Network(container, { nodes: nodesDS, edges: edgesDS }, {
+  physics: {
+    enabled: true,
+    solver: 'forceAtlas2Based',
+    forceAtlas2Based: {
+      gravitationalConstant: -60,
+      centralGravity: 0.005,
+      springLength: 120,
+      springConstant: 0.08,
+      damping: 0.4,
+      avoidOverlap: 0.8,
+    },
+    stabilization: { iterations: 200, fit: true },
+  },
+  interaction: {
+    hover: true,
+    tooltipDelay: 100,
+    hideEdgesOnDrag: true,
+    navigationButtons: false,
+    keyboard: false,
+  },
+  nodes: { shape: 'dot', borderWidth: 1.5 },
+  edges: { smooth: { type: 'continuous', roundness: 0.2 }, selectionWidth: 3 },
+});
 
-      network.once('stabilizationIterationsDone', () => {
-        network.setOptions({ physics: { enabled: false } });
-      });
+network.once('stabilizationIterationsDone', () => {
+  network.setOptions({ physics: { enabled: false } });
+});
 
-      function showInfo(nodeId) {
-        const n = nodesDS.get(nodeId);
-        if (!n) return;
-        const neighborIds = network.getConnectedNodes(nodeId);
-        const neighborItems = neighborIds
-          .map((nid) => {
-            const nb = nodesDS.get(nid);
-            const color = nb ? nb.color.background : '#555';
-            return `<span class="neighbor-link" style="border-left-color:${esc(color)}" onclick="focusNode(${JSON.stringify(nid)})">${esc(nb ? nb.label : nid)}</span>`;
-          })
-          .join('');
-        document.getElementById('info-content').innerHTML = `
+function showInfo(nodeId) {
+  const n = nodesDS.get(nodeId);
+  if (!n) return;
+  const neighborIds = network.getConnectedNodes(nodeId);
+  const neighborItems = neighborIds.map(nid => {
+    const nb = nodesDS.get(nid);
+    const color = nb ? nb.color.background : '#555';
+    return `<span class="neighbor-link" style="border-left-color:${esc(color)}" onclick="focusNode(${JSON.stringify(nid)})">${esc(nb ? nb.label : nid)}</span>`;
+  }).join('');
+  document.getElementById('info-content').innerHTML = `
     <div class="field"><b>${esc(n.label)}</b></div>
     <div class="field">Type: ${esc(n._file_type || 'unknown')}</div>
     <div class="field">Community: ${esc(n._community_name)}</div>
@@ -93521,127 +93497,118 @@
     <div class="field">Degree: ${n._degree}</div>
     ${neighborIds.length ? `<div class="field" style="margin-top:8px;color:#aaa;font-size:11px">Neighbors (${neighborIds.length})</div><div id="neighbors-list">${neighborItems}</div>` : ''}
   `;
-      }
+}
 
-      function focusNode(nodeId) {
-        network.focus(nodeId, { scale: 1.4, animation: true });
-        network.selectNodes([nodeId]);
-        showInfo(nodeId);
-      }
+function focusNode(nodeId) {
+  network.focus(nodeId, { scale: 1.4, animation: true });
+  network.selectNodes([nodeId]);
+  showInfo(nodeId);
+}
 
-      // Track hovered node — hover detection is more reliable than click params
-      let hoveredNodeId = null;
-      network.on('hoverNode', (params) => {
-        hoveredNodeId = params.node;
-        container.style.cursor = 'pointer';
-      });
-      network.on('blurNode', () => {
-        hoveredNodeId = null;
-        container.style.cursor = 'default';
-      });
-      container.addEventListener('click', () => {
-        if (hoveredNodeId !== null) {
-          showInfo(hoveredNodeId);
-          network.selectNodes([hoveredNodeId]);
-        }
-      });
-      network.on('click', (params) => {
-        if (params.nodes.length > 0) {
-          showInfo(params.nodes[0]);
-        } else if (hoveredNodeId === null) {
-          document.getElementById('info-content').innerHTML =
-            '<span class="empty">Click a node to inspect it</span>';
-        }
-      });
+// Track hovered node — hover detection is more reliable than click params
+let hoveredNodeId = null;
+network.on('hoverNode', params => {
+  hoveredNodeId = params.node;
+  container.style.cursor = 'pointer';
+});
+network.on('blurNode', () => {
+  hoveredNodeId = null;
+  container.style.cursor = 'default';
+});
+container.addEventListener('click', () => {
+  if (hoveredNodeId !== null) {
+    showInfo(hoveredNodeId);
+    network.selectNodes([hoveredNodeId]);
+  }
+});
+network.on('click', params => {
+  if (params.nodes.length > 0) {
+    showInfo(params.nodes[0]);
+  } else if (hoveredNodeId === null) {
+    document.getElementById('info-content').innerHTML = '<span class="empty">Click a node to inspect it</span>';
+  }
+});
 
-      const searchInput = document.getElementById('search');
-      const searchResults = document.getElementById('search-results');
-      searchInput.addEventListener('input', () => {
-        const q = searchInput.value.toLowerCase().trim();
-        searchResults.innerHTML = '';
-        if (!q) {
-          searchResults.style.display = 'none';
-          return;
-        }
-        const matches = RAW_NODES.filter((n) => n.label.toLowerCase().includes(q)).slice(0, 20);
-        if (!matches.length) {
-          searchResults.style.display = 'none';
-          return;
-        }
-        searchResults.style.display = 'block';
-        matches.forEach((n) => {
-          const el = document.createElement('div');
-          el.className = 'search-item';
-          el.textContent = n.label;
-          el.style.borderLeft = `3px solid ${n.color.background}`;
-          el.style.paddingLeft = '8px';
-          el.onclick = () => {
-            network.focus(n.id, { scale: 1.5, animation: true });
-            network.selectNodes([n.id]);
-            showInfo(n.id);
-            searchResults.style.display = 'none';
-            searchInput.value = '';
-          };
-          searchResults.appendChild(el);
-        });
-      });
-      document.addEventListener('click', (e) => {
-        if (!searchResults.contains(e.target) && e.target !== searchInput)
-          searchResults.style.display = 'none';
-      });
+const searchInput = document.getElementById('search');
+const searchResults = document.getElementById('search-results');
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.toLowerCase().trim();
+  searchResults.innerHTML = '';
+  if (!q) { searchResults.style.display = 'none'; return; }
+  const matches = RAW_NODES.filter(n => n.label.toLowerCase().includes(q)).slice(0, 20);
+  if (!matches.length) { searchResults.style.display = 'none'; return; }
+  searchResults.style.display = 'block';
+  matches.forEach(n => {
+    const el = document.createElement('div');
+    el.className = 'search-item';
+    el.textContent = n.label;
+    el.style.borderLeft = `3px solid ${n.color.background}`;
+    el.style.paddingLeft = '8px';
+    el.onclick = () => {
+      network.focus(n.id, { scale: 1.5, animation: true });
+      network.selectNodes([n.id]);
+      showInfo(n.id);
+      searchResults.style.display = 'none';
+      searchInput.value = '';
+    };
+    searchResults.appendChild(el);
+  });
+});
+document.addEventListener('click', e => {
+  if (!searchResults.contains(e.target) && e.target !== searchInput)
+    searchResults.style.display = 'none';
+});
 
-      const hiddenCommunities = new Set();
+const hiddenCommunities = new Set();
 
-      const selectAllCb = document.getElementById('select-all-cb');
+const selectAllCb = document.getElementById('select-all-cb');
 
-      function updateSelectAllState() {
-        const total = LEGEND.length;
-        const hidden = hiddenCommunities.size;
-        selectAllCb.checked = hidden === 0;
-        selectAllCb.indeterminate = hidden > 0 && hidden < total;
-      }
+function updateSelectAllState() {
+  const total = LEGEND.length;
+  const hidden = hiddenCommunities.size;
+  selectAllCb.checked = hidden === 0;
+  selectAllCb.indeterminate = hidden > 0 && hidden < total;
+}
 
-      function toggleAllCommunities(hide) {
-        document.querySelectorAll('.legend-item').forEach((item) => {
-          hide ? item.classList.add('dimmed') : item.classList.remove('dimmed');
-        });
-        document.querySelectorAll('.legend-cb').forEach((cb) => {
-          cb.checked = !hide;
-        });
-        LEGEND.forEach((c) => {
-          if (hide) hiddenCommunities.add(c.cid);
-          else hiddenCommunities.delete(c.cid);
-        });
-        const updates = RAW_NODES.map((n) => ({ id: n.id, hidden: hide }));
-        nodesDS.update(updates);
-        updateSelectAllState();
-      }
+function toggleAllCommunities(hide) {
+  document.querySelectorAll('.legend-item').forEach(item => {
+    hide ? item.classList.add('dimmed') : item.classList.remove('dimmed');
+  });
+  document.querySelectorAll('.legend-cb').forEach(cb => {
+    cb.checked = !hide;
+  });
+  LEGEND.forEach(c => {
+    if (hide) hiddenCommunities.add(c.cid); else hiddenCommunities.delete(c.cid);
+  });
+  const updates = RAW_NODES.map(n => ({ id: n.id, hidden: hide }));
+  nodesDS.update(updates);
+  updateSelectAllState();
+}
 
-      const legendEl = document.getElementById('legend');
-      LEGEND.forEach((c) => {
-        const item = document.createElement('div');
-        item.className = 'legend-item';
-        const cb = document.createElement('input');
-        cb.type = 'checkbox';
-        cb.className = 'legend-cb';
-        cb.checked = true;
-        cb.addEventListener('change', (e) => {
-          e.stopPropagation();
-          if (cb.checked) {
-            hiddenCommunities.delete(c.cid);
-            item.classList.remove('dimmed');
-          } else {
-            hiddenCommunities.add(c.cid);
-            item.classList.add('dimmed');
-          }
-          const updates = RAW_NODES.filter((n) => n.community === c.cid).map((n) => ({
-            id: n.id,
-            hidden: !cb.checked,
-          }));
-          nodesDS.update(updates);
-          updateSelectAllState();
-        });
-        item.innerHTML = `<div class="legend-dot" style="background:${c.color}"></div>
+const legendEl = document.getElementById('legend');
+LEGEND.forEach(c => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  const cb = document.createElement('input');
+  cb.type = 'checkbox';
+  cb.className = 'legend-cb';
+  cb.checked = true;
+  cb.addEventListener('change', (e) => {
+    e.stopPropagation();
+    if (cb.checked) {
+      hiddenCommunities.delete(c.cid);
+      item.classList.remove('dimmed');
+    } else {
+      hiddenCommunities.add(c.cid);
+      item.classList.add('dimmed');
+    }
+    const updates = RAW_NODES
+      .filter(n => n.community === c.cid)
+      .map(n => ({ id: n.id, hidden: !cb.checked }));
+    nodesDS.update(updates);
+    updateSelectAllState();
+  });
+  item.innerHTML = `<div class="legend-dot" style="background:${c.color}"></div>
     <span class="legend-label">${c.label}</span>
     <span class="legend-count">${c.count}</span>`;
         item.prepend(cb);
@@ -93675,23 +93642,23 @@
           const cy = positions.reduce((s, p) => s + p.y, 0) / positions.length;
           const expanded = positions.map((p) => ({
             x: cx + (p.x - cx) * 1.15,
-            y: cy + (p.y - cy) * 1.15,
-          }));
-          ctx.moveTo(expanded[0].x, expanded[0].y);
-          expanded.slice(1).forEach((p) => ctx.lineTo(p.x, p.y));
-          ctx.closePath();
-          ctx.fill();
-          ctx.globalAlpha = 0.4;
-          ctx.stroke();
-          // Label
-          ctx.globalAlpha = 0.8;
-          ctx.fillStyle = '#4f46e5';
-          ctx.font = 'bold 11px sans-serif';
-          ctx.textAlign = 'center';
-          ctx.fillText(h.label, cx, cy - 5);
-          ctx.restore();
-        });
-      });
-    </script>
-  </body>
+            y: cy + (p.y - cy) * 1.15
+        }));
+        ctx.moveTo(expanded[0].x, expanded[0].y);
+        expanded.slice(1).forEach(p => ctx.lineTo(p.x, p.y));
+        ctx.closePath();
+        ctx.fill();
+        ctx.globalAlpha = 0.4;
+        ctx.stroke();
+        // Label
+        ctx.globalAlpha = 0.8;
+        ctx.fillStyle = '#4f46e5';
+        ctx.font = 'bold 11px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(h.label, cx, cy - 5);
+        ctx.restore();
+    });
+});
+</script>
+</body>
 </html>

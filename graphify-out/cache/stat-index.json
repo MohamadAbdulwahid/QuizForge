@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "/home/mohamad/coding/QuizForge/.husky/_/husky.sh": {
     "size": 160,
@@ -325,3 +326,6 @@
     "hash": "efedc39de03852e95e84ea9f1eb62144d18d8a96bd46c4b22fc16a4e6fca962d"
   }
 }
+=======
+{"/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/0003_abnormal_the_twelve.sql":{"size":3124,"mtime_ns":1781215161634164704,"hash":"592e0b460f9ff1907af7ebf279b2f18a12e599291aefeb4b75b236a73ffd0ded"},"/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/meta/0003_snapshot.json":{"size":39045,"mtime_ns":1781215161634164704,"hash":"7b40776eb8632e8974e2851cc0a458b6aaab0c2e217f5d4607c0f999eaf1ca3d"},"/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/0004_fair_colleen_wing.sql":{"size":469,"mtime_ns":1781230462341029293,"hash":"8d0881ada71fa24bdbe6962aacc86ccdd20f3915f1550ee0074f4fd0465dcf1a"},"/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/meta/0004_snapshot.json":{"size":39587,"mtime_ns":1781230462341029293,"hash":"fe6de2cc68a4de513856c6395a6243ad7d31340efc9ebb7de717f0796b7eaf0c"},"/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/meta/_journal.json":{"size":800,"mtime_ns":1781230462341029293,"hash":"38f223b086219c56ac4e1deceee2fa0557e9132cfb9c0d68578db03519a3befe"},"/home/mohamad/coding/QuizForge/docs/product-backlog.md":{"size":16969,"mtime_ns":1781215161638164746,"hash":"d7dfd6d39089b888d67895c32ea59b3bc274026adf36aa32069c5a0df027d192"},"/home/mohamad/coding/QuizForge/docs/sprint.06/sprint-backlog.md":{"size":19178,"mtime_ns":1781215161638164746,"hash":"9cb57ac6764b2c153139a056176f8d7e29599f81419efe2c97813201fcbfd59f"}}
+>>>>>>> 4bf98b3 (chore(graphify): update labels, cache, and manifest)
