@@ -1,9 +1,22 @@
 import { bigint, index, pgEnum, pgTable, text, timestamp, uuid, jsonb } from 'drizzle-orm/pg-core';
 import { USER } from './auth/user';
 
-export const questionType = pgEnum('question_type', ['multiple-choice', 'true-false', 'open']);
+export const questionType = pgEnum('question_type', [
+  'multiple-choice',
+  'true-false',
+  'open',
+  'ordering',
+  'matching',
+  'fill-in-blank',
+]);
 // Type exports from enum values
-export type questionType = 'multiple-choice' | 'true-false' | 'open';
+export type questionType =
+  | 'multiple-choice'
+  | 'true-false'
+  | 'open'
+  | 'ordering'
+  | 'matching'
+  | 'fill-in-blank';
 
 export const QUIZ = pgTable(
   'quiz',
