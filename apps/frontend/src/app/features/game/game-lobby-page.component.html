@@ -23,70 +23,77 @@
     ></div>
     <div class="absolute top-[10%] left-[50%] h-20 w-20 rotate-6 rounded-2xl bg-white/10"></div>
     <div class="absolute bottom-[35%] left-[5%] h-16 w-16 -rotate-45 rounded-xl bg-white/10"></div>
+    <!-- Extra shapes for added depth -->
+    <div class="absolute top-[45%] left-[3%] h-12 w-12 rotate-12 rounded-full bg-white/10"></div>
+    <div class="absolute top-[55%] right-[4%] h-14 w-14 -rotate-12 rounded-full bg-white/10"></div>
+    <div class="absolute top-[5%] left-[40%] h-10 w-10 rotate-45 rounded-xl bg-white/10"></div>
+    <div class="absolute right-[35%] bottom-[8%] h-12 w-12 -rotate-6 rounded-2xl bg-white/10"></div>
   </div>
 
   <!-- Top bar -->
   <!-- Note: Lobby uses custom button styling instead of BubblyButton because the dark gradient
        background makes BubblyButton tones (primary=blue on blue, ghost=white bg) look wrong. -->
-  <div class="relative z-20 flex items-center justify-between px-6 py-4">
+  <div class="relative z-20 flex items-center justify-between px-6 py-5">
     <button
       type="button"
-      class="rounded-2xl px-4 py-2 text-sm font-bold text-white/80 transition hover:bg-white/10 hover:text-white"
+      class="rounded-2xl px-5 py-3 text-base font-bold text-white/80 transition hover:bg-white/10 hover:text-white"
       (click)="leaveLobby()"
     >
       ← Leave
     </button>
-    <span class="font-display text-lg font-bold text-white/60">Game Lobby</span>
+    <div class="flex flex-col items-center gap-1">
+      <span class="qf-eyebrow text-white/70">Game Lobby</span>
+      <span class="font-display text-sm font-bold text-white/80">{{ playerCount() }} in lobby</span>
+    </div>
     @if (isHost()) {
       <button
         type="button"
-        class="rounded-2xl px-4 py-2 text-sm font-bold text-rose-300/80 transition hover:bg-white/10 hover:text-rose-300"
+        class="rounded-2xl px-5 py-3 text-base font-bold text-white/80 transition hover:bg-white/10 hover:text-white"
         (click)="requestEndSession()"
       >
-        End Session
+        ← Back to Dashboard
       </button>
     } @else {
-      <div class="w-24"></div>
+      <div class="w-32"></div>
     }
   </div>
 
   <!-- Scrollable main content -->
-  <div class="relative z-10 flex flex-1 flex-col items-center overflow-y-auto px-4 pt-4 pb-8">
-    <!-- PIN Display -->
-    <div class="mb-6 text-center">
-      <p class="mb-2 text-xs font-bold tracking-[0.3em] text-white/60 uppercase">Join with code</p>
+  <div class="relative z-10 flex flex-1 flex-col items-center overflow-y-auto px-4 pt-6 pb-10">
+    <!-- PIN Display - MASSIVE -->
+    <div class="mb-8 text-center">
+      <p class="qf-eyebrow mb-3 text-white/70">Join with code</p>
       <p
-        class="font-display text-6xl font-extrabold tracking-[0.2em] text-white drop-shadow-lg sm:text-8xl"
+        class="font-display animate-pulse text-7xl font-extrabold tracking-[0.2em] text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.55)] sm:text-8xl md:text-9xl"
       >
         {{ pin() }}
       </p>
     </div>
 
-    <!-- Status badges -->
-    <div class="mb-6 flex flex-wrap items-center justify-center gap-3">
+    <!-- Status badges - BIGGER -->
+    <div class="mb-8 flex flex-wrap items-center justify-center gap-4">
       <div
-        class="inline-flex items-center gap-2 rounded-2xl bg-white/20 px-4 py-2 backdrop-blur-sm"
+        class="inline-flex items-center gap-3 rounded-2xl bg-white/20 px-5 py-3 backdrop-blur-sm"
       >
-        <span class="font-display text-lg font-bold text-white">{{ playerCount() }}</span>
-        <span class="text-xs font-bold text-white/70">players</span>
+        <span class="font-display text-2xl font-bold text-white">{{ playerCount() }}</span>
+        <span class="text-sm font-bold tracking-wider text-white/80 uppercase">players</span>
       </div>
       <div
-        class="inline-flex items-center gap-2 rounded-2xl bg-white/20 px-4 py-2 backdrop-blur-sm"
+        class="inline-flex items-center gap-3 rounded-2xl bg-white/20 px-5 py-3 backdrop-blur-sm"
       >
         <span
-          class="h-2 w-2 rounded-full"
+          class="h-3 w-3 rounded-full shadow-sm"
           [class.bg-emerald-400]="connected()"
           [class.bg-rose-400]="!connected()"
         ></span>
-        <span class="text-xs font-bold text-white/70">
+        <span class="text-sm font-bold tracking-wider text-white/80 uppercase">
           {{ connected() ? 'Connected' : 'Disconnected' }}
         </span>
       </div>
       @if (isHost()) {
-        <div
-          class="inline-flex items-center gap-2 rounded-2xl bg-amber-400/20 px-4 py-2 backdrop-blur-sm"
-        >
-          <span class="text-xs font-bold text-amber-300">Host</span>
+        <div class="inline-flex items-center gap-2 rounded-2xl bg-amber-400 px-5 py-3 shadow-lg">
+          <span class="text-2xl leading-none">👑</span>
+          <span class="text-sm font-bold tracking-wider text-amber-950 uppercase">Host</span>
         </div>
       }
     </div>
@@ -94,7 +101,7 @@
     <!-- Error message -->
     @if (errorMessage()) {
       <div
-        class="mb-6 w-full max-w-md rounded-2xl border border-rose-300/50 bg-rose-500/20 px-4 py-3 text-center text-sm font-bold text-white"
+        class="mb-6 w-full max-w-md rounded-2xl border border-rose-300/50 bg-rose-500/20 px-5 py-4 text-center text-base font-bold text-white"
       >
         {{ errorMessage() }}
       </div>
@@ -103,40 +110,38 @@
     <!-- Reconnecting indicator -->
     @if (reconnecting()) {
       <div
-        class="mb-6 w-full max-w-md rounded-2xl border border-amber-300/50 bg-amber-500/20 px-4 py-3 text-center text-sm font-bold text-amber-200"
+        class="mb-6 w-full max-w-md rounded-2xl border border-amber-300/50 bg-amber-500/20 px-5 py-4 text-center text-base font-bold text-amber-200"
       >
-        <span class="mr-2 inline-block animate-spin">⟳</span>
+        <span class="mr-2 inline-block animate-spin text-xl">⟳</span>
         Reconnecting to lobby...
       </div>
     }
 
-    <!-- Status message -->
-    <p class="mb-8 text-center text-base font-bold text-white/70">
+    <!-- Status message - BIGGER -->
+    <p class="mb-10 text-center text-xl font-bold text-white/80 sm:text-2xl">
       {{ statusMessage() }}
     </p>
 
-    <!-- Players grid -->
+    <!-- Players grid - BIGGER CARDS -->
     @if (players().length > 0) {
-      <div class="w-full max-w-4xl">
-        <h3
-          class="font-display mb-5 text-center text-sm font-bold tracking-wider text-white/50 uppercase"
-        >
+      <div class="w-full max-w-5xl">
+        <h3 class="qf-eyebrow mb-6 text-center text-white/60">
           Players in lobby ({{ playerCount() }})
         </h3>
-        <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+        <div class="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
           @for (player of players(); track player.userId) {
             <div
-              class="rounded-2xl bg-white/15 p-4 text-center backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white/25"
+              class="rounded-3xl bg-white/15 p-6 text-center backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white/25"
             >
               <div
-                class="mx-auto mb-2 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/25 text-3xl shadow-sm"
+                class="mx-auto mb-3 flex h-20 w-20 items-center justify-center rounded-2xl bg-white/25 text-5xl shadow-sm"
               >
                 {{ player.emoji }}
               </div>
-              <p class="truncate text-sm font-bold text-white/90">{{ player.name }}</p>
+              <p class="truncate text-lg font-bold text-white/90">{{ player.name }}</p>
               @if (player.isSelf) {
                 <span
-                  class="mt-1 inline-block rounded-full bg-emerald-400/30 px-2.5 py-0.5 text-xs font-bold text-emerald-300"
+                  class="mt-2 inline-block rounded-full bg-emerald-500 px-3 py-1 text-sm font-bold tracking-wider text-white uppercase shadow-md"
                 >
                   YOU
                 </span>
@@ -147,23 +152,24 @@
       </div>
     } @else {
       <div class="flex flex-1 items-center justify-center">
-        <p class="text-center text-lg font-bold text-white/50">Waiting for players to join...</p>
+        <p class="text-center text-2xl font-bold text-white/60">Waiting for players to join...</p>
       </div>
     }
 
-    <!-- Host controls -->
+    <!-- Host controls - ENORMOUS BUTTON -->
     @if (isHost()) {
-      <div class="mt-10 flex flex-col items-center gap-3">
+      <div class="mt-12 flex flex-col items-center gap-4">
         <button
           type="button"
-          class="font-display text-bubbly-primary rounded-2xl bg-white px-12 py-4 text-xl font-bold shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl active:scale-95 disabled:pointer-events-none disabled:opacity-50"
+          class="font-display text-bubbly-primary rounded-3xl bg-white px-16 py-5 text-2xl font-bold shadow-2xl transition-all duration-200 hover:scale-105 active:scale-95 disabled:pointer-events-none disabled:opacity-50"
+          [class.animate-pulse]="canStartGame()"
           [disabled]="!canStartGame()"
           (click)="startGame()"
         >
           @if (startRequested()) {
-            <span class="flex items-center gap-2">
+            <span class="flex items-center gap-3">
               <svg
-                class="h-5 w-5 animate-spin"
+                class="h-6 w-6 animate-spin"
                 fill="none"
                 viewBox="0 0 24 24"
               >
@@ -184,23 +190,25 @@
               Starting...
             </span>
           } @else {
-            Start Game
+            Start Game →
           }
         </button>
-        <p class="text-sm font-semibold text-white/50">
+        <p class="text-base font-semibold text-white/70">
           Minimum {{ minPlayersToStart() }} players needed
         </p>
       </div>
     }
 
-    <!-- Non-host waiting prompt -->
+    <!-- Non-host waiting prompt - BIGGER -->
     @if (!isHost() && players().length > 0) {
-      <div class="mt-10 text-center">
+      <div class="mt-12 text-center">
         <div
-          class="inline-flex items-center gap-2 rounded-2xl bg-white/10 px-5 py-3 backdrop-blur-sm"
+          class="inline-flex items-center gap-3 rounded-2xl bg-white/15 px-6 py-4 backdrop-blur-sm"
         >
-          <span class="animate-pulse text-lg text-white/60">●</span>
-          <span class="text-sm font-bold text-white/50">Waiting for host to start the game...</span>
+          <span class="animate-pulse text-2xl leading-none text-white/70">●</span>
+          <span class="text-base font-bold text-white/70">
+            Waiting for host to start the game...
+          </span>
         </div>
       </div>
     }
@@ -210,8 +218,8 @@
 <!-- End Session Confirmation Modal -->
 <app-bubbly-modal
   [visible]="showEndConfirmModal()"
-  title="End Session?"
-  message="All connected players will be kicked and redirected. This action cannot be undone."
+  title="Leave and end session?"
+  message="Going back to the dashboard will end this session. All connected players will be kicked and redirected."
   confirmLabel="End Session"
   [showCancel]="true"
   [danger]="true"
