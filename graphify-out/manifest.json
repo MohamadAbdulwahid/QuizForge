@@ -1613,5 +1613,15 @@
     "mtime": 1781034551.7747416,
     "ast_hash": "2a77c210701ddcb77c16a710f98b0e7a",
     "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/.husky/pre-commit": {
+    "mtime": 1781034551.7507412,
+    "ast_hash": "d9327fbdb05fc26c816e538e21b98c11",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/.husky/pre-push": {
+    "mtime": 1781034551.7507412,
+    "ast_hash": "01aaec34c54611b1a62176f218a7cc9c",
+    "semantic_hash": ""
   }
 }
