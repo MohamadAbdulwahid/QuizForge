@@ -115,9 +115,9 @@
 
 ---
 
-## Sprint 6 - Game Lobby, Question UI & End-to-End Flow
+## Sprint 6 - Forge Classic MVP Completion & Treasure Forge
 
-**Goal:** Build game lobby with player management, question display component, live leaderboard, and shared UI components to complete the end-to-end Forge Classic gameplay flow.
+**Goal:** Complete the Forge Classic MVP with join flow, live lobby, question/answer UI, and leaderboard. Implement the Treasure Forge game mode with weighted chest generation, steal/swap mechanics, gold economy, and treasure chest UI/animations.
 
 | ID | User Story | Story Points |
 |----|-----------|--------------|
@@ -129,26 +129,21 @@
 | PB-80 | As a **Participant**, I want answer submission via WebSocket (submit-answer event) with visual feedback (button disable, loading state) so answers are sent and acknowledged. *(merged PB-80 + PB-81)* | 3 |
 | PB-54 | As a **Participant**, I want to see live leaderboard after each question so I know my rank. | 3 |
 | PB-63 | As a **User**, I want shared UI components (button, card) with Bubbly animations so the interface is polished and consistent. | 2 |
+| **PB-82** | As a **System**, we want weighted random chest generation algorithm so chest contents are randomized. | 3 |
+| **PB-83** | As a **System**, we want chest_picks table to store selections so game history is preserved. | 2 |
+| **PB-84** | As a **Participant**, I want to see 3 Bubbly Chests after correct answer so I can pick one. | 3 |
+| **PB-85** | As a **System**, we want chest contents reveal (gold, multiplier, steal, swap) with animations so rewards are shown. | 4 |
+| **PB-86** | As a **System**, we want server-side gold calculation and validation so cheating is prevented. | 4 |
+| **PB-87** | As a **System**, we want steal mechanic (10% from leader) with broadcast so all players are notified. | 3 |
+| **PB-88** | As a **System**, we want swap mechanic (random player) with broadcast so gold exchanges are tracked. | 3 |
+| **PB-89** | As a **Participant**, I want to see gold counter with animations so my gold is visible. | 2 |
+| **PB-90** | As a **Participant**, I want chest wobble/shiver hover animations with CSS so chests feel interactive. | 1 |
 
-**Sprint 6 Total:** 25 SP
+**Sprint 6 Total:** 50 SP *(25 SP Forge Classic + 25 SP Treasure Forge)*
 
 ---
 
 ## Future Sprints (Backlog)
-
-### Game Modes - Treasure Forge
-
-| ID | User Story | Story Points |
-|----|-----------|--------------|
-| PB-82 | As a **System**, we want weighted random chest generation algorithm so chest contents are randomized. | 3 |
-| PB-83 | As a **System**, we want chest_picks table to store selections so game history is preserved. | 2 |
-| PB-84 | As a **Participant**, I want to see 3 Bubbly Chests after correct answer so I can pick one. | 3 |
-| PB-85 | As a **System**, we want chest contents reveal (gold, multiplier, steal, swap) with animations so rewards are shown. | 4 |
-| PB-86 | As a **System**, we want server-side gold calculation and validation so cheating is prevented. | 4 |
-| PB-87 | As a **System**, we want steal mechanic (10% from leader) with broadcast so all players are notified. | 3 |
-| PB-88 | As a **System**, we want swap mechanic (random player) with broadcast so gold exchanges are tracked. | 3 |
-| PB-89 | As a **Participant**, I want to see gold counter with animations so my gold is visible. | 2 |
-| PB-90 | As a **Participant**, I want chest wobble/shiver hover animations with CSS so chests feel interactive. | 1 |
 
 ### Game Modes - Bubbly Royale
 
@@ -229,8 +224,8 @@
 
 ## Backlog Summary
 
-**Planned Sprint Story Points:** 149 SP (Sprints 1-6)
-**Future Backlog Story Points:** ~161 SP
+**Planned Sprint Story Points:** 174 SP (Sprints 1-6)
+**Future Backlog Story Points:** ~136 SP
 **Total Estimated Story Points:** ~310 SP
 
 ### Sprint Velocity Overview
@@ -242,12 +237,12 @@
 | Sprint 3 | Frontend Foundation & WebSocket Infrastructure | 25 SP |
 | Sprint 4 | Auth UI, Dashboard & Quiz Builder | 25 SP |
 | Sprint 5 | Forge Classic Game Engine & Real-Time Scoring | 25 SP |
-| Sprint 6 | Game Lobby, Question UI & End-to-End Flow | 25 SP |
+| Sprint 6 | Forge Classic MVP Completion & Treasure Forge | 50 SP |
 
 ### Consolidation Notes
 - **Reduced from 10 sprints to 6** by merging related stories and combining backend/frontend work
 - **Forge Classic** is the MVP game mode delivered end-to-end by Sprint 6
-- **Treasure Forge** and **Bubbly Royale** game modes moved to Future Sprints (50 SP) as post-MVP work
+- **Treasure Forge** promoted to Sprint 6 (25 SP); **Bubbly Royale** moved to Future Sprints (25 SP) as post-MVP work
 - **Merged stories** reduce overhead by combining related work that shares infrastructure (noted with *(merged)* tags)
 - Frontend development starts Sprint 3 (unchanged)
 - Complete playable game flow (auth → create quiz → host session → players join → play → leaderboard) achieved by Sprint 6
