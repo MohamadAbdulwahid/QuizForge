@@ -40,6 +40,7 @@ export class GameStateService {
   private readonly pinState = signal<string | null>(null);
   private readonly sessionIdState = signal<number | null>(null);
   private readonly hostUserIdState = signal<string | null>(null);
+  private readonly currentUserIdState = signal<string | null>(null);
   private readonly playersState = signal<GamePlayerState[]>([]);
   private readonly currentQuestionState = signal<GameQuestionEvent | null>(null);
   private readonly leaderboardState = signal<LeaderboardEntry[]>([]);
@@ -52,11 +53,20 @@ export class GameStateService {
   private readonly errorState = signal<string | null>(null);
   private readonly endedState = signal(false);
   private readonly nowMs = signal(Date.now());
+  private readonly gameModeState = signal<string>('forge-classic');
+  private readonly currentGoldState = signal<number>(0);
+  private readonly penaltyUntilState = signal<number | null>(null);
+  // Draft answers for structured question types. Reset on each new question.
+  // The player components bind to these via 2-way binding and serialize on submit.
+  private readonly draftOrderingState = signal<string[]>([]);
+  private readonly draftMatchingState = signal<Record<string, string>>({});
+  private readonly draftTextState = signal<string>('');
   private timerId: ReturnType<typeof setInterval> | null = null;
 
   readonly pin = this.pinState.asReadonly();
   readonly sessionId = this.sessionIdState.asReadonly();
   readonly hostUserId = this.hostUserIdState.asReadonly();
+  readonly currentUserId = this.currentUserIdState.asReadonly();
   readonly players = this.playersState.asReadonly();
   readonly currentQuestion = this.currentQuestionState.asReadonly();
   readonly leaderboard = this.leaderboardState.asReadonly();
@@ -66,6 +76,22 @@ export class GameStateService {
   readonly lastRoundResult = this.lastRoundResultState.asReadonly();
   readonly errorMessage = this.errorState.asReadonly();
   readonly ended = this.endedState.asReadonly();
+  readonly gameMode = this.gameModeState.asReadonly();
+  /** Current gold total (Treasure Forge mode). */
+  readonly currentGold = this.currentGoldState.asReadonly();
+  /** Penalty end timestamp (Treasure Forge mode). */
+  readonly penaltyUntil = this.penaltyUntilState.asReadonly();
+  /** Draft ordering answer (array of option ids in current order). */
+  readonly draftOrdering = this.draftOrderingState.asReadonly();
+  /** Draft matching answer (leftId → rightId map). */
+  readonly draftMatching = this.draftMatchingState.asReadonly();
+  /** Draft fill-in-blank answer (raw text). */
+  readonly draftText = this.draftTextState.asReadonly();
+  /** Whether the player is currently in penalty cooldown. */
+  readonly isInPenalty = computed(() => {
+    const until = this.penaltyUntilState();
+    return until !== null && Date.now() < until;
+  });
   readonly timeRemainingMs = computed(() => {
     const question = this.currentQuestionState();
     if (!question) {
@@ -104,6 +130,27 @@ export class GameStateService {
     );
   }
 
+  setCurrentUserId(userId: string): void {
+    this.currentUserIdState.set(userId);
+  }
+
+  setGameMode(mode: string): void {
+    this.gameModeState.set(mode);
+    if (mode !== 'forge-classic') {
+      this.currentGoldState.set(0);
+    }
+  }
+
+  /** Sets the current gold total (treasure forge mode). */
+  setCurrentGold(gold: number): void {
+    this.currentGoldState.set(gold);
+  }
+
+  /** Sets the penalty end timestamp (treasure forge mode). Null = no penalty. */
+  setPenaltyUntil(ms: number | null): void {
+    this.penaltyUntilState.set(ms);
+  }
+
   setRound(event: RoundStartedEvent): void {
     this.pinState.set(event.pin);
     this.sessionIdState.set(event.sessionId);
@@ -120,7 +167,29 @@ export class GameStateService {
     this.lastAnswerState.set(null);
     this.lastRoundResultState.set(null);
     this.errorState.set(null);
-    this.startClock();
+    // Reset structured-answer drafts on every new question.
+    this.draftOrderingState.set([]);
+    this.draftMatchingState.set({});
+    this.draftTextState.set('');
+    // Only start timer for Forge Classic (TF has no per-question timer)
+    if (this.gameModeState() === 'forge-classic') {
+      this.startClock();
+    }
+  }
+
+  /** Sets the draft ordering answer (array of option ids in current order). */
+  setDraftOrdering(orderedIds: string[]): void {
+    this.draftOrderingState.set(orderedIds);
+  }
+
+  /** Sets the draft matching answer (leftId → rightId map). */
+  setDraftMatching(pairs: Record<string, string>): void {
+    this.draftMatchingState.set(pairs);
+  }
+
+  /** Sets the draft fill-in-blank answer (raw text). */
+  setDraftText(text: string): void {
+    this.draftTextState.set(text);
   }
 
   selectAnswer(optionId: string): void {
@@ -182,6 +251,7 @@ export class GameStateService {
     this.endedState.set(true);
     this.currentQuestionState.set(null);
     this.stopClock();
+    // Don't reset gold — keep it for final display
   }
 
   reset(): void {
@@ -199,6 +269,9 @@ export class GameStateService {
     this.lastRoundResultState.set(null);
     this.errorState.set(null);
     this.endedState.set(false);
+    this.draftOrderingState.set([]);
+    this.draftMatchingState.set({});
+    this.draftTextState.set('');
     this.stopClock();
   }
 
