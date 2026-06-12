@@ -96,6 +96,7 @@
   "94": "Community 94",
   "95": "Community 95",
 <<<<<<< HEAD
+<<<<<<< HEAD
   "96": "Community 96",
   "97": "Community 97",
   "98": "Community 98",
@@ -291,4 +292,8 @@
 =======
   "96": "Community 96"
 >>>>>>> 5514abe (style: final formatting and graphify sync)
+=======
+  "96": "Community 96",
+  "97": "Community 97"
+>>>>>>> 6117afa (chore(graphify): update graph data files)
 }

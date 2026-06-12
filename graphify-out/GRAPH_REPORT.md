@@ -6,6 +6,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 - 263 files · ~220,656 words
 - Verdict: corpus is large enough that graph structure adds value.
 
@@ -30,14 +31,18 @@
 =======
 - 286 files · ~257,849 words
 >>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
+=======
+- 288 files · ~263,891 words
+>>>>>>> 6117afa (chore(graphify): update graph data files)
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1455 nodes · 1645 edges · 97 communities (79 shown, 18 thin omitted)
+- 1524 nodes · 1745 edges · 98 communities (82 shown, 16 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -56,6 +61,9 @@
 =======
 - Built from commit: `8247da4e`
 >>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
+=======
+- Built from commit: `1b30c308`
+>>>>>>> 6117afa (chore(graphify): update graph data files)
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -133,7 +141,6 @@
 - [[_COMMUNITY_Community 70|Community 70]]
 - [[_COMMUNITY_Community 71|Community 71]]
 - [[_COMMUNITY_Community 72|Community 72]]
-- [[_COMMUNITY_Community 73|Community 73]]
 - [[_COMMUNITY_Community 74|Community 74]]
 - [[_COMMUNITY_Community 75|Community 75]]
 - [[_COMMUNITY_Community 76|Community 76]]
@@ -157,6 +164,7 @@
 - [[_COMMUNITY_Community 94|Community 94]]
 - [[_COMMUNITY_Community 95|Community 95]]
 - [[_COMMUNITY_Community 96|Community 96]]
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -356,13 +364,16 @@
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
 =======
 >>>>>>> 5514abe (style: final formatting and graphify sync)
+=======
+- [[_COMMUNITY_Community 97|Community 97]]
+>>>>>>> 6117afa (chore(graphify): update graph data files)
 
 ## God Nodes (most connected - your core abstractions)
 1. `QuizBuilderPageComponent` - 46 edges
 2. `GameStateService` - 26 edges
 3. `HostPageComponent` - 24 edges
-4. `GameLobbyPageComponent` - 19 edges
-5. `WebsocketService` - 18 edges
+4. `WebsocketService` - 20 edges
+5. `GameLobbyPageComponent` - 19 edges
 6. `DashboardGroupsPageComponent` - 17 edges
 7. `DashboardCreateSessionPageComponent` - 16 edges
 8. `TreasureForgePlayPageComponent` - 16 edges
@@ -371,16 +382,23 @@
 
 ## Surprising Connections (you probably didn't know these)
 - `endTreasureForgeGame()` --calls--> `logGameEvent()`  [EXTRACTED]
+<<<<<<< HEAD
   apps/backend/src/websocket/namespaces/game.namespace.ts → apps/backend/src/websocket/namespaces/game.namespace.ts  _Bridges community 5 → community 13_
 - `handleTreasureForgeNextQuestion()` --calls--> `emitError()`  [EXTRACTED]
   apps/backend/src/websocket/namespaces/game.namespace.ts → apps/backend/src/websocket/namespaces/game.namespace.ts  _Bridges community 7 → community 5_
 - `buildPublicQuestion()` --calls--> `buildPublicOptions()`  [EXTRACTED]
   apps/backend/src/websocket/namespaces/game.namespace.ts → apps/backend/src/websocket/namespaces/game.namespace.ts  _Bridges community 13 → community 7_
 >>>>>>> 4bf98b3 (chore(graphify): update labels, cache, and manifest)
+=======
+  apps/backend/src/websocket/namespaces/game.namespace.ts → apps/backend/src/websocket/namespaces/game.namespace.ts  _Bridges community 5 → community 7_
+- `emitGameEnded()` --calls--> `logGameEvent()`  [EXTRACTED]
+  apps/backend/src/websocket/namespaces/game.namespace.ts → apps/backend/src/websocket/namespaces/game.namespace.ts  _Bridges community 3 → community 7_
+>>>>>>> 6117afa (chore(graphify): update graph data files)
 
 ## Import Cycles
 - None detected.
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -923,6 +941,9 @@ Nodes (8): installation, version, plugins, $schema, tui, autoExit, useDaemonProc
 =======
 ## Communities (97 total, 18 thin omitted)
 >>>>>>> 5514abe (style: final formatting and graphify sync)
+=======
+## Communities (98 total, 16 thin omitted)
+>>>>>>> 6117afa (chore(graphify): update graph data files)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.18
@@ -938,7 +959,7 @@ Nodes (7): ACTIVE_STATUSES, findActiveByPin(), findByPin(), findPlayerBySessionA
 
 ### Community 3 - "Community 3"
 Cohesion: 0.04
-Nodes (40): ActiveGameState, ActiveRoundState, AnswerAckEvent, BuiltPublicOptions, ChestEffectEvent, ChestsRevealedEvent, ClientToServerEvents, closeRound() (+32 more)
+Nodes (43): ActiveGameState, ActiveRoundState, AnswerAckEvent, buildLeaderboard(), BuiltPublicOptions, ChestEffectEvent, ChestsRevealedEvent, ClientToServerEvents (+35 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.38
@@ -953,8 +974,8 @@ Cohesion: 0.40
 Nodes (4): ActiveQuestionAnswerState, AnswerValidationInput, AnswerValidationResult, validateAnswerSubmission()
 
 ### Community 7 - "Community 7"
-Cohesion: 0.25
-Nodes (9): buildPublicOptions(), buildTfPublicQuestion(), deterministicShuffle(), handleTreasureForgeNextQuestion(), hashStringToInt(), parseMatchingLeftArray(), parseTextOptions(), readFIBOptions() (+1 more)
+Cohesion: 0.18
+Nodes (14): buildPublicOptions(), buildPublicQuestion(), buildTfPublicQuestion(), deterministicShuffle(), emitNextQuestion(), handleTreasureForgeNextQuestion(), handleTreasureForgeStartGame(), hashStringToInt() (+6 more)
 
 ### Community 8 - "Community 8"
 Cohesion: 0.05
@@ -965,20 +986,16 @@ Cohesion: 0.05
 Nodes (43): group_invite_group_id_group_id_fk, group_invite_invited_by_user_id_users_id_fk, group_invite_invited_user_id_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate (+35 more)
 
 ### Community 10 - "Community 10"
-Cohesion: 0.10
-Nodes (20): baseFields, CreateQuizRequest, createQuizRequestSchema, fillInBlankOptionSchema, fillInBlankSchema, matchingLeftOptionSchema, matchingSchema, multipleChoiceSchema (+12 more)
+Cohesion: 0.05
+Nodes (31): QuizController, AiGenerateRequest, aiGenerateRequestSchema, baseFields, CreateQuizRequest, createQuizRequestSchema, fillInBlankOptionSchema, fillInBlankSchema (+23 more)
 
 ### Community 11 - "Community 11"
 Cohesion: 0.10
-Nodes (18): EndSessionMessage, endSessionMessageSchema, JoinGameMessage, joinGameMessageSchema, LeaveGameMessage, leaveGameMessageSchema, NextQuestionMessage, nextQuestionMessageSchema (+10 more)
+Nodes (19): emitSocketValidationError(), EndSessionMessage, endSessionMessageSchema, JoinGameMessage, joinGameMessageSchema, LeaveGameMessage, leaveGameMessageSchema, NextQuestionMessage (+11 more)
 
 ### Community 12 - "Community 12"
 Cohesion: 0.12
 Nodes (18): CreateSessionRequest, createSessionRequestSchema, PinParam, pinParamSchema, UpdateSessionStatusRequest, updateSessionStatusSchema, sessionRouter, createSession() (+10 more)
-
-### Community 13 - "Community 13"
-Cohesion: 0.29
-Nodes (8): buildLeaderboard(), buildPublicQuestion(), emitGameEnded(), emitNextQuestion(), handleTreasureForgeStartGame(), logGameEvent(), sendGameResync(), startRound()
 
 ### Community 14 - "Community 14"
 Cohesion: 0.08
@@ -1033,8 +1050,8 @@ Cohesion: 0.09
 Nodes (23): profile_user_id_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, schemaTo, tableFrom (+15 more)
 
 ### Community 29 - "Community 29"
-Cohesion: 0.09
-Nodes (23): profile_user_id_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, schemaTo, tableFrom (+15 more)
+Cohesion: 0.20
+Nodes (10): profile_user_id_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, schemaTo, tableFrom (+2 more)
 
 ### Community 31 - "Community 31"
 Cohesion: 0.22
@@ -1043,6 +1060,10 @@ Nodes (9): group_member_group_id_group_id_fk, columnsFrom, columnsTo, name, onDe
 ### Community 32 - "Community 32"
 Cohesion: 0.13
 Nodes (14): GameModeOption, StepItem, VisibilityOption, QuizSummary, CreateSessionPayload, CreateSessionResponse, GameMode, HostSessionSummary (+6 more)
+
+### Community 33 - "Community 33"
+Cohesion: 0.22
+Nodes (9): group_member_user_id_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, schemaTo, tableFrom (+1 more)
 
 ### Community 34 - "Community 34"
 Cohesion: 0.20
@@ -1093,8 +1114,8 @@ Cohesion: 0.23
 Nodes (3): MatchingAnswerPanelComponent, MatchingItem, MatchingPairs
 
 ### Community 47 - "Community 47"
-Cohesion: 0.33
-Nodes (6): created_at, default, name, notNull, primaryKey, type
+Cohesion: 0.25
+Nodes (6): Feature, FeatureIcon, FeatureTone, LandingPageComponent, Step, TILE_CLASSES
 
 ### Community 48 - "Community 48"
 Cohesion: 0.18
@@ -1109,8 +1130,8 @@ Cohesion: 0.11
 Nodes (21): AnswerSubmissionState, GamePlayerState, LeaderboardEntry, RoundResult, AnswerAckEvent, ChestEffectEvent, ChestsRevealedEvent, ClientToServerEvents (+13 more)
 
 ### Community 51 - "Community 51"
-Cohesion: 0.22
-Nodes (9): group_member_group_id_group_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, tableFrom, tableTo (+1 more)
+Cohesion: 0.11
+Nodes (18): group_member_group_id_group_id_fk, group_member_user_id_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, tableFrom (+10 more)
 
 ### Community 52 - "Community 52"
 Cohesion: 0.40
@@ -1133,16 +1154,16 @@ Cohesion: 0.18
 Nodes (11): group_id, user_id, name, notNull, primaryKey, type, columns, name (+3 more)
 
 ### Community 59 - "Community 59"
-Cohesion: 0.29
-Nodes (7): role, default, name, notNull, primaryKey, type, typeSchema
+Cohesion: 0.25
+Nodes (8): columns, concurrently, isUnique, method, name, with, group_member_group_id_user_id_unique, indexes
 
 ### Community 60 - "Community 60"
 Cohesion: 0.40
 Nodes (5): responded_at, name, notNull, primaryKey, type
 
 ### Community 61 - "Community 61"
-Cohesion: 0.33
-Nodes (6): joined_at, default, name, notNull, primaryKey, type
+Cohesion: 0.50
+Nodes (3): Config, envSchema, parsedEnv
 
 ### Community 62 - "Community 62"
 Cohesion: 0.40
@@ -1151,6 +1172,10 @@ Nodes (3): ChestPickValidationInput, ChestPickValidationResult, validateChestPic
 ### Community 63 - "Community 63"
 Cohesion: 0.50
 Nodes (3): dialect, entries, version
+
+### Community 64 - "Community 64"
+Cohesion: 0.17
+Nodes (5): LobbyPlayer, SessionApiService, SessionStatus, SessionClosedEvent, SocketErrorPayload
 
 ### Community 65 - "Community 65"
 Cohesion: 0.20
@@ -1168,10 +1193,6 @@ Nodes (12): updated_at, username, columns, default, name, notNull, primaryKey, t
 Cohesion: 0.20
 Nodes (10): identity, cache, cycle, increment, maxValue, minValue, name, schema (+2 more)
 
-### Community 69 - "Community 69"
-Cohesion: 0.40
-Nodes (4): LobbyPlayer, SessionStatus, SessionClosedEvent, SocketErrorPayload
-
 ### Community 71 - "Community 71"
 Cohesion: 0.29
 Nodes (3): StealTargetPickerComponent, TargetPlayer, TargetSelectedEvent
@@ -1179,10 +1200,6 @@ Nodes (3): StealTargetPickerComponent, TargetPlayer, TargetSelectedEvent
 ### Community 72 - "Community 72"
 Cohesion: 0.25
 Nodes (9): addGold(), GoldResult, loseGold(), multiplyGold(), stealGold(), StealInput, StealResult, swapGold() (+1 more)
-
-### Community 73 - "Community 73"
-Cohesion: 0.25
-Nodes (8): columns, concurrently, isUnique, method, name, with, group_member_group_id_user_id_unique, indexes
 
 ### Community 74 - "Community 74"
 Cohesion: 0.29
@@ -1201,12 +1218,8 @@ Cohesion: 0.09
 Nodes (22): Additional Game Modes (Future), Advanced Features, Analytics & Monitoring, API Documentation & Polish, Backend (13 SP), Backlog Summary, Consolidation Notes, Frontend (12 SP) (+14 more)
 
 ### Community 80 - "Community 80"
-Cohesion: 0.22
-Nodes (9): group_member_user_id_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, schemaTo, tableFrom (+1 more)
-
-### Community 81 - "Community 81"
-Cohesion: 0.47
-Nodes (4): createDefaultQuestion(), createFibOption(), createOption(), defaultOptionsForType()
+Cohesion: 0.25
+Nodes (8): checkConstraints, compositePrimaryKeys, indexes, isRLSEnabled, name, policies, schema, public.profile
 
 ### Community 82 - "Community 82"
 Cohesion: 0.13
@@ -1226,6 +1239,7 @@ Nodes (11): group_id, user_id, name, notNull, primaryKey, type, columns, name (+
 
 ### Community 88 - "Community 88"
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 4bf98b3 (chore(graphify): update labels, cache, and manifest)
 Cohesion: 0.25
 Nodes (7): QuestionType, QuizDetailDto, QuizOptionDto, QuizOptions, QuizQuestionPayload, QuizSavePayload, QuizSaveResponse
@@ -1233,6 +1247,10 @@ Nodes (7): QuestionType, QuizDetailDto, QuizOptionDto, QuizOptions, QuizQuestion
 Cohesion: 0.19
 Nodes (12): FieldError, QuestionDraft, QuestionOption, QuestionType, QuizDetailDto, QuizOptionDto, QuizOptions, QuizQuestionDto (+4 more)
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
+=======
+Cohesion: 0.05
+Nodes (22): AiQuizPageComponent, createDefaultQuestion(), createFibOption(), createOption(), defaultOptionsForType(), FieldError, QuestionDraft, QuestionOption (+14 more)
+>>>>>>> 6117afa (chore(graphify): update graph data files)
 
 <<<<<<< HEAD
 ### Community 142 - "Community 142"
@@ -1334,6 +1352,7 @@ Nodes (6): compilerOptions, outDir, types, exclude, extends, include
 Cohesion: 0.29
 Nodes (7): columns, concurrently, isUnique, method, name, with, group_member_user_idx
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1604,8 +1623,17 @@ Nodes (9): checkConstraints, compositePrimaryKeys, foreignKeys, isRLSEnabled, na
 ### Community 95 - "Community 95"
 Cohesion: 0.22
 Nodes (9): group_member_user_id_users_id_fk, columnsFrom, columnsTo, name, onDelete, onUpdate, schemaTo, tableFrom (+1 more)
+=======
+### Community 91 - "Community 91"
+Cohesion: 0.29
+Nodes (7): role, default, name, notNull, primaryKey, type, typeSchema
+>>>>>>> 6117afa (chore(graphify): update graph data files)
 
-### Community 96 - "Community 96"
+### Community 92 - "Community 92"
+Cohesion: 0.33
+Nodes (4): createSocketAuthMiddleware(), socketAuthMiddleware, VerifySocketToken, websocketLogger
+
+### Community 93 - "Community 93"
 Cohesion: 0.29
 Nodes (7): columns, concurrently, isUnique, method, name, with, group_member_user_idx
 >>>>>>> 4bf98b3 (chore(graphify): update labels, cache, and manifest)
@@ -1622,7 +1650,20 @@ Nodes (3): executor, options, db:seed
 Cohesion: 0.67
 Nodes (3): test, executor, options
 
+### Community 95 - "Community 95"
+Cohesion: 0.33
+Nodes (6): created_at, default, name, notNull, primaryKey, type
+
+### Community 96 - "Community 96"
+Cohesion: 0.33
+Nodes (6): joined_at, default, name, notNull, primaryKey, type
+
+### Community 97 - "Community 97"
+Cohesion: 0.40
+Nodes (5): columns, name, nullsNotDistinct, uniqueConstraints, profile_username_unique
+
 ## Knowledge Gaps
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 - **1829 isolated node(s):** `husky.sh script`, `$schema`, `plugin`, `@opencode-ai/plugin`, `args` (+1824 more)
@@ -1642,6 +1683,11 @@ Nodes (3): test, executor, options
 =======
 - **18 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 >>>>>>> 5514abe (style: final formatting and graphify sync)
+=======
+- **829 isolated node(s):** `LobbyPlayer`, `FeatureIcon`, `FeatureTone`, `Feature`, `Step` (+824 more)
+  These have ≤1 connection - possible missing edges or undocumented components.
+- **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+>>>>>>> 6117afa (chore(graphify): update graph data files)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -1674,19 +1720,29 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.030) - this node is a cross-community bridge._
 =======
 - **Why does `tables` connect `Community 34` to `Community 9`, `Community 75`, `Community 16`, `Community 21`, `Community 25`, `Community 28`?**
-  _High betweenness centrality (0.033) - this node is a cross-community bridge._
-- **Why does `id` connect `Community 54` to `Community 34`, `Community 35`, `Community 8`, `Community 41`, `Community 43`, `Community 86`, `Community 23`?**
   _High betweenness centrality (0.029) - this node is a cross-community bridge._
+<<<<<<< HEAD
 >>>>>>> 5514abe (style: final formatting and graphify sync)
 - **Why does `columns` connect `Community 8` to `Community 25`, `Community 54`?**
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
   _High betweenness centrality (0.025) - this node is a cross-community bridge._
 - **What connects `QuestionOption`, `QuestionDraft`, `FieldError` to the rest of the system?**
+=======
+- **Why does `tables` connect `Community 66` to `Community 76`, `Community 80`, `Community 18`, `Community 19`, `Community 22`, `Community 27`?**
+  _High betweenness centrality (0.024) - this node is a cross-community bridge._
+- **Why does `SessionApiService` connect `Community 64` to `Community 32`, `Community 65`?**
+  _High betweenness centrality (0.023) - this node is a cross-community bridge._
+- **What connects `LobbyPlayer`, `FeatureIcon`, `FeatureTone` to the rest of the system?**
+>>>>>>> 6117afa (chore(graphify): update graph data files)
   _829 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.11231884057971014 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.08262108262108261 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**
+<<<<<<< HEAD
   _Cohesion score 0.04421768707482993 - nodes in this community are weakly interconnected._
 >>>>>>> 4bf98b3 (chore(graphify): update labels, cache, and manifest)
+=======
+  _Cohesion score 0.042986425339366516 - nodes in this community are weakly interconnected._
+>>>>>>> 6117afa (chore(graphify): update graph data files)
