@@ -15,7 +15,7 @@ describe('LoginComponent', () => {
       providers: [{ provide: AuthService, useValue: authServiceMock }, provideRouter([])],
     });
 
-    fireEvent.click(screen.getByRole('button', { name: /login/i }));
+    fireEvent.click(screen.getByRole('button', { name: /sign in/i }));
 
     expect(screen.getByTestId('auth-error')).toBeTruthy();
     expect(authServiceMock.signIn).not.toHaveBeenCalled();
@@ -37,7 +37,7 @@ describe('LoginComponent', () => {
 
     fireEvent.input(emailInput, { target: { value: 'player@example.com' } });
     fireEvent.input(passwordInput, { target: { value: 'password' } });
-    fireEvent.click(screen.getByRole('button', { name: /login/i }));
+    fireEvent.click(screen.getByRole('button', { name: /sign in/i }));
 
     await waitFor(() => {
       expect(authServiceMock.signIn).toHaveBeenCalledWith({
