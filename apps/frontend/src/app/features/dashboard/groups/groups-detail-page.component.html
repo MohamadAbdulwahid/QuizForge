@@ -1,28 +1,27 @@
 <div class="qf-page-stack">
-  <!-- Header with back button -->
-  <div class="flex items-start justify-between gap-4">
-    <div class="flex items-center gap-3">
-      <app-bubbly-button
-        tone="ghost"
-        size="sm"
-        (click)="navigateBack()"
+  <!-- ── Back button ── -->
+  <div>
+    <app-bubbly-button
+      tone="ghost"
+      size="md"
+      (click)="navigateBack()"
+    >
+      <svg
+        class="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2.5"
+        aria-hidden="true"
       >
-        <svg
-          class="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M15.75 19.5L8.25 12l7.5-7.5"
-          />
-        </svg>
-        Back
-      </app-bubbly-button>
-    </div>
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M15.75 19.5L8.25 12l7.5-7.5"
+        />
+      </svg>
+      Back
+    </app-bubbly-button>
   </div>
 
   <!-- Error alert -->
@@ -55,18 +54,18 @@
   @if (group(); as g) {
     <!-- Group heading -->
     <app-bubbly-card tone="soft">
-      <app-page-heading
-        [eyebrow]="g.name"
-        [title]="g.name"
-        [description]="g.description || 'No description provided.'"
-      />
-      <div class="mt-4 flex items-center gap-3">
-        <span class="qf-chip">
+      <p class="qf-eyebrow">Classroom</p>
+      <h1 class="qf-h1 mt-2">{{ g.name }}</h1>
+      <p class="qf-muted mt-3 max-w-3xl text-base md:text-lg">
+        {{ g.description || 'No description provided.' }}
+      </p>
+      <div class="mt-4 flex flex-wrap items-center gap-2">
+        <span class="qf-chip text-sm">
           {{ g.member_count }} member{{ g.member_count === 1 ? '' : 's' }}
         </span>
-        <span class="qf-chip">{{ g.join_policy }}</span>
+        <span class="qf-chip text-sm">{{ g.join_policy }}</span>
         @if (g.is_discoverable) {
-          <span class="qf-chip">Discoverable</span>
+          <span class="qf-chip text-sm">Discoverable</span>
         }
       </div>
     </app-bubbly-card>
@@ -75,16 +74,40 @@
     @if (isCurrentUserAdmin()) {
       <section>
         <div class="mb-4 flex items-center justify-between">
-          <h2 class="qf-panel-title text-xl">Join Requests</h2>
+          <h2 class="qf-h2">Join Requests</h2>
           <app-bubbly-badge
             [count]="joinRequests().length"
             tone="warning"
-            size="sm"
+            size="md"
           />
         </div>
         @if (joinRequests().length === 0) {
           <app-bubbly-card tone="soft">
-            <div class="qf-empty-state">No pending join requests.</div>
+            <div class="qf-empty-state rounded-3xl py-12">
+              <div
+                class="bg-bubbly-primary/15 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-3xl"
+              >
+                <svg
+                  class="h-8 w-8"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  style="color: var(--bubbly-primary-deep)"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                  />
+                </svg>
+              </div>
+              <p class="font-display text-2xl font-bold text-slate-700">No pending join requests</p>
+              <p class="qf-muted mt-1 text-base">
+                You're all caught up — new requests will show up here.
+              </p>
+            </div>
           </app-bubbly-card>
         } @else {
           <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -93,26 +116,26 @@
                 <div class="flex flex-col gap-3">
                   <div>
                     <p
-                      class="font-display text-lg font-bold"
+                      class="font-display text-2xl font-bold"
                       style="color: var(--bubbly-primary-deep)"
                     >
                       {{ request.username }}
                     </p>
-                    <p class="qf-muted mt-1 text-sm font-semibold">
+                    <p class="qf-muted mt-1 text-base font-semibold">
                       Requested {{ request.created_at | date: 'mediumDate' }}
                     </p>
                   </div>
-                  <div class="flex gap-2">
+                  <div class="flex flex-wrap gap-2">
                     <app-bubbly-button
                       tone="primary"
-                      size="sm"
+                      size="md"
                       (click)="acceptJoinRequest(request.id)"
                     >
                       Accept
                     </app-bubbly-button>
                     <app-bubbly-button
                       tone="ghost"
-                      size="sm"
+                      size="md"
                       (click)="rejectJoinRequest(request.id)"
                     >
                       Reject
@@ -128,10 +151,32 @@
 
     <!-- Members List -->
     <section>
-      <h2 class="qf-panel-title mb-4 text-xl">Members</h2>
+      <h2 class="qf-h2 mb-4">Members</h2>
       @if (g.members.length === 0) {
         <app-bubbly-card tone="soft">
-          <div class="qf-empty-state">No members yet.</div>
+          <div class="qf-empty-state rounded-3xl py-12">
+            <div
+              class="bg-bubbly-primary/15 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-3xl"
+            >
+              <svg
+                class="h-8 w-8"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.8"
+                style="color: var(--bubbly-primary-deep)"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0Zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0Z"
+                />
+              </svg>
+            </div>
+            <p class="font-display text-2xl font-bold text-slate-700">No members yet</p>
+            <p class="qf-muted mt-1 text-base">Invite people to this group to see them here.</p>
+          </div>
         </app-bubbly-card>
       } @else {
         <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -139,19 +184,19 @@
             <app-bubbly-card tone="surface">
               <div class="flex flex-col gap-3">
                 <div class="flex items-start justify-between gap-2">
-                  <div>
+                  <div class="min-w-0">
                     <p
-                      class="font-display text-lg font-bold"
+                      class="font-display text-2xl font-bold"
                       style="color: var(--bubbly-primary-deep)"
                     >
                       {{ member.username }}
                     </p>
-                    <p class="qf-muted mt-1 text-sm font-semibold">
+                    <p class="qf-muted mt-1 text-base font-semibold">
                       Joined {{ member.joined_at | date: 'mediumDate' }}
                     </p>
                   </div>
                   <span
-                    class="qf-chip"
+                    class="qf-chip text-sm"
                     [style.background]="
                       member.role === 'admin'
                         ? 'var(--bubbly-primary)'
@@ -164,17 +209,17 @@
                 </div>
                 <!-- Admin actions for other members -->
                 @if (isCurrentUserAdmin() && member.role !== 'admin') {
-                  <div class="flex gap-2">
+                  <div class="flex flex-wrap gap-2">
                     <app-bubbly-button
                       tone="ghost"
-                      size="sm"
+                      size="md"
                       (click)="promoteToAdmin(member.user_id)"
                     >
                       Promote
                     </app-bubbly-button>
                     <app-bubbly-button
                       tone="ghost"
-                      size="sm"
+                      size="md"
                       (click)="removeMember(member.user_id)"
                     >
                       Remove
@@ -185,17 +230,17 @@
                 @if (
                   isCurrentUserAdmin() && member.role === 'admin' && member.user_id !== g.created_by
                 ) {
-                  <div class="flex gap-2">
+                  <div class="flex flex-wrap gap-2">
                     <app-bubbly-button
                       tone="ghost"
-                      size="sm"
+                      size="md"
                       (click)="demoteToMember(member.user_id)"
                     >
                       Demote
                     </app-bubbly-button>
                     <app-bubbly-button
                       tone="ghost"
-                      size="sm"
+                      size="md"
                       (click)="removeMember(member.user_id)"
                     >
                       Remove
@@ -212,61 +257,38 @@
     <!-- Group Settings (admin only) -->
     @if (isCurrentUserAdmin()) {
       <section>
-        <h2 class="qf-panel-title mb-4 text-xl">Group Settings</h2>
+        <h2 class="qf-h2 mb-4">Group Settings</h2>
         <app-bubbly-card tone="surface">
-          <div class="flex flex-col gap-4">
-            <div class="flex flex-col gap-2">
-              <span
-                class="text-sm font-bold"
-                style="color: var(--bubbly-primary-deep)"
-              >
-                Group Name
-              </span>
+          <div class="grid gap-5">
+            <div class="flex flex-col gap-1.5">
+              <span class="qf-eyebrow">Group Name</span>
               <p
-                class="text-sm"
-                style="color: var(--bubbly-text)"
+                class="font-display text-xl font-bold"
+                style="color: var(--bubbly-primary-deep)"
               >
                 {{ g.name }}
               </p>
             </div>
-            <div class="flex flex-col gap-2">
-              <span
-                class="text-sm font-bold"
-                style="color: var(--bubbly-primary-deep)"
-              >
-                Description
-              </span>
-              <p
-                class="text-sm"
-                style="color: var(--bubbly-text)"
-              >
+            <div class="flex flex-col gap-1.5">
+              <span class="qf-eyebrow">Description</span>
+              <p class="qf-muted text-base">
                 {{ g.description || 'No description set.' }}
               </p>
             </div>
-            <div class="flex flex-col gap-2">
-              <span
-                class="text-sm font-bold"
-                style="color: var(--bubbly-primary-deep)"
-              >
-                Join Policy
-              </span>
+            <div class="flex flex-col gap-1.5">
+              <span class="qf-eyebrow">Join Policy</span>
               <p
-                class="text-sm"
-                style="color: var(--bubbly-text)"
+                class="font-display text-base font-bold"
+                style="color: var(--bubbly-primary-deep)"
               >
                 {{ g.join_policy }}
               </p>
             </div>
-            <div class="flex flex-col gap-2">
-              <span
-                class="text-sm font-bold"
-                style="color: var(--bubbly-primary-deep)"
-              >
-                Discoverable
-              </span>
+            <div class="flex flex-col gap-1.5">
+              <span class="qf-eyebrow">Discoverable</span>
               <p
-                class="text-sm"
-                style="color: var(--bubbly-text)"
+                class="font-display text-base font-bold"
+                style="color: var(--bubbly-primary-deep)"
               >
                 {{ g.is_discoverable ? 'Yes' : 'No' }}
               </p>
@@ -274,7 +296,7 @@
             <div class="mt-2 flex gap-2">
               <app-bubbly-button
                 tone="primary"
-                size="sm"
+                size="md"
               >
                 Edit Settings
               </app-bubbly-button>

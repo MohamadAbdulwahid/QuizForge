@@ -14,7 +14,6 @@ import { BubblyAlertComponent } from '../../../shared/ui/bubbly-alert.component'
 import { BubblyBadgeComponent } from '../../../shared/ui/bubbly-badge.component';
 import { BubblyButtonComponent } from '../../../shared/ui/bubbly-button.component';
 import { BubblyCardComponent } from '../../../shared/ui/bubbly-card.component';
-import { PageHeadingComponent } from '../../../shared/ui/page-heading.component';
 
 @Component({
   selector: 'app-groups-detail-page',
@@ -25,7 +24,6 @@ import { PageHeadingComponent } from '../../../shared/ui/page-heading.component'
     BubblyBadgeComponent,
     BubblyButtonComponent,
     BubblyCardComponent,
-    PageHeadingComponent,
   ],
   templateUrl: './groups-detail-page.component.html',
 })
