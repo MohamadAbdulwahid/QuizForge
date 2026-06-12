@@ -101,18 +101,26 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // Read username from router state (set by play page) before awaiting
+    // auth — guests won't have a Supabase session and must still be able
+    // to join with the display name they typed on /play.
+    const state = history.state as { username?: string };
+    const guestUsername = state?.username?.trim() ?? '';
+
     await this.authService.whenReady();
     const token = this.authService.accessToken();
     const currentUser = this.authService.currentUser();
+    const isGuest = !token || !currentUser;
 
-    if (!token || !currentUser) {
-      await this.router.navigateByUrl('/login');
+    // Resolve display name: explicit play-page input wins, then the
+    // authenticated user's display name, then a generic fallback.
+    const username =
+      guestUsername || (currentUser ? buildDisplayName(currentUser, 'Player') : 'Player');
+
+    if (!username) {
+      this.errorMessage.set('Please enter a username to join the game.');
       return;
     }
-
-    // Read username from router state (set by play page)
-    const state = history.state as { username?: string };
-    const username = state?.username?.trim() || buildDisplayName(currentUser, 'Player');
 
     this.bindSocketEvents();
 
@@ -124,9 +132,13 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
           this.sessionStatus.set(this.normalizeStatus(session.status));
           this.statusMessage.set(this.buildStatusMessage(this.normalizeStatus(session.status)));
 
-          this.websocketService.connect(token);
-          if (!session.isHost) {
-            this.upsertPlayer(currentUser.id, username, true);
+          if (isGuest) {
+            this.websocketService.connectAsGuest(username);
+          } else {
+            this.websocketService.connect(token ?? '');
+            if (!session.isHost && currentUser) {
+              this.upsertPlayer(currentUser.id, username, true);
+            }
           }
           this.websocketService.joinGame(pin, username);
           this.hasJoined = true;
