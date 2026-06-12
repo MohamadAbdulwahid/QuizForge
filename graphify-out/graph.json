@@ -19648,7 +19648,7 @@
       "label": ".parseMatchingPairs()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L500",
+      "source_location": "L502",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_parsematchingpairs",
       "community": 81,
       "norm_label": ".parsematchingpairs()"
@@ -19660,6 +19660,7 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L197",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_addquestion",
       "community": 25,
@@ -19668,6 +19669,9 @@
 =======
       "source_location": "L514",
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
+=======
+      "source_location": "L516",
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_addquestion",
       "community": 45,
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
@@ -19679,6 +19683,7 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L201",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_removequestion",
       "community": 25,
@@ -19687,6 +19692,9 @@
 =======
       "source_location": "L518",
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
+=======
+      "source_location": "L520",
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_removequestion",
       "community": 45,
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
@@ -19698,6 +19706,7 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L208",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatequestiontext",
       "community": 25,
@@ -19706,6 +19715,9 @@
 =======
       "source_location": "L525",
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
+=======
+      "source_location": "L527",
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatequestiontext",
       "community": 45,
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
@@ -19717,6 +19729,7 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L212",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatequestiontype",
       "community": 25,
@@ -19725,6 +19738,9 @@
 =======
       "source_location": "L534",
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
+=======
+      "source_location": "L536",
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatequestiontype",
       "community": 45,
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
@@ -19736,6 +19752,7 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L231",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updateoptiontext",
       "community": 25,
@@ -19744,6 +19761,9 @@
 =======
       "source_location": "L559",
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
+=======
+      "source_location": "L561",
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updateoptiontext",
       "community": 45,
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
@@ -19755,6 +19775,7 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L241",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_markcorrect",
       "community": 25,
@@ -19763,6 +19784,9 @@
 =======
       "source_location": "L569",
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
+=======
+      "source_location": "L571",
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_markcorrect",
       "community": 45,
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
@@ -19774,6 +19798,7 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L247",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_addoption",
       "community": 25,
@@ -19782,6 +19807,9 @@
 =======
       "source_location": "L575",
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
+=======
+      "source_location": "L577",
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_addoption",
       "community": 45,
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
@@ -19791,6 +19819,7 @@
       "label": ".removeOption()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L256",
@@ -19810,6 +19839,9 @@
 =======
       "source_location": "L585",
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
+=======
+      "source_location": "L587",
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_removeoption",
       "community": 45,
       "norm_label": ".removeoption()"
@@ -19818,7 +19850,7 @@
       "label": ".addOrderingItem()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L601",
+      "source_location": "L603",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_addorderingitem",
       "community": 45,
       "norm_label": ".addorderingitem()"
@@ -19827,7 +19859,7 @@
       "label": ".removeOrderingItem()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L611",
+      "source_location": "L613",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_removeorderingitem",
       "community": 45,
       "norm_label": ".removeorderingitem()"
@@ -19836,7 +19868,7 @@
       "label": ".moveOrderingItem()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L621",
+      "source_location": "L623",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_moveorderingitem",
       "community": 45,
       "norm_label": ".moveorderingitem()"
@@ -19845,7 +19877,7 @@
       "label": ".addMatchingPair()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L637",
+      "source_location": "L639",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_addmatchingpair",
       "community": 45,
       "norm_label": ".addmatchingpair()"
@@ -19854,7 +19886,7 @@
       "label": ".removeMatchingPair()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L660",
+      "source_location": "L662",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_removematchingpair",
       "community": 45,
       "norm_label": ".removematchingpair()"
@@ -19863,7 +19895,7 @@
       "label": ".updateMatchingLeftText()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L684",
+      "source_location": "L686",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatematchinglefttext",
       "community": 45,
       "norm_label": ".updatematchinglefttext()"
@@ -19872,7 +19904,7 @@
       "label": ".updateMatchingRightText()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L694",
+      "source_location": "L696",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatematchingrighttext",
       "community": 45,
       "norm_label": ".updatematchingrighttext()"
@@ -19881,7 +19913,7 @@
       "label": ".updateMatchingPairing()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L707",
+      "source_location": "L709",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatematchingpairing",
       "community": 45,
       "norm_label": ".updatematchingpairing()"
@@ -19890,7 +19922,7 @@
       "label": ".addFibAnswer()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L719",
+      "source_location": "L721",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_addfibanswer",
       "community": 45,
       "norm_label": ".addfibanswer()"
@@ -19899,7 +19931,7 @@
       "label": ".removeFibAnswer()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L728",
+      "source_location": "L730",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_removefibanswer",
       "community": 45,
       "norm_label": ".removefibanswer()"
@@ -19908,7 +19940,7 @@
       "label": ".updateFibAnswerText()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L738",
+      "source_location": "L740",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatefibanswertext",
       "community": 45,
       "norm_label": ".updatefibanswertext()"
@@ -19917,7 +19949,7 @@
       "label": ".toggleFibCaseSensitive()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L750",
+      "source_location": "L752",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_togglefibcasesensitive",
       "community": 45,
       "norm_label": ".togglefibcasesensitive()"
@@ -19926,7 +19958,7 @@
       "label": ".updateTimeLimit()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L764",
+      "source_location": "L766",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatetimelimit",
       "community": 45,
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
@@ -19938,6 +19970,7 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L277",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatepoints",
       "community": 25,
@@ -19946,6 +19979,9 @@
 =======
       "source_location": "L772",
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
+=======
+      "source_location": "L774",
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatepoints",
       "community": 45,
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
@@ -19957,6 +19993,7 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L286",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_getquestionerrors",
       "community": 25,
@@ -19965,6 +20002,9 @@
 =======
       "source_location": "L781",
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
+=======
+      "source_location": "L783",
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_getquestionerrors",
       "community": 93,
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
@@ -19974,6 +20014,7 @@
       "label": ".isValid()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L291",
@@ -19993,6 +20034,9 @@
 =======
       "source_location": "L786",
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
+=======
+      "source_location": "L788",
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_isvalid",
       "community": 45,
       "norm_label": ".isvalid()"
@@ -20001,7 +20045,7 @@
       "label": ".buildQuestionPayload()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L797",
+      "source_location": "L799",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_buildquestionpayload",
       "community": 45,
       "norm_label": ".buildquestionpayload()"
@@ -20010,7 +20054,7 @@
       "label": ".save()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L881",
+      "source_location": "L883",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_save",
       "community": 93,
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
@@ -20022,6 +20066,7 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L350",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_savehandler",
       "community": 25,
@@ -20030,6 +20075,9 @@
 =======
       "source_location": "L929",
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
+=======
+      "source_location": "L931",
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_savehandler",
       "community": 93,
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
@@ -20039,6 +20087,7 @@
       "label": ".goBack()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L369",
@@ -20058,6 +20107,9 @@
 =======
       "source_location": "L948",
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
+=======
+      "source_location": "L950",
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_goback",
       "community": 45,
       "norm_label": ".goback()"
@@ -20066,7 +20118,7 @@
       "label": ".selectQuestion()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L953",
+      "source_location": "L955",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_selectquestion",
       "community": 45,
       "norm_label": ".selectquestion()"
@@ -20075,7 +20127,7 @@
       "label": ".toggleDescription()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L958",
+      "source_location": "L960",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_toggledescription",
       "community": 45,
       "norm_label": ".toggledescription()"
@@ -20084,7 +20136,7 @@
       "label": ".onTitleInput()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L963",
+      "source_location": "L965",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_ontitleinput",
       "community": 45,
       "norm_label": ".ontitleinput()"
@@ -20093,7 +20145,7 @@
       "label": ".onDescriptionInput()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L967",
+      "source_location": "L969",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_ondescriptioninput",
       "community": 45,
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
@@ -20105,6 +20157,7 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L378",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_onquestiontextinput",
       "community": 25,
@@ -20113,6 +20166,9 @@
 =======
       "source_location": "L971",
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
+=======
+      "source_location": "L973",
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_onquestiontextinput",
       "community": 45,
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
@@ -20124,6 +20180,7 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L382",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_onoptiontextinput",
       "community": 25,
@@ -20132,6 +20189,9 @@
 =======
       "source_location": "L975",
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
+=======
+      "source_location": "L977",
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_onoptiontextinput",
       "community": 45,
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
@@ -20143,6 +20203,7 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L386",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_ontypeselect",
       "community": 25,
@@ -20151,6 +20212,9 @@
 =======
       "source_location": "L979",
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
+=======
+      "source_location": "L981",
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_ontypeselect",
       "community": 45,
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
@@ -20162,6 +20226,7 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L393",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_ontimelimitinput",
       "community": 25,
@@ -20170,6 +20235,9 @@
 =======
       "source_location": "L983",
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
+=======
+      "source_location": "L985",
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_ontimelimitinput",
       "community": 45,
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
@@ -20179,6 +20247,7 @@
       "label": ".onPointsInput()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L397",
@@ -28632,6 +28701,9 @@
 =======
       "source_location": "L987",
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
+=======
+      "source_location": "L989",
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_onpointsinput",
       "community": 45,
       "norm_label": ".onpointsinput()"
@@ -28640,7 +28712,7 @@
       "label": ".questionTypeLabel()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L994",
+      "source_location": "L996",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_questiontypelabel",
       "community": 45,
       "norm_label": ".questiontypelabel()"
@@ -28649,7 +28721,7 @@
       "label": ".optionLabel()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L998",
+      "source_location": "L1000",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_optionlabel",
       "community": 45,
       "norm_label": ".optionlabel()"
@@ -28658,7 +28730,7 @@
       "label": ".isPaired()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L1003",
+      "source_location": "L1005",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_ispaired",
       "community": 45,
       "norm_label": ".ispaired()"
@@ -89685,6 +89757,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "built_at_commit": "d65faf1ccc4a2e3684fed7f1a9dc51085df614aa"
 =======
   "built_at_commit": "650d952f27241bf82b176be6c835e6c2eced05b6"
@@ -89708,3 +89781,7 @@
 >>>>>>> b250f33 (chore: re-add husky hooks and update graphify cache)
 =======
 >>>>>>> 8247da4 (chore(graphify): sync after husky re-add)
+=======
+  "built_at_commit": "8247da4e743b154d4adaad259d4142e7fe14035f"
+}
+>>>>>>> 88d1261 (chore: restore husky tracking and sync graphify)
