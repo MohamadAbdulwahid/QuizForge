@@ -1,9 +1,22 @@
+/**
+ * Lightweight structural validation for an incoming answer submission.
+ *
+ * This module checks *when* and *who* may answer a round, not whether
+ * the answer is correct. Correctness is the responsibility of the
+ * `gradeAnswer` engine and is computed later in the request lifecycle.
+ *
+ * The previous `optionIds: string[]` whitelist was removed because the
+ * richer question types (Ordering, Matching, Fill-in-the-Blank) do not
+ * fit a single whitelist check — the WebSocket schema already enforces
+ * `selectedAnswer` is a non-empty string up to 5000 chars, which is
+ * sufficient to reject obviously empty/malformed payloads.
+ */
+
 export interface ActiveQuestionAnswerState {
   sessionId: number;
   questionId: number;
   startTimeMs: number;
   timeLimitMs: number;
-  optionIds: string[];
   submittedUserIds: Set<string>;
 }
 
@@ -55,13 +68,9 @@ export function validateAnswerSubmission(input: AnswerValidationInput): AnswerVa
     };
   }
 
-  if (!activeQuestion.optionIds.includes(input.selectedAnswer)) {
-    return {
-      ok: false,
-      code: 'INVALID_ANSWER',
-      error: 'Selected answer is not valid for this question',
-    };
-  }
+  // selectedAnswer is enforced non-empty by the WebSocket Zod schema.
+  // We do NOT re-validate against a per-type whitelist here; type-specific
+  // payload parsing lives in the grading engine.
 
   const elapsedMs = Math.max(0, input.nowMs - activeQuestion.startTimeMs);
 
