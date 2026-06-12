@@ -294,6 +294,12 @@
 >>>>>>> 5514abe (style: final formatting and graphify sync)
 =======
   "96": "Community 96",
+<<<<<<< HEAD
   "97": "Community 97"
 >>>>>>> 6117afa (chore(graphify): update graph data files)
+=======
+  "97": "Community 97",
+  "98": "Community 98",
+  "99": "Community 99"
+>>>>>>> 2eee43f (chore(graphify-out): update manifest.json with new mtime and ast_hash values for modified files)
 }
