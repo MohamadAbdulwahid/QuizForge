@@ -28583,19 +28583,10 @@
       "norm_label": ".optionlabel()"
     },
     {
-      "label": ".rightOptionId()",
-      "file_type": "code",
-      "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L1004",
-      "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_rightoptionid",
-      "community": 45,
-      "norm_label": ".rightoptionid()"
-    },
-    {
       "label": ".isPaired()",
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
-      "source_location": "L1009",
+      "source_location": "L1001",
       "id": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_ispaired",
       "community": 45,
       "norm_label": ".ispaired()"
@@ -29470,7 +29461,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.ts",
       "source_location": "L49",
-      "community": 32,
+      "community": 33,
       "norm_label": "dashboardcreatesessionpagecomponent",
       "id": "dashboard_dashboard_create_session_page_component_dashboardcreatesessionpagecomponent"
     },
@@ -29479,7 +29470,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.ts",
       "source_location": "L143",
-      "community": 32,
+      "community": 33,
       "norm_label": ".constructor()",
       "id": "dashboard_dashboard_create_session_page_component_dashboardcreatesessionpagecomponent_constructor"
     },
@@ -29488,7 +29479,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.ts",
       "source_location": "L155",
-      "community": 32,
+      "community": 33,
       "norm_label": ".selectquiz()",
       "id": "dashboard_dashboard_create_session_page_component_dashboardcreatesessionpagecomponent_selectquiz"
     },
@@ -29497,7 +29488,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.ts",
       "source_location": "L160",
-      "community": 32,
+      "community": 33,
       "norm_label": ".selectgamemode()",
       "id": "dashboard_dashboard_create_session_page_component_dashboardcreatesessionpagecomponent_selectgamemode"
     },
@@ -29506,7 +29497,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.ts",
       "source_location": "L167",
-      "community": 32,
+      "community": 33,
       "norm_label": ".ontftimerminutesinput()",
       "id": "dashboard_dashboard_create_session_page_component_dashboardcreatesessionpagecomponent_ontftimerminutesinput"
     },
@@ -29515,7 +29506,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.ts",
       "source_location": "L172",
-      "community": 32,
+      "community": 33,
       "norm_label": ".ontfgoldgoalinput()",
       "id": "dashboard_dashboard_create_session_page_component_dashboardcreatesessionpagecomponent_ontfgoldgoalinput"
     },
@@ -29524,7 +29515,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.ts",
       "source_location": "L177",
-      "community": 32,
+      "community": 33,
       "norm_label": ".nextstep()",
       "id": "dashboard_dashboard_create_session_page_component_dashboardcreatesessionpagecomponent_nextstep"
     },
@@ -29533,7 +29524,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.ts",
       "source_location": "L190",
-      "community": 32,
+      "community": 33,
       "norm_label": ".previousstep()",
       "id": "dashboard_dashboard_create_session_page_component_dashboardcreatesessionpagecomponent_previousstep"
     },
@@ -29542,7 +29533,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.ts",
       "source_location": "L198",
-      "community": 32,
+      "community": 33,
       "norm_label": ".createsession()",
       "id": "dashboard_dashboard_create_session_page_component_dashboardcreatesessionpagecomponent_createsession"
     },
@@ -29551,7 +29542,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.ts",
       "source_location": "L250",
-      "community": 32,
+      "community": 33,
       "norm_label": ".updatebroadcastmode()",
       "id": "dashboard_dashboard_create_session_page_component_dashboardcreatesessionpagecomponent_updatebroadcastmode"
     },
@@ -29560,7 +29551,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.ts",
       "source_location": "L260",
-      "community": 32,
+      "community": 33,
       "norm_label": ".togglebroadcastgroup()",
       "id": "dashboard_dashboard_create_session_page_component_dashboardcreatesessionpagecomponent_togglebroadcastgroup"
     },
@@ -29569,7 +29560,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.ts",
       "source_location": "L269",
-      "community": 32,
+      "community": 33,
       "norm_label": ".stepcircleclass()",
       "id": "dashboard_dashboard_create_session_page_component_dashboardcreatesessionpagecomponent_stepcircleclass"
     },
@@ -29578,7 +29569,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.ts",
       "source_location": "L280",
-      "community": 32,
+      "community": 33,
       "norm_label": ".steplabelclass()",
       "id": "dashboard_dashboard_create_session_page_component_dashboardcreatesessionpagecomponent_steplabelclass"
     },
@@ -29587,7 +29578,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.ts",
       "source_location": "L286",
-      "community": 32,
+      "community": 33,
       "norm_label": ".stepvalidationmessage()",
       "id": "dashboard_dashboard_create_session_page_component_dashboardcreatesessionpagecomponent_stepvalidationmessage"
     },
@@ -29596,7 +29587,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.ts",
       "source_location": "L297",
-      "community": 32,
+      "community": 33,
       "norm_label": ".loadquizzes()",
       "id": "dashboard_dashboard_create_session_page_component_dashboardcreatesessionpagecomponent_loadquizzes"
     },
@@ -29605,7 +29596,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.ts",
       "source_location": "L332",
-      "community": 32,
+      "community": 33,
       "norm_label": ".loadgroups()",
       "id": "dashboard_dashboard_create_session_page_component_dashboardcreatesessionpagecomponent_loadgroups"
     },
@@ -30298,7 +30289,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/treasure-forge-play-page.component.ts",
       "source_location": "L1",
-      "community": 26,
+      "community": 57,
       "norm_label": "treasure-forge-play-page.component.ts",
       "id": "game_treasure_forge_play_page_component"
     },
@@ -30307,7 +30298,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/treasure-forge-play-page.component.ts",
       "source_location": "L35",
-      "community": 26,
+      "community": 57,
       "norm_label": "option_colors",
       "id": "game_treasure_forge_play_page_component_option_colors"
     },
@@ -30748,7 +30739,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/game-play-page.component.ts",
       "source_location": "L1",
-      "community": 103,
+      "community": 53,
       "norm_label": "game-play-page.component.ts",
       "id": "game_game_play_page_component"
     },
@@ -30757,7 +30748,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/game-play-page.component.ts",
       "source_location": "L20",
-      "community": 103,
+      "community": 53,
       "norm_label": "optionstyle",
       "id": "game_game_play_page_component_optionstyle"
     },
@@ -30766,7 +30757,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/game-play-page.component.ts",
       "source_location": "L26",
-      "community": 103,
+      "community": 53,
       "norm_label": "option_styles",
       "id": "game_game_play_page_component_option_styles"
     },
@@ -30775,7 +30766,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/game-play-page.component.ts",
       "source_location": "L48",
-      "community": 33,
+      "community": 53,
       "norm_label": "gameplaypagecomponent",
       "id": "game_game_play_page_component_gameplaypagecomponent"
     },
@@ -30784,7 +30775,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/game-play-page.component.ts",
       "source_location": "L75",
-      "community": 33,
+      "community": 53,
       "norm_label": ".ngoninit()",
       "id": "game_game_play_page_component_gameplaypagecomponent_ngoninit"
     },
@@ -30793,7 +30784,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/game-play-page.component.ts",
       "source_location": "L92",
-      "community": 33,
+      "community": 53,
       "norm_label": ".ngondestroy()",
       "id": "game_game_play_page_component_gameplaypagecomponent_ngondestroy"
     },
@@ -30802,7 +30793,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/game-play-page.component.ts",
       "source_location": "L102",
-      "community": 33,
+      "community": 53,
       "norm_label": ".getoptionstyle()",
       "id": "game_game_play_page_component_gameplaypagecomponent_getoptionstyle"
     },
@@ -30811,7 +30802,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/game-play-page.component.ts",
       "source_location": "L107",
-      "community": 33,
+      "community": 53,
       "norm_label": ".getanswergridclass()",
       "id": "game_game_play_page_component_gameplaypagecomponent_getanswergridclass"
     },
@@ -30820,7 +30811,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/game-play-page.component.ts",
       "source_location": "L119",
-      "community": 33,
+      "community": 53,
       "norm_label": ".getoptionclasses()",
       "id": "game_game_play_page_component_gameplaypagecomponent_getoptionclasses"
     },
@@ -30829,7 +30820,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/game-play-page.component.ts",
       "source_location": "L130",
-      "community": 33,
+      "community": 53,
       "norm_label": ".selectanswer()",
       "id": "game_game_play_page_component_gameplaypagecomponent_selectanswer"
     },
@@ -30838,7 +30829,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/game-play-page.component.ts",
       "source_location": "L151",
-      "community": 33,
+      "community": 53,
       "norm_label": ".submitstructured()",
       "id": "game_game_play_page_component_gameplaypagecomponent_submitstructured"
     },
@@ -30847,7 +30838,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/game-play-page.component.ts",
       "source_location": "L234",
-      "community": 33,
+      "community": 53,
       "norm_label": ".abs()",
       "id": "game_game_play_page_component_gameplaypagecomponent_abs"
     },
@@ -30856,7 +30847,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/game-play-page.component.ts",
       "source_location": "L239",
-      "community": 33,
+      "community": 53,
       "norm_label": ".onanswerresult()",
       "id": "game_game_play_page_component_gameplaypagecomponent_onanswerresult"
     },
@@ -30865,7 +30856,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/game-play-page.component.ts",
       "source_location": "L254",
-      "community": 33,
+      "community": 53,
       "norm_label": ".animateoptionsin()",
       "id": "game_game_play_page_component_gameplaypagecomponent_animateoptionsin"
     },
@@ -30874,7 +30865,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/game-play-page.component.ts",
       "source_location": "L284",
-      "community": 33,
+      "community": 53,
       "norm_label": ".clearanimationtimeouts()",
       "id": "game_game_play_page_component_gameplaypagecomponent_clearanimationtimeouts"
     },
@@ -30883,7 +30874,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/game-play-page.component.ts",
       "source_location": "L291",
-      "community": 33,
+      "community": 53,
       "norm_label": ".clearroundsummarytimeout()",
       "id": "game_game_play_page_component_gameplaypagecomponent_clearroundsummarytimeout"
     },
@@ -30892,7 +30883,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/game-play-page.component.ts",
       "source_location": "L298",
-      "community": 33,
+      "community": 53,
       "norm_label": ".dismisssessionclosed()",
       "id": "game_game_play_page_component_gameplaypagecomponent_dismisssessionclosed"
     },
@@ -30901,7 +30892,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/features/game/game-play-page.component.ts",
       "source_location": "L303",
-      "community": 33,
+      "community": 53,
       "norm_label": ".bindsocketevents()",
       "id": "game_game_play_page_component_gameplaypagecomponent_bindsocketevents"
     },
@@ -31783,7 +31774,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/core/services/session-api.service.ts",
       "source_location": "L65",
-      "community": 32,
+      "community": 91,
       "norm_label": "sessionapiservice",
       "id": "services_session_api_service_sessionapiservice"
     },
@@ -31792,7 +31783,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/core/services/session-api.service.ts",
       "source_location": "L68",
-      "community": 32,
+      "community": 91,
       "norm_label": ".createsession()",
       "id": "services_session_api_service_sessionapiservice_createsession"
     },
@@ -31801,7 +31792,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/core/services/session-api.service.ts",
       "source_location": "L72",
-      "community": 32,
+      "community": 91,
       "norm_label": ".getsessionbypin()",
       "id": "services_session_api_service_sessionapiservice_getsessionbypin"
     },
@@ -31810,7 +31801,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/core/services/session-api.service.ts",
       "source_location": "L76",
-      "community": 32,
+      "community": 91,
       "norm_label": ".updatesessionstatus()",
       "id": "services_session_api_service_sessionapiservice_updatesessionstatus"
     },
@@ -31819,7 +31810,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/core/services/session-api.service.ts",
       "source_location": "L82",
-      "community": 32,
+      "community": 91,
       "norm_label": ".getmysessions()",
       "id": "services_session_api_service_sessionapiservice_getmysessions"
     },
@@ -31828,7 +31819,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/core/services/session-api.service.ts",
       "source_location": "L86",
-      "community": 32,
+      "community": 91,
       "norm_label": ".gethostsessiondata()",
       "id": "services_session_api_service_sessionapiservice_gethostsessiondata"
     },
@@ -31837,7 +31828,7 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/app/core/services/session-api.service.ts",
       "source_location": "L90",
-      "community": 32,
+      "community": 91,
       "norm_label": ".getleaderboard()",
       "id": "services_session_api_service_sessionapiservice_getleaderboard"
     },
@@ -32080,7 +32071,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L7",
-      "community": 91,
+      "community": 21,
       "norm_label": "public.group",
       "id": "meta_0003_snapshot_tables_public_group"
     },
@@ -32089,7 +32080,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L8",
-      "community": 91,
+      "community": 21,
       "norm_label": "name",
       "id": "meta_0003_snapshot_public_group_name"
     },
@@ -32098,7 +32089,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L9",
-      "community": 91,
+      "community": 21,
       "norm_label": "schema",
       "id": "meta_0003_snapshot_public_group_schema"
     },
@@ -32107,7 +32098,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L10",
-      "community": 99,
+      "community": 23,
       "norm_label": "columns",
       "id": "meta_0003_snapshot_public_group_columns"
     },
@@ -32251,7 +32242,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L28",
-      "community": 102,
+      "community": 23,
       "norm_label": "name",
       "id": "meta_0003_snapshot_columns_name"
     },
@@ -32260,7 +32251,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L29",
-      "community": 102,
+      "community": 23,
       "norm_label": "name",
       "id": "meta_0003_snapshot_name_name"
     },
@@ -32269,7 +32260,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L30",
-      "community": 102,
+      "community": 23,
       "norm_label": "type",
       "id": "meta_0003_snapshot_name_type"
     },
@@ -32278,7 +32269,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L31",
-      "community": 102,
+      "community": 23,
       "norm_label": "primarykey",
       "id": "meta_0003_snapshot_name_primarykey"
     },
@@ -32287,7 +32278,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L32",
-      "community": 102,
+      "community": 23,
       "norm_label": "notnull",
       "id": "meta_0003_snapshot_name_notnull"
     },
@@ -32296,7 +32287,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L34",
-      "community": 101,
+      "community": 23,
       "norm_label": "description",
       "id": "meta_0003_snapshot_columns_description"
     },
@@ -32305,7 +32296,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L35",
-      "community": 101,
+      "community": 23,
       "norm_label": "name",
       "id": "meta_0003_snapshot_description_name"
     },
@@ -32314,7 +32305,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L36",
-      "community": 101,
+      "community": 23,
       "norm_label": "type",
       "id": "meta_0003_snapshot_description_type"
     },
@@ -32323,7 +32314,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L37",
-      "community": 101,
+      "community": 23,
       "norm_label": "primarykey",
       "id": "meta_0003_snapshot_description_primarykey"
     },
@@ -32332,7 +32323,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L38",
-      "community": 101,
+      "community": 23,
       "norm_label": "notnull",
       "id": "meta_0003_snapshot_description_notnull"
     },
@@ -32341,7 +32332,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L40",
-      "community": 99,
+      "community": 23,
       "norm_label": "created_by",
       "id": "meta_0003_snapshot_columns_created_by"
     },
@@ -32350,7 +32341,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L41",
-      "community": 99,
+      "community": 23,
       "norm_label": "name",
       "id": "meta_0003_snapshot_created_by_name"
     },
@@ -32359,7 +32350,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L42",
-      "community": 99,
+      "community": 23,
       "norm_label": "type",
       "id": "meta_0003_snapshot_created_by_type"
     },
@@ -32368,7 +32359,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L43",
-      "community": 99,
+      "community": 23,
       "norm_label": "primarykey",
       "id": "meta_0003_snapshot_created_by_primarykey"
     },
@@ -32377,7 +32368,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L44",
-      "community": 99,
+      "community": 23,
       "norm_label": "notnull",
       "id": "meta_0003_snapshot_created_by_notnull"
     },
@@ -32386,7 +32377,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L46",
-      "community": 100,
+      "community": 23,
       "norm_label": "is_discoverable",
       "id": "meta_0003_snapshot_columns_is_discoverable"
     },
@@ -32395,7 +32386,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L47",
-      "community": 100,
+      "community": 23,
       "norm_label": "name",
       "id": "meta_0003_snapshot_is_discoverable_name"
     },
@@ -32404,7 +32395,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L48",
-      "community": 100,
+      "community": 23,
       "norm_label": "type",
       "id": "meta_0003_snapshot_is_discoverable_type"
     },
@@ -32413,7 +32404,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L49",
-      "community": 100,
+      "community": 23,
       "norm_label": "primarykey",
       "id": "meta_0003_snapshot_is_discoverable_primarykey"
     },
@@ -32422,7 +32413,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L50",
-      "community": 100,
+      "community": 23,
       "norm_label": "notnull",
       "id": "meta_0003_snapshot_is_discoverable_notnull"
     },
@@ -32433,9 +32424,13 @@
       "source_file": "apps/backend/src/api/routes/auth.routes.ts",
       "source_location": "L51",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "id": "routes_auth_routes_authroutes",
 =======
       "community": 100,
+=======
+      "community": 23,
+>>>>>>> 5514abe (style: final formatting and graphify sync)
       "norm_label": "default",
       "id": "meta_0003_snapshot_is_discoverable_default"
     },
@@ -32561,7 +32556,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L69",
-      "community": 97,
+      "community": 21,
       "norm_label": "indexes",
       "id": "meta_0003_snapshot_public_group_indexes"
     },
@@ -32570,7 +32565,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L70",
-      "community": 97,
+      "community": 21,
       "norm_label": "group_creator_idx",
       "id": "meta_0003_snapshot_indexes_group_creator_idx"
     },
@@ -32579,7 +32574,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L71",
-      "community": 97,
+      "community": 21,
       "norm_label": "name",
       "id": "meta_0003_snapshot_group_creator_idx_name"
     },
@@ -32588,7 +32583,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L72",
-      "community": 97,
+      "community": 21,
       "norm_label": "columns",
       "id": "meta_0003_snapshot_group_creator_idx_columns"
     },
@@ -32597,7 +32592,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L80",
-      "community": 97,
+      "community": 21,
       "norm_label": "isunique",
       "id": "meta_0003_snapshot_group_creator_idx_isunique"
     },
@@ -32606,7 +32601,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L81",
-      "community": 97,
+      "community": 21,
       "norm_label": "concurrently",
       "id": "meta_0003_snapshot_group_creator_idx_concurrently"
     },
@@ -32615,7 +32610,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L82",
-      "community": 97,
+      "community": 21,
       "norm_label": "method",
       "id": "meta_0003_snapshot_group_creator_idx_method"
     },
@@ -32624,7 +32619,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L83",
-      "community": 97,
+      "community": 21,
       "norm_label": "with",
       "id": "meta_0003_snapshot_group_creator_idx_with"
     },
@@ -32633,7 +32628,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L85",
-      "community": 98,
+      "community": 21,
       "norm_label": "group_discoverable_idx",
       "id": "meta_0003_snapshot_indexes_group_discoverable_idx"
     },
@@ -32642,7 +32637,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L86",
-      "community": 98,
+      "community": 21,
       "norm_label": "name",
       "id": "meta_0003_snapshot_group_discoverable_idx_name"
     },
@@ -32651,7 +32646,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L87",
-      "community": 98,
+      "community": 21,
       "norm_label": "columns",
       "id": "meta_0003_snapshot_group_discoverable_idx_columns"
     },
@@ -32660,7 +32655,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L95",
-      "community": 98,
+      "community": 21,
       "norm_label": "isunique",
       "id": "meta_0003_snapshot_group_discoverable_idx_isunique"
     },
@@ -32669,7 +32664,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L96",
-      "community": 98,
+      "community": 21,
       "norm_label": "concurrently",
       "id": "meta_0003_snapshot_group_discoverable_idx_concurrently"
     },
@@ -32678,7 +32673,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L97",
-      "community": 98,
+      "community": 21,
       "norm_label": "method",
       "id": "meta_0003_snapshot_group_discoverable_idx_method"
     },
@@ -32687,7 +32682,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L98",
-      "community": 98,
+      "community": 21,
       "norm_label": "with",
       "id": "meta_0003_snapshot_group_discoverable_idx_with"
     },
@@ -32696,7 +32691,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L101",
-      "community": 91,
+      "community": 21,
       "norm_label": "foreignkeys",
       "id": "meta_0003_snapshot_public_group_foreignkeys"
     },
@@ -32786,7 +32781,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L117",
-      "community": 91,
+      "community": 21,
       "norm_label": "compositeprimarykeys",
       "id": "meta_0003_snapshot_public_group_compositeprimarykeys"
     },
@@ -32795,7 +32790,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L118",
-      "community": 91,
+      "community": 21,
       "norm_label": "uniqueconstraints",
       "id": "meta_0003_snapshot_public_group_uniqueconstraints"
     },
@@ -32804,7 +32799,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L119",
-      "community": 91,
+      "community": 21,
       "norm_label": "policies",
       "id": "meta_0003_snapshot_public_group_policies"
     },
@@ -32813,7 +32808,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L120",
-      "community": 91,
+      "community": 21,
       "norm_label": "checkconstraints",
       "id": "meta_0003_snapshot_public_group_checkconstraints"
     },
@@ -32822,7 +32817,7 @@
       "file_type": "code",
       "source_file": "apps/backend/supabase/migrations/meta/0003_snapshot.json",
       "source_location": "L121",
-      "community": 91,
+      "community": 21,
       "norm_label": "isrlsenabled",
       "id": "meta_0003_snapshot_public_group_isrlsenabled"
     },
@@ -33124,9 +33119,15 @@
       "source_file": ".opencode/skills/monitor-ci/scripts/ci-poll-decide.mjs",
       "source_location": "L49",
       "weight": 1.0,
+<<<<<<< HEAD
       "source": "scripts_ci_poll_decide",
       "target": "scripts_ci_poll_decide_prevfailureclassification",
       "confidence_score": 1.0
+=======
+      "confidence_score": 1.0,
+      "source": "quizzes_quiz_builder_page_component",
+      "target": "quizzes_quiz_builder_page_component_createfiboption"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "contains",
@@ -42417,10 +42418,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L94",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component",
+<<<<<<< HEAD
       "target": "quizzes_quiz_builder_page_component_defaultoptionsfortype",
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "confidence_score": 1.0
+=======
+      "target": "quizzes_quiz_builder_page_component_defaultoptionsfortype"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "contains",
@@ -59904,7 +59910,9 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "target": "services_quiz_api_service",
       "confidence_score": 1.0
@@ -59939,6 +59947,9 @@
 =======
       "target": "services_quiz_api_service_questiontype",
       "confidence_score": 1.0
+=======
+      "target": "services_quiz_api_service_questiontype"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "imports",
@@ -59958,10 +59969,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component",
+<<<<<<< HEAD
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "target": "services_quiz_api_service_quizoptiondto",
       "confidence_score": 1.0
+=======
+      "target": "services_quiz_api_service_quizoptiondto"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
 <<<<<<< HEAD
@@ -59999,10 +60015,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component",
+<<<<<<< HEAD
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "target": "services_quiz_api_service_quizquestionpayload",
       "confidence_score": 1.0
+=======
+      "target": "services_quiz_api_service_quizquestionpayload"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
 <<<<<<< HEAD
@@ -60121,7 +60142,9 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component",
+<<<<<<< HEAD
       "target": "services_quiz_api_service_quizapiservice",
       "confidence_score": 1.0
     },
@@ -60185,6 +60208,9 @@
       "source": "services_sentry_service",
       "target": "environments_environment",
       "confidence_score": 1.0
+=======
+      "target": "services_quiz_api_service_quizsavepayload"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "imports",
@@ -60745,9 +60771,9 @@
 =======
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component",
-      "target": "types_question_types_question_types",
-      "confidence_score": 1.0
+      "target": "types_question_types_question_types"
     },
     {
       "relation": "imports",
@@ -60756,9 +60782,9 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component",
-      "target": "types_question_types_questiontypeconfig",
-      "confidence_score": 1.0
+      "target": "types_question_types_questiontypeconfig"
     },
     {
       "relation": "calls",
@@ -60778,9 +60804,9 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L100",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_defaultoptionsfortype",
-      "target": "quizzes_quiz_builder_page_component_createoption",
-      "confidence_score": 1.0
+      "target": "quizzes_quiz_builder_page_component_createoption"
     },
     {
       "relation": "calls",
@@ -60789,9 +60815,9 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L396",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_detailtodraft",
-      "target": "quizzes_quiz_builder_page_component_createoption",
-      "confidence_score": 1.0
+      "target": "quizzes_quiz_builder_page_component_createoption"
     },
     {
       "relation": "calls",
@@ -60800,10 +60826,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L111",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_defaultoptionsfortype",
+<<<<<<< HEAD
       "target": "quizzes_quiz_builder_page_component_createfiboption",
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "confidence_score": 1.0
+=======
+      "target": "quizzes_quiz_builder_page_component_createfiboption"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "calls",
@@ -60819,7 +60850,9 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L462",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_detailtodraft",
+<<<<<<< HEAD
       "target": "quizzes_quiz_builder_page_component_createfiboption",
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "confidence_score": 1.0
@@ -63633,6 +63666,9 @@
       "source": "quizzes_quiz_builder_page_component",
       "target": "ui_page_heading_component_pageheadingcomponent",
       "confidence_score": 1.0
+=======
+      "target": "quizzes_quiz_builder_page_component_createfiboption"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "calls",
@@ -63641,9 +63677,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L43",
       "weight": 1.0,
+<<<<<<< HEAD
       "source": "quizzes_quiz_builder_page_component_createdefaultquestion",
       "target": "quizzes_quiz_builder_page_component_createoption",
       "confidence_score": 1.0
+=======
+      "confidence_score": 1.0,
+      "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_detailtodraft",
+      "target": "quizzes_quiz_builder_page_component_defaultoptionsfortype"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "calls",
@@ -63698,10 +63740,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L717",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent",
+<<<<<<< HEAD
       "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_addfibanswer",
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "confidence_score": 1.0
+=======
+      "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_addfibanswer"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "method",
@@ -63925,10 +63972,15 @@
 =======
       "source_location": "L635",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent",
+<<<<<<< HEAD
       "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_addmatchingpair",
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "confidence_score": 1.0
+=======
+      "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_addmatchingpair"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "method",
@@ -63950,10 +64002,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L599",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent",
+<<<<<<< HEAD
       "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_addorderingitem",
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "confidence_score": 1.0
+=======
+      "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_addorderingitem"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "method",
@@ -63977,10 +64034,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L795",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent",
+<<<<<<< HEAD
       "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_buildquestionpayload",
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "confidence_score": 1.0
+=======
+      "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_buildquestionpayload"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "method",
@@ -64535,10 +64597,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L1009",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent",
+<<<<<<< HEAD
       "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_ispaired",
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "confidence_score": 1.0
+=======
+      "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_ispaired"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "method",
@@ -65501,10 +65568,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L619",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent",
+<<<<<<< HEAD
       "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_moveorderingitem",
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "confidence_score": 1.0
+=======
+      "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_moveorderingitem"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "method",
@@ -65599,10 +65671,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L498",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent",
+<<<<<<< HEAD
       "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_parsematchingpairs",
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "confidence_score": 1.0
+=======
+      "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_parsematchingpairs"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "method",
@@ -65627,10 +65704,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L726",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent",
+<<<<<<< HEAD
       "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_removefibanswer",
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "confidence_score": 1.0
+=======
+      "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_removefibanswer"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "method",
@@ -65645,10 +65727,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L658",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent",
+<<<<<<< HEAD
       "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_removematchingpair",
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "confidence_score": 1.0
+=======
+      "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_removematchingpair"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "method",
@@ -65673,10 +65760,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L609",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent",
+<<<<<<< HEAD
       "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_removeorderingitem",
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "confidence_score": 1.0
+=======
+      "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_removeorderingitem"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "method",
@@ -65699,6 +65791,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
+<<<<<<< HEAD
       "source_location": "L1004",
       "weight": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent",
@@ -65749,6 +65842,8 @@
       "target": "play_play_page_component_playpagecomponent",
 =======
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
+=======
+>>>>>>> 5514abe (style: final formatting and graphify sync)
       "source_location": "L326",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -65791,10 +65886,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L748",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent",
+<<<<<<< HEAD
       "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_togglefibcasesensitive",
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "confidence_score": 1.0
+=======
+      "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_togglefibcasesensitive"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "method",
@@ -65829,10 +65929,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L736",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent",
+<<<<<<< HEAD
       "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatefibanswertext",
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "confidence_score": 1.0
+=======
+      "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatefibanswertext"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "method",
@@ -65947,10 +66052,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L682",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent",
+<<<<<<< HEAD
       "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatematchinglefttext",
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "confidence_score": 1.0
+=======
+      "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatematchinglefttext"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "method",
@@ -65965,10 +66075,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L705",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent",
+<<<<<<< HEAD
       "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatematchingpairing",
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "confidence_score": 1.0
+=======
+      "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatematchingpairing"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "method",
@@ -65983,10 +66098,15 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L692",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent",
+<<<<<<< HEAD
       "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatematchingrighttext",
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
       "confidence_score": 1.0
+=======
+      "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_updatematchingrighttext"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
     },
     {
       "relation": "method",
@@ -71506,9 +71626,9 @@
       "source_file": "apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts",
       "source_location": "L432",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_detailtodraft",
-      "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_parsematchingpairs",
-      "confidence_score": 1.0
+      "target": "quizzes_quiz_builder_page_component_quizbuilderpagecomponent_parsematchingpairs"
     },
     {
       "relation": "calls",
@@ -89491,6 +89611,7 @@
   "hyperedges": [],
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "built_at_commit": "d65faf1ccc4a2e3684fed7f1a9dc51085df614aa"
 =======
   "built_at_commit": "650d952f27241bf82b176be6c835e6c2eced05b6"
@@ -89503,3 +89624,7 @@
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
 =======
 >>>>>>> f0b4398 (style: final formatting pass)
+=======
+  "built_at_commit": "f0b439804389a68e0ebc2db4d33a0f8fcc288128"
+}
+>>>>>>> 5514abe (style: final formatting and graphify sync)

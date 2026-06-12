@@ -411,15 +411,17 @@ export class QuizBuilderPageComponent {
       case 'matching': {
         // Prefer the DTO contract (options = left, rightOptions = right). Fall
         // back to the raw `{left, right}` jsonb shape if `rightOptions` is
-        // missing and `options` is an object — defensive against older data.
-        let left: QuestionOption[] = [];
+        // missing — defensive against older data.
+        let left: QuestionOption[] = q.options;
         let right: QuestionOption[] = q.rightOptions ?? [];
-        if (right.length === 0 && q.options.length > 0 && !Array.isArray(q.options)) {
-          const raw = q.options as unknown as { left?: QuestionOption[]; right?: QuestionOption[] };
-          left = raw.left ?? [];
-          right = raw.right ?? [];
-        } else if (Array.isArray(q.options)) {
-          left = q.options;
+        if (right.length === 0 && left.length > 0) {
+          // Detect the raw `{left, right}` jsonb shape at runtime — the typed
+          // surface is always a flat array, so we cast and probe the shape.
+          const probe = left as unknown as { left?: QuestionOption[]; right?: QuestionOption[] };
+          if (probe && typeof probe === 'object' && 'left' in probe && 'right' in probe) {
+            left = probe.left ?? [];
+            right = probe.right ?? [];
+          }
         }
         if (left.length === 0 || right.length === 0) {
           const defaults = defaultOptionsForType('matching');

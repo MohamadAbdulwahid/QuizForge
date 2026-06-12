@@ -95,6 +95,7 @@
   "93": "Community 93",
   "94": "Community 94",
   "95": "Community 95",
+<<<<<<< HEAD
   "96": "Community 96",
   "97": "Community 97",
   "98": "Community 98",
@@ -287,4 +288,7 @@
 =======
   "103": "Community 103"
 >>>>>>> 1e549ba (style: auto-format remaining files and update graphify cache)
+=======
+  "96": "Community 96"
+>>>>>>> 5514abe (style: final formatting and graphify sync)
 }
