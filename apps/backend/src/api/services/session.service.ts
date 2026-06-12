@@ -67,7 +67,11 @@ export async function createSession(
     hostId,
     status: 'waiting',
     broadcastMode,
+    gameMode: data.game_mode ?? 'forge-classic',
     groupIds: broadcastGroupIds,
+    tfEndMode: data.game_mode === 'treasure-forge' ? (data.tf_end_mode ?? null) : null,
+    tfTimerMinutes: data.game_mode === 'treasure-forge' ? (data.tf_timer_minutes ?? null) : null,
+    tfGoldGoal: data.game_mode === 'treasure-forge' ? (data.tf_gold_goal ?? null) : null,
   });
 
   sessionServiceLogger.info(
