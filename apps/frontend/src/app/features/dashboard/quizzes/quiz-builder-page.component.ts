@@ -3,23 +3,46 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Component, computed, DestroyRef, effect, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { QuizApiService, QuizQuestionDto } from '../../../core/services/quiz-api.service';
+import {
+  QuestionType,
+  QuizApiService,
+  QuizQuestionDto,
+  QuizOptionDto,
+  QuizQuestionPayload,
+  QuizSavePayload,
+} from '../../../core/services/quiz-api.service';
 import { BubblyAlertComponent } from '../../../shared/ui/bubbly-alert.component';
 import { BubblyButtonComponent } from '../../../shared/ui/bubbly-button.component';
 import { BubblyCardComponent } from '../../../shared/ui/bubbly-card.component';
+import { QUESTION_TYPES, QuestionTypeConfig } from '../../quiz/types/question-types';
 
 /* ─── Types ─── */
 
-interface QuestionOption {
-  id: string;
-  text: string;
-}
+/**
+ * Alias for the canonical option shape from the API. Reusing it (instead of
+ * redefining) keeps the draft layer and the save payload in lock-step —
+ * matching options get `matchId`, FIB options get `answer`/`caseSensitive`,
+ * the rest just need `id` + `text`.
+ */
+type QuestionOption = QuizOptionDto;
 
 interface QuestionDraft {
   clientId: string;
   text: string;
-  type: 'multiple-choice' | 'true-false';
+  type: QuestionType;
+  /**
+   * Flat options list. For `multiple-choice`, `true-false`, and `ordering`
+   * each entry is `{id, text}`. For `fill-in-blank` each entry is
+   * `{id, answer, caseSensitive}` (text is unused / blank). For `matching`
+   * this is the LEFT column (with `matchId` pointing to a right option).
+   */
   options: QuestionOption[];
+  /** Matching only: the RIGHT column (text only, no matchId). */
+  rightOptions?: QuestionOption[];
+  /**
+   * Id of the correct option (MC, TF) or ignored for types where the
+   * correct answer is derived from the option order or matchId.
+   */
   correctAnswerId: string;
   timeLimit: number;
   points: number;
@@ -30,10 +53,23 @@ interface FieldError {
   message: string;
 }
 
+/* ─── Constants ─── */
+
+const MIN_MC_OPTIONS = 2;
+const MAX_MC_OPTIONS = 6;
+const MIN_ORDERING_ITEMS = 2;
+const MAX_ORDERING_ITEMS = 8;
+const MIN_MATCHING_PAIRS = 2;
+const MAX_MATCHING_PAIRS = 6;
+
 /* ─── Helpers ─── */
 
 function createOption(id: string, text = ''): QuestionOption {
   return { id, text };
+}
+
+function createFibOption(id: string, answer = ''): QuestionOption {
+  return { id, text: '', answer, caseSensitive: false };
 }
 
 function createDefaultQuestion(): QuestionDraft {
@@ -50,6 +86,43 @@ function createDefaultQuestion(): QuestionDraft {
   };
 }
 
+/**
+ * Returns the seed options for a freshly-added question of the given type.
+ * For matching, returns both columns. The `correctAnswerId` is set by the
+ * caller (initially empty except for TF where it points at the "True" option).
+ */
+function defaultOptionsForType(type: QuestionType): {
+  left: QuestionOption[];
+  right?: QuestionOption[];
+} {
+  switch (type) {
+    case 'true-false': {
+      const trueOpt = createOption(crypto.randomUUID(), 'True');
+      const falseOpt = createOption(crypto.randomUUID(), 'False');
+      return { left: [trueOpt, falseOpt], right: undefined };
+    }
+    case 'matching': {
+      return {
+        left: [createOption(crypto.randomUUID(), ''), createOption(crypto.randomUUID(), '')],
+        right: [createOption(crypto.randomUUID(), ''), createOption(crypto.randomUUID(), '')],
+      };
+    }
+    case 'fill-in-blank':
+      return { left: [createFibOption(crypto.randomUUID(), '')], right: undefined };
+    case 'ordering':
+      return {
+        left: [createOption(crypto.randomUUID(), ''), createOption(crypto.randomUUID(), '')],
+        right: undefined,
+      };
+    case 'multiple-choice':
+    default:
+      return {
+        left: [createOption(crypto.randomUUID(), ''), createOption(crypto.randomUUID(), '')],
+        right: undefined,
+      };
+  }
+}
+
 function validateQuestion(q: QuestionDraft): FieldError[] {
   const errors: FieldError[] = [];
   if (!q.text.trim()) {
@@ -61,32 +134,129 @@ function validateQuestion(q: QuestionDraft): FieldError[] {
     });
   }
 
-  if (q.type === 'multiple-choice') {
-    if (q.options.length < 2) {
-      errors.push({ field: `${q.clientId}-options`, message: 'At least 2 options required.' });
-    }
-    q.options.forEach((opt, i) => {
-      if (!opt.text.trim()) {
+  switch (q.type) {
+    case 'multiple-choice': {
+      if (q.options.length < MIN_MC_OPTIONS) {
         errors.push({
-          field: `${q.clientId}-opt-${i}`,
-          message: `Option ${String.fromCharCode(65 + i)} cannot be empty.`,
-        });
-      } else if (opt.text.length > 500) {
-        errors.push({
-          field: `${q.clientId}-opt-${i}`,
-          message: `Option ${String.fromCharCode(65 + i)} must be under 500 characters.`,
+          field: `${q.clientId}-options`,
+          message: `At least ${MIN_MC_OPTIONS} options required.`,
         });
       }
-    });
-    if (!q.correctAnswerId || !q.options.find((o) => o.id === q.correctAnswerId)) {
-      errors.push({ field: `${q.clientId}-correct`, message: 'Select a correct answer.' });
-    }
-  } else {
-    if (!q.correctAnswerId) {
-      errors.push({
-        field: `${q.clientId}-correct`,
-        message: 'Select True or False as the correct answer.',
+      q.options.forEach((opt, i) => {
+        if (!opt.text.trim()) {
+          errors.push({
+            field: `${q.clientId}-opt-${i}`,
+            message: `Option ${String.fromCharCode(65 + i)} cannot be empty.`,
+          });
+        } else if (opt.text.length > 500) {
+          errors.push({
+            field: `${q.clientId}-opt-${i}`,
+            message: `Option ${String.fromCharCode(65 + i)} must be under 500 characters.`,
+          });
+        }
       });
+      if (!q.correctAnswerId || !q.options.find((o) => o.id === q.correctAnswerId)) {
+        errors.push({ field: `${q.clientId}-correct`, message: 'Select a correct answer.' });
+      }
+      break;
+    }
+    case 'true-false': {
+      if (!q.correctAnswerId || !q.options.find((o) => o.id === q.correctAnswerId)) {
+        errors.push({
+          field: `${q.clientId}-correct`,
+          message: 'Select True or False as the correct answer.',
+        });
+      }
+      break;
+    }
+    case 'ordering': {
+      if (q.options.length < MIN_ORDERING_ITEMS) {
+        errors.push({
+          field: `${q.clientId}-options`,
+          message: `At least ${MIN_ORDERING_ITEMS} items required.`,
+        });
+      }
+      q.options.forEach((opt, i) => {
+        if (!opt.text.trim()) {
+          errors.push({
+            field: `${q.clientId}-opt-${i}`,
+            message: `Item ${i + 1} cannot be empty.`,
+          });
+        } else if (opt.text.length > 500) {
+          errors.push({
+            field: `${q.clientId}-opt-${i}`,
+            message: `Item ${i + 1} must be under 500 characters.`,
+          });
+        }
+      });
+      break;
+    }
+    case 'matching': {
+      const left = q.options;
+      const right = q.rightOptions ?? [];
+      if (left.length < MIN_MATCHING_PAIRS || right.length < MIN_MATCHING_PAIRS) {
+        errors.push({
+          field: `${q.clientId}-options`,
+          message: `At least ${MIN_MATCHING_PAIRS} pairs required.`,
+        });
+      }
+      const rightIds = new Set(right.map((o) => o.id));
+      left.forEach((opt, i) => {
+        if (!opt.text.trim()) {
+          errors.push({
+            field: `${q.clientId}-opt-${i}`,
+            message: `Prompt ${String.fromCharCode(65 + i)} cannot be empty.`,
+          });
+        } else if (opt.text.length > 500) {
+          errors.push({
+            field: `${q.clientId}-opt-${i}`,
+            message: `Prompt ${String.fromCharCode(65 + i)} must be under 500 characters.`,
+          });
+        }
+        if (!opt.matchId || !rightIds.has(opt.matchId)) {
+          errors.push({
+            field: `${q.clientId}-opt-${i}`,
+            message: `Prompt ${String.fromCharCode(65 + i)} must be paired with an answer.`,
+          });
+        }
+      });
+      right.forEach((opt, i) => {
+        if (!opt.text.trim()) {
+          errors.push({
+            field: `${q.clientId}-right-${i}`,
+            message: `Answer ${i + 1} cannot be empty.`,
+          });
+        } else if (opt.text.length > 500) {
+          errors.push({
+            field: `${q.clientId}-right-${i}`,
+            message: `Answer ${i + 1} must be under 500 characters.`,
+          });
+        }
+      });
+      break;
+    }
+    case 'fill-in-blank': {
+      if (q.options.length < 1) {
+        errors.push({
+          field: `${q.clientId}-options`,
+          message: 'At least one accepted answer is required.',
+        });
+      }
+      q.options.forEach((opt, i) => {
+        const answer = opt.answer ?? '';
+        if (!answer.trim()) {
+          errors.push({
+            field: `${q.clientId}-opt-${i}`,
+            message: `Answer ${i + 1} cannot be empty.`,
+          });
+        } else if (answer.length > 500) {
+          errors.push({
+            field: `${q.clientId}-opt-${i}`,
+            message: `Answer ${i + 1} must be under 500 characters.`,
+          });
+        }
+      });
+      break;
     }
   }
 
@@ -130,7 +300,7 @@ export class QuizBuilderPageComponent {
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly successMessage = signal<string | null>(null);
 
-  /* ─── Selection state (new) ─── */
+  /* ─── Selection state ─── */
   protected readonly selectedQuestionId = signal<string | null>(null);
   protected readonly showDescription = signal(false);
 
@@ -148,6 +318,9 @@ export class QuizBuilderPageComponent {
     if (!id) return 0;
     return this.questions().findIndex((q) => q.clientId === id) + 1;
   });
+
+  /** Exposed to the template so `@for` can render the segmented type picker. */
+  protected readonly questionTypes: readonly QuestionTypeConfig[] = QUESTION_TYPES;
 
   /* ─── Lifecycle ─── */
   constructor() {
@@ -200,27 +373,138 @@ export class QuizBuilderPageComponent {
       });
   }
 
+  /**
+   * Converts a `QuizQuestionDto` (the API contract) into the in-memory
+   * `QuestionDraft` used by the editor. Handles all 5 question types.
+   *
+   * For matching, the wire contract splits the saved `{left, right}` blob
+   * into a flat `options` (left) + optional `rightOptions` (right). If the
+   * API ever returns matching data as `{left, right}` inside `options` (the
+   * raw jsonb shape), we still recover gracefully.
+   */
   private detailToDraft(q: QuizQuestionDto): QuestionDraft {
-    const options = (q.options as QuestionOption[] | null) ?? [];
-    return {
+    const base = {
       clientId: crypto.randomUUID(),
       text: q.text,
-      type: q.type as 'multiple-choice' | 'true-false',
-      options: options.length ? options : this.defaultOptions(q.type),
-      correctAnswerId: q.correct_answer ?? options[0]?.id ?? '',
       timeLimit: q.time_limit ?? 30,
       points: q.points ?? 100,
     };
+
+    switch (q.type) {
+      case 'true-false': {
+        const trueOpt = q.options.find((o) => o.text === 'True') ?? createOption(crypto.randomUUID(), 'True');
+        const falseOpt =
+          q.options.find((o) => o.text === 'False') ?? createOption(crypto.randomUUID(), 'False');
+        const storedAnswer = q.correct_answer ?? '';
+        // Prefer the option whose text matches the stored answer; fall back to True.
+        const match =
+          q.options.find((o) => o.text.toLowerCase() === storedAnswer.toLowerCase()) ??
+          (storedAnswer === 'false' ? falseOpt : trueOpt);
+        return {
+          ...base,
+          type: 'true-false',
+          options: [trueOpt, falseOpt],
+          correctAnswerId: match.id,
+        };
+      }
+      case 'matching': {
+        // Prefer the DTO contract (options = left, rightOptions = right). Fall
+        // back to the raw `{left, right}` jsonb shape if `rightOptions` is
+        // missing and `options` is an object — defensive against older data.
+        let left: QuestionOption[] = [];
+        let right: QuestionOption[] = q.rightOptions ?? [];
+        if (right.length === 0 && q.options.length > 0 && !Array.isArray(q.options)) {
+          const raw = q.options as unknown as { left?: QuestionOption[]; right?: QuestionOption[] };
+          left = raw.left ?? [];
+          right = raw.right ?? [];
+        } else if (Array.isArray(q.options)) {
+          left = q.options;
+        }
+        if (left.length === 0 || right.length === 0) {
+          const defaults = defaultOptionsForType('matching');
+          left = defaults.left;
+          right = defaults.right ?? [];
+        }
+        // Ensure every left has a matchId pointing to a real right (rehydrate
+        // from the saved `correct_answer` JSON if needed).
+        const rightIds = new Set(right.map((o) => o.id));
+        const pairs = this.parseMatchingPairs(q.correct_answer);
+        left = left.map((opt) => {
+          if (opt.matchId && rightIds.has(opt.matchId)) {
+            return opt;
+          }
+          const fallback = pairs[opt.id];
+          if (fallback && rightIds.has(fallback)) {
+            return { ...opt, matchId: fallback };
+          }
+          // Last resort: pair by index.
+          const idx = left.indexOf(opt);
+          return { ...opt, matchId: right[idx]?.id ?? '' };
+        });
+        return {
+          ...base,
+          type: 'matching',
+          options: left,
+          rightOptions: right,
+          correctAnswerId: '',
+        };
+      }
+      case 'fill-in-blank': {
+        const answers =
+          q.options.length > 0
+            ? q.options.map((o) => ({
+                id: o.id,
+                text: '',
+                answer: o.answer ?? '',
+                caseSensitive: o.caseSensitive ?? false,
+              }))
+            : [createFibOption(crypto.randomUUID(), '')];
+        return {
+          ...base,
+          type: 'fill-in-blank',
+          options: answers,
+          correctAnswerId: '',
+        };
+      }
+      case 'ordering': {
+        const items = q.options.length > 0 ? q.options : defaultOptionsForType('ordering').left;
+        return {
+          ...base,
+          type: 'ordering',
+          options: items.map((o) => ({ id: o.id, text: o.text })),
+          correctAnswerId: '',
+        };
+      }
+      case 'multiple-choice':
+      default: {
+        const options =
+          q.options.length > 0 ? q.options : defaultOptionsForType('multiple-choice').left;
+        return {
+          ...base,
+          type: 'multiple-choice',
+          options,
+          correctAnswerId: q.correct_answer ?? options[0]?.id ?? '',
+        };
+      }
+    }
   }
 
-  private defaultOptions(type: string): QuestionOption[] {
-    if (type === 'true-false') {
-      return [
-        createOption(crypto.randomUUID(), 'True'),
-        createOption(crypto.randomUUID(), 'False'),
-      ];
+  /**
+   * Decodes a matching question's `correct_answer` (a JSON object string
+   * of `{leftId: rightId}`) into a plain record. Returns an empty object
+   * on any parse failure.
+   */
+  private parseMatchingPairs(correctAnswer: string | null): Record<string, string> {
+    if (!correctAnswer) return {};
+    try {
+      const parsed = JSON.parse(correctAnswer) as unknown;
+      if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+        return parsed as Record<string, string>;
+      }
+    } catch {
+      /* ignore */
     }
-    return [createOption(crypto.randomUUID(), ''), createOption(crypto.randomUUID(), '')];
+    return {};
   }
 
   /* ─── Question mutations ─── */
@@ -239,24 +523,35 @@ export class QuizBuilderPageComponent {
     this.questions.update((qs) => qs.map((q) => (q.clientId === clientId ? { ...q, text } : q)));
   }
 
-  protected updateQuestionType(clientId: string, type: 'multiple-choice' | 'true-false'): void {
+  /**
+   * Switches a question's type. Resets the options, right options, and
+   * correct answer id to the canonical defaults for the new type so the
+   * editor always opens with a valid skeleton.
+   */
+  protected updateQuestionType(clientId: string, type: QuestionType): void {
     this.questions.update((qs) =>
       qs.map((q) => {
         if (q.clientId !== clientId) return q;
+        const defaults = defaultOptionsForType(type);
+        let correctAnswerId = '';
         if (type === 'true-false') {
-          const trueOpt = createOption(crypto.randomUUID(), 'True');
-          const falseOpt = createOption(crypto.randomUUID(), 'False');
-          return { ...q, type, options: [trueOpt, falseOpt], correctAnswerId: trueOpt.id };
+          // Default the correct answer to the "True" option.
+          correctAnswerId = defaults.left[0]?.id ?? '';
+        } else if (type === 'matching') {
+          // Pre-pair each left with the right of the same index.
+          const right = defaults.right ?? [];
+          const left = defaults.left.map((opt, i) => ({
+            ...opt,
+            matchId: right[i]?.id ?? '',
+          }));
+          return { ...q, type, options: left, rightOptions: right, correctAnswerId };
         }
-        return {
-          ...q,
-          type,
-          options: [createOption(crypto.randomUUID(), ''), createOption(crypto.randomUUID(), '')],
-          correctAnswerId: '',
-        };
+        return { ...q, type, options: defaults.left, rightOptions: undefined, correctAnswerId };
       })
     );
   }
+
+  /* ─── MC option mutations ─── */
 
   protected updateOptionText(clientId: string, optionIdx: number, text: string): void {
     this.questions.update((qs) =>
@@ -277,7 +572,8 @@ export class QuizBuilderPageComponent {
   protected addOption(clientId: string): void {
     this.questions.update((qs) =>
       qs.map((q) => {
-        if (q.clientId !== clientId || q.options.length >= 6) return q;
+        if (q.clientId !== clientId || q.type !== 'multiple-choice') return q;
+        if (q.options.length >= MAX_MC_OPTIONS) return q;
         return { ...q, options: [...q.options, createOption(crypto.randomUUID(), '')] };
       })
     );
@@ -286,7 +582,8 @@ export class QuizBuilderPageComponent {
   protected removeOption(clientId: string, optionIdx: number): void {
     this.questions.update((qs) =>
       qs.map((q) => {
-        if (q.clientId !== clientId || q.options.length <= 2) return q;
+        if (q.clientId !== clientId || q.type !== 'multiple-choice') return q;
+        if (q.options.length <= MIN_MC_OPTIONS) return q;
         const removed = q.options[optionIdx];
         const options = q.options.filter((_, i) => i !== optionIdx);
         const correctAnswerId =
@@ -295,6 +592,170 @@ export class QuizBuilderPageComponent {
       })
     );
   }
+
+  /* ─── Ordering mutations ─── */
+
+  protected addOrderingItem(clientId: string): void {
+    this.questions.update((qs) =>
+      qs.map((q) => {
+        if (q.clientId !== clientId || q.type !== 'ordering') return q;
+        if (q.options.length >= MAX_ORDERING_ITEMS) return q;
+        return { ...q, options: [...q.options, createOption(crypto.randomUUID(), '')] };
+      })
+    );
+  }
+
+  protected removeOrderingItem(clientId: string, idx: number): void {
+    this.questions.update((qs) =>
+      qs.map((q) => {
+        if (q.clientId !== clientId || q.type !== 'ordering') return q;
+        if (q.options.length <= MIN_ORDERING_ITEMS) return q;
+        return { ...q, options: q.options.filter((_, i) => i !== idx) };
+      })
+    );
+  }
+
+  protected moveOrderingItem(clientId: string, idx: number, direction: 'up' | 'down'): void {
+    this.questions.update((qs) =>
+      qs.map((q) => {
+        if (q.clientId !== clientId || q.type !== 'ordering') return q;
+        const targetIdx = direction === 'up' ? idx - 1 : idx + 1;
+        if (targetIdx < 0 || targetIdx >= q.options.length) return q;
+        const options = [...q.options];
+        [options[idx], options[targetIdx]] = [options[targetIdx], options[idx]];
+        return { ...q, options };
+      })
+    );
+  }
+
+  /* ─── Matching mutations ─── */
+
+  /** Adds a blank left option and a blank right option (paired by index). */
+  protected addMatchingPair(clientId: string): void {
+    this.questions.update((qs) =>
+      qs.map((q) => {
+        if (q.clientId !== clientId || q.type !== 'matching') return q;
+        const leftLen = q.options.length;
+        const rightLen = q.rightOptions?.length ?? 0;
+        if (leftLen >= MAX_MATCHING_PAIRS || rightLen >= MAX_MATCHING_PAIRS) return q;
+        const newRight = createOption(crypto.randomUUID(), '');
+        const newLeft = { ...createOption(crypto.randomUUID(), ''), matchId: newRight.id };
+        return {
+          ...q,
+          options: [...q.options, newLeft],
+          rightOptions: [...(q.rightOptions ?? []), newRight],
+        };
+      })
+    );
+  }
+
+  /**
+   * Removes a pair (left + right at the same index) and re-pairs any left
+   * whose matchId pointed to the removed right so all remaining lefts
+   * stay bound to a valid right.
+   */
+  protected removeMatchingPair(clientId: string, idx: number): void {
+    this.questions.update((qs) =>
+      qs.map((q) => {
+        if (q.clientId !== clientId || q.type !== 'matching') return q;
+        const leftLen = q.options.length;
+        const rightLen = q.rightOptions?.length ?? 0;
+        if (leftLen <= MIN_MATCHING_PAIRS || rightLen <= MIN_MATCHING_PAIRS) return q;
+        const removedRightId = q.rightOptions?.[idx]?.id;
+        const options = q.options
+          .filter((_, i) => i !== idx)
+          .map((opt) =>
+            opt.matchId === removedRightId
+              ? { ...opt, matchId: q.rightOptions?.[idx + 1]?.id ?? q.rightOptions?.[idx - 1]?.id ?? '' }
+              : opt
+          );
+        const rightOptions = (q.rightOptions ?? []).filter((_, i) => i !== idx);
+        return { ...q, options, rightOptions };
+      })
+    );
+  }
+
+  protected updateMatchingLeftText(clientId: string, idx: number, text: string): void {
+    this.questions.update((qs) =>
+      qs.map((q) => {
+        if (q.clientId !== clientId || q.type !== 'matching') return q;
+        const options = q.options.map((opt, i) => (i === idx ? { ...opt, text } : opt));
+        return { ...q, options };
+      })
+    );
+  }
+
+  protected updateMatchingRightText(clientId: string, idx: number, text: string): void {
+    this.questions.update((qs) =>
+      qs.map((q) => {
+        if (q.clientId !== clientId || q.type !== 'matching') return q;
+        const rightOptions = (q.rightOptions ?? []).map((opt, i) =>
+          i === idx ? { ...opt, text } : opt
+        );
+        return { ...q, rightOptions };
+      })
+    );
+  }
+
+  /** Sets `options[leftIdx].matchId = matchId` (the id of a right option). */
+  protected updateMatchingPairing(clientId: string, leftIdx: number, matchId: string): void {
+    this.questions.update((qs) =>
+      qs.map((q) => {
+        if (q.clientId !== clientId || q.type !== 'matching') return q;
+        const options = q.options.map((opt, i) =>
+          i === leftIdx ? { ...opt, matchId } : opt
+        );
+        return { ...q, options };
+      })
+    );
+  }
+
+  /* ─── Fill-in-blank mutations ─── */
+
+  protected addFibAnswer(clientId: string): void {
+    this.questions.update((qs) =>
+      qs.map((q) => {
+        if (q.clientId !== clientId || q.type !== 'fill-in-blank') return q;
+        return { ...q, options: [...q.options, createFibOption(crypto.randomUUID(), '')] };
+      })
+    );
+  }
+
+  protected removeFibAnswer(clientId: string, idx: number): void {
+    this.questions.update((qs) =>
+      qs.map((q) => {
+        if (q.clientId !== clientId || q.type !== 'fill-in-blank') return q;
+        if (q.options.length <= 1) return q;
+        return { ...q, options: q.options.filter((_, i) => i !== idx) };
+      })
+    );
+  }
+
+  protected updateFibAnswerText(clientId: string, idx: number, text: string): void {
+    this.questions.update((qs) =>
+      qs.map((q) => {
+        if (q.clientId !== clientId || q.type !== 'fill-in-blank') return q;
+        const options = q.options.map((opt, i) =>
+          i === idx ? { ...opt, answer: text, text: '' } : opt
+        );
+        return { ...q, options };
+      })
+    );
+  }
+
+  protected toggleFibCaseSensitive(clientId: string, idx: number): void {
+    this.questions.update((qs) =>
+      qs.map((q) => {
+        if (q.clientId !== clientId || q.type !== 'fill-in-blank') return q;
+        const options = q.options.map((opt, i) =>
+          i === idx ? { ...opt, caseSensitive: !opt.caseSensitive } : opt
+        );
+        return { ...q, options };
+      })
+    );
+  }
+
+  /* ─── Time/points ─── */
 
   protected updateTimeLimit(clientId: string, value: number): void {
     this.questions.update((qs) =>
@@ -323,6 +784,96 @@ export class QuizBuilderPageComponent {
     return this.questions().every((q) => validateQuestion(q).length === 0);
   }
 
+  /**
+   * Builds the per-type save payload. The discriminated union in
+   * `QuizQuestionPayload` is the source of truth: MC/TF/ordering/FIB
+   * use the flat `options` shape; matching uses the `{left, right}` shape.
+   * `correct_answer` semantics vary by type and are documented inline.
+   */
+  private buildQuestionPayload(q: QuestionDraft): QuizQuestionPayload {
+    const text = q.text.trim();
+    const timeLimit = q.timeLimit;
+    const points = q.points;
+
+    if (q.type === 'matching') {
+      const left = q.options.map((opt) => ({
+        id: opt.id,
+        text: opt.text,
+        matchId: opt.matchId ?? '',
+      }));
+      const right = (q.rightOptions ?? []).map((opt) => ({ id: opt.id, text: opt.text }));
+      // Build the `{leftId: rightId}` map from each left's matchId.
+      const pairs: Record<string, string> = {};
+      for (const opt of left) {
+        if (opt.matchId) pairs[opt.id] = opt.matchId;
+      }
+      return {
+        text,
+        type: 'matching',
+        options: { left, right },
+        correct_answer: JSON.stringify(pairs),
+        time_limit: timeLimit,
+        points,
+      };
+    }
+
+    if (q.type === 'true-false') {
+      // Read the text of the marked-correct option and lowercase it — the
+      // backend's Zod enum requires the literal strings 'true' or 'false'.
+      const chosen = q.options.find((o) => o.id === q.correctAnswerId);
+      const literal = (chosen?.text ?? 'True').toLowerCase() as 'true' | 'false';
+      return {
+        text,
+        type: 'true-false',
+        options: q.options.map((o) => ({ id: o.id, text: o.text })),
+        correct_answer: literal,
+        time_limit: timeLimit,
+        points,
+      };
+    }
+
+    if (q.type === 'ordering') {
+      // The canonical answer is the option-id list in the saved order.
+      return {
+        text,
+        type: 'ordering',
+        options: q.options.map((o) => ({ id: o.id, text: o.text })),
+        correct_answer: JSON.stringify(q.options.map((o) => o.id)),
+        time_limit: timeLimit,
+        points,
+      };
+    }
+
+    if (q.type === 'fill-in-blank') {
+      // The first answer is the canonical one (per spec).
+      const first = q.options[0];
+      const canonical = first?.answer ?? '';
+      return {
+        text,
+        type: 'fill-in-blank',
+        options: q.options.map((o) => ({
+          id: o.id,
+          text: '',
+          answer: o.answer ?? '',
+          caseSensitive: o.caseSensitive ?? false,
+        })),
+        correct_answer: canonical,
+        time_limit: timeLimit,
+        points,
+      };
+    }
+
+    // multiple-choice
+    return {
+      text,
+      type: 'multiple-choice',
+      options: q.options.map((o) => ({ id: o.id, text: o.text })),
+      correct_answer: q.correctAnswerId,
+      time_limit: timeLimit,
+      points,
+    };
+  }
+
   protected save(): void {
     this.errorMessage.set(null);
     this.successMessage.set(null);
@@ -338,7 +889,6 @@ export class QuizBuilderPageComponent {
     }
 
     if (allErrors.length > 0) {
-      // Scroll to first error by focusing the title — user can see red indicators
       this.errorMessage.set(
         `${allErrors.length} issue${allErrors.length > 1 ? 's' : ''} need${allErrors.length === 1 ? 's' : ''} fixing.`
       );
@@ -347,16 +897,11 @@ export class QuizBuilderPageComponent {
 
     this.isSaving.set(true);
 
-    const questionsPayload = this.questions().map((q) => ({
-      text: q.text.trim(),
-      type: q.type,
-      options: q.options,
-      correct_answer: q.correctAnswerId,
-      time_limit: q.timeLimit,
-      points: q.points,
-    }));
+    const questionsPayload: QuizQuestionPayload[] = this.questions().map((q) =>
+      this.buildQuestionPayload(q)
+    );
 
-    const payload = {
+    const payload: QuizSavePayload = {
       title: this.title().trim(),
       description: this.description().trim() || undefined,
       questions: questionsPayload,
@@ -400,12 +945,12 @@ export class QuizBuilderPageComponent {
     void this.router.navigate(['/dashboard/quizzes']);
   }
 
-  /* ─── Selection helper (new) ─── */
+  /* ─── Selection helpers ─── */
   protected selectQuestion(clientId: string): void {
     this.selectedQuestionId.set(clientId);
   }
 
-  /* ─── Description toggle (new) ─── */
+  /* ─── Description toggle ─── */
   protected toggleDescription(): void {
     this.showDescription.update((v) => !v);
   }
@@ -427,11 +972,8 @@ export class QuizBuilderPageComponent {
     this.updateOptionText(clientId, optionIdx, (event.target as HTMLInputElement).value);
   }
 
-  protected onTypeSelect(clientId: string, event: Event): void {
-    this.updateQuestionType(
-      clientId,
-      (event.target as HTMLSelectElement).value as 'multiple-choice' | 'true-false'
-    );
+  protected onTypeSelect(clientId: string, type: QuestionType): void {
+    this.updateQuestionType(clientId, type);
   }
 
   protected onTimeLimitInput(clientId: string, event: Event): void {
@@ -442,18 +984,27 @@ export class QuizBuilderPageComponent {
     this.updatePoints(clientId, parseInt((event.target as HTMLInputElement).value) || 0);
   }
 
-  /* ─── Type helpers (used in template) ─── */
-  protected readonly questionTypeOptions = [
-    { value: 'multiple-choice', label: 'Multiple Choice' },
-    { value: 'true-false', label: 'True / False' },
-  ];
+  /* ─── Type / option label helpers ─── */
+
+  /** Returns the human label for a question type, used in the left list chips. */
+  protected questionTypeLabel(type: QuestionType): string {
+    return QUESTION_TYPES.find((t) => t.id === type)?.label ?? type;
+  }
 
   protected optionLabel(index: number): string {
     return String.fromCharCode(65 + index);
   }
 
-  /** Returns a short label for the question type, used in the left list chips. */
-  protected questionTypeLabel(type: 'multiple-choice' | 'true-false'): string {
-    return type === 'multiple-choice' ? 'Multiple Choice' : 'True / False';
+  /**
+   * Tracks-by helper for `@for` on the right column of a matching question.
+   * Falls back to the index string if `rightOptions` is somehow empty.
+   */
+  protected rightOptionId(_index: number, option: QuestionOption): string {
+    return option.id;
+  }
+
+  /** True if the given left option has a non-empty matchId (UI: shows a checkmark). */
+  protected isPaired(option: QuestionOption): boolean {
+    return !!option.matchId;
   }
 }
