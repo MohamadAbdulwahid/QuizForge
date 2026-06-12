@@ -1,15 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, effect, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuizApiService, QuizQuestionDto } from '../../../core/services/quiz-api.service';
 import { BubblyAlertComponent } from '../../../shared/ui/bubbly-alert.component';
 import { BubblyButtonComponent } from '../../../shared/ui/bubbly-button.component';
 import { BubblyCardComponent } from '../../../shared/ui/bubbly-card.component';
-import { BubblyInputComponent } from '../../../shared/ui/bubbly-input.component';
-
-import { PageHeadingComponent } from '../../../shared/ui/page-heading.component';
 
 /* ─── Types ─── */
 
@@ -112,10 +109,7 @@ function validateQuestion(q: QuestionDraft): FieldError[] {
   imports: [
     CommonModule,
     FormsModule,
-    PageHeadingComponent,
     BubblyCardComponent,
-    BubblyInputComponent,
-
     BubblyButtonComponent,
     BubblyAlertComponent,
   ],
@@ -136,10 +130,24 @@ export class QuizBuilderPageComponent {
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly successMessage = signal<string | null>(null);
 
+  /* ─── Selection state (new) ─── */
+  protected readonly selectedQuestionId = signal<string | null>(null);
+  protected readonly showDescription = signal(false);
+
   /* ─── Computed ─── */
   protected readonly isEditMode = computed(() => this.quizId() !== null);
   protected readonly pageTitle = computed(() => (this.isEditMode() ? 'Edit Quiz' : 'Create Quiz'));
   protected readonly hasMultipleQuestions = computed(() => this.questions().length > 1);
+  protected readonly activeQuestion = computed<QuestionDraft | null>(() => {
+    const id = this.selectedQuestionId();
+    if (!id) return null;
+    return this.questions().find((q) => q.clientId === id) ?? null;
+  });
+  protected readonly selectedIndex = computed<number>(() => {
+    const id = this.selectedQuestionId();
+    if (!id) return 0;
+    return this.questions().findIndex((q) => q.clientId === id) + 1;
+  });
 
   /* ─── Lifecycle ─── */
   constructor() {
@@ -151,6 +159,28 @@ export class QuizBuilderPageComponent {
         this.loadQuiz(id);
       }
     }
+    this.initSelection();
+  }
+
+  /**
+   * Keeps the selected question valid as the list changes.
+   * - Picks the first question if nothing is selected or the current selection is gone
+   * - Clears selection when the list is empty
+   * Runs on initial mount and after loadQuiz replaces the questions array.
+   */
+  private initSelection(): void {
+    effect(() => {
+      const qs = this.questions();
+      const current = this.selectedQuestionId();
+      if (qs.length === 0) {
+        if (current !== null) this.selectedQuestionId.set(null);
+        return;
+      }
+      const stillValid = current !== null && qs.some((q) => q.clientId === current);
+      if (!stillValid) {
+        this.selectedQuestionId.set(qs[0].clientId);
+      }
+    });
   }
 
   /* ─── Quiz loading ─── */
@@ -370,7 +400,21 @@ export class QuizBuilderPageComponent {
     void this.router.navigate(['/dashboard/quizzes']);
   }
 
+  /* ─── Selection helper (new) ─── */
+  protected selectQuestion(clientId: string): void {
+    this.selectedQuestionId.set(clientId);
+  }
+
+  /* ─── Description toggle (new) ─── */
+  protected toggleDescription(): void {
+    this.showDescription.update((v) => !v);
+  }
+
   /* ─── Template helpers for `$event` casting ─── */
+  protected onTitleInput(event: Event): void {
+    this.title.set((event.target as HTMLInputElement).value);
+  }
+
   protected onDescriptionInput(event: Event): void {
     this.description.set((event.target as HTMLTextAreaElement).value);
   }
@@ -406,5 +450,10 @@ export class QuizBuilderPageComponent {
 
   protected optionLabel(index: number): string {
     return String.fromCharCode(65 + index);
+  }
+
+  /** Returns a short label for the question type, used in the left list chips. */
+  protected questionTypeLabel(type: 'multiple-choice' | 'true-false'): string {
+    return type === 'multiple-choice' ? 'Multiple Choice' : 'True / False';
   }
 }
