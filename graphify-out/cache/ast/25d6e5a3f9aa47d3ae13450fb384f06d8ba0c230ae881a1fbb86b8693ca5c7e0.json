@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "nodes": [
     {
@@ -61,3 +62,6 @@
   "input_tokens": 0,
   "output_tokens": 0
 }
+=======
+{"nodes": [{"id": "home_mohamad_coding_quizforge_opencode_memory_sse_real_time_sessions_md", "label": "sse-real-time-sessions.md", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/.opencode/memory/sse-real-time-sessions.md", "source_location": "L1"}, {"id": "memory_sse_real_time_sessions_sse_real_time_session_updates", "label": "SSE Real-Time Session Updates", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/.opencode/memory/sse-real-time-sessions.md", "source_location": "L7"}, {"id": "memory_sse_real_time_sessions_architecture", "label": "Architecture", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/.opencode/memory/sse-real-time-sessions.md", "source_location": "L11"}, {"id": "memory_sse_real_time_sessions_data_flow", "label": "Data Flow", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/.opencode/memory/sse-real-time-sessions.md", "source_location": "L26"}], "edges": [{"source": "home_mohamad_coding_quizforge_opencode_memory_sse_real_time_sessions_md", "target": "memory_sse_real_time_sessions_sse_real_time_session_updates", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/.opencode/memory/sse-real-time-sessions.md", "source_location": "L7", "weight": 1.0}, {"source": "memory_sse_real_time_sessions_sse_real_time_session_updates", "target": "memory_sse_real_time_sessions_architecture", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/.opencode/memory/sse-real-time-sessions.md", "source_location": "L11", "weight": 1.0}, {"source": "memory_sse_real_time_sessions_sse_real_time_session_updates", "target": "memory_sse_real_time_sessions_data_flow", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/.opencode/memory/sse-real-time-sessions.md", "source_location": "L26", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
+>>>>>>> 432aae7 (chore: clean up empty code change entries in commit history)
