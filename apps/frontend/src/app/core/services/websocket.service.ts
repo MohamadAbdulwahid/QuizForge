@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
 import { environment } from '../../../environments/environment';
 
@@ -30,6 +30,7 @@ export interface LobbyStateEvent {
     username?: string;
     isHost?: boolean;
   }>;
+  gameMode?: string;
 }
 
 export interface GameStartedEvent {
@@ -37,6 +38,7 @@ export interface GameStartedEvent {
   sessionId: number;
   startedByUserId?: string;
   playerCount?: number;
+  gameMode?: string;
 }
 
 export interface RoundStartedEvent {
@@ -56,8 +58,12 @@ export interface GameQuestionEvent {
   order: number;
   totalQuestions: number;
   text: string;
+  /** Permissive `string` so server-side question type additions don't break the client. */
   type: string;
+  /** Left-column items for matching; sole options column for every other type. */
   options: Array<{ id: string; text: string }>;
+  /** Right-column items for matching (shuffled server-side). Undefined for non-matching. */
+  rightOptions?: Array<{ id: string; text: string }>;
   points: number;
   timeLimitMs: number;
   serverStartTimeMs: number;
@@ -118,6 +124,56 @@ export interface SessionClosedEvent {
   reason: string;
 }
 
+export interface ChestsRevealedEvent {
+  pin: string;
+  sessionId: number;
+  questionId: number;
+  chests: Array<{ type: string; label: string }>;
+}
+
+export interface ChestEffectEvent {
+  pin: string;
+  sessionId: number;
+  questionId: number;
+  outcomeType: string;
+  outcomeValue: number | null;
+  label: string;
+  goldDelta: number;
+  newTotal: number;
+  targetUsername?: string;
+}
+
+export interface GoldUpdateEvent {
+  pin: string;
+  sessionId: number;
+  playerId: string;
+  username: string;
+  goldDelta: number;
+  newTotal: number;
+  leaderboard: LeaderboardPlayerEvent[];
+}
+
+export interface TargetNeededEvent {
+  pin: string;
+  sessionId: number;
+  questionId: number;
+  outcomeType: 'steal' | 'swap';
+  stealPercent?: number;
+}
+
+export interface ForgeActivityEvent {
+  pin: string;
+  sessionId: number;
+  timestamp: number;
+  type: 'chest-picked' | 'steal' | 'swap' | 'round-correct' | 'round-incorrect';
+  playerId: string;
+  playerUsername: string;
+  message: string;
+  goldDelta?: number;
+  newTotal?: number;
+  targetUsername?: string;
+}
+
 type ServerToClientEvents = {
   'player-joined': (payload: PlayerJoinedEvent) => void;
   'player-left': (payload: PlayerLeftEvent) => void;
@@ -133,6 +189,11 @@ type ServerToClientEvents = {
   'game-ended': (payload: GameEndedEvent) => void;
   'session-closed': (payload: SessionClosedEvent) => void;
   error: (payload: SocketErrorPayload) => void;
+  'chests-revealed': (payload: ChestsRevealedEvent) => void;
+  'chest-effect': (payload: ChestEffectEvent) => void;
+  'gold-update': (payload: GoldUpdateEvent) => void;
+  'target-needed': (payload: TargetNeededEvent) => void;
+  'forge-activity': (payload: ForgeActivityEvent) => void;
 };
 
 type ClientToServerEvents = {
@@ -147,7 +208,20 @@ type ClientToServerEvents = {
     selectedAnswer: string;
   }) => void;
   'next-question': (payload: { pin: string }) => void;
+  'request-question': (payload: { pin: string }) => void;
   'skip-question': (payload: { pin: string }) => void;
+  'select-chest': (payload: {
+    pin: string;
+    sessionId: number;
+    questionId: number;
+    chestIndex: number;
+  }) => void;
+  'select-steal-target': (payload: {
+    pin: string;
+    sessionId: number;
+    questionId: number;
+    targetUserId: string;
+  }) => void;
 };
 
 const RECONNECT_BASE_DELAY = 1000;
@@ -165,9 +239,9 @@ export class WebsocketService {
   private readonly playerJoinedSubject = new Subject<PlayerJoinedEvent>();
   private readonly playerLeftSubject = new Subject<PlayerLeftEvent>();
   private readonly lobbyStateSubject = new Subject<LobbyStateEvent>();
-  private readonly gameStartedSubject = new Subject<GameStartedEvent>();
-  private readonly roundStartedSubject = new Subject<RoundStartedEvent>();
-  private readonly questionSubject = new Subject<GameQuestionEvent>();
+  private readonly gameStartedSubject = new ReplaySubject<GameStartedEvent>(1);
+  private readonly roundStartedSubject = new ReplaySubject<RoundStartedEvent>(1);
+  private readonly questionSubject = new ReplaySubject<GameQuestionEvent>(1);
   private readonly answerAckSubject = new Subject<AnswerAckEvent>();
   private readonly answerRejectedSubject = new Subject<SocketErrorPayload>();
   private readonly scoreUpdateSubject = new Subject<ScoreUpdateEvent>();
@@ -176,6 +250,11 @@ export class WebsocketService {
   private readonly gameEndedSubject = new Subject<GameEndedEvent>();
   private readonly sessionClosedSubject = new Subject<SessionClosedEvent>();
   private readonly socketErrorSubject = new Subject<SocketErrorPayload>();
+  private readonly chestsRevealedSubject = new Subject<ChestsRevealedEvent>();
+  private readonly chestEffectSubject = new Subject<ChestEffectEvent>();
+  private readonly goldUpdateSubject = new Subject<GoldUpdateEvent>();
+  private readonly targetNeededSubject = new Subject<TargetNeededEvent>();
+  private readonly forgeActivitySubject = new Subject<ForgeActivityEvent>();
 
   readonly playerJoined$: Observable<PlayerJoinedEvent> = this.playerJoinedSubject.asObservable();
   readonly playerLeft$: Observable<PlayerLeftEvent> = this.playerLeftSubject.asObservable();
@@ -194,6 +273,13 @@ export class WebsocketService {
   readonly sessionClosed$: Observable<SessionClosedEvent> =
     this.sessionClosedSubject.asObservable();
   readonly socketError$: Observable<SocketErrorPayload> = this.socketErrorSubject.asObservable();
+  readonly chestsRevealed$: Observable<ChestsRevealedEvent> =
+    this.chestsRevealedSubject.asObservable();
+  readonly chestEffect$: Observable<ChestEffectEvent> = this.chestEffectSubject.asObservable();
+  readonly goldUpdate$: Observable<GoldUpdateEvent> = this.goldUpdateSubject.asObservable();
+  readonly targetNeeded$: Observable<TargetNeededEvent> = this.targetNeededSubject.asObservable();
+  readonly forgeActivity$: Observable<ForgeActivityEvent> =
+    this.forgeActivitySubject.asObservable();
 
   readonly connected = signal(false);
   readonly reconnecting = signal(false);
@@ -294,6 +380,26 @@ export class WebsocketService {
     this.socket.on('error', (payload) => {
       this.socketErrorSubject.next(payload);
     });
+
+    this.socket.on('chests-revealed', (payload) => {
+      this.chestsRevealedSubject.next(payload);
+    });
+
+    this.socket.on('chest-effect', (payload) => {
+      this.chestEffectSubject.next(payload);
+    });
+
+    this.socket.on('gold-update', (payload) => {
+      this.goldUpdateSubject.next(payload);
+    });
+
+    this.socket.on('target-needed', (payload) => {
+      this.targetNeededSubject.next(payload);
+    });
+
+    this.socket.on('forge-activity', (payload) => {
+      this.forgeActivitySubject.next(payload);
+    });
   }
 
   joinGame(pin: string, username?: string): void {
@@ -326,6 +432,24 @@ export class WebsocketService {
 
   nextQuestion(pin: string): void {
     this.socket?.emit('next-question', { pin });
+  }
+
+  /** Requests the next question in continuous Treasure Forge mode. */
+  requestNextQuestion(pin: string): void {
+    this.socket?.emit('request-question', { pin });
+  }
+
+  selectChest(pin: string, sessionId: number, questionId: number, chestIndex: number): void {
+    this.socket?.emit('select-chest', { pin, sessionId, questionId, chestIndex });
+  }
+
+  selectStealTarget(
+    pin: string,
+    sessionId: number,
+    questionId: number,
+    targetUserId: string
+  ): void {
+    this.socket?.emit('select-steal-target', { pin, sessionId, questionId, targetUserId });
   }
 
   disconnect(): void {
