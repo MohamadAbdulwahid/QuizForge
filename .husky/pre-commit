@@ -1,0 +1,11 @@
+#!/bin/sh
+echo "🔍 Running pre-commit checks on affected projects..."
+
+# Only lint projects affected by current changes
+bun lint:affected
+bun format
+
+# Uncomment when you add tests:
+# bun test:affected
+
+echo "✅ Pre-commit checks passed!"
