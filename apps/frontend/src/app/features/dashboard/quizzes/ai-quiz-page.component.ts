@@ -89,11 +89,15 @@ export class AiQuizPageComponent {
           const body = err?.error;
 
           if (status === 429) {
-            this.errorMessage.set('AI service is rate limited. Please wait a moment and try again.');
+            this.errorMessage.set(
+              'AI service is rate limited. Please wait a moment and try again.'
+            );
           } else if (status === 503) {
             this.errorMessage.set('AI quiz generation is not configured on the server.');
           } else if (status === 504) {
-            this.errorMessage.set('AI request timed out. Your notes may be too long — try shortening them.');
+            this.errorMessage.set(
+              'AI request timed out. Your notes may be too long — try shortening them.'
+            );
           } else {
             this.errorMessage.set(
               body?.message || body?.error || 'Failed to generate quiz. Please try again.'
@@ -115,28 +119,26 @@ export class AiQuizPageComponent {
 
     this.isSaving.set(true);
 
-    const questionsPayload: QuizQuestionPayload[] = questions.map(
-      (q): QuizQuestionPayload => {
-        if (q.type === 'matching') {
-          return {
-            text: q.text,
-            type: 'matching',
-            options: q.options as { left: QuizOptionDto[]; right: QuizOptionDto[] },
-            correct_answer: q.correct_answer,
-            time_limit: q.time_limit,
-            points: q.points,
-          };
-        }
+    const questionsPayload: QuizQuestionPayload[] = questions.map((q): QuizQuestionPayload => {
+      if (q.type === 'matching') {
         return {
           text: q.text,
-          type: q.type as Exclude<QuestionType, 'matching'>,
-          options: q.options as QuizOptionDto[],
+          type: 'matching',
+          options: q.options as { left: QuizOptionDto[]; right: QuizOptionDto[] },
           correct_answer: q.correct_answer,
           time_limit: q.time_limit,
           points: q.points,
         };
       }
-    );
+      return {
+        text: q.text,
+        type: q.type as Exclude<QuestionType, 'matching'>,
+        options: q.options as QuizOptionDto[],
+        correct_answer: q.correct_answer,
+        time_limit: q.time_limit,
+        points: q.points,
+      };
+    });
 
     const payload: QuizSavePayload = {
       title: this.title().trim(),

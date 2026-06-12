@@ -47,7 +47,9 @@ function buildAiResponse(questions: unknown[]): Response {
   );
 }
 
-function buildValidMultipleChoice(overrides: Record<string, unknown> = {}): Record<string, unknown> {
+function buildValidMultipleChoice(
+  overrides: Record<string, unknown> = {}
+): Record<string, unknown> {
   return {
     text: 'What is 2+2?',
     type: 'multiple-choice',
@@ -146,9 +148,8 @@ describe('AI Quiz Generator Service', () => {
     it('should call the AI API with correct endpoint and headers', async () => {
       mockFetch.mockResolvedValueOnce(buildAiResponse([buildValidMultipleChoice()]));
 
-      const { generateQuizQuestions } = await import(
-        '../../../src/api/services/ai-quiz-generator.service'
-      );
+      const { generateQuizQuestions } =
+        await import('../../../src/api/services/ai-quiz-generator.service');
 
       const result = await generateQuizQuestions('Test Quiz', 'Some study notes.');
 
@@ -184,9 +185,8 @@ describe('AI Quiz Generator Service', () => {
         ])
       );
 
-      const { generateQuizQuestions } = await import(
-        '../../../src/api/services/ai-quiz-generator.service'
-      );
+      const { generateQuizQuestions } =
+        await import('../../../src/api/services/ai-quiz-generator.service');
 
       const result = await generateQuizQuestions('Test', 'Notes here.');
 
@@ -199,9 +199,8 @@ describe('AI Quiz Generator Service', () => {
     it('should validate ordering questions correctly', async () => {
       mockFetch.mockResolvedValueOnce(buildAiResponse([buildValidOrdering()]));
 
-      const { generateQuizQuestions } = await import(
-        '../../../src/api/services/ai-quiz-generator.service'
-      );
+      const { generateQuizQuestions } =
+        await import('../../../src/api/services/ai-quiz-generator.service');
 
       const result = await generateQuizQuestions('Test', 'Notes here.');
       expect(result).toHaveLength(1);
@@ -211,9 +210,8 @@ describe('AI Quiz Generator Service', () => {
     it('should validate matching questions correctly', async () => {
       mockFetch.mockResolvedValueOnce(buildAiResponse([buildValidMatching()]));
 
-      const { generateQuizQuestions } = await import(
-        '../../../src/api/services/ai-quiz-generator.service'
-      );
+      const { generateQuizQuestions } =
+        await import('../../../src/api/services/ai-quiz-generator.service');
 
       const result = await generateQuizQuestions('Test', 'Notes here.');
       expect(result).toHaveLength(1);
@@ -223,9 +221,8 @@ describe('AI Quiz Generator Service', () => {
     it('should include optional instructions in the user message', async () => {
       mockFetch.mockResolvedValueOnce(buildAiResponse([buildValidMultipleChoice()]));
 
-      const { generateQuizQuestions } = await import(
-        '../../../src/api/services/ai-quiz-generator.service'
-      );
+      const { generateQuizQuestions } =
+        await import('../../../src/api/services/ai-quiz-generator.service');
 
       await generateQuizQuestions('Test', 'Notes', 'Focus on chapter 3 only.');
 
@@ -237,40 +234,33 @@ describe('AI Quiz Generator Service', () => {
     });
 
     it('should throw AppError when AI returns non-200', async () => {
-      mockFetch.mockResolvedValueOnce(
-        new Response('Rate limited', { status: 429 })
-      );
+      mockFetch.mockResolvedValueOnce(new Response('Rate limited', { status: 429 }));
 
-      const { generateQuizQuestions } = await import(
-        '../../../src/api/services/ai-quiz-generator.service'
-      );
+      const { generateQuizQuestions } =
+        await import('../../../src/api/services/ai-quiz-generator.service');
 
       await expect(generateQuizQuestions('Test', 'Notes')).rejects.toThrow('rate limited');
     });
 
     it('should throw AppError when AI returns 401', async () => {
-      mockFetch.mockResolvedValueOnce(
-        new Response('Unauthorized', { status: 401 })
-      );
+      mockFetch.mockResolvedValueOnce(new Response('Unauthorized', { status: 401 }));
 
-      const { generateQuizQuestions } = await import(
-        '../../../src/api/services/ai-quiz-generator.service'
-      );
+      const { generateQuizQuestions } =
+        await import('../../../src/api/services/ai-quiz-generator.service');
 
       await expect(generateQuizQuestions('Test', 'Notes')).rejects.toThrow('authentication');
     });
 
     it('should throw AppError when AI returns empty content', async () => {
       mockFetch.mockResolvedValueOnce(
-        new Response(
-          JSON.stringify({ choices: [{ message: { content: '' } }] }),
-          { status: 200, headers: { 'Content-Type': 'application/json' } }
-        )
+        new Response(JSON.stringify({ choices: [{ message: { content: '' } }] }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        })
       );
 
-      const { generateQuizQuestions } = await import(
-        '../../../src/api/services/ai-quiz-generator.service'
-      );
+      const { generateQuizQuestions } =
+        await import('../../../src/api/services/ai-quiz-generator.service');
 
       await expect(generateQuizQuestions('Test', 'Notes')).rejects.toThrow('empty');
     });
@@ -285,9 +275,8 @@ describe('AI Quiz Generator Service', () => {
         )
       );
 
-      const { generateQuizQuestions } = await import(
-        '../../../src/api/services/ai-quiz-generator.service'
-      );
+      const { generateQuizQuestions } =
+        await import('../../../src/api/services/ai-quiz-generator.service');
 
       await expect(generateQuizQuestions('Test', 'Notes')).rejects.toThrow('invalid JSON');
     });
@@ -302,9 +291,8 @@ describe('AI Quiz Generator Service', () => {
         )
       );
 
-      const { generateQuizQuestions } = await import(
-        '../../../src/api/services/ai-quiz-generator.service'
-      );
+      const { generateQuizQuestions } =
+        await import('../../../src/api/services/ai-quiz-generator.service');
 
       await expect(generateQuizQuestions('Test', 'Notes')).rejects.toThrow('missing');
     });
@@ -319,9 +307,8 @@ describe('AI Quiz Generator Service', () => {
         )
       );
 
-      const { generateQuizQuestions } = await import(
-        '../../../src/api/services/ai-quiz-generator.service'
-      );
+      const { generateQuizQuestions } =
+        await import('../../../src/api/services/ai-quiz-generator.service');
 
       await expect(generateQuizQuestions('Test', 'Notes')).rejects.toThrow('any questions');
     });
@@ -331,21 +318,17 @@ describe('AI Quiz Generator Service', () => {
         buildAiResponse([{ text: 'Missing fields', type: 'multiple-choice' }])
       );
 
-      const { generateQuizQuestions } = await import(
-        '../../../src/api/services/ai-quiz-generator.service'
-      );
+      const { generateQuizQuestions } =
+        await import('../../../src/api/services/ai-quiz-generator.service');
 
       await expect(generateQuizQuestions('Test', 'Notes')).rejects.toThrow('invalid');
     });
 
     it('should throw AppError on fetch abort (timeout)', async () => {
-      mockFetch.mockRejectedValueOnce(
-        new DOMException('The operation was aborted', 'AbortError')
-      );
+      mockFetch.mockRejectedValueOnce(new DOMException('The operation was aborted', 'AbortError'));
 
-      const { generateQuizQuestions } = await import(
-        '../../../src/api/services/ai-quiz-generator.service'
-      );
+      const { generateQuizQuestions } =
+        await import('../../../src/api/services/ai-quiz-generator.service');
 
       await expect(generateQuizQuestions('Test', 'Notes')).rejects.toThrow('timed out');
     });

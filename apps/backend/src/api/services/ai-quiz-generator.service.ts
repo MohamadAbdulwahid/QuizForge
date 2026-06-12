@@ -108,7 +108,9 @@ Output ONLY the JSON object — no markdown fences, no explanations, no addition
 // Builds the user message from title, notes, and optional instructions.
 // ---------------------------------------------------------------------------
 function buildUserMessage(title: string, notes: string, instructions?: string): string {
-  const parts = [`Generate a quiz based on the following notes.\n\nTitle: ${title}\n\nNotes:\n${notes}`];
+  const parts = [
+    `Generate a quiz based on the following notes.\n\nTitle: ${title}\n\nNotes:\n${notes}`,
+  ];
 
   if (instructions && instructions.trim().length > 0) {
     parts.push(`\nAdditional Instructions:\n${instructions.trim()}`);
@@ -127,7 +129,9 @@ interface AiGenerateResponse {
 // ---------------------------------------------------------------------------
 // Calls the AI API with the given messages and parses the structured response.
 // ---------------------------------------------------------------------------
-async function callAiApi(messages: { role: string; content: string }[]): Promise<AiGenerateResponse> {
+async function callAiApi(
+  messages: { role: string; content: string }[]
+): Promise<AiGenerateResponse> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), AI_TIMEOUT_MS);
 
@@ -160,17 +164,21 @@ async function callAiApi(messages: { role: string; content: string }[]): Promise
       );
 
       if (response.status === 429) {
-        throw new AppError('AI service rate limited — please try again later', 429, 'AI_RATE_LIMITED');
+        throw new AppError(
+          'AI service rate limited — please try again later',
+          429,
+          'AI_RATE_LIMITED'
+        );
       }
       if (response.status === 401 || response.status === 403) {
-        throw new AppError('AI service authentication failed — check AI_API_KEY', 500, 'AI_AUTH_FAILED');
+        throw new AppError(
+          'AI service authentication failed — check AI_API_KEY',
+          500,
+          'AI_AUTH_FAILED'
+        );
       }
 
-      throw new AppError(
-        `AI API returned status ${response.status}`,
-        502,
-        'AI_SERVICE_ERROR'
-      );
+      throw new AppError(`AI API returned status ${response.status}`, 502, 'AI_SERVICE_ERROR');
     }
 
     const data = (await response.json()) as {
@@ -192,14 +200,28 @@ async function callAiApi(messages: { role: string; content: string }[]): Promise
     }
 
     if (typeof parsed !== 'object' || parsed === null || !('questions' in parsed)) {
-      logger.error({ parsed: JSON.stringify(parsed).slice(0, 500) }, 'AI response missing questions key');
-      throw new AppError('AI response is missing the "questions" field', 502, 'AI_MISSING_QUESTIONS');
+      logger.error(
+        { parsed: JSON.stringify(parsed).slice(0, 500) },
+        'AI response missing questions key'
+      );
+      throw new AppError(
+        'AI response is missing the "questions" field',
+        502,
+        'AI_MISSING_QUESTIONS'
+      );
     }
 
     const responseObj = parsed as AiGenerateResponse;
 
     if (!Array.isArray(responseObj.questions) || responseObj.questions.length === 0) {
-      logger.error({ questionCount: Array.isArray(responseObj.questions) ? responseObj.questions.length : 'N/A' }, 'AI generated no questions');
+      logger.error(
+        {
+          questionCount: Array.isArray(responseObj.questions)
+            ? responseObj.questions.length
+            : 'N/A',
+        },
+        'AI generated no questions'
+      );
       throw new AppError('AI did not generate any questions', 502, 'AI_NO_QUESTIONS');
     }
 
@@ -228,7 +250,9 @@ function validateQuestion(question: unknown, index: number): QuestionInput {
   const result = QuestionSchema.safeParse(question);
 
   if (!result.success) {
-    const issues = result.error.issues.map((i) => `  - ${i.path.join('.')}: ${i.message}`).join('\n');
+    const issues = result.error.issues
+      .map((i) => `  - ${i.path.join('.')}: ${i.message}`)
+      .join('\n');
     logger.error({ index, issues }, 'AI-generated question failed Zod validation');
     throw new AppError(
       `Question at index ${index} is invalid: ${result.error.issues[0]?.message ?? 'unknown validation error'}`,

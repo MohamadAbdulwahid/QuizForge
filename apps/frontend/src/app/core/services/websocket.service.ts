@@ -339,9 +339,7 @@ export class WebsocketService {
    * `auth` payload.
    * @param socket - The freshly created socket to bind listeners to.
    */
-  private setupSocketListeners(
-    socket: Socket<ServerToClientEvents, ClientToServerEvents>
-  ): void {
+  private setupSocketListeners(socket: Socket<ServerToClientEvents, ClientToServerEvents>): void {
     socket.on('connect', () => {
       this.connected.set(true);
       this.reconnecting.set(false);

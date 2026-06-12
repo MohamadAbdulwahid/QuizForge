@@ -9,9 +9,7 @@
       >
         ← Back
       </app-bubbly-button>
-      <h1 class="font-display text-2xl text-base-content sm:text-3xl">
-        AI Quiz Generator
-      </h1>
+      <h1 class="font-display text-base-content text-2xl sm:text-3xl">AI Quiz Generator</h1>
     </div>
 
     @if (hasQuestions()) {
@@ -48,13 +46,16 @@
   }
 
   <!-- Input form -->
-  <app-bubbly-card tone="surface" [padded]="true">
+  <app-bubbly-card
+    tone="surface"
+    [padded]="true"
+  >
     <div class="space-y-5">
       <!-- Title -->
       <div>
         <label
           for="ai-quiz-title"
-          class="mb-1.5 block text-sm font-bold text-base-content"
+          class="text-base-content mb-1.5 block text-sm font-bold"
         >
           Quiz Title
         </label>
@@ -66,7 +67,7 @@
           [value]="title()"
           (input)="onTitleInput($event)"
         />
-        <p class="mt-1 text-xs text-base-content/50">
+        <p class="text-base-content/50 mt-1 text-xs">
           {{ title().trim().length }} / 200 characters
         </p>
       </div>
@@ -75,7 +76,7 @@
       <div>
         <label
           for="ai-quiz-notes"
-          class="mb-1.5 block text-sm font-bold text-base-content"
+          class="text-base-content mb-1.5 block text-sm font-bold"
         >
           Class Notes
         </label>
@@ -86,7 +87,7 @@
           [value]="notes()"
           (input)="onNotesInput($event)"
         ></textarea>
-        <p class="mt-1 text-xs text-base-content/50">
+        <p class="text-base-content/50 mt-1 text-xs">
           {{ notes().trim().length }} / 50000 characters (minimum 10)
         </p>
       </div>
@@ -95,10 +96,10 @@
       <div>
         <label
           for="ai-quiz-instructions"
-          class="mb-1.5 block text-sm font-bold text-base-content"
+          class="text-base-content mb-1.5 block text-sm font-bold"
         >
           Additional Instructions
-          <span class="font-normal text-base-content/50">(optional)</span>
+          <span class="text-base-content/50 font-normal">(optional)</span>
         </label>
         <textarea
           id="ai-quiz-instructions"
@@ -107,7 +108,7 @@
           [value]="instructions()"
           (input)="onInstructionsInput($event)"
         ></textarea>
-        <p class="mt-1 text-xs text-base-content/50">
+        <p class="text-base-content/50 mt-1 text-xs">
           {{ instructions().trim().length }} / 1000 characters
         </p>
       </div>
@@ -143,7 +144,7 @@
   <!-- Generated questions preview -->
   @if (hasQuestions() && !isLoading()) {
     <div class="mt-8">
-      <h2 class="font-display mb-4 text-xl text-base-content">
+      <h2 class="font-display text-base-content mb-4 text-xl">
         Generated Questions ({{ generatedQuestions().length }})
       </h2>
 
@@ -154,34 +155,32 @@
             [padded]="true"
           >
             <div class="flex items-start gap-3">
-              <span class="font-display mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-primary/15 text-sm text-primary">
+              <span
+                class="font-display bg-primary/15 text-primary mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-sm"
+              >
                 {{ i + 1 }}
               </span>
 
               <div class="min-w-0 flex-1">
                 <div class="mb-3 flex flex-wrap items-center gap-2">
-                  <h3 class="font-body text-base font-bold text-base-content">
+                  <h3 class="font-body text-base-content text-base font-bold">
                     {{ question.text }}
                   </h3>
                   <span class="badge badge-sm rounded-lg">
                     {{ questionTypeLabel(question.type) }}
                   </span>
                   @if (question.time_limit) {
-                    <span class="text-xs text-base-content/50">
-                      {{ question.time_limit }}s
-                    </span>
+                    <span class="text-base-content/50 text-xs">{{ question.time_limit }}s</span>
                   }
                   @if (question.points) {
-                    <span class="text-xs text-base-content/50">
-                      {{ question.points }} pts
-                    </span>
+                    <span class="text-base-content/50 text-xs">{{ question.points }} pts</span>
                   }
                 </div>
 
                 <!-- Multiple choice options -->
                 @if (question.type === 'multiple-choice') {
                   <ul class="space-y-1.5">
-                    @for (opt of ($any(question).options); track opt.id) {
+                    @for (opt of $any(question).options; track opt.id) {
                       <li
                         class="flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm"
                         [class.bg-success/10]="opt.id === question.correct_answer"
@@ -196,7 +195,7 @@
                         </span>
                         <span>{{ opt.text }}</span>
                         @if (opt.id === question.correct_answer) {
-                          <span class="text-xs text-success">✓</span>
+                          <span class="text-success text-xs">✓</span>
                         }
                       </li>
                     }
@@ -206,14 +205,14 @@
                 <!-- True / False -->
                 @if (question.type === 'true-false') {
                   <div class="flex gap-3">
-                    @for (opt of ($any(question).options); track opt.id) {
+                    @for (opt of $any(question).options; track opt.id) {
                       <span
                         class="inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-sm"
                         [class.bg-success/10]="opt.id === question.correct_answer"
                       >
                         {{ opt.text }}
                         @if (opt.id === question.correct_answer) {
-                          <span class="text-xs text-success">✓</span>
+                          <span class="text-success text-xs">✓</span>
                         }
                       </span>
                     }
@@ -222,10 +221,10 @@
 
                 <!-- Ordering -->
                 @if (question.type === 'ordering') {
-                  <div class="text-sm text-base-content/70">
+                  <div class="text-base-content/70 text-sm">
                     <p class="mb-1 font-bold">Correct order:</p>
                     <ol class="list-inside list-decimal space-y-0.5">
-                      @for (opt of ($any(question).options); track opt.id) {
+                      @for (opt of $any(question).options; track opt.id) {
                         <li>{{ opt.text }}</li>
                       }
                     </ol>
@@ -237,18 +236,18 @@
                   <div class="text-sm">
                     <div class="grid grid-cols-2 gap-2">
                       <div>
-                        <p class="mb-1 font-bold text-base-content/70">Left</p>
+                        <p class="text-base-content/70 mb-1 font-bold">Left</p>
                         <ul class="space-y-1">
-                          @for (l of ($any(question).options).left; track l.id) {
-                            <li class="rounded-lg bg-base-100 px-2 py-1">{{ l.text }}</li>
+                          @for (l of $any(question).options.left; track l.id) {
+                            <li class="bg-base-100 rounded-lg px-2 py-1">{{ l.text }}</li>
                           }
                         </ul>
                       </div>
                       <div>
-                        <p class="mb-1 font-bold text-base-content/70">Right</p>
+                        <p class="text-base-content/70 mb-1 font-bold">Right</p>
                         <ul class="space-y-1">
-                          @for (r of ($any(question).options).right; track r.id) {
-                            <li class="rounded-lg bg-base-100 px-2 py-1">{{ r.text }}</li>
+                          @for (r of $any(question).options.right; track r.id) {
+                            <li class="bg-base-100 rounded-lg px-2 py-1">{{ r.text }}</li>
                           }
                         </ul>
                       </div>
@@ -261,9 +260,13 @@
                   <div class="text-sm">
                     <p class="text-base-content/70">
                       Accepted answer(s):
-                      @for (opt of ($any(question).options); track opt.id; let last = $last) {
-                        <code class="rounded bg-base-100 px-1.5 py-0.5 text-xs">{{ opt.answer }}</code>
-                        @if (!last) {, }
+                      @for (opt of $any(question).options; track opt.id; let last = $last) {
+                        <code class="bg-base-100 rounded px-1.5 py-0.5 text-xs">
+                          {{ opt.answer }}
+                        </code>
+                        @if (!last) {
+                          ,
+                        }
                       }
                     </p>
                   </div>
