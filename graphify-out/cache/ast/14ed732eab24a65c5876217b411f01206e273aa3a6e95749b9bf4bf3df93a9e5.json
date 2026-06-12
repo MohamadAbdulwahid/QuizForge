@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 7d6281d (fix(graphify): add missing newline at end of JSON files)
 {
   "nodes": [
     {
@@ -13,6 +16,9 @@
   "input_tokens": 0,
   "output_tokens": 0
 }
+<<<<<<< HEAD
 =======
 {"nodes": [{"id": "home_mohamad_coding_quizforge_opencode_memory_project_md", "label": "project.md", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/.opencode/memory/project.md", "source_location": "L1"}], "edges": [], "input_tokens": 0, "output_tokens": 0}
 >>>>>>> 432aae7 (chore: clean up empty code change entries in commit history)
+=======
+>>>>>>> 7d6281d (fix(graphify): add missing newline at end of JSON files)

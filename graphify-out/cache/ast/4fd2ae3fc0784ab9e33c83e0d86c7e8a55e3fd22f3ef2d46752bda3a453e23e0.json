@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 7d6281d (fix(graphify): add missing newline at end of JSON files)
 {
   "nodes": [
     {
@@ -46,6 +49,9 @@
   "input_tokens": 0,
   "output_tokens": 0
 }
+<<<<<<< HEAD
 =======
 {"nodes": [{"id": "home_mohamad_coding_quizforge_readme_md", "label": "README.md", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/README.md", "source_location": "L1"}, {"id": "quizforge_readme_quizforge", "label": "QuizForge", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/README.md", "source_location": "L1"}, {"id": "quizforge_readme_environment_variables", "label": "Environment Variables", "file_type": "document", "source_file": "/home/mohamad/coding/QuizForge/README.md", "source_location": "L4"}], "edges": [{"source": "home_mohamad_coding_quizforge_readme_md", "target": "quizforge_readme_quizforge", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/README.md", "source_location": "L1", "weight": 1.0}, {"source": "quizforge_readme_quizforge", "target": "quizforge_readme_environment_variables", "relation": "contains", "confidence": "EXTRACTED", "source_file": "/home/mohamad/coding/QuizForge/README.md", "source_location": "L4", "weight": 1.0}], "input_tokens": 0, "output_tokens": 0}
 >>>>>>> 432aae7 (chore: clean up empty code change entries in commit history)
+=======
+>>>>>>> 7d6281d (fix(graphify): add missing newline at end of JSON files)
