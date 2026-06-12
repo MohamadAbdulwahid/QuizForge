@@ -1,0 +1,206 @@
+<div class="qf-page-stack">
+  <!-- ── Hero ── -->
+  <header
+    class="relative overflow-hidden rounded-3xl p-8 text-white shadow-[0_8px_0_0_rgba(0,0,0,0.12)] md:p-10"
+    style="background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 45%, var(--bubbly-primary) 100%)"
+  >
+    <!-- Decorative shapes -->
+    <div
+      class="pointer-events-none absolute -top-6 -right-6 h-40 w-40 rotate-12 rounded-3xl bg-white/10"
+    ></div>
+    <div
+      class="pointer-events-none absolute right-12 -bottom-8 h-24 w-24 rotate-45 rounded-2xl bg-white/10"
+    ></div>
+    <div
+      class="pointer-events-none absolute top-1/2 left-[8%] h-12 w-12 -rotate-12 rounded-xl bg-white/10"
+    ></div>
+
+    <div class="relative max-w-2xl">
+      <p
+        class="mb-3 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-xs font-bold tracking-[0.2em] uppercase backdrop-blur-sm"
+      >
+        <span class="text-base">✨</span>
+        Quiz Marketplace
+      </p>
+      <h1 class="font-display text-4xl font-bold drop-shadow md:text-5xl">
+        Discover ready-made quizzes
+      </h1>
+      <p class="mt-3 max-w-xl text-base font-semibold text-white/85 md:text-lg">
+        Curated quiz packs you can drop straight into your library. Pick a topic, preview the
+        questions, and launch a session in seconds.
+      </p>
+    </div>
+  </header>
+
+  <!-- ── Categories ── -->
+  <section>
+    <p class="qf-eyebrow">Browse</p>
+    <h2 class="qf-h2 mt-2">Categories</h2>
+    <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <app-bubbly-card tone="soft">
+        <div class="flex items-center gap-3">
+          <span
+            class="bg-bubbly-primary/15 flex h-12 w-12 items-center justify-center rounded-2xl text-2xl"
+            aria-hidden="true"
+          >
+            🔬
+          </span>
+          <div>
+            <p class="font-display text-lg font-bold text-[var(--bubbly-primary-deep)]">STEM</p>
+            <p class="qf-muted text-xs font-semibold">Math, science, logic</p>
+          </div>
+        </div>
+      </app-bubbly-card>
+
+      <app-bubbly-card tone="soft">
+        <div class="flex items-center gap-3">
+          <span
+            class="bg-bubbly-accent/15 flex h-12 w-12 items-center justify-center rounded-2xl text-2xl"
+            aria-hidden="true"
+          >
+            📚
+          </span>
+          <div>
+            <p class="font-display text-lg font-bold text-[var(--bubbly-accent)]">Humanities</p>
+            <p class="qf-muted text-xs font-semibold">History, geography, civics</p>
+          </div>
+        </div>
+      </app-bubbly-card>
+
+      <app-bubbly-card tone="soft">
+        <div class="flex items-center gap-3">
+          <span
+            class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-2xl"
+            aria-hidden="true"
+          >
+            🗣️
+          </span>
+          <div>
+            <p class="font-display text-lg font-bold text-amber-700">Language</p>
+            <p class="qf-muted text-xs font-semibold">Vocabulary, grammar, phrases</p>
+          </div>
+        </div>
+      </app-bubbly-card>
+
+      <app-bubbly-card tone="soft">
+        <div class="flex items-center gap-3">
+          <span
+            class="flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-100 text-2xl"
+            aria-hidden="true"
+          >
+            🎬
+          </span>
+          <div>
+            <p class="font-display text-lg font-bold text-violet-700">Pop Culture</p>
+            <p class="qf-muted text-xs font-semibold">Movies, music, sports, games</p>
+          </div>
+        </div>
+      </app-bubbly-card>
+    </div>
+  </section>
+
+  <!-- ── Featured packs ── -->
+  <section>
+    <div class="mb-5 flex items-end justify-between gap-3">
+      <div>
+        <p class="qf-eyebrow">Featured</p>
+        <h2 class="qf-h2 mt-2">Quiz Packs</h2>
+      </div>
+      <span
+        class="rounded-full bg-[var(--bubbly-surface-soft)] px-3 py-1 text-xs font-bold tracking-wider text-[var(--bubbly-muted)] uppercase"
+      >
+        {{ packs().length }} packs
+      </span>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      @for (pack of packs(); track pack.id) {
+        <app-bubbly-card tone="surface">
+          <div class="flex flex-col gap-4">
+            <!-- Emoji tile + category badge -->
+            <div class="flex items-start justify-between gap-3">
+              <div
+                class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br text-4xl"
+                [ngClass]="tileGradient(pack.accent)"
+                aria-hidden="true"
+              >
+                {{ pack.emoji }}
+              </div>
+              <span
+                class="rounded-full px-3 py-1 text-[11px] font-bold tracking-wider uppercase"
+                [ngClass]="accentClasses(pack.accent)"
+              >
+                {{ pack.category }}
+              </span>
+            </div>
+
+            <!-- Title + description -->
+            <div>
+              <h3 class="font-display text-2xl font-bold text-[var(--bubbly-primary-deep)]">
+                {{ pack.title }}
+              </h3>
+              <p class="qf-muted mt-2 text-sm font-semibold md:text-base">
+                {{ pack.description }}
+              </p>
+            </div>
+
+            <!-- Footer: question count + Add button -->
+            <div
+              class="mt-auto flex items-center justify-between gap-3 border-t border-[var(--bubbly-border)] pt-4"
+            >
+              <span class="qf-muted text-sm font-bold">{{ pack.questionCount }} questions</span>
+              <button
+                type="button"
+                class="qf-button-ghost qf-tactile inline-flex items-center gap-1.5 rounded-2xl px-3 py-1.5 text-xs font-bold opacity-60"
+                disabled
+                aria-disabled="true"
+                title="Coming soon"
+              >
+                <svg
+                  class="h-3.5 w-3.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 4.5v15m7.5-7.5h-15"
+                  />
+                </svg>
+                Add to Library
+              </button>
+            </div>
+          </div>
+        </app-bubbly-card>
+      }
+    </div>
+  </section>
+
+  <!-- ── Coming Soon footer ── -->
+  <section>
+    <app-bubbly-card tone="soft">
+      <div
+        class="flex flex-col items-center gap-4 py-8 text-center md:flex-row md:justify-between md:py-6 md:text-left"
+      >
+        <div>
+          <p class="qf-eyebrow">What's next</p>
+          <h3 class="font-display text-2xl font-bold text-[var(--bubbly-primary-deep)] md:text-3xl">
+            More packs landing soon
+          </h3>
+          <p class="qf-muted mt-2 max-w-xl text-base">
+            Premium packs, teacher-shared libraries, and community quizzes are on the roadmap.
+          </p>
+        </div>
+        <div
+          class="bg-bubbly-primary/15 flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl text-3xl"
+          aria-hidden="true"
+        >
+          🚀
+        </div>
+      </div>
+    </app-bubbly-card>
+  </section>
+</div>
