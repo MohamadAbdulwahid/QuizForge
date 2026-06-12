@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { quizController } from '../controllers/quiz.controller';
+import { AiGenerateRequestSchema } from '../dtos/ai-generate.dto';
 import {
   QuizIdParamSchema,
   ShareCodeParamSchema,
@@ -18,6 +19,11 @@ quizPublicRouter.get(
 );
 
 quizRouter.post('/', validateBody(CreateQuizRequestSchema), quizController.createQuiz);
+quizRouter.post(
+  '/ai-generate',
+  validateBody(AiGenerateRequestSchema),
+  quizController.aiGenerateQuiz
+);
 quizRouter.get('/', quizController.getMyQuizzes);
 quizRouter.get('/:id', validateParams(QuizIdParamSchema), quizController.getQuizById);
 quizRouter.patch(

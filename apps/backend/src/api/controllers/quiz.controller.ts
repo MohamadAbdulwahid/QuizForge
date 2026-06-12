@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import type { AuthenticatedRequest } from '../middleware/auth';
+import { generateQuizQuestions } from '../services/ai-quiz-generator.service';
 import {
   createQuizWithCollisionGuard,
   deleteQuiz,
@@ -66,6 +67,25 @@ export class QuizController {
     const quizId = Number(req.params.id);
     const quiz = await getQuizById(quizId, userId);
     res.status(StatusCodes.OK).json(quiz);
+  }
+
+  /**
+   * Generates quiz questions from user-provided notes using AI.
+   * Returns the generated questions for preview before saving.
+   */
+  async aiGenerateQuiz(req: AuthenticatedRequest, res: Response): Promise<void> {
+    const { title, notes, instructions } = req.body as {
+      title: string;
+      notes: string;
+      instructions?: string;
+    };
+
+    const questions = await generateQuizQuestions(title, notes, instructions);
+
+    res.status(StatusCodes.OK).json({
+      data: { questions },
+      meta: { count: questions.length },
+    });
   }
 
   /**
