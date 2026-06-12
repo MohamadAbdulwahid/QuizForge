@@ -392,7 +392,8 @@ export class QuizBuilderPageComponent {
 
     switch (q.type) {
       case 'true-false': {
-        const trueOpt = q.options.find((o) => o.text === 'True') ?? createOption(crypto.randomUUID(), 'True');
+        const trueOpt =
+          q.options.find((o) => o.text === 'True') ?? createOption(crypto.randomUUID(), 'True');
         const falseOpt =
           q.options.find((o) => o.text === 'False') ?? createOption(crypto.randomUUID(), 'False');
         const storedAnswer = q.correct_answer ?? '';
@@ -666,7 +667,10 @@ export class QuizBuilderPageComponent {
           .filter((_, i) => i !== idx)
           .map((opt) =>
             opt.matchId === removedRightId
-              ? { ...opt, matchId: q.rightOptions?.[idx + 1]?.id ?? q.rightOptions?.[idx - 1]?.id ?? '' }
+              ? {
+                  ...opt,
+                  matchId: q.rightOptions?.[idx + 1]?.id ?? q.rightOptions?.[idx - 1]?.id ?? '',
+                }
               : opt
           );
         const rightOptions = (q.rightOptions ?? []).filter((_, i) => i !== idx);
@@ -702,9 +706,7 @@ export class QuizBuilderPageComponent {
     this.questions.update((qs) =>
       qs.map((q) => {
         if (q.clientId !== clientId || q.type !== 'matching') return q;
-        const options = q.options.map((opt, i) =>
-          i === leftIdx ? { ...opt, matchId } : opt
-        );
+        const options = q.options.map((opt, i) => (i === leftIdx ? { ...opt, matchId } : opt));
         return { ...q, options };
       })
     );
