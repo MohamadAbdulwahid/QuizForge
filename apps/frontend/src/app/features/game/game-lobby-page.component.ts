@@ -12,6 +12,7 @@ import {
 } from '../../core/services/websocket.service';
 import { buildDisplayName } from '../../shared/utils/display-name';
 import { BubblyModalComponent } from '../../shared/ui/bubbly-modal.component';
+import { GameStateService } from './services/game-state.service';
 
 interface LobbyPlayer {
   userId: string;
@@ -34,6 +35,7 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
   private readonly sessionEventBus = inject(SessionEventBus);
   private readonly sessionApiService = inject(SessionApiService);
   private readonly websocketService = inject(WebsocketService);
+  private readonly gameStateService = inject(GameStateService);
 
   protected readonly pin = signal('');
   protected readonly statusMessage = signal('Connecting to lobby...');
@@ -43,6 +45,7 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
   protected readonly hostUserId = signal<string | null>(null);
   protected readonly sessionStatus = signal<SessionStatus>('waiting');
   protected readonly minPlayersToStart = signal(2);
+  protected readonly gameMode = signal<string>('forge-classic');
   protected readonly startRequested = signal(false);
   protected readonly connected = this.websocketService.connected;
   protected readonly reconnecting = this.websocketService.reconnecting;
@@ -215,6 +218,7 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
       .subscribe((event) => {
         this.hostUserId.set(event.hostUserId);
         this.minPlayersToStart.set(event.minPlayersToStart || 2);
+        this.gameMode.set(event.gameMode ?? 'forge-classic');
 
         const normalizedStatus = this.normalizeStatus(event.status);
         this.sessionStatus.set(normalizedStatus);
@@ -234,17 +238,42 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
         );
       });
 
-    this.websocketService.gameStarted$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      this.startRequested.set(false);
-      this.sessionStatus.set('playing');
-      const target = this.isHost() ? '/host' : '/game';
-      this.statusMessage.set(
-        this.isHost()
-          ? 'Game started. Displaying questions...'
-          : 'Game started. Waiting for the first question...'
-      );
-      void this.router.navigate([target, this.pin()]);
-    });
+    this.websocketService.gameStarted$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((event) => {
+        this.startRequested.set(false);
+        this.sessionStatus.set('playing');
+
+        // Update gameMode from the game-started event (more reliable than lobby-state)
+        if (event.gameMode) {
+          this.gameMode.set(event.gameMode);
+        }
+
+        // Store game mode for the play page
+        this.gameStateService.setGameMode(event.gameMode ?? 'forge-classic');
+
+        // Store current user ID for treasure-forge gold updates
+        const ownUserId = this.authService.currentUser()?.id;
+        if (ownUserId) {
+          this.gameStateService.setCurrentUserId(ownUserId);
+        }
+
+        const isHost = this.isHost();
+        let target: string;
+
+        if (isHost) {
+          target = '/host';
+        } else {
+          target = '/game';
+        }
+
+        this.statusMessage.set(
+          isHost
+            ? 'Game started. Displaying questions...'
+            : 'Game started. Waiting for the first question...'
+        );
+        void this.router.navigate([target, this.pin()]);
+      });
 
     this.websocketService.sessionClosed$
       .pipe(takeUntilDestroyed(this.destroyRef))
