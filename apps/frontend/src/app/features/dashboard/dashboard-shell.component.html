@@ -7,7 +7,31 @@
       <div
         class="bg-bubbly-primary rounded-3xl p-5 text-white shadow-[0_6px_0_0_var(--bubbly-primary-deep)]"
       >
-        <h1 class="font-display text-3xl font-bold">QuizForge</h1>
+        <div class="flex items-center gap-3">
+          <div
+            class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-sm"
+          >
+            <svg
+              class="h-7 w-7"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"
+              />
+            </svg>
+          </div>
+          <div>
+            <h1 class="font-display text-2xl leading-none font-bold">QuizForge</h1>
+            <p class="mt-1 text-xs font-bold tracking-[0.18em] text-white/80 uppercase">
+              Forge · Play · Learn
+            </p>
+          </div>
+        </div>
       </div>
 
       <!-- Play Button - Below Logo -->
@@ -26,115 +50,105 @@
             <path d="M8 5v14l11-7z" />
           </svg>
         </div>
-        <div>
+        <div class="flex-1">
           <span class="font-display block text-xl font-bold">Play</span>
-          <span class="block text-xs font-semibold text-white/70">Join a game</span>
+          <span class="block text-xs font-bold text-white/80">Join a game with a PIN</span>
         </div>
+        <svg
+          class="h-5 w-5 text-white/80 transition group-hover:translate-x-0.5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+          />
+        </svg>
         <!-- Decorative circles -->
         <div class="absolute -top-3 -right-3 h-16 w-16 rounded-full bg-white/10"></div>
         <div class="absolute -right-1 -bottom-2 h-10 w-10 rounded-full bg-white/10"></div>
       </a>
 
       <!-- Navigation -->
-      <nav class="mt-5 grid gap-2 text-sm font-bold">
+      <nav class="mt-5 grid gap-1.5">
         @for (item of navItems(); track item.route) {
           <a
             [routerLink]="item.route"
             [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
             routerLinkActive="active-nav"
-            class="qf-tactile nav-item hover:text-bubbly-primary flex items-center gap-3 rounded-2xl px-4 py-3 text-slate-600 hover:bg-sky-50"
+            class="qf-tactile nav-item flex items-center gap-3 rounded-2xl px-3 py-2.5"
           >
-            <svg
-              class="h-5 w-5 shrink-0"
-              fill="currentColor"
-              viewBox="0 0 24 24"
+            <span
+              class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
+              [ngClass]="iconBgFor(item)"
             >
-              <path [attr.d]="iconPaths[item.icon]" />
-            </svg>
-            <span class="block">{{ item.label }}</span>
+              <svg
+                class="h-5 w-5"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path [attr.d]="iconPaths[item.icon]" />
+              </svg>
+            </span>
+            <span class="block flex-1 truncate">{{ item.label }}</span>
           </a>
         }
       </nav>
 
-      <!-- Profile Dropdown Area -->
+      <!-- Profile Section — matches sidebar surface for visual cohesion -->
       <div
         class="relative mt-auto"
         (mouseenter)="onProfileHover(true)"
         (mouseleave)="onProfileHover(false)"
       >
-        <!-- Profile Trigger -->
-        <div class="rounded-3xl bg-slate-50 p-4">
-          <div class="flex items-center gap-3">
-            <div
-              class="bg-bubbly-primary flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold text-white"
-            >
-              {{ displayName().charAt(0).toUpperCase() }}
-            </div>
-            <div class="min-w-0 flex-1">
-              <p class="text-xs font-bold tracking-[0.18em] text-slate-500 uppercase">Signed in</p>
-              <p class="font-display text-bubbly-primary truncate text-sm font-bold">
-                {{ displayName() }}
-              </p>
-            </div>
-            <svg
-              class="h-4 w-4 shrink-0 text-slate-400 transition-transform duration-200"
-              [class.rotate-180]="profileDropdownOpen()"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </div>
-        </div>
-
-        <!-- Dropdown Menu - Slides out to the left -->
-        @if (profileDropdownOpen()) {
-          <div
-            class="profile-dropdown absolute bottom-full left-0 mb-2 w-56 rounded-2xl border border-[var(--bubbly-border)] bg-[var(--bubbly-surface)] p-2 shadow-[0_6px_0_0_var(--bubbly-shadow)]"
+        <button
+          type="button"
+          class="qf-profile-card qf-tactile flex w-full items-center gap-3 rounded-2xl p-3 text-left"
+          (click)="onProfileHover(!profileDropdownOpen())"
+        >
+          <span
+            class="bg-bubbly-primary flex h-10 w-10 items-center justify-center rounded-xl text-sm font-bold text-white"
           >
-            <!-- Settings Option -->
-            <button
-              type="button"
-              class="qf-tactile hover:text-bubbly-primary flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-bold text-slate-700 hover:bg-sky-50"
-              (click)="openSettings()"
-            >
-              <div
-                class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--bubbly-surface-soft)]"
-              >
-                <svg
-                  class="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M9.594 3.99c.27-.83.83-1.5 1.55-1.99a2.002 2.002 0 011.712 0c.72.49 1.28 1.16 1.55 1.99l.14.434c.19.58.6.99 1.18 1.18l.434.14c.83.27 1.5.83 1.99 1.55a2.002 2.002 0 010 1.712l-.14.434c-.19.58-.6.99-1.18 1.18l-.434.14c-.58.19-.99.6-1.18 1.18l-.14.434c-.27.83-.83 1.5-1.55 1.99a2.002 2.002 0 01-1.712 0c-.72-.49-1.28-1.16-1.55-1.99l-.14-.434c-.19-.58-.6-.99-1.18-1.18l-.434-.14c-.83-.27-1.5-.83-1.99-1.55a2.002 2.002 0 010-1.712l.14-.434c.19-.58.6-.99 1.18-1.18l.434-.14c.58-.19.99-.6 1.18-1.18l.14-.434ZM15 12a3 3 0 11-6 0 3 3 0 016 0Z"
-                  />
-                </svg>
-              </div>
-              <span>Settings</span>
-            </button>
+            {{ displayName().charAt(0).toUpperCase() }}
+          </span>
+          <span class="min-w-0 flex-1">
+            <span class="qf-eyebrow block">Signed in</span>
+            <span class="font-display text-bubbly-primary-deep block truncate text-base font-bold">
+              {{ displayName() }}
+            </span>
+          </span>
+          <svg
+            class="h-4 w-4 shrink-0 text-slate-500 transition-transform duration-200"
+            [class.rotate-180]="profileDropdownOpen()"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M8.25 4.5l7.5 7.5-7.5 7.5"
+            />
+          </svg>
+        </button>
 
-            <!-- Logout Option -->
-            <button
-              type="button"
-              class="qf-tactile mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-bold text-slate-700 hover:bg-[var(--bubbly-error-bg)] hover:text-[var(--bubbly-error-text)]"
-              (click)="logout()"
-            >
-              <div
-                class="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--bubbly-surface-soft)]"
+        <!-- Profile Menu - Buttons match the sidebar surface -->
+        @if (profileDropdownOpen()) {
+          <div class="profile-menu absolute top-0 left-full z-20 flex items-end">
+            <div class="flex gap-2 pb-3">
+              <!-- Settings -->
+              <button
+                type="button"
+                title="Settings"
+                class="qf-profile-menu-btn qf-tactile flex h-14 w-14 items-center justify-center rounded-2xl shadow-[0_4px_0_0_var(--bubbly-shadow)]"
+                (click)="openSettings()"
               >
                 <svg
-                  class="h-4 w-4"
+                  class="h-6 w-6"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -143,23 +157,60 @@
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3"
+                    d="M9.594 3.99c.27-.83.83-1.5 1.55-1.99a2.002 2.002 0 0 1 1.712 0c.72.49 1.28 1.16 1.55 1.99l.14.434c.19.58.6.99 1.18 1.18l.434.14c.83.27 1.5.83 1.99 1.55a2.002 2.002 0 0 1 0 1.712l-.14.434c-.19.58-.6.99-1.18 1.18l-.434.14c-.58.19-.99.6-1.18 1.18l-.14.434c-.27.83-.83 1.5-1.55 1.99a2.002 2.002 0 0 1-1.712 0c-.72-.49-1.28-1.16-1.55-1.99l-.14-.434c-.19-.58-.6-.99-1.18-1.18l-.434-.14c-.83-.27-1.5-.83-1.99-1.55a2.002 2.002 0 0 1 0-1.712l.14-.434c.19-.58.6-.99 1.18-1.18l.434-.14c.58-.19.99-.6 1.18-1.18l.14-.434ZM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                   />
                 </svg>
-              </div>
-              <span>Logout</span>
-            </button>
+              </button>
+
+              <!-- Logout -->
+              <button
+                type="button"
+                title="Sign out"
+                class="qf-profile-menu-btn danger qf-tactile flex h-14 w-14 items-center justify-center rounded-2xl shadow-[0_4px_0_0_var(--bubbly-shadow)]"
+                (click)="logout()"
+              >
+                <svg
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         }
       </div>
     </aside>
 
     <section class="flex min-w-0 flex-1 flex-col">
+      <!-- Mobile header -->
       <header class="sticky top-0 z-30 border-b border-white/70 bg-white/90 px-4 py-3 lg:hidden">
         <div class="flex items-center justify-between gap-3">
-          <div>
-            <p class="text-xs font-bold tracking-[0.2em] text-slate-500 uppercase">QuizForge</p>
-            <p class="font-display text-bubbly-primary text-xl font-bold">{{ displayName() }}</p>
+          <div class="flex items-center gap-3">
+            <div
+              class="bg-bubbly-primary flex h-10 w-10 items-center justify-center rounded-2xl text-white"
+            >
+              <svg
+                class="h-6 w-6"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+            <div>
+              <p class="font-display text-bubbly-primary text-lg font-bold">{{ displayName() }}</p>
+              <p class="text-[10px] font-bold tracking-[0.2em] text-slate-500 uppercase">
+                QuizForge
+              </p>
+            </div>
           </div>
           <div class="flex items-center gap-2">
             <a
