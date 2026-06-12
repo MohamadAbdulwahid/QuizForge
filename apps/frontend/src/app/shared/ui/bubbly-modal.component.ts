@@ -34,34 +34,42 @@ import { Component, input, output } from '@angular/core';
             </p>
           }
 
-          <div
-            class="mt-6 flex justify-end gap-3"
-            [class.justify-center]="!showCancel()"
-          >
-            @if (showCancel()) {
+          <ng-content></ng-content>
+
+          @if (customFooter()) {
+            <div class="mt-6 flex justify-end gap-3">
+              <ng-content select="[modal-footer]"></ng-content>
+            </div>
+          } @else {
+            <div
+              class="mt-6 flex justify-end gap-3"
+              [class.justify-center]="!showCancel()"
+            >
+              @if (showCancel()) {
+                <button
+                  type="button"
+                  class="qf-button-ghost qf-tactile rounded-2xl px-5 py-3 text-sm font-bold"
+                  (click)="dismiss.emit()"
+                >
+                  Cancel
+                </button>
+              }
+
               <button
                 type="button"
-                class="qf-button-ghost qf-tactile rounded-2xl px-5 py-3 text-sm font-bold"
-                (click)="dismiss.emit()"
+                class="qf-tactile inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-bold"
+                [class.bg-rose-600]="danger()"
+                [class.text-white]="danger()"
+                [class.shadow-[0_5px_0_0_#dc2626]]="danger()"
+                [class.bg-bubbly-primary]="!danger()"
+                [class.text-white]="!danger()"
+                [class.shadow-[0_5px_0_0_var(--bubbly-primary-deep)]]="!danger()"
+                (click)="confirm.emit()"
               >
-                Cancel
+                {{ confirmLabel() }}
               </button>
-            }
-
-            <button
-              type="button"
-              class="qf-tactile inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-bold"
-              [class.bg-rose-600]="danger()"
-              [class.text-white]="danger()"
-              [class.shadow-[0_5px_0_0_#dc2626]]="danger()"
-              [class.bg-bubbly-primary]="!danger()"
-              [class.text-white]="!danger()"
-              [class.shadow-[0_5px_0_0_var(--bubbly-primary-deep)]]="!danger()"
-              (click)="confirm.emit()"
-            >
-              {{ confirmLabel() }}
-            </button>
-          </div>
+            </div>
+          }
         </div>
       </div>
     }
@@ -74,6 +82,12 @@ export class BubblyModalComponent {
   readonly confirmLabel = input('OK');
   readonly showCancel = input(false);
   readonly danger = input(false);
+  /**
+   * When true, the default Cancel/Confirm buttons are replaced by content
+   * projected via `<ng-content select="[modal-footer]">`. Use this when the
+   * modal hosts a form that needs its own footer (e.g. a Create flow).
+   */
+  readonly customFooter = input(false);
 
   readonly confirm = output<void>();
   readonly dismiss = output<void>();
