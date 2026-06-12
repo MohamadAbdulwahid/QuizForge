@@ -178,6 +178,13 @@ interface SocketData {
   userId?: string;
   joinedPin?: string;
   username?: string;
+  /**
+   * Set by the socket auth middleware when the handshake opted into the
+   * guest path (`auth.guest === true`). Guests have a non-UUID `userId`
+   * of the form `guest:<uuid>`, so downstream handlers must skip any DB
+   * write that targets a UUID-typed column (e.g. `session_player.user_id`).
+   */
+  isGuest?: boolean;
 }
 
 interface PlayerJoinedEvent {
@@ -396,6 +403,13 @@ export function registerGameNamespace(
     );
 
     socket.on('join-game', async (payload) => {
+      // Guests flow through this handler too: their `socket.data.userId`
+      // is a non-UUID `guest:<uuid>` string and `socket.data.isGuest` is
+      // true. The handler skips any DB write that would target a UUID
+      // column (e.g. `session_player.user_id`) for those sockets, but
+      // still admits them into the room and the in-memory game state so
+      // they can play, see questions, appear on the leaderboard, and
+      // submit answers like any other player.
       const parsed = JoinGameMessageSchema.safeParse(payload);
 
       if (!parsed.success) {
@@ -418,7 +432,10 @@ export function registerGameNamespace(
       }
 
       const userId = socket.data.userId;
-      const username = parsed.data.username ?? formatUsername(userId);
+      // Priority: explicit payload username > middleware-stored guest
+      // username > synthesised fallback from the userId.
+      const username =
+        parsed.data.username ?? socket.data.username ?? formatUsername(userId);
 
       // Check for duplicate username in the session (skip if same user reconnecting)
       if (userId) {
@@ -449,7 +466,9 @@ export function registerGameNamespace(
         }
       }
 
-      if (userId) {
+      // Authenticated users get a `session_player` row; guests do NOT
+      // (their userId is not a valid UUID and would crash the insert).
+      if (userId && !socket.data.isGuest) {
         await resolvedDependencies.upsertSessionPlayer({ sessionId: session.id, userId, username });
       }
 
@@ -474,8 +493,10 @@ export function registerGameNamespace(
         });
       }
 
-      // Track host connections for orphaned-session cleanup.
-      if (userId === session.host_id) {
+      // Track host connections for orphaned-session cleanup. Guests can
+      // never be hosts (they are not the session creator), so gate the
+      // branch defensively.
+      if (userId === session.host_id && !socket.data.isGuest) {
         const hostSessions = connectedHosts.get(userId) ?? new Set<string>();
         hostSessions.add(pin);
         connectedHosts.set(userId, hostSessions);
@@ -509,17 +530,38 @@ export function registerGameNamespace(
           );
         }
 
-        // Also ensure player is in playersByUserId and scoresByUserId
+        // Also ensure player is in playersByUserId and scoresByUserId.
+        // For authenticated users, hydrate from the DB row. For guests,
+        // there is no DB row — seed an in-memory placeholder so that
+        // submit-answer / leaderboard / chest-pick handlers can find the
+        // player record and emit a username instead of an empty string.
         if (!activeGame.playersByUserId.has(userId)) {
           gameNamespaceLogger.info(
-            { userId, pin },
+            { userId, pin, isGuest: socket.data.isGuest === true },
             'TF join-game: added player to playersByUserId'
           );
-          const player = await sessionRepository.findPlayerBySessionAndUser(session.id, userId);
-          if (player) {
-            activeGame.playersByUserId.set(userId, player);
+          if (!socket.data.isGuest) {
+            const player = await sessionRepository.findPlayerBySessionAndUser(session.id, userId);
+            if (player) {
+              activeGame.playersByUserId.set(userId, player);
+              if (!activeGame.scoresByUserId.has(userId)) {
+                activeGame.scoresByUserId.set(userId, player.score);
+              }
+            }
+          } else {
+            // Guest placeholder — SessionPlayer-shaped object with the
+            // minimum fields consumed downstream (user_id, username,
+            // score, status). Other fields are left undefined.
+            activeGame.playersByUserId.set(userId, {
+              id: 0,
+              session_id: session.id,
+              user_id: userId,
+              username,
+              score: 0,
+              status: 'active',
+            });
             if (!activeGame.scoresByUserId.has(userId)) {
-              activeGame.scoresByUserId.set(userId, player.score);
+              activeGame.scoresByUserId.set(userId, 0);
             }
           }
         }
@@ -820,7 +862,8 @@ export function registerGameNamespace(
         resolvedDependencies,
         gameState,
         userId,
-        socket.data.username
+        socket.data.username,
+        socket.data.isGuest
       );
       const isCorrect = round ? gradeAnswer(round.question, selectedAnswer).correct : false;
 
@@ -1160,7 +1203,8 @@ export function registerGameNamespace(
         resolvedDependencies,
         gameState,
         userId,
-        socket.data.username
+        socket.data.username,
+        socket.data.isGuest
       );
       const currentGold = gameState.scoresByUserId.get(userId) ?? 0;
 
@@ -1333,7 +1377,8 @@ export function registerGameNamespace(
         resolvedDependencies,
         gameState,
         userId,
-        socket.data.username
+        socket.data.username,
+        socket.data.isGuest
       );
       const targetPlayer = gameState.playersByUserId.get(targetUserId);
       if (!targetPlayer) {
@@ -1604,7 +1649,11 @@ export function registerGameNamespace(
       }
 
       if (activeGame && userId) {
-        void resolvedDependencies.markPlayerDisconnected(activeGame.sessionId, userId);
+        // Guests have no `session_player` row — `markPlayerDisconnected`
+        // would crash Postgres on the `user_id = $1` UUID comparison.
+        if (!socket.data.isGuest) {
+          void resolvedDependencies.markPlayerDisconnected(activeGame.sessionId, userId);
+        }
 
         // Remove from in-memory player pool so auto-advance doesn't wait for them
         activeGame.playersByUserId.delete(userId);
@@ -2878,11 +2927,32 @@ async function ensureGamePlayer(
   dependencies: GameNamespaceDependencies,
   gameState: ActiveGameState,
   userId: string,
-  username?: string
+  username?: string,
+  isGuest?: boolean
 ): Promise<SessionPlayer> {
   const existingPlayer = gameState.playersByUserId.get(userId);
   if (existingPlayer) {
     return existingPlayer;
+  }
+
+  // Guests have a non-UUID `userId` and no `session_player` row — the
+  // upsert would crash Postgres. Synthesise an in-memory placeholder so
+  // downstream emitters (answer-ack, leaderboard, etc.) can read a
+  // username and the score stays in `scoresByUserId` only.
+  if (isGuest) {
+    const placeholder: SessionPlayer = {
+      id: 0,
+      session_id: gameState.sessionId,
+      user_id: userId,
+      username: username ?? formatUsername(userId),
+      score: 0,
+      status: 'active',
+    };
+    gameState.playersByUserId.set(userId, placeholder);
+    if (!gameState.scoresByUserId.has(userId)) {
+      gameState.scoresByUserId.set(userId, 0);
+    }
+    return placeholder;
   }
 
   const player = await dependencies.upsertSessionPlayer({
