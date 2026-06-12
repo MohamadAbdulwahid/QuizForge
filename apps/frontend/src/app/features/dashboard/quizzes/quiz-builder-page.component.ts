@@ -365,7 +365,15 @@ export class QuizBuilderPageComponent {
         next: (quiz) => {
           this.title.set(quiz.title);
           this.description.set(quiz.description ?? '');
-          this.questions.set(quiz.questions.map((q) => this.detailToDraft(q)));
+
+          const rawQuestions = quiz.questions;
+          if (!Array.isArray(rawQuestions) || rawQuestions.length === 0) {
+            this.questions.set([]);
+            return;
+          }
+
+          const drafts = rawQuestions.map((q) => this.detailToDraft(q));
+          this.questions.set(drafts);
         },
         error: () => {
           this.errorMessage.set('Failed to load quiz. It may have been deleted.');
@@ -412,16 +420,27 @@ export class QuizBuilderPageComponent {
         // Prefer the DTO contract (options = left, rightOptions = right). Fall
         // back to the raw `{left, right}` jsonb shape if `rightOptions` is
         // missing — defensive against older data.
-        let left: QuestionOption[] = q.options;
+        let left: QuestionOption[] = [];
         let right: QuestionOption[] = q.rightOptions ?? [];
-        if (right.length === 0 && left.length > 0) {
-          // Detect the raw `{left, right}` jsonb shape at runtime — the typed
-          // surface is always a flat array, so we cast and probe the shape.
-          const probe = left as unknown as { left?: QuestionOption[]; right?: QuestionOption[] };
-          if (probe && typeof probe === 'object' && 'left' in probe && 'right' in probe) {
-            left = probe.left ?? [];
-            right = probe.right ?? [];
+
+        // Detect the raw `{left, right}` jsonb shape at runtime — the typed
+        // surface is always a flat array, so we cast and probe the shape.
+        const rawOptions = q.options as unknown;
+        if (
+          rawOptions &&
+          typeof rawOptions === 'object' &&
+          !Array.isArray(rawOptions) &&
+          'left' in rawOptions &&
+          'right' in rawOptions
+        ) {
+          const shaped = rawOptions as { left?: QuestionOption[]; right?: QuestionOption[] };
+          left = shaped.left ?? [];
+          if (right.length === 0) {
+            right = shaped.right ?? [];
           }
+        } else if (Array.isArray(q.options)) {
+          // Standard DTO contract: options is the left column.
+          left = q.options;
         }
         // Fill any missing column with defaults (preserves the other column).
         if (left.length === 0) {
