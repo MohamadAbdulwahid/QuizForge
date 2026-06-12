@@ -434,8 +434,7 @@ export function registerGameNamespace(
       const userId = socket.data.userId;
       // Priority: explicit payload username > middleware-stored guest
       // username > synthesised fallback from the userId.
-      const username =
-        parsed.data.username ?? socket.data.username ?? formatUsername(userId);
+      const username = parsed.data.username ?? socket.data.username ?? formatUsername(userId);
 
       // Check for duplicate username in the session (skip if same user reconnecting)
       if (userId) {

@@ -1,7 +1,7 @@
 <!-- ── Sticky Top Nav ── -->
 <header
   class="sticky top-0 z-40 w-full border-b border-[var(--bubbly-border)]/60 backdrop-blur-md"
-  style="background: color-mix(in srgb, var(--bubbly-background) 85%, transparent);"
+  style="background: color-mix(in srgb, var(--bubbly-background) 85%, transparent)"
 >
   <nav
     class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 md:px-8"
@@ -9,7 +9,7 @@
   >
     <a
       routerLink="/"
-      class="flex items-center gap-2.5 font-display text-xl font-bold text-[var(--bubbly-primary-deep)] md:text-2xl"
+      class="font-display flex items-center gap-2.5 text-xl font-bold text-[var(--bubbly-primary-deep)] md:text-2xl"
     >
       <span
         class="flex h-9 w-9 items-center justify-center rounded-2xl bg-[var(--bubbly-primary)] text-white shadow-[0_4px_0_0_var(--bubbly-primary-deep)]"
@@ -80,25 +80,26 @@
     <span
       class="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-xs font-bold tracking-[0.2em] uppercase backdrop-blur-sm"
     >
-      <span class="h-2 w-2 animate-pulse rounded-full bg-white" aria-hidden="true"></span>
+      <span
+        class="h-2 w-2 animate-pulse rounded-full bg-white"
+        aria-hidden="true"
+      ></span>
       Live Multiplayer Quizzes
     </span>
 
     <!-- Headline -->
     <h1
-      class="mt-6 font-display text-5xl font-bold leading-[1.05] text-white drop-shadow-sm md:text-6xl lg:text-7xl"
+      class="font-display mt-6 text-5xl leading-[1.05] font-bold text-white drop-shadow-sm md:text-6xl lg:text-7xl"
     >
-      Turn Any Classroom<br class="hidden md:block" />
+      Turn Any Classroom
+      <br class="hidden md:block" />
       Into a Game Show
     </h1>
 
     <!-- Subheadline -->
-    <p
-      class="mt-6 max-w-2xl text-lg font-semibold text-white/90 md:text-xl"
-    >
-      QuizForge turns any device into a buzzer. Build quizzes, run live games on the
-      projector, and watch the leaderboard light up — no app install, no accounts
-      required to play.
+    <p class="mt-6 max-w-2xl text-lg font-semibold text-white/90 md:text-xl">
+      QuizForge turns any device into a buzzer. Build quizzes, run live games on the projector, and
+      watch the leaderboard light up — no app install, no accounts required to play.
     </p>
 
     <!-- CTAs -->
@@ -143,7 +144,10 @@
 
   <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
     @for (feature of features; track feature.title) {
-      <app-bubbly-card tone="surface" [padded]="true">
+      <app-bubbly-card
+        tone="surface"
+        [padded]="true"
+      >
         <div class="flex h-full flex-col gap-4">
           <span
             class="flex h-14 w-14 items-center justify-center rounded-2xl"
@@ -181,7 +185,12 @@
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                   <path d="M14 2v6h6" />
                   <path d="M9.5 14a2 2 0 1 1 3.5 1.4c-.8.6-1 .9-1 1.6" />
-                  <circle cx="10" cy="18" r="0.6" fill="currentColor" />
+                  <circle
+                    cx="10"
+                    cy="18"
+                    r="0.6"
+                    fill="currentColor"
+                  />
                 </svg>
               }
               @case ('projector') {
@@ -195,9 +204,19 @@
                   stroke-linejoin="round"
                   aria-hidden="true"
                 >
-                  <rect x="2" y="5" width="20" height="13" rx="2" />
+                  <rect
+                    x="2"
+                    y="5"
+                    width="20"
+                    height="13"
+                    rx="2"
+                  />
                   <path d="M8 21h8M12 18v3" />
-                  <path d="M10 11.5l4 2.5-4 2.5z" fill="currentColor" stroke="none" />
+                  <path
+                    d="M10 11.5l4 2.5-4 2.5z"
+                    fill="currentColor"
+                    stroke="none"
+                  />
                 </svg>
               }
               @case ('chart') {
@@ -212,9 +231,33 @@
                   aria-hidden="true"
                 >
                   <path d="M3 3v18h18" />
-                  <rect x="7" y="13" width="3" height="5" rx="0.5" fill="currentColor" stroke="none" />
-                  <rect x="12" y="9" width="3" height="9" rx="0.5" fill="currentColor" stroke="none" />
-                  <rect x="17" y="6" width="3" height="12" rx="0.5" fill="currentColor" stroke="none" />
+                  <rect
+                    x="7"
+                    y="13"
+                    width="3"
+                    height="5"
+                    rx="0.5"
+                    fill="currentColor"
+                    stroke="none"
+                  />
+                  <rect
+                    x="12"
+                    y="9"
+                    width="3"
+                    height="9"
+                    rx="0.5"
+                    fill="currentColor"
+                    stroke="none"
+                  />
+                  <rect
+                    x="17"
+                    y="6"
+                    width="3"
+                    height="12"
+                    rx="0.5"
+                    fill="currentColor"
+                    stroke="none"
+                  />
                 </svg>
               }
             }
@@ -244,10 +287,13 @@
     <ol class="mt-10 grid gap-5 md:grid-cols-3">
       @for (step of steps; track step.number) {
         <li>
-          <app-bubbly-card tone="surface" [padded]="true">
+          <app-bubbly-card
+            tone="surface"
+            [padded]="true"
+          >
             <div class="flex h-full flex-col gap-3">
               <span
-                class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--bubbly-primary)] font-display text-2xl font-bold text-white shadow-[0_4px_0_0_var(--bubbly-primary-deep)]"
+                class="font-display flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--bubbly-primary)] text-2xl font-bold text-white shadow-[0_4px_0_0_var(--bubbly-primary-deep)]"
                 aria-hidden="true"
               >
                 {{ step.number }}
@@ -268,20 +314,22 @@
 
 <!-- ── Final CTA Strip ── -->
 <section class="mx-auto max-w-6xl px-5 py-20 md:px-8 md:py-24">
-  <app-bubbly-card tone="surface" [padded]="true">
+  <app-bubbly-card
+    tone="surface"
+    [padded]="true"
+  >
     <div
       class="flex flex-col items-center gap-6 text-center md:flex-row md:justify-between md:gap-8 md:text-left"
     >
       <div class="flex-1">
         <p class="qf-eyebrow">Get Started</p>
         <h2
-          class="mt-2 font-display text-3xl font-bold text-[var(--bubbly-primary-deep)] md:text-4xl"
+          class="font-display mt-2 text-3xl font-bold text-[var(--bubbly-primary-deep)] md:text-4xl"
         >
           Ready to forge something fun?
         </h2>
         <p class="qf-muted mt-3 max-w-xl text-base md:text-lg">
-          Hop into a game in seconds, or create a free account to build your own quiz
-          library.
+          Hop into a game in seconds, or create a free account to build your own quiz library.
         </p>
       </div>
       <div class="flex flex-col gap-3 sm:flex-row">
@@ -309,7 +357,7 @@
   >
     <a
       routerLink="/"
-      class="flex items-center gap-2 font-display text-lg font-bold text-[var(--bubbly-primary-deep)]"
+      class="font-display flex items-center gap-2 text-lg font-bold text-[var(--bubbly-primary-deep)]"
     >
       <span
         class="flex h-8 w-8 items-center justify-center rounded-2xl bg-[var(--bubbly-primary)] text-white shadow-[0_4px_0_0_var(--bubbly-primary-deep)]"

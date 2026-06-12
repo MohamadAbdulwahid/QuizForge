@@ -92,7 +92,9 @@ describe('socket auth middleware', () => {
     expect(socket.data.username).toBe('Casey');
     expect(typeof socket.data.userId).toBe('string');
     // Format: "guest:" + RFC 4122 UUID (8-4-4-4-12 hex chars, 36 total).
-    expect(socket.data.userId).toMatch(/^guest:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);
+    expect(socket.data.userId).toMatch(
+      /^guest:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+    );
     expect(next).toHaveBeenCalledTimes(1);
     expect(next.mock.calls[0]?.[0]).toBeUndefined();
   });
