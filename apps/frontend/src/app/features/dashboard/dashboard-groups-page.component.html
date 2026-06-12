@@ -1,164 +1,419 @@
 <div class="qf-page-stack">
-  <div class="flex items-start justify-between gap-4">
-    <app-bubbly-card tone="soft">
-      <app-page-heading
-        eyebrow="Classrooms"
-        title="My Groups"
-        description="Manage your classroom groups, join live sessions, and respond to invites."
-      />
-    </app-bubbly-card>
+  <!-- ── Hero header ── -->
+  <header class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+    <div>
+      <p class="qf-eyebrow">Classrooms</p>
+      <h1 class="qf-h1 mt-2">My Groups</h1>
+      <p class="qf-muted mt-3 max-w-2xl text-base md:text-lg">
+        Manage your classroom groups, jump into live sessions, and respond to invites.
+      </p>
+    </div>
     <app-bubbly-button
-      tone="primary"
-      size="md"
-      (click)="navigateToCreate()"
+      tone="accent"
+      size="lg"
+      (click)="openModal()"
     >
-      Create Group
+      + Create Group
     </app-bubbly-button>
-  </div>
+  </header>
 
   @if (errorMessage()) {
     <div class="qf-alert-error">{{ errorMessage() }}</div>
   }
 
-  <!-- Groups Grid -->
-  <section>
-    <h2 class="qf-panel-title mb-4 text-xl">Your Groups</h2>
-    @if (loading()) {
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <div class="qf-soft-surface h-44 rounded-3xl"></div>
-        <div class="qf-soft-surface h-44 rounded-3xl"></div>
-        <div class="qf-soft-surface h-44 rounded-3xl"></div>
-      </div>
-    } @else if (groups().length === 0) {
-      <app-bubbly-card tone="soft">
-        <div class="qf-empty-state">
-          You haven't joined any groups yet. Create one or discover groups to get started.
-        </div>
-      </app-bubbly-card>
-    } @else {
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        @for (group of groups(); track group.id) {
-          <button
-            type="button"
-            class="qf-surface qf-tactile w-full cursor-pointer rounded-2xl p-5 text-left"
-            (click)="navigateToGroup(group.id)"
-          >
-            <div class="flex items-start justify-between gap-2">
-              <h3
-                class="font-display line-clamp-1 text-lg font-bold"
+  <!-- ── Segmented tabs ── -->
+  <nav
+    class="qf-soft-surface inline-flex flex-wrap gap-1 self-start rounded-2xl p-1.5"
+    role="tablist"
+    aria-label="Groups sections"
+  >
+    @for (tab of tabs(); track tab.id) {
+      <button
+        type="button"
+        role="tab"
+        [attr.aria-selected]="activeTab() === tab.id"
+        class="qf-tactile inline-flex min-h-11 items-center gap-2 rounded-xl px-4 py-2 text-sm font-bold md:px-5"
+        [class.bg-white]="activeTab() === tab.id"
+        [class.shadow-sm]="activeTab() === tab.id"
+        [style.color]="
+          activeTab() === tab.id ? 'var(--bubbly-primary-deep)' : 'var(--bubbly-muted)'
+        "
+        (click)="activeTab.set(tab.id)"
+      >
+        <span>{{ tab.label }}</span>
+        <span
+          class="qf-chip"
+          [style.background]="
+            activeTab() === tab.id ? 'var(--bubbly-primary)' : 'var(--bubbly-surface)'
+          "
+          [style.color]="activeTab() === tab.id ? 'white' : 'var(--bubbly-text)'"
+        >
+          {{ tab.count }}
+        </span>
+      </button>
+    }
+  </nav>
+
+  <!-- ── Active section ── -->
+  @switch (activeTab()) {
+    @case ('groups') {
+      <section class="grid gap-3">
+        @if (loading()) {
+          <div class="qf-soft-surface h-24 rounded-2xl"></div>
+          <div class="qf-soft-surface h-24 rounded-2xl"></div>
+          <div class="qf-soft-surface h-24 rounded-2xl"></div>
+        } @else if (groups().length === 0) {
+          <app-bubbly-card tone="soft">
+            <div class="flex flex-col items-center gap-3 py-8 text-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-16 w-16"
+                style="color: var(--bubbly-primary)"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
+                />
+              </svg>
+              <p
+                class="font-display text-2xl font-bold"
                 style="color: var(--bubbly-primary-deep)"
               >
-                {{ group.name }}
-              </h3>
-              @if (group.role === 'admin') {
-                <app-bubbly-badge
-                  [count]="joinRequestCounts().get(group.id)"
-                  tone="warning"
-                  size="sm"
+                No groups yet
+              </p>
+              <p class="qf-muted max-w-md text-base">
+                Create your first classroom group to start running live quizzes with your students.
+              </p>
+              <app-bubbly-button
+                tone="primary"
+                size="md"
+                (click)="openModal()"
+              >
+                + Create Group
+              </app-bubbly-button>
+            </div>
+          </app-bubbly-card>
+        } @else {
+          @for (group of groups(); track group.id) {
+            <button
+              type="button"
+              class="qf-surface qf-tactile w-full cursor-pointer rounded-2xl p-5 text-left"
+              (click)="navigateToGroup(group.id)"
+            >
+              <div class="flex flex-col gap-4 md:flex-row md:items-center">
+                <!-- Avatar -->
+                <div
+                  class="flex h-14 w-14 flex-none items-center justify-center rounded-full"
+                  style="background: var(--bubbly-primary)"
+                  aria-hidden="true"
+                >
+                  <span class="font-display text-2xl font-bold text-white">
+                    {{ groupInitial(group.name) }}
+                  </span>
+                </div>
+
+                <!-- Middle: name + description + chips -->
+                <div class="min-w-0 flex-1">
+                  <h3
+                    class="font-display text-2xl font-bold"
+                    style="color: var(--bubbly-primary-deep)"
+                  >
+                    {{ group.name }}
+                  </h3>
+                  <p class="qf-muted mt-1 line-clamp-1 text-base font-semibold">
+                    {{ group.description || 'No description provided.' }}
+                  </p>
+                  <div class="mt-3 flex flex-wrap gap-2">
+                    <span class="qf-chip">
+                      {{ group.member_count }} member{{ group.member_count === 1 ? '' : 's' }}
+                    </span>
+                    <span class="qf-chip">
+                      {{ joinPolicyLabel(group.join_policy) }}
+                    </span>
+                    <span class="qf-chip">
+                      {{ group.role === 'admin' ? 'Admin' : 'Member' }}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Right: join-request badge + chevron -->
+                <div class="flex flex-none items-center gap-3">
+                  @if (group.role === 'admin' && joinRequestCount(group.id) > 0) {
+                    <app-bubbly-badge
+                      [count]="joinRequestCount(group.id)"
+                      tone="warning"
+                      size="md"
+                    />
+                  }
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2.5"
+                    stroke="currentColor"
+                    class="h-6 w-6"
+                    style="color: var(--bubbly-muted)"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </button>
+          }
+        }
+      </section>
+    }
+
+    @case ('sessions') {
+      <section class="grid gap-3">
+        @if (activeSessions().length === 0) {
+          <app-bubbly-card tone="soft">
+            <div class="flex flex-col items-center gap-3 py-8 text-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-16 w-16"
+                style="color: var(--bubbly-primary)"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z"
                 />
-              }
-            </div>
-            <p class="qf-muted mt-2 line-clamp-2 text-sm font-semibold">
-              {{ group.description || 'No description provided.' }}
-            </p>
-            <div class="mt-4 flex items-center gap-3">
-              <span class="qf-chip">
-                {{ group.member_count }} member{{ group.member_count === 1 ? '' : 's' }}
-              </span>
-              <span class="qf-chip">{{ group.role }}</span>
-            </div>
-          </button>
-        }
-      </div>
-    }
-  </section>
-
-  <!-- Active Sessions -->
-  <section>
-    <h2 class="qf-panel-title mb-4 text-xl">Active Sessions</h2>
-    @if (activeSessions().length === 0) {
-      <app-bubbly-card tone="soft">
-        <div class="qf-empty-state">No active sessions right now.</div>
-      </app-bubbly-card>
-    } @else {
-      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        @for (session of activeSessions(); track session.session_id) {
-          <app-bubbly-card
-            tone="surface"
-            [interactive]="true"
-          >
-            <div class="flex flex-col gap-3">
-              <div>
-                <p
-                  class="font-display line-clamp-1 text-lg font-bold"
-                  style="color: var(--bubbly-primary-deep)"
-                >
-                  {{ session.quiz_title }}
-                </p>
-                <p class="qf-muted mt-1 text-sm font-semibold">
-                  Hosted by {{ session.host_username }}
-                </p>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="qf-chip">PIN: {{ session.pin }}</span>
-                <app-bubbly-button
-                  tone="primary"
-                  size="sm"
-                  (click)="navigateToSession(session.pin)"
-                >
-                  Join
-                </app-bubbly-button>
-              </div>
+              </svg>
+              <p
+                class="font-display text-2xl font-bold"
+                style="color: var(--bubbly-primary-deep)"
+              >
+                No active sessions
+              </p>
+              <p class="qf-muted max-w-md text-base">
+                When someone in your groups starts a live session, it'll show up here.
+              </p>
             </div>
           </app-bubbly-card>
-        }
-      </div>
-    }
-  </section>
-
-  <!-- Pending Invites -->
-  <section>
-    <h2 class="qf-panel-title mb-4 text-xl">Pending Invites</h2>
-    @if (invites().length === 0) {
-      <app-bubbly-card tone="soft">
-        <div class="qf-empty-state">No pending invites.</div>
-      </app-bubbly-card>
-    } @else {
-      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        @for (invite of invites(); track invite.id) {
-          <app-bubbly-card tone="surface">
-            <div class="flex flex-col gap-3">
-              <div>
-                <p
-                  class="font-display line-clamp-1 text-lg font-bold"
-                  style="color: var(--bubbly-primary-deep)"
-                >
-                  {{ invite.group_name }}
-                </p>
-                <p class="qf-muted mt-1 text-sm font-semibold">
-                  Invited by {{ invite.invited_by_username }}
-                </p>
-              </div>
-              <div class="flex gap-2">
-                <app-bubbly-button
-                  tone="primary"
-                  size="sm"
-                  (click)="respondToInvite(invite.id, 'accept')"
-                >
-                  Accept
-                </app-bubbly-button>
-                <app-bubbly-button
-                  tone="ghost"
-                  size="sm"
-                  (click)="respondToInvite(invite.id, 'decline')"
-                >
-                  Decline
-                </app-bubbly-button>
+        } @else {
+          @for (session of activeSessions(); track session.session_id) {
+            <div class="qf-surface rounded-2xl p-5">
+              <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div class="min-w-0 flex-1">
+                  <h3
+                    class="font-display text-2xl font-bold"
+                    style="color: var(--bubbly-primary-deep)"
+                  >
+                    {{ session.quiz_title }}
+                  </h3>
+                  <p class="qf-muted mt-1 text-base font-semibold">
+                    Hosted by {{ session.host_username }}
+                  </p>
+                </div>
+                <div class="flex flex-none flex-wrap items-center gap-3 md:flex-nowrap">
+                  <span
+                    class="font-display rounded-2xl px-4 py-2 text-xl font-bold tracking-wider text-white md:text-2xl"
+                    style="background: var(--bubbly-accent)"
+                  >
+                    PIN: {{ session.pin }}
+                  </span>
+                  <app-bubbly-button
+                    tone="primary"
+                    size="md"
+                    (click)="navigateToSession(session.pin)"
+                  >
+                    Join
+                  </app-bubbly-button>
+                </div>
               </div>
             </div>
-          </app-bubbly-card>
+          }
         }
-      </div>
+      </section>
     }
-  </section>
+
+    @case ('invites') {
+      <section class="grid gap-3">
+        @if (invites().length === 0) {
+          <app-bubbly-card tone="soft">
+            <div class="flex flex-col items-center gap-3 py-8 text-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-16 w-16"
+                style="color: var(--bubbly-primary)"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
+                />
+              </svg>
+              <p
+                class="font-display text-2xl font-bold"
+                style="color: var(--bubbly-primary-deep)"
+              >
+                No pending invites
+              </p>
+              <p class="qf-muted max-w-md text-base">
+                When someone invites you to a group, it'll show up here.
+              </p>
+            </div>
+          </app-bubbly-card>
+        } @else {
+          @for (invite of invites(); track invite.id) {
+            <div class="qf-surface rounded-2xl p-5">
+              <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div class="min-w-0 flex-1">
+                  <h3
+                    class="font-display text-2xl font-bold"
+                    style="color: var(--bubbly-primary-deep)"
+                  >
+                    {{ invite.group_name }}
+                  </h3>
+                  <p class="qf-muted mt-1 text-base font-semibold">
+                    Invited by {{ invite.invited_by_username }}
+                  </p>
+                </div>
+                <div class="flex flex-none flex-wrap items-center gap-3">
+                  <app-bubbly-button
+                    tone="primary"
+                    size="md"
+                    (click)="respondToInvite(invite.id, 'accept')"
+                  >
+                    Accept
+                  </app-bubbly-button>
+                  <app-bubbly-button
+                    tone="ghost"
+                    size="md"
+                    (click)="respondToInvite(invite.id, 'decline')"
+                  >
+                    Decline
+                  </app-bubbly-button>
+                </div>
+              </div>
+            </div>
+          }
+        }
+      </section>
+    }
+  }
 </div>
+
+<!-- ── Create Group modal ── -->
+<app-bubbly-modal
+  [visible]="createModalOpen()"
+  [customFooter]="true"
+  title="Create Group"
+  (dismiss)="closeModal()"
+>
+  <form
+    (ngSubmit)="submitCreate()"
+    class="grid gap-5"
+  >
+    @if (createError()) {
+      <div class="qf-alert-error">{{ createError() }}</div>
+    }
+
+    <app-bubbly-input
+      label="Group Name"
+      placeholder="e.g., Period 3 Science"
+      [error]="nameError()"
+      [ngModel]="groupName()"
+      (ngModelChange)="groupName.set($event)"
+      name="groupName"
+    />
+
+    <app-bubbly-input
+      label="Description (optional)"
+      placeholder="What is this group about?"
+      [ngModel]="description()"
+      (ngModelChange)="description.set($event)"
+      name="description"
+    />
+
+    <!-- Discoverable toggle -->
+    <div class="grid gap-2">
+      <span
+        class="text-sm font-bold"
+        style="color: var(--bubbly-text)"
+      >
+        Discoverable
+      </span>
+      <div class="flex items-center gap-3">
+        <button
+          type="button"
+          class="qf-tactile h-6 w-12 rounded-full transition-colors"
+          [style.background]="isDiscoverable() ? 'var(--bubbly-primary)' : 'var(--bubbly-border)'"
+          (click)="isDiscoverable.update((v) => !v)"
+          [attr.aria-checked]="isDiscoverable()"
+          role="switch"
+        >
+          <span
+            class="block h-5 w-5 rounded-full bg-white shadow-sm transition-transform"
+            [style.transform]="isDiscoverable() ? 'translateX(26px)' : 'translateX(2px)'"
+          ></span>
+        </button>
+        <span
+          class="text-sm font-semibold"
+          style="color: var(--bubbly-muted)"
+        >
+          {{ isDiscoverable() ? 'Visible in group discovery' : 'Hidden from group discovery' }}
+        </span>
+      </div>
+    </div>
+
+    <app-bubbly-select
+      label="Join Policy"
+      placeholder="Select a join policy"
+      [options]="joinPolicyOptions"
+      [ngModel]="joinPolicy()"
+      (ngModelChange)="joinPolicy.set($event)"
+      name="joinPolicy"
+    />
+  </form>
+
+  <div
+    modal-footer
+    class="flex flex-wrap items-center justify-end gap-3"
+  >
+    <app-bubbly-button
+      type="button"
+      tone="ghost"
+      size="md"
+      [disabled]="creating()"
+      (click)="closeModal()"
+    >
+      Cancel
+    </app-bubbly-button>
+    <app-bubbly-button
+      type="button"
+      tone="primary"
+      size="md"
+      [disabled]="creating()"
+      (click)="submitCreate()"
+    >
+      @if (creating()) {
+        Creating...
+      } @else {
+        Create Group
+      }
+    </app-bubbly-button>
+  </div>
+</app-bubbly-modal>
