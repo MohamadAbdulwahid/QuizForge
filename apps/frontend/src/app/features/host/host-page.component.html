@@ -1,4 +1,4 @@
-<!-- Full-screen host view — projector-optimised, no sidebar, big everything -->
+<!-- Full-screen host view — projector-optimised, big & polished for game-show feel -->
 <div
   class="from-bubbly-primary fixed inset-0 flex flex-col bg-gradient-to-b via-[#007fb0] to-[#006090]"
 >
@@ -13,36 +13,42 @@
     ></div>
   }
 
-  <!-- ── Top bar: PIN + controls ── -->
+  <!-- ── Top bar: HOST badge + PIN + controls ── -->
   <header
-    class="flex shrink-0 items-center justify-between bg-black/20 px-5 py-2.5 backdrop-blur-sm"
+    class="flex shrink-0 items-center justify-between gap-4 bg-black/25 px-6 py-4 backdrop-blur-sm"
   >
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-4">
       <span
-        class="rounded-full bg-amber-400 px-2.5 py-0.5 text-xs font-bold tracking-wider text-amber-900 uppercase"
+        class="font-display rounded-2xl bg-[var(--bubbly-accent)] px-4 py-2 text-base font-black tracking-widest text-white uppercase shadow-lg"
       >
         Host
       </span>
-      <span class="font-display text-2xl font-bold tracking-[0.15em] text-white">
+      <span
+        class="font-display text-5xl font-black tracking-[0.15em] text-white drop-shadow-lg sm:text-6xl"
+      >
         {{ pin() }}
       </span>
       <span
-        class="inline-block h-2.5 w-2.5 rounded-full"
+        class="ml-1 inline-block h-3 w-3 rounded-full"
         [class.bg-emerald-400]="connected()"
         [class.bg-rose-400]="!connected()"
       ></span>
     </div>
 
-    <div class="flex items-center gap-2.5">
-      <div class="flex items-center gap-1 rounded-full bg-white/15 px-3 py-1 backdrop-blur-sm">
-        <span class="text-sm font-bold text-white/90">{{ playerCount() }}</span>
-        <span class="text-xs font-semibold text-white/60">players</span>
+    <div class="flex items-center gap-3">
+      <div
+        class="flex items-center gap-2 rounded-full border-2 border-white/30 bg-[var(--bubbly-primary)]/40 px-5 py-2.5 backdrop-blur-sm"
+      >
+        <span class="font-display text-2xl font-black text-white drop-shadow">
+          {{ playerCount() }}
+        </span>
+        <span class="text-sm font-bold tracking-wide text-white/85 uppercase">players</span>
       </div>
 
       @if (isGameActive() && !gameEnded()) {
         <button
           type="button"
-          class="rounded-2xl bg-white/15 px-4 py-1.5 text-sm font-bold text-white/90 backdrop-blur-sm transition-all duration-200 hover:bg-white/25"
+          class="qf-tactile rounded-2xl bg-white/15 px-5 py-2.5 text-base font-bold text-white/90 backdrop-blur-sm transition-all duration-200 hover:bg-white/25"
           (click)="skipQuestion()"
         >
           Skip
@@ -51,7 +57,7 @@
 
       <button
         type="button"
-        class="rounded-2xl bg-rose-500/40 px-4 py-1.5 text-sm font-bold text-white backdrop-blur-sm transition-all duration-200 hover:bg-rose-500/60"
+        class="qf-tactile rounded-2xl bg-rose-500 px-5 py-2.5 text-base font-bold text-white shadow-lg transition-all duration-200 hover:bg-rose-600"
         (click)="requestEndSession()"
       >
         End
@@ -62,7 +68,7 @@
   <!-- ── Error banner ── -->
   @if (errorMessage()) {
     <div
-      class="mx-4 mt-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-2 text-sm font-bold text-rose-700"
+      class="mx-6 mt-3 rounded-2xl border border-rose-200 bg-rose-50 px-5 py-3 text-base font-bold text-rose-700"
     >
       {{ errorMessage() }}
     </div>
@@ -71,7 +77,7 @@
   <!-- ── Reconnecting banner ── -->
   @if (reconnecting()) {
     <div
-      class="mx-4 mt-2 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-bold text-amber-700"
+      class="mx-6 mt-3 rounded-2xl border border-amber-200 bg-amber-50 px-5 py-3 text-base font-bold text-amber-700"
     >
       <span class="mr-2 inline-block animate-spin">⟳</span>
       Connection lost — reconnecting...
@@ -81,25 +87,135 @@
   <!-- ── Main content ── -->
   @if (initialLoading()) {
     <div class="flex flex-1 items-center justify-center">
-      <p class="font-display text-2xl font-bold text-white/70">Loading session data...</p>
+      <p class="font-display text-3xl font-bold text-white/70">Loading session data...</p>
     </div>
   } @else if (gameEnded()) {
-    <div class="flex flex-1 items-center justify-center">
-      <p class="font-display text-5xl font-bold text-white">Game Complete!</p>
-      <p class="mt-4 text-lg font-semibold text-white/70">Redirecting to leaderboard...</p>
+    <div class="flex flex-1 flex-col items-center justify-center">
+      <p class="font-display text-6xl font-black text-white drop-shadow-lg sm:text-7xl">
+        Game Complete!
+      </p>
+      <p class="mt-6 text-2xl font-semibold text-white/70">Redirecting to leaderboard...</p>
     </div>
+  } @else if (isTreasureForge()) {
+    <!-- ── Treasure Forge: Timer Bar ── -->
+    @if (tfEndMode() === 'timer') {
+      <div
+        class="mx-6 mt-3 flex items-center gap-4 rounded-2xl border border-white/10 bg-black/20 px-5 py-3 backdrop-blur-sm"
+      >
+        <span class="text-base font-bold tracking-wide text-white/60 uppercase">Timer</span>
+        <div class="flex-1 overflow-hidden rounded-full bg-white/10">
+          <div
+            class="h-3 rounded-full transition-all duration-300 ease-linear"
+            [class.bg-emerald-400]="tfTimeRemainingSeconds() > 60"
+            [class.bg-amber-400]="tfTimeRemainingSeconds() <= 60 && tfTimeRemainingSeconds() > 15"
+            [class.bg-rose-400]="tfTimeRemainingSeconds() <= 15"
+            [style.width.%]="tfTimerProgress()"
+          ></div>
+        </div>
+        <span
+          class="font-display text-xl font-bold tabular-nums"
+          [class.text-emerald-300]="tfTimeRemainingSeconds() > 60"
+          [class.text-amber-300]="tfTimeRemainingSeconds() <= 60 && tfTimeRemainingSeconds() > 15"
+          [class.text-rose-300]="tfTimeRemainingSeconds() <= 15"
+        >
+          @if (tfTimeRemainingSeconds() >= 60) {
+            {{ tfTimeRemainingSeconds() / 60 | number: '1.0-0' }}m
+          } @else {
+            {{ tfTimeRemainingSeconds() }}s
+          }
+        </span>
+      </div>
+    } @else if (tfEndMode() === 'gold_goal') {
+      <div
+        class="mx-6 mt-3 flex items-center gap-3 rounded-2xl border border-amber-400/30 bg-black/20 px-5 py-3 backdrop-blur-sm"
+      >
+        <span class="text-base font-bold tracking-wide text-white/60 uppercase">Gold Goal</span>
+        <span class="font-display text-xl font-black text-amber-300">🪙 {{ tfGoldGoal() }}</span>
+      </div>
+    }
+
+    <!-- ── Treasure Forge: Activity Feed + Leaderboard ── -->
+    <main class="flex flex-1 gap-5 overflow-hidden px-6 pt-3 pb-5">
+      <!-- Left: Activity Feed -->
+      <div
+        class="flex flex-1 flex-col overflow-hidden rounded-3xl border border-white/10 bg-black/20 backdrop-blur-sm"
+      >
+        <div class="shrink-0 border-b border-white/10 px-6 py-4">
+          <h2 class="font-display text-2xl font-black text-white">Activity Feed</h2>
+        </div>
+        <div class="flex-1 space-y-2.5 overflow-y-auto px-6 py-4">
+          @if (forgeActivities().length === 0) {
+            <p class="text-base font-semibold text-white/50">Waiting for players to answer...</p>
+          }
+          @for (activity of forgeActivities(); track activity.timestamp; let last = $last) {
+            <div
+              class="rounded-2xl border bg-white/5 px-5 py-3.5 transition-all duration-300"
+              [class.border-emerald-400/40]="activity.type === 'round-correct'"
+              [class.border-rose-400/40]="activity.type === 'round-incorrect'"
+              [class.border-amber-400/40]="activity.type === 'chest-picked'"
+              [class.border-purple-400/40]="activity.type === 'steal' || activity.type === 'swap'"
+              [class.animate-in]="last"
+            >
+              <p class="text-base font-semibold text-white/90">
+                {{ activity.message }}
+              </p>
+              @if (activity.goldDelta !== undefined && activity.goldDelta !== 0) {
+                <p
+                  class="mt-1 text-sm font-bold"
+                  [class.text-emerald-300]="activity.goldDelta! > 0"
+                  [class.text-rose-300]="activity.goldDelta! < 0"
+                >
+                  {{ activity.goldDelta! > 0 ? '+' : '' }}{{ activity.goldDelta }} Gold
+                </p>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Right: Leaderboard -->
+      <div
+        class="flex w-80 flex-col overflow-hidden rounded-3xl border-2 border-amber-400/30 bg-black/20 backdrop-blur-sm"
+      >
+        <div class="shrink-0 border-b border-amber-400/30 px-6 py-4">
+          <h2 class="font-display text-2xl font-black text-amber-300">Leaderboard</h2>
+        </div>
+        <div class="flex-1 space-y-2.5 overflow-y-auto px-6 py-4">
+          @if (leaderboard().length === 0) {
+            <p class="text-base font-semibold text-white/50">No players yet</p>
+          }
+          @for (player of leaderboard(); track player.userId) {
+            <div
+              class="flex items-center justify-between rounded-2xl border border-white/10 bg-white/10 px-5 py-3.5"
+            >
+              <div class="flex items-center gap-4">
+                <span class="font-display text-lg font-black text-amber-300">
+                  #{{ player.rank }}
+                </span>
+                <span class="text-lg font-bold text-white/90">
+                  {{ player.username }}
+                </span>
+              </div>
+              <span class="font-display text-2xl font-black text-amber-400">
+                {{ player.score }}
+              </span>
+            </div>
+          }
+        </div>
+      </div>
+    </main>
   } @else if (currentQuestion(); as question) {
-    <main class="flex flex-1 flex-col overflow-hidden px-4 pb-2">
+    <main class="flex flex-1 flex-col overflow-hidden px-6 pb-3">
       <!-- ── Question stage ── -->
       <div class="relative min-h-[35vh] flex-1">
         <div
-          class="host-question font-display font-bold"
+          class="host-question font-display font-bold text-white drop-shadow-lg"
           [class.host-question-centered]="
             questionPhase() === 'centered' || questionPhase() === 'moving'
           "
           [class.host-question-top]="questionPhase() === 'top'"
         >
-          <div class="text-sm font-bold tracking-[0.15em] text-white/50 uppercase">
+          <div class="text-base font-bold tracking-[0.15em] text-white/60 uppercase">
             {{ question.orderIndex + 1 }} / {{ totalQuestions() }}
           </div>
           <div class="mt-1 leading-tight">
@@ -108,46 +224,198 @@
         </div>
       </div>
 
-      <!-- ── Options grid ── -->
-      <div
-        class="transition-all duration-500 ease-out"
-        [style.opacity]="questionPhase() === 'centered' ? '0' : '1'"
-        [style.pointerEvents]="questionPhase() === 'centered' ? 'none' : 'auto'"
-      >
-        @if (questionPhase() !== 'centered') {
-          <div class="mx-auto grid w-full max-w-5xl flex-1 grid-cols-2 gap-4">
-            @for (option of question.options; track option.id; let i = $index) {
-              @if (visibleOptionIds().has(option.id)) {
-                <div class="host-option-enter">
+      <!-- ── Type-specific content (options, ordering, matching, FIB) ── -->
+      <!-- MC/TF keep the original non-flex wrapper so the inner grid's      -->
+      <!-- `flex-1` remains decorative and cards auto-size to content.      -->
+      <!-- The new-type renderers each manage their own internal layout.     -->
+      @if (question.type === 'multiple-choice' || question.type === 'true-false') {
+        <div
+          class="transition-all duration-500 ease-out"
+          [style.opacity]="questionPhase() === 'centered' ? '0' : '1'"
+          [style.pointerEvents]="questionPhase() === 'centered' ? 'none' : 'auto'"
+        >
+          @if (questionPhase() !== 'centered') {
+            <div class="mx-auto grid w-full max-w-6xl flex-1 grid-cols-2 gap-5">
+              @for (option of question.options; track option.id; let i = $index) {
+                @if (visibleOptionIds().has(option.id)) {
+                  <div class="host-option-enter">
+                    <div
+                      class="flex min-h-[16vh] items-center rounded-3xl border-4 px-8 py-6 font-bold text-white shadow-lg backdrop-blur-sm transition-all"
+                      [ngClass]="{
+                        'border-sky-400 bg-sky-500/10': i === 0,
+                        'border-rose-400 bg-rose-500/10': i === 1,
+                        'border-emerald-400 bg-emerald-500/10': i === 2,
+                        'border-violet-400 bg-violet-500/10': i === 3,
+                      }"
+                    >
+                      <span
+                        class="font-display mr-6 text-5xl font-black drop-shadow sm:text-6xl"
+                        [ngClass]="{
+                          'text-sky-300': i === 0,
+                          'text-rose-300': i === 1,
+                          'text-emerald-300': i === 2,
+                          'text-violet-300': i === 3,
+                        }"
+                      >
+                        {{ getOptionLabel(i) }}
+                      </span>
+                      <span class="text-3xl leading-tight sm:text-4xl">
+                        {{ option.text }}
+                      </span>
+                    </div>
+                  </div>
+                }
+              }
+            </div>
+          }
+        </div>
+      } @else if (questionPhase() === 'top') {
+        <div
+          class="transition-all duration-500 ease-out"
+          [style.opacity]="questionPhase() === 'centered' ? '0' : '1'"
+          [style.pointerEvents]="questionPhase() === 'centered' ? 'none' : 'auto'"
+        >
+          @switch (question.type) {
+            @case ('ordering') {
+              <!-- Ordering: vertical list, one column, big cards with -->
+              <!-- position badges. Items shown in their shuffled display -->
+              <!-- order (server-side deterministic shuffle) — host does -->
+              <!-- not know the correct order, so no reveal logic. -->
+              <div
+                class="mx-auto flex w-full max-w-4xl flex-col gap-3 overflow-y-auto pr-2"
+                style="max-height: 55vh"
+              >
+                @for (option of question.options; track option.id; let i = $index) {
                   <div
-                    class="flex min-h-[12vh] items-center rounded-3xl border-2 border-white/20 bg-white/10 px-6 py-5 font-bold text-white backdrop-blur-sm"
+                    class="host-option-enter flex min-h-[12vh] items-center gap-5 rounded-3xl border-4 bg-white/5 px-5 py-4 shadow-lg backdrop-blur-sm sm:gap-6 sm:px-7"
+                    [ngClass]="getProjectorColor(i).border"
                   >
-                    <span class="mr-4 text-4xl font-black text-white/40">
-                      {{ getOptionLabel(i) }}
+                    <span
+                      class="font-display flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-3xl font-black drop-shadow sm:h-20 sm:w-20 sm:text-5xl"
+                      [ngClass]="[getProjectorColor(i).badgeBg, getProjectorColor(i).badgeText]"
+                    >
+                      {{ i + 1 }}
                     </span>
-                    <span class="text-2xl leading-tight sm:text-3xl">
+                    <span
+                      class="flex-1 text-2xl leading-tight font-bold text-white drop-shadow sm:text-3xl md:text-4xl"
+                    >
                       {{ option.text }}
                     </span>
                   </div>
-                </div>
-              }
+                }
+              </div>
             }
-          </div>
-        }
-      </div>
+            @case ('matching') {
+              <!-- Matching: two columns side by side. Left column gets -->
+              <!-- letter badges and the colour cycle; right column stays -->
+              <!-- neutral so players can focus on which right-side item -->
+              <!-- matches the coloured left-side anchor. -->
+              <div
+                class="mx-auto grid w-full max-w-6xl grid-cols-1 gap-5 overflow-y-auto pr-1 md:grid-cols-2"
+                style="max-height: 55vh"
+              >
+                <div class="flex flex-col gap-3">
+                  <h3
+                    class="font-display text-base font-bold tracking-wider text-white/60 uppercase sm:text-lg"
+                  >
+                    Match From
+                  </h3>
+                  @for (option of question.options; track option.id; let i = $index) {
+                    <div
+                      class="host-option-enter flex min-h-[12vh] items-center gap-4 rounded-2xl border-4 bg-white/5 px-4 py-3 shadow-lg backdrop-blur-sm"
+                      [ngClass]="getProjectorColor(i).border"
+                    >
+                      <span
+                        class="font-display flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-2xl font-black sm:h-14 sm:w-14 sm:text-3xl"
+                        [ngClass]="[getProjectorColor(i).badgeBg, getProjectorColor(i).badgeText]"
+                      >
+                        {{ getOptionLabel(i) }}
+                      </span>
+                      <span
+                        class="flex-1 text-lg leading-tight font-bold text-white sm:text-xl md:text-2xl"
+                      >
+                        {{ option.text }}
+                      </span>
+                    </div>
+                  }
+                </div>
+                <div class="flex flex-col gap-3">
+                  <h3
+                    class="font-display text-base font-bold tracking-wider text-white/60 uppercase sm:text-lg"
+                  >
+                    Match To
+                  </h3>
+                  @for (option of getRightOptions(question); track option.id) {
+                    <div
+                      class="host-option-enter flex min-h-[12vh] items-center rounded-2xl border-4 border-white/20 bg-white/5 px-5 py-3 shadow-lg backdrop-blur-sm"
+                    >
+                      <span
+                        class="flex-1 text-lg leading-tight font-bold text-white sm:text-xl md:text-2xl"
+                      >
+                        {{ option.text }}
+                      </span>
+                    </div>
+                  } @empty {
+                    <p class="text-base font-semibold text-white/50">
+                      No matching items configured.
+                    </p>
+                  }
+                </div>
+              </div>
+            }
+            @case ('fill-in-blank') {
+              <!-- Fill-in-the-Blank: question text is already shown -->
+              <!-- above. Below, a big amber-stroked blank tells the -->
+              <!-- room "this is the gap you fill in". Correct answer -->
+              <!-- is not leaked to the host payload. -->
+              <div class="flex items-center justify-center py-4">
+                <div
+                  class="rounded-3xl border-4 border-amber-400/60 bg-amber-500/10 px-10 py-8 text-center shadow-2xl backdrop-blur-sm sm:px-16 sm:py-12"
+                >
+                  <div
+                    class="font-display text-3xl font-black tracking-widest text-amber-200 drop-shadow-lg sm:text-5xl md:text-6xl"
+                  >
+                    _______________
+                  </div>
+                  <div
+                    class="mt-4 text-sm font-bold tracking-wider text-amber-200/70 uppercase sm:mt-6 sm:text-xl"
+                  >
+                    Players type their answer
+                  </div>
+                </div>
+                @if (question.options.length > 1) {
+                  <div
+                    class="ml-6 hidden rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-base font-semibold text-white/60 backdrop-blur-sm lg:block"
+                  >
+                    {{ question.options.length }} accepted answers
+                  </div>
+                }
+              </div>
+            }
+          }
+        </div>
+      }
 
       <!-- ── Answer progress ── -->
       @if (questionPhase() !== 'centered') {
-        <div class="mt-3">
-          <div class="flex items-center justify-between px-1">
-            <span class="text-base font-bold text-white/70">
+        <div class="mt-4">
+          <div class="flex items-center justify-between gap-4 px-2">
+            <span class="text-lg font-bold text-white/85">
               {{ answeredCount() }} / {{ playerCount() }} answered
             </span>
             @if (answeredCount() >= playerCount() && playerCount() > 0) {
-              <span class="text-base font-bold text-emerald-300">All answered!</span>
+              <span class="text-lg font-bold text-emerald-300">All answered!</span>
+            } @else {
+              <span class="text-lg font-bold text-white/85">
+                @if (playerCount() > 0) {
+                  {{ (answeredCount() / playerCount()) * 100 | number: '1.0-0' }}%
+                } @else {
+                  0%
+                }
+              </span>
             }
           </div>
-          <div class="mt-1 h-3 overflow-hidden rounded-full bg-white/20">
+          <div class="mt-2 h-4 overflow-hidden rounded-full bg-white/20">
             <div
               class="h-full rounded-full bg-emerald-400 transition-all duration-300"
               [style.width.%]="playerCount() > 0 ? (answeredCount() / playerCount()) * 100 : 0"
@@ -158,21 +426,29 @@
     </main>
   } @else {
     <!-- ── Between questions / pre-game / round summary ── -->
-    <div class="flex flex-1 items-center justify-center px-4">
+    <div class="flex flex-1 items-center justify-center px-6">
       @if (showRoundSummary() && leaderboard().length > 0) {
-        <div class="text-center">
-          <p class="font-display text-4xl font-bold text-white">Round Complete!</p>
-          <p class="mt-2 text-lg font-semibold text-emerald-300">
+        <div class="w-full max-w-2xl text-center">
+          <p class="font-display text-5xl font-black text-white drop-shadow-lg sm:text-6xl">
+            Round Complete!
+          </p>
+          <p class="mt-3 text-2xl font-semibold text-emerald-300">
             {{ answeredCount() }} / {{ playerCount() }} answered
           </p>
-          <div class="mx-auto mt-6 max-w-md space-y-2">
+          <div class="mx-auto mt-8 max-w-md space-y-3">
             @for (player of leaderboard().slice(0, 5); track player.userId) {
-              <div class="flex items-center justify-between rounded-2xl bg-white/10 px-4 py-2">
-                <div class="flex items-center gap-3">
-                  <span class="text-sm font-bold text-white/40">#{{ player.rank }}</span>
-                  <span class="text-base font-bold text-white/90">{{ player.username }}</span>
+              <div
+                class="flex items-center justify-between rounded-2xl border border-amber-400/20 bg-white/10 px-5 py-3.5"
+              >
+                <div class="flex items-center gap-4">
+                  <span class="font-display text-lg font-black text-amber-300">
+                    #{{ player.rank }}
+                  </span>
+                  <span class="text-lg font-bold text-white/90">
+                    {{ player.username }}
+                  </span>
                 </div>
-                <span class="font-display text-lg font-bold text-amber-400">
+                <span class="font-display text-2xl font-black text-amber-400">
                   {{ player.score }}
                 </span>
               </div>
@@ -181,10 +457,13 @@
         </div>
       } @else {
         <div class="text-center">
-          <p class="font-display text-4xl font-bold text-white">
+          <p class="animate-pulse text-8xl drop-shadow-lg">🎮</p>
+          <p
+            class="font-display mt-8 animate-pulse text-5xl font-black text-white drop-shadow-lg sm:text-7xl"
+          >
             {{ totalQuestions() > 0 ? 'Get Ready...' : 'Waiting for game to start...' }}
           </p>
-          <p class="mt-3 text-lg font-semibold text-white/70">
+          <p class="mt-5 text-xl font-semibold text-white/75">
             {{ totalQuestions() > 0 ? 'The next question is coming up!' : statusMessage() }}
           </p>
         </div>
