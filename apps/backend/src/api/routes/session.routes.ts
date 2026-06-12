@@ -17,7 +17,12 @@ sessionRouter.post(
   sessionController.createSession
 );
 sessionRouter.get('/mine', authMiddleware, sessionController.getMySessions);
-sessionRouter.get('/:pin', validateParams(PinParamSchema), sessionController.getSessionByPin);
+sessionRouter.get(
+  '/:pin',
+  authMiddleware,
+  validateParams(PinParamSchema),
+  sessionController.getSessionByPin
+);
 sessionRouter.get(
   '/:pin/leaderboard',
   validateParams(PinParamSchema),
