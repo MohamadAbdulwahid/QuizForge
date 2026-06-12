@@ -14,6 +14,12 @@ const envSchema = z.object({
   FRONTEND_URL: z.url(),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']).default('info'),
   SENTRY_DSN: z.string().optional(),
+
+  // AI Quiz Generation (vendor-neutral, OpenAI-compatible API)
+  // Optional — when missing the AI generate endpoint returns a descriptive error.
+  AI_API_URL: z.string().url().optional(),
+  AI_API_KEY: z.string().min(1).optional(),
+  AI_MODEL: z.string().min(1).default('gpt-4o'),
 });
 
 type Config = z.infer<typeof envSchema>;
