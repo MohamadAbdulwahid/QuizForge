@@ -1,26 +1,48 @@
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Component, DestroyRef, OnInit, OnDestroy, inject, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, OnDestroy, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { buildDisplayName } from '../../shared/utils/display-name';
 import { WebsocketService } from '../../core/services/websocket.service';
 import { BubblyModalComponent } from '../../shared/ui/bubbly-modal.component';
 import { GameStateService } from './services/game-state.service';
+import { TreasureForgePlayPageComponent } from './treasure-forge-play-page.component';
+import {
+  serializeFibAnswer,
+  serializeMatchingAnswer,
+  serializeOrderingAnswer,
+} from '../quiz/types/question-types';
+import { OrderingAnswerPanelComponent } from '../quiz/answer-panels/ordering-answer-panel.component';
+import { MatchingAnswerPanelComponent } from '../quiz/answer-panels/matching-answer-panel.component';
+import { FillInBlankAnswerPanelComponent } from '../quiz/answer-panels/fill-in-blank-answer-panel.component';
 
-interface OptionShape {
-  id: string;
-  shape: 'square' | 'circle' | 'triangle' | 'diamond';
-  colorClass: string;
-  bgClass: string;
-  borderClass: string;
-  label: string;
+interface OptionStyle {
+  readonly bgClass: string;
+  readonly accentClass: string;
+  readonly label: string;
 }
+
+const OPTION_STYLES: readonly OptionStyle[] = [
+  { bgClass: 'bg-sky-500', accentClass: 'text-sky-300', label: 'A' },
+  { bgClass: 'bg-rose-500', accentClass: 'text-rose-300', label: 'B' },
+  { bgClass: 'bg-emerald-500', accentClass: 'text-emerald-300', label: 'C' },
+  { bgClass: 'bg-violet-500', accentClass: 'text-violet-300', label: 'D' },
+  { bgClass: 'bg-amber-500', accentClass: 'text-amber-300', label: 'E' },
+  { bgClass: 'bg-fuchsia-500', accentClass: 'text-fuchsia-300', label: 'F' },
+];
 
 @Component({
   selector: 'app-game-play-page',
   standalone: true,
-  imports: [CommonModule, BubblyModalComponent],
+  imports: [
+    CommonModule,
+    BubblyModalComponent,
+    TreasureForgePlayPageComponent,
+    OrderingAnswerPanelComponent,
+    MatchingAnswerPanelComponent,
+    FillInBlankAnswerPanelComponent,
+  ],
   templateUrl: './game-play-page.component.html',
 })
 export class GamePlayPageComponent implements OnInit, OnDestroy {
@@ -46,48 +68,13 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
   // Track entering animation
   protected readonly optionEntered = signal<Set<string>>(new Set());
 
-  // Blooket-style option shapes — each option gets a color + shape
-  private readonly shapeConfigs = [
-    {
-      shape: 'square' as const,
-      colorClass: 'text-sky-400',
-      bgClass: 'bg-sky-500',
-      borderClass: 'border-sky-500',
-      label: 'A',
-    },
-    {
-      shape: 'circle' as const,
-      colorClass: 'text-rose-400',
-      bgClass: 'bg-rose-500',
-      borderClass: 'border-rose-500',
-      label: 'B',
-    },
-    {
-      shape: 'triangle' as const,
-      colorClass: 'text-emerald-400',
-      bgClass: 'bg-emerald-500',
-      borderClass: 'border-emerald-500',
-      label: 'C',
-    },
-    {
-      shape: 'diamond' as const,
-      colorClass: 'text-violet-400',
-      bgClass: 'bg-violet-500',
-      borderClass: 'border-violet-500',
-      label: 'D',
-    },
-  ];
-
-  // Computed: mapped options with shapes
-  protected optionShapes = signal<OptionShape[]>([]);
-
   private pin = '';
   private animationTimeouts: ReturnType<typeof setTimeout>[] = [];
+  private didConnect = false;
 
   async ngOnInit(): Promise<void> {
     this.pin = this.route.snapshot.paramMap.get('pin') ?? '';
     await this.authService.whenReady();
-    this.bindSocketEvents();
 
     const token = this.authService.accessToken();
     const currentUser = this.authService.currentUser();
@@ -95,39 +82,48 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // Bind socket events for all game modes
+    this.bindSocketEvents();
     this.websocketService.connect(token);
     this.websocketService.joinGame(this.pin, buildDisplayName(currentUser, 'Player'));
+    this.didConnect = true;
   }
 
   ngOnDestroy(): void {
     this.clearAnimationTimeouts();
     this.clearRoundSummaryTimeout();
-    this.websocketService.leaveGame(this.pin, 'game-page-destroy');
-    this.websocketService.disconnect();
-  }
-
-  /** Returns the shape config for a given option index. */
-  protected getShapeForOption(index: number): OptionShape {
-    return {
-      ...this.shapeConfigs[index % this.shapeConfigs.length],
-      id: this.gameState.currentQuestion()?.options[index]?.id ?? '',
-    };
-  }
-
-  /** Build the mapped option shapes from the current question. */
-  private buildOptionShapes(): void {
-    const question = this.gameState.currentQuestion();
-    if (!question) {
-      this.optionShapes.set([]);
-      return;
+    if (this.didConnect) {
+      this.websocketService.leaveGame(this.pin, 'game-page-destroy');
+      this.websocketService.disconnect();
     }
+  }
 
-    this.optionShapes.set(
-      question.options.map((opt, i) => ({
-        ...this.shapeConfigs[i % this.shapeConfigs.length],
-        id: opt.id,
-      }))
-    );
+  /** Returns the option style (color + letter) for a given option index. */
+  protected getOptionStyle(index: number): OptionStyle {
+    return OPTION_STYLES[index % OPTION_STYLES.length];
+  }
+
+  /** Returns Tailwind classes for the answer options grid based on option count. */
+  protected getAnswerGridClass(count: number): string {
+    const base = 'grid w-full max-w-5xl gap-3 sm:gap-4 md:gap-5';
+    if (count <= 2) {
+      return `${base} grid-cols-1`;
+    }
+    if (count <= 4) {
+      return `${base} grid-cols-1 sm:grid-cols-2`;
+    }
+    return `${base} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`;
+  }
+
+  /** Returns full Tailwind class string for a single option button. */
+  protected getOptionClasses(index: number, disabled: boolean): string {
+    const style = this.getOptionStyle(index);
+    const layout =
+      'flex min-h-24 items-center gap-3 rounded-3xl px-4 py-4 text-left shadow-2xl sm:min-h-28 sm:gap-4 sm:px-6 sm:py-5';
+    const state = disabled
+      ? 'cursor-not-allowed opacity-70'
+      : 'transition-transform active:scale-95';
+    return `${layout} ${style.bgClass} ${state}`;
   }
 
   /** Selects an answer tile — immediately submits (no separate submit button). */
@@ -147,14 +143,93 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
     this.websocketService.submitAnswer(this.pin, question.sessionId, question.questionId, optionId);
   }
 
-  /** Returns CSS classes for an option button based on its shape and selection state. */
-  protected getOptionButtonClass(shape: OptionShape, _index: number): string {
-    const base = `${shape.bgClass} shadow-[0_8px_0_0_rgba(0,0,0,0.3)]`;
-    if (this.selectedAnswerId() === shape.id) {
-      return `${base} player-option-selected`;
+  /**
+   * Submits a structured answer (ordering, matching, fill-in-blank). The
+   * draft is read from the game state, serialized to the canonical string
+   * the backend expects, and sent over the WebSocket.
+   */
+  protected submitStructured(): void {
+    const state = this.gameState;
+    if (state.submissionState() !== 'idle' || state.timeRemainingMs() <= 0) {
+      return;
     }
-    return base;
+
+    const question = state.currentQuestion();
+    if (!question) {
+      return;
+    }
+
+    let serialized: string | null = null;
+    switch (question.type) {
+      case 'ordering': {
+        const order = state.draftOrdering();
+        if (order.length === 0) {
+          return;
+        }
+        serialized = serializeOrderingAnswer([...order]);
+        break;
+      }
+      case 'matching': {
+        const pairs = state.draftMatching();
+        serialized = serializeMatchingAnswer({ ...pairs });
+        break;
+      }
+      case 'fill-in-blank': {
+        const text = state.draftText();
+        if (text.trim().length === 0) {
+          return;
+        }
+        serialized = serializeFibAnswer(text);
+        break;
+      }
+      default:
+        return;
+    }
+
+    if (serialized === null) {
+      return;
+    }
+
+    state.markPending();
+    this.websocketService.submitAnswer(
+      this.pin,
+      question.sessionId,
+      question.questionId,
+      serialized
+    );
   }
+
+  /**
+   * Whether the current structured question has a valid answer ready
+   * (ordering: at least 1 item, matching: any pairs, fill-in-blank: non-blank).
+   * Used by the SUBMIT button's disabled state.
+   */
+  protected readonly canSubmitStructured = computed(() => {
+    const state = this.gameState;
+    const question = state.currentQuestion();
+    if (!question) {
+      return false;
+    }
+    if (state.submissionState() !== 'idle' || state.timeRemainingMs() <= 0) {
+      return false;
+    }
+    switch (question.type) {
+      case 'ordering':
+        return state.draftOrdering().length > 0;
+      case 'matching':
+        return Object.keys(state.draftMatching()).length > 0;
+      case 'fill-in-blank':
+        return state.draftText().trim().length > 0;
+      default:
+        return false;
+    }
+  });
+
+  /** True when the current question is one of the structured types. */
+  protected readonly isStructuredQuestion = computed(() => {
+    const t = this.gameState.currentQuestion()?.type;
+    return t === 'ordering' || t === 'matching' || t === 'fill-in-blank';
+  });
 
   protected abs(value: number | undefined): number {
     return value ? Math.abs(value) : 0;
@@ -240,8 +315,6 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
       this.showIncorrect.set(false);
       this.showRoundSummary.set(false);
       this.clearRoundSummaryTimeout();
-      // Build shape mappings and trigger animation
-      this.buildOptionShapes();
       this.animateOptionsIn();
     });
     this.websocketService.answerAck$
@@ -272,6 +345,8 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
     this.websocketService.gameEnded$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((event) => {
+        // Forge Classic handles game-ended directly; TF mode handled by child component
+        if (this.gameState.gameMode() === 'treasure-forge') return;
         this.gameState.endGame(event);
         void this.router.navigate(['/leaderboards'], {
           state: {
@@ -284,6 +359,8 @@ export class GamePlayPageComponent implements OnInit, OnDestroy {
     this.websocketService.sessionClosed$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((event) => {
+        // Forge Classic shows a modal; TF mode handled by child component
+        if (this.gameState.gameMode() === 'treasure-forge') return;
         this.websocketService.disconnect();
         this.sessionClosedReason.set(event.reason);
         this.showSessionClosedModal.set(true);
