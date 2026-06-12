@@ -423,10 +423,12 @@ export class QuizBuilderPageComponent {
             right = probe.right ?? [];
           }
         }
-        if (left.length === 0 || right.length === 0) {
-          const defaults = defaultOptionsForType('matching');
-          left = defaults.left;
-          right = defaults.right ?? [];
+        // Fill any missing column with defaults (preserves the other column).
+        if (left.length === 0) {
+          left = defaultOptionsForType('matching').left;
+        }
+        if (right.length === 0) {
+          right = defaultOptionsForType('matching').right ?? [];
         }
         // Ensure every left has a matchId pointing to a real right (rehydrate
         // from the saved `correct_answer` JSON if needed).
