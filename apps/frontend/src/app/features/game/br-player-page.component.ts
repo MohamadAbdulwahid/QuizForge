@@ -6,11 +6,14 @@ import { WebsocketService } from '../../core/services/websocket.service';
 import { buildDisplayName } from '../../shared/utils/display-name';
 import { BubblyAlertComponent } from '../../shared/ui/bubbly-alert.component';
 import { BubblyModalComponent } from '../../shared/ui/bubbly-modal.component';
+import { BrLivesBarComponent } from '../../shared/ui/br-lives-bar.component';
+import { BrPowerUpCardComponent } from '../../shared/ui/br-power-up-card.component';
+import { BrCurseTokenCardComponent } from '../../shared/ui/br-curse-token-card.component';
 import { BubblePopComponent } from './bubble-pop/bubble-pop.component';
 import { GameStateService } from './services/game-state.service';
 
-/** Power-up icon mapping for display. */
-const POWER_UP_ICONS: Record<string, string> = {
+/** Curated icon set for power-ups. Falls back to ✨. */
+const POWER_UP_ICONS: Readonly<Record<string, string>> = {
   Shield: '🛡️',
   QuickBubble: '⚡',
   DoublePop: '💥',
@@ -18,163 +21,50 @@ const POWER_UP_ICONS: Record<string, string> = {
   BubbleHeal: '💖',
 };
 
-/** Curse icon mapping for display. */
-const CURSE_ICONS: Record<string, string> = {
+/** Curated icon set for curses. */
+const CURSE_ICONS: Readonly<Record<string, string>> = {
   SlowMotion: '🐌',
   Jumble: '🔀',
   LifeSteal: '💀',
 };
 
+/** Cycle through vibrant Blooket-style colors for answer option cards. */
+const OPTION_COLORS = [
+  'bg-rose-500',
+  'bg-sky-500',
+  'bg-emerald-500',
+  'bg-violet-500',
+  'bg-amber-500',
+  'bg-fuchsia-500',
+] as const;
+
+const OPTION_BORDER_COLORS = [
+  '#fb7185', // rose-400
+  '#38bdf8', // sky-400
+  '#34d399', // emerald-400
+  '#a78bfa', // violet-400
+  '#fbbf24', // amber-400
+  '#e879f9', // fuchsia-400
+] as const;
+
 @Component({
   selector: 'app-br-player-page',
   standalone: true,
-  imports: [BubblePopComponent, BubblyAlertComponent, BubblyModalComponent],
+  imports: [
+    BubblePopComponent,
+    BubblyAlertComponent,
+    BubblyModalComponent,
+    BrLivesBarComponent,
+    BrPowerUpCardComponent,
+    BrCurseTokenCardComponent,
+  ],
   templateUrl: './br-player-page.component.html',
   styles: [
     `
       :host {
         display: block;
         min-height: 100dvh;
-        background: var(--bubbly-background);
-        color: var(--bubbly-text);
-        font-family: var(--bubbly-font-body);
         overflow-x: hidden;
-      }
-
-      .spectator-overlay {
-        filter: grayscale(100%);
-      }
-
-      .life-heart {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        transition:
-          transform 300ms ease,
-          opacity 300ms ease;
-      }
-
-      .life-heart.lost {
-        opacity: 0.3;
-        filter: grayscale(100%);
-      }
-
-      .life-heart.popping {
-        animation: life-pop 500ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-      }
-
-      .duel-answer-btn {
-        width: 100%;
-        padding: 1rem 1.25rem;
-        border-radius: var(--bubbly-radius-xl);
-        border: 3px solid transparent;
-        background: var(--bubbly-surface-soft);
-        color: var(--bubbly-text);
-        font-family: var(--bubbly-font-body);
-        font-weight: 700;
-        font-size: 1.125rem;
-        text-align: left;
-        cursor: pointer;
-        transition:
-          border-color 200ms ease,
-          background-color 200ms ease,
-          transform 150ms ease;
-      }
-
-      .duel-answer-btn:hover:not(:disabled) {
-        background: var(--bubbly-surface);
-        transform: scale(1.01);
-      }
-
-      .duel-answer-btn:focus-visible {
-        outline: 3px solid var(--bubbly-focus);
-        outline-offset: 2px;
-      }
-
-      .duel-answer-btn:active:not(:disabled) {
-        transform: scale(0.98);
-      }
-
-      .duel-answer-btn.selected {
-        border-color: var(--bubbly-primary);
-        background: color-mix(in srgb, var(--bubbly-primary) 13%, white);
-        animation: option-pulse 800ms ease-in-out infinite;
-      }
-
-      .duel-answer-btn:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-
-      .result-banner {
-        animation: slide-down 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
-      }
-
-      @keyframes life-pop {
-        0% {
-          transform: scale(1);
-          opacity: 1;
-        }
-        40% {
-          transform: scale(1.4);
-          opacity: 0.7;
-        }
-        100% {
-          transform: scale(0);
-          opacity: 0;
-        }
-      }
-
-      @keyframes option-pulse {
-        0%,
-        100% {
-          box-shadow: 0 0 0 0 var(--bubbly-primary);
-        }
-        50% {
-          box-shadow: 0 0 0 4px var(--bubbly-primary);
-        }
-      }
-
-      @keyframes slide-down {
-        from {
-          transform: translateY(-30px);
-          opacity: 0;
-        }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
-      }
-
-      @keyframes flash-red {
-        0%,
-        100% {
-          background-color: transparent;
-        }
-        50% {
-          background-color: rgba(239, 68, 68, 0.2);
-        }
-      }
-
-      .life-flash {
-        animation: flash-red 600ms ease-in-out;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .life-heart.popping,
-        .duel-answer-btn.selected,
-        .result-banner,
-        .life-flash {
-          animation: none;
-        }
-        .life-heart.popping {
-          opacity: 0;
-          transform: scale(0);
-        }
-        .duel-answer-btn {
-          transition: none;
-        }
       }
     `,
   ],
@@ -224,7 +114,9 @@ export class BrPlayerPageComponent implements OnInit, OnDestroy {
 
   readonly isWatchingDuel = computed(() => {
     return (
-      this.gameState.roundType() === 'duel' && !this.isInDuel() && !this.gameState.isSpectator()
+      this.gameState.roundType() === 'duel' &&
+      !this.isInDuel() &&
+      !this.gameState.isSpectator()
     );
   });
 
@@ -268,10 +160,9 @@ export class BrPlayerPageComponent implements OnInit, OnDestroy {
   });
 
   /** Count of curses cast on the current duel (curseOpportunityTargets may have metadata). */
-  readonly cursesOnCurrentDuel = computed(() => {
-    // Spectators can see how many curses have been cast this round
-    return this.gameState.curseTokens().filter((c) => c.cast).length;
-  });
+  readonly cursesOnCurrentDuel = computed(() =>
+    this.gameState.curseTokens().filter((c) => c.cast).length
+  );
 
   // ── Internal ──
   private pin = '';
@@ -379,6 +270,50 @@ export class BrPlayerPageComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/dashboard');
   }
 
+  // ── Icon helpers (used in template for toasts and list items) ──
+
+  getPowerUpIcon(type: string): string {
+    return POWER_UP_ICONS[type] ?? '✨';
+  }
+
+  getCurseIcon(type: string): string {
+    return CURSE_ICONS[type] ?? '🔮';
+  }
+
+  // ── Layout helpers (used in template) ──
+
+  getOptionColor(i: number): string {
+    return OPTION_COLORS[i % OPTION_COLORS.length];
+  }
+
+  getOptionBorderColor(i: number): string {
+    return OPTION_BORDER_COLORS[i % OPTION_BORDER_COLORS.length];
+  }
+
+  getOptionLetter(i: number): string {
+    return String.fromCharCode(65 + i);
+  }
+
+  /** Returns an array [0..count-1] for @for iteration. */
+  range(count: number): number[] {
+    return Array.from({ length: Math.max(0, count) }, (_, i) => i);
+  }
+
+  /**
+   * Index of the life that was just lost (so the lives bar can play
+   * its pop animation). Derived from `lifeLostRecently` + current lives
+   * — when the player who just lost a life matches our user, pop the
+   * one that just disappeared (i.e. `remaining`).
+   */
+  readonly lifeJustLostIndex = computed<number | null>(() => {
+    const recentLoser = this.gameState.lifeLostRecently();
+    const me = this.gameState.currentUserId();
+    if (!recentLoser || recentLoser !== me) return null;
+    // The life at the index `remaining` was just lost
+    // (e.g. lives was 3, now 2 → index 2 just disappeared).
+    return this.gameState.lives();
+  });
+
   // ── Toast helpers ──
 
   private showPowerUpNotification(name: string): void {
@@ -435,16 +370,6 @@ export class BrPlayerPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  // ── Power-up icon helper (used in template) ──
-
-  getPowerUpIcon(type: string): string {
-    return POWER_UP_ICONS[type] ?? '✨';
-  }
-
-  getCurseIcon(type: string): string {
-    return CURSE_ICONS[type] ?? '🔮';
-  }
-
   // ── Socket event bindings ──
 
   private bindSocketEvents(): void {
@@ -461,7 +386,6 @@ export class BrPlayerPageComponent implements OnInit, OnDestroy {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((event) => {
         this.gameStarted.set(true);
-        // Set userId from auth
         const currentUser = this.authService.currentUser();
         if (currentUser) {
           this.gameState.setCurrentUserId(currentUser.id);
@@ -479,13 +403,11 @@ export class BrPlayerPageComponent implements OnInit, OnDestroy {
         this.showSessionClosedModal.set(true);
       });
 
-    // Watch duel state changes to start/stop timer and reset selections
     this.websocketService.duelQuestion$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((event) => {
         const duel = this.gameState.duelState();
         if (!duel || duel.duelId !== event.duelId) return;
-        // Reset answer state when new question arrives for our duel
         this.selectedAnswer.set(null);
         this.answerSubmitted.set(false);
         this.startDuelTimer(event.question.timerMs);
@@ -496,25 +418,23 @@ export class BrPlayerPageComponent implements OnInit, OnDestroy {
       .subscribe((event) => {
         const duel = this.gameState.duelState();
         if (!duel || duel.duelId !== event.duelId) return;
-        // Stop the timer on duel result
         this.clearDuelTimer();
       });
 
-    // Track when we enter/leave a duel to reset state
-    this.websocketService.duelPaired$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-      this.selectedAnswer.set(null);
-      this.answerSubmitted.set(false);
-      this.clearDuelTimer();
-    });
+    this.websocketService.duelPaired$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.selectedAnswer.set(null);
+        this.answerSubmitted.set(false);
+        this.clearDuelTimer();
+      });
 
-    // Reset bubble pop state on round transition
     this.websocketService.roundTransition$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         this.bubbleBubblesReached.set(0);
         this.bubbleTimeMs.set(null);
         this.bubbleSubmitted.set(false);
-        // Reset duel state if transitioning out of a duel round
         if (this.wasInDuel) {
           this.selectedAnswer.set(null);
           this.answerSubmitted.set(false);
@@ -543,12 +463,14 @@ export class BrPlayerPageComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.websocketService.lifeLost$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event) => {
-      const currentUserId = this.gameState.currentUserId();
-      if (event.playerId === currentUserId) {
-        this.showLifeLost();
-      }
-    });
+    this.websocketService.lifeLost$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((event) => {
+        const currentUserId = this.gameState.currentUserId();
+        if (event.playerId === currentUserId) {
+          this.showLifeLost();
+        }
+      });
 
     this.websocketService.playerEliminated$
       .pipe(takeUntilDestroyed(this.destroyRef))

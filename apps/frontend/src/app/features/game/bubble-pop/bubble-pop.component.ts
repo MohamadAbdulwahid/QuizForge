@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import {
   Component,
   computed,
+  DestroyRef,
   inject,
   input,
   OnDestroy,
@@ -21,140 +22,32 @@ export interface BubbleData {
   readonly y: number;
 }
 
+/** Phase of the bubble pop challenge. */
+type ChallengePhase = 'countdown' | 'active' | 'complete' | 'waiting';
+
+const WRONG_RESET_MS = 460;
+
+/**
+ * Bubble Pop arena — full-screen reflex challenge.
+ *
+ * Flow:
+ *  1. 'waiting'    — bubbles rendered, timer idle, "Click bubble 1 to start"
+ *  2. 'countdown'  — 3-2-1-GO overlay, bubbles not yet clickable
+ *  3. 'active'     — timer running, clicks count, wrong = red shake + reset
+ *  4. 'complete'   — timer stopped, big "Done!" with confetti
+ *
+ * Emits `bubbleClick(num)` for each correct pop, and `challengeComplete(ms)`
+ * when the player pops all 6 in order.
+ */
 @Component({
   selector: 'app-bubble-pop',
   standalone: true,
-  imports: [],
   templateUrl: './bubble-pop.component.html',
   styles: [
     `
       :host {
         display: block;
         width: 100%;
-      }
-
-      .bubble-area {
-        position: relative;
-        width: 100%;
-        aspect-ratio: 1;
-        max-width: 500px;
-        margin: 0 auto;
-        border-radius: var(--bubbly-radius-xl);
-        background: var(--bubbly-surface-soft);
-        border: 2px dashed var(--bubbly-border);
-        overflow: hidden;
-      }
-
-      .bubble-area.celebrating {
-        border-style: solid;
-        border-color: var(--bubbly-warning-border);
-        background: var(--bubbly-warning-bg);
-        box-shadow: 0 0 48px 8px var(--bubbly-warning-border);
-      }
-
-      .bubble-btn {
-        position: absolute;
-        width: 5rem;
-        height: 5rem;
-        border-radius: var(--bubbly-radius-full);
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: var(--bubbly-font-heading);
-        font-size: 2rem;
-        font-weight: var(--bubbly-font-weight-bold);
-        color: white;
-        background: var(--bubbly-primary);
-        box-shadow:
-          0 6px 0 0 var(--bubbly-primary-deep),
-          0 2px 12px var(--bubbly-shadow);
-        transform: translate(-50%, -50%);
-        transition:
-          transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
-          opacity 250ms ease,
-          background-color 300ms ease;
-        outline-offset: 3px;
-      }
-
-      .bubble-btn:focus-visible {
-        outline: 3px solid var(--bubbly-focus);
-      }
-
-      .bubble-btn:hover:not(:disabled):not(.popped):not(.shaking) {
-        transform: translate(-50%, -50%) scale(1.12);
-      }
-
-      .bubble-btn:active:not(:disabled):not(.popped):not(.shaking) {
-        transform: translate(-50%, -50%) scale(0.94);
-      }
-
-      .bubble-btn.popped {
-        transform: translate(-50%, -50%) scale(0) rotate(18deg);
-        opacity: 0;
-        pointer-events: none;
-      }
-
-      .bubble-btn.shaking {
-        background: var(--bubbly-error-bg);
-        color: var(--bubbly-error-text);
-        box-shadow:
-          0 6px 0 0 var(--bubbly-error-border),
-          0 0 16px var(--bubbly-error-border);
-        animation: bubble-shake 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
-      }
-
-      @keyframes bubble-shake {
-        0%,
-        100% {
-          transform: translate(-50%, -50%);
-        }
-        10%,
-        50%,
-        90% {
-          transform: translate(calc(-50% - 8px), -50%);
-        }
-        30%,
-        70% {
-          transform: translate(calc(-50% + 8px), -50%);
-        }
-      }
-
-      @keyframes bubble-celebrate {
-        0%,
-        100% {
-          box-shadow: 0 0 48px 8px var(--bubbly-warning-border);
-        }
-        50% {
-          box-shadow: 0 0 64px 16px var(--bubbly-warning-border);
-        }
-      }
-
-      .bubble-area.celebrating {
-        animation: bubble-celebrate 800ms ease-in-out infinite;
-      }
-
-      /* Reduced motion */
-      @media (prefers-reduced-motion: reduce) {
-        .bubble-btn {
-          transition: none;
-        }
-        .bubble-btn.shaking {
-          animation: none;
-        }
-        .bubble-area.celebrating {
-          animation: none;
-        }
-      }
-
-      /* Tablet+ */
-      @media (min-width: 640px) {
-        .bubble-btn {
-          width: 6rem;
-          height: 6rem;
-          font-size: 2.5rem;
-        }
       }
     `,
   ],
@@ -165,6 +58,12 @@ export class BubblePopComponent implements OnInit, OnDestroy {
    * When not provided, random positions are generated on mount.
    */
   readonly bubbles = input<readonly BubbleData[]>([]);
+
+  /**
+   * Whether to skip the 3-2-1 countdown. When true, the challenge
+   * is interactive immediately on mount. Defaults to false (countdown enabled).
+   */
+  readonly skipCountdown = input<boolean>(false);
 
   /** Emits the bubble number (1–6) each time a correct bubble is clicked. */
   readonly bubbleClick = output<number>();
@@ -180,13 +79,16 @@ export class BubblePopComponent implements OnInit, OnDestroy {
   protected readonly isComplete = signal(false);
   protected readonly hasStarted = signal(false);
   protected readonly elapsedTimeMs = signal(0);
+  protected readonly countdownValue = signal<3 | 2 | 1 | 'GO' | null>(null);
 
   private readonly internalBubbles = signal<readonly BubbleData[]>([]);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
   private startTimestamp: number | null = null;
   private timerInterval: ReturnType<typeof setInterval> | null = null;
   private wrongResetTimeout: ReturnType<typeof setTimeout> | null = null;
+  private countdownTimeout: ReturnType<typeof setTimeout> | null = null;
 
   /** The bubbles to render: parent input, or internally generated. */
   protected readonly displayBubbles = computed(() => {
@@ -194,26 +96,12 @@ export class BubblePopComponent implements OnInit, OnDestroy {
     return input.length === 6 ? input : this.internalBubbles();
   });
 
-  ngOnInit(): void {
-    if (this.bubbles().length < 6) {
-      this.internalBubbles.set(this.generateRandomBubbles());
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.clearTimer();
-    this.clearWrongReset();
-  }
-
-  // ── Template helpers ──
-
-  protected isPopped(num: number): boolean {
-    return this.poppedBubbles().has(num);
-  }
-
-  protected isShaking(num: number): boolean {
-    return this.wrongBubbles().has(num);
-  }
+  protected readonly phase = computed<ChallengePhase>(() => {
+    if (this.isComplete()) return 'complete';
+    if (this.countdownValue() !== null) return 'countdown';
+    if (this.hasStarted()) return 'active';
+    return 'waiting';
+  });
 
   protected readonly isResetting = computed(() => this.wrongBubbles().size > 0);
 
@@ -224,25 +112,55 @@ export class BubblePopComponent implements OnInit, OnDestroy {
     return `${secs}.${String(millis).padStart(3, '0')}s`;
   });
 
+  /** Confetti pieces rendered on completion — generated once on complete. */
+  protected readonly confettiPieces = computed(() => {
+    if (this.phase() !== 'complete') return [];
+    return Array.from({ length: 30 }, (_, i) => ({
+      id: i,
+      leftPct: Math.random() * 100,
+      delayMs: Math.random() * 1200,
+      colorIndex: i % 6,
+    }));
+  });
+
+  /** Background-color cycle for confetti. */
+  protected confettiColor(i: number): string {
+    const palette = ['#00a5e0', '#cd2750', '#f59e0b', '#10b981', '#8b5cf6', '#ec4899'];
+    return palette[i % palette.length];
+  }
+
+  ngOnInit(): void {
+    if (this.bubbles().length < 6) {
+      this.internalBubbles.set(this.generateRandomBubbles());
+    }
+    // Start the countdown on mount unless caller opts out.
+    // The challenge becomes interactive after 3-2-1-GO completes.
+    if (this.isBrowser && !this.skipCountdown()) {
+      this.startCountdown();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.clearTimer();
+    this.clearWrongReset();
+    this.clearCountdown();
+  }
+
   // ── Click handler ──
 
   protected onBubbleClick(num: number): void {
-    // Ignore clicks during wrong-animation reset
+    // Block clicks during countdown overlay, wrong-reset animation, and after completion
+    if (this.phase() === 'countdown') return;
     if (this.isResetting()) return;
-    // Ignore clicks after completion
     if (this.isComplete()) return;
-    // Ignore clicks on already-popped bubbles
     if (this.isPopped(num)) return;
 
-    // Start the timer on the very first click
+    // Start the timer on the very first click (allowed even when not yet started)
     if (!this.hasStarted()) {
-      this.hasStarted.set(true);
-      this.startTimestamp = Date.now();
       this.startTimer();
     }
 
     if (num === this.nextExpectedNumber()) {
-      // Correct — pop this bubble
       this.poppedBubbles.update((s) => {
         const next = new Set(s);
         next.add(num);
@@ -251,13 +169,43 @@ export class BubblePopComponent implements OnInit, OnDestroy {
       this.nextExpectedNumber.update((n) => n + 1);
       this.bubbleClick.emit(num);
 
-      // All 6 popped? Complete the challenge.
       if (num === 6) {
         this.completeChallenge();
       }
     } else {
-      // Wrong — shake all remaining bubbles, then reset
       this.triggerWrongReset();
+    }
+  }
+
+  // ── Countdown ──
+
+  private startCountdown(): void {
+    this.clearCountdown();
+    this.countdownValue.set(3);
+    let step = 3;
+    const tick = (): void => {
+      if (step <= 0) {
+        this.countdownValue.set('GO');
+        // After "GO" appears briefly, dismiss the overlay but wait
+        // for the player to make their first click to actually start
+        // the timer. This way they see "GO!" and the bubbles become
+        // active immediately.
+        this.countdownTimeout = setTimeout(() => {
+          this.countdownValue.set(null);
+        }, 700);
+        return;
+      }
+      this.countdownValue.set(step as 3 | 2 | 1);
+      step -= 1;
+      this.countdownTimeout = setTimeout(tick, 900);
+    };
+    this.countdownTimeout = setTimeout(tick, 900);
+  }
+
+  private clearCountdown(): void {
+    if (this.countdownTimeout !== null) {
+      clearTimeout(this.countdownTimeout);
+      this.countdownTimeout = null;
     }
   }
 
@@ -266,11 +214,13 @@ export class BubblePopComponent implements OnInit, OnDestroy {
   private startTimer(): void {
     if (!this.isBrowser) return;
     this.clearTimer();
+    this.hasStarted.set(true);
+    this.startTimestamp = Date.now();
     this.timerInterval = setInterval(() => {
       if (this.startTimestamp !== null) {
         this.elapsedTimeMs.set(Date.now() - this.startTimestamp);
       }
-    }, 10);
+    }, 30);
   }
 
   private clearTimer(): void {
@@ -283,7 +233,6 @@ export class BubblePopComponent implements OnInit, OnDestroy {
   // ── Wrong-reset logic ──
 
   private triggerWrongReset(): void {
-    // Mark all unpopped bubbles as shaking
     this.wrongBubbles.update(() => {
       const next = new Set<number>();
       for (const b of this.displayBubbles()) {
@@ -296,11 +245,10 @@ export class BubblePopComponent implements OnInit, OnDestroy {
 
     this.clearWrongReset();
     this.wrongResetTimeout = setTimeout(() => {
-      // After shake animation, reset all bubble state
       this.wrongBubbles.set(new Set());
       this.poppedBubbles.set(new Set());
       this.nextExpectedNumber.set(1);
-    }, 450);
+    }, WRONG_RESET_MS);
   }
 
   private clearWrongReset(): void {
@@ -318,11 +266,20 @@ export class BubblePopComponent implements OnInit, OnDestroy {
     this.challengeComplete.emit(this.elapsedTimeMs());
   }
 
+  // ── Template helpers ──
+
+  protected isPopped(num: number): boolean {
+    return this.poppedBubbles().has(num);
+  }
+
+  protected isShaking(num: number): boolean {
+    return this.wrongBubbles().has(num);
+  }
+
   // ── Internal position generation ──
 
   private generateRandomBubbles(): readonly BubbleData[] {
-    // Use a seeded-ish approach to avoid tight clumping.
-    // Divide the area into zones and pick positions within each.
+    // Place bubbles in zones to avoid tight clumping.
     const zones = [
       { cx: 25, cy: 25 },
       { cx: 65, cy: 20 },
@@ -334,8 +291,8 @@ export class BubblePopComponent implements OnInit, OnDestroy {
 
     return zones.map((zone, i) => ({
       number: i + 1,
-      x: zone.cx + (Math.random() - 0.5) * 24,
-      y: zone.cy + (Math.random() - 0.5) * 24,
+      x: zone.cx + (Math.random() - 0.5) * 20,
+      y: zone.cy + (Math.random() - 0.5) * 20,
     }));
   }
 }

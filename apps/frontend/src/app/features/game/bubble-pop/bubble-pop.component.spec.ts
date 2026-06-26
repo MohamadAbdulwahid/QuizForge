@@ -34,6 +34,9 @@ describe('BubblePopComponent', () => {
 
     fixture = TestBed.createComponent(BubblePopComponent);
     component = fixture.componentInstance;
+    // Tests opt out of the 3-2-1 countdown so clicks work immediately
+    // (fake timers would otherwise leave the component stuck in countdown).
+    fixture.componentRef.setInput('skipCountdown', true);
   });
 
   afterEach(() => {
@@ -47,7 +50,7 @@ describe('BubblePopComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const buttons = fixture.debugElement.queryAll(By.css('.bubble-btn'));
+    const buttons = fixture.debugElement.queryAll(By.css('.br-bubble'));
     expect(buttons.length).toBe(6);
   });
 
@@ -55,11 +58,11 @@ describe('BubblePopComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const buttons = fixture.debugElement.queryAll(By.css('.bubble-btn'));
+    const buttons = fixture.debugElement.queryAll(By.css('.br-bubble'));
     expect(buttons.length).toBe(6);
   });
 
-  it('shows instruction text before any click', async () => {
+  it('shows "click 1 to start" instruction before any click', async () => {
     fixture.componentRef.setInput('bubbles', makeBubbles());
     fixture.detectChanges();
     await fixture.whenStable();
@@ -91,15 +94,14 @@ describe('BubblePopComponent', () => {
 
     component.challengeComplete.subscribe(completeSpy);
 
-    // Click 1 through 6 in order
     for (let n = 1; n <= 6; n++) {
       clickBubble(fixture, n);
       fixture.detectChanges();
     }
     await fixture.whenStable();
 
-    // Since fake timers are used, the timer interval won't advance.
-    // But the component should still mark isComplete() = true and emit.
+    // With fake timers, the timer interval won't advance, but the
+    // component should still mark complete and emit the event.
     expect(completeSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -131,17 +133,14 @@ describe('BubblePopComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    // First click is correct (bubble 1)
     clickBubble(fixture, 1);
     fixture.detectChanges();
     await fixture.whenStable();
 
-    // Click bubble 3 instead of 2 — wrong
     clickBubble(fixture, 3);
     fixture.detectChanges();
     await fixture.whenStable();
 
-    // All non-popped bubbles should be shaking
     const bubble2 = findBubble(fixture, 2);
     const bubble3 = findBubble(fixture, 3);
 
@@ -154,26 +153,22 @@ describe('BubblePopComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    // Pop 1, then wrong-click 3
     clickBubble(fixture, 1);
     fixture.detectChanges();
 
     clickBubble(fixture, 3);
     fixture.detectChanges();
 
-    // After the shake animation timeout (450ms)
     vi.advanceTimersByTime(500);
     fixture.detectChanges();
     await fixture.whenStable();
 
-    // All bubbles should be back: no popped, no shaking
-    const allButtons = fixture.debugElement.queryAll(By.css('.bubble-btn'));
+    const allButtons = fixture.debugElement.queryAll(By.css('.br-bubble'));
     for (const btn of allButtons) {
       expect(btn.classes['popped']).toBeFalsy();
       expect(btn.classes['shaking']).toBeFalsy();
     }
 
-    // Next expected should be back to 1
     expect(component['nextExpectedNumber']()).toBe(1);
   });
 
@@ -184,17 +179,14 @@ describe('BubblePopComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    // Click bubble 1 (correct)
     clickBubble(fixture, 1);
     fixture.detectChanges();
     await fixture.whenStable();
 
-    // Click bubble 1 again (should be ignored)
     clickBubble(fixture, 1);
     fixture.detectChanges();
     await fixture.whenStable();
 
-    // Should not have reset — bubble 1 still popped, next expected = 2
     const bubble1 = findBubble(fixture, 1);
     expect(bubble1.classes['popped']).toBe(true);
     expect(component['nextExpectedNumber']()).toBe(2);
@@ -205,22 +197,45 @@ describe('BubblePopComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    // Pop 1, then wrong-click 3
     clickBubble(fixture, 1);
     fixture.detectChanges();
 
     clickBubble(fixture, 3);
     fixture.detectChanges();
 
-    // While shaking, click bubble 2 (should be ignored)
     clickBubble(fixture, 2);
     fixture.detectChanges();
     await fixture.whenStable();
 
-    // Bubble 2 should still be shaking (not popped)
     const bubble2 = findBubble(fixture, 2);
     expect(bubble2.classes['shaking']).toBe(true);
     expect(bubble2.classes['popped']).toBeFalsy();
+  });
+
+  it('does not start countdown when skipCountdown is true', async () => {
+    fixture.componentRef.setInput('bubbles', makeBubbles());
+    fixture.componentRef.setInput('skipCountdown', true);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    // With skipCountdown=true, phase is 'waiting' immediately, not 'countdown'.
+    expect(component['phase']()).toBe('waiting');
+  });
+
+  it('starts countdown when skipCountdown is false', async () => {
+    // Recreate the fixture so ngOnInit runs with skipCountdown=false.
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [BubblePopComponent],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
+    const freshFixture = TestBed.createComponent(BubblePopComponent);
+    freshFixture.componentRef.setInput('bubbles', makeBubbles());
+    freshFixture.componentRef.setInput('skipCountdown', false);
+    freshFixture.detectChanges();
+    await freshFixture.whenStable();
+
+    expect(freshFixture.componentInstance['phase']()).toBe('countdown');
   });
 });
 
@@ -230,8 +245,10 @@ function findBubble(
   fixture: ComponentFixture<BubblePopComponent>,
   num: number
 ): { classes: Record<string, boolean>; nativeElement: HTMLElement } {
-  const buttons = fixture.debugElement.queryAll(By.css('.bubble-btn'));
-  const found = buttons.find((btn) => btn.nativeElement.textContent.trim() === String(num));
+  const buttons = fixture.debugElement.queryAll(By.css('.br-bubble'));
+  const found = buttons.find(
+    (btn) => btn.nativeElement.textContent.trim() === String(num)
+  );
   if (!found) {
     throw new Error(`Bubble ${num} not found in DOM`);
   }

@@ -167,15 +167,15 @@ describe('BrPlayerPageComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    // Header should show 2 filled hearts and 1 empty
-    const header = fixture.nativeElement.querySelector('header');
-    expect(header).toBeTruthy();
+    // Header should show 2 filled hearts and 1 empty (rendered by <app-br-lives-bar>)
+    const livesBar = fixture.nativeElement.querySelector('app-br-lives-bar');
+    expect(livesBar).toBeTruthy();
 
-    const hearts = header.querySelectorAll('.life-heart');
+    const hearts = livesBar.querySelectorAll('.br-life-heart');
     expect(hearts.length).toBe(3); // 3 starting lives
 
     // Count lost hearts
-    const lostHearts = header.querySelectorAll('.life-heart.lost');
+    const lostHearts = livesBar.querySelectorAll('.br-life-heart.lost');
     expect(lostHearts.length).toBe(1); // 3 - 2 = 1 lost
   });
 
@@ -215,7 +215,7 @@ describe('BrPlayerPageComponent', () => {
     expect(body).toContain('What is the capital of France?');
 
     // Find answer buttons
-    const buttons = fixture.nativeElement.querySelectorAll('.duel-answer-btn');
+    const buttons = fixture.nativeElement.querySelectorAll('.br-answer-btn');
     expect(buttons.length).toBe(4);
 
     // Click the first answer (Paris)

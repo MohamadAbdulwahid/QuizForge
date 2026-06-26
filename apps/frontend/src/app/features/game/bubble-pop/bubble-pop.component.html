@@ -1,68 +1,94 @@
 <div class="flex w-full flex-col items-center gap-5">
   <!-- ── Timer display ── -->
   <div
-    class="qf-chip font-display text-base sm:text-lg"
-    [class.bg-bubbly-warning]="isComplete()"
-    [class.qf-alert-success]="isComplete()"
+    class="br-timer"
+    [class.urgent]="isComplete() === false && hasStarted() && elapsedTimeMs() > 5000"
     aria-live="polite"
   >
-    @if (!hasStarted()) {
-      <span>Click bubble 1 to start!</span>
-    } @else if (isComplete()) {
-      <span>Complete &mdash; {{ formattedTime() }}</span>
+    <span class="br-timer-icon" aria-hidden="true">⏱️</span>
+    @if (phase() === 'waiting') {
+      <span class="br-timer-value">Click bubble 1 to start!</span>
+    } @else if (phase() === 'countdown') {
+      <span class="br-timer-value">Get Ready...</span>
+    } @else if (phase() === 'complete') {
+      <span class="br-timer-value">{{ formattedTime() }}</span>
     } @else {
-      <span>{{ formattedTime() }}</span>
+      <span class="br-timer-value">{{ formattedTime() }}</span>
     }
   </div>
 
   <!-- ── Bubble play area ── -->
   <div
-    class="bubble-area"
-    [class.celebrating]="isComplete()"
+    class="br-arena"
+    [class.countdown-active]="phase() === 'countdown'"
+    [class.complete]="phase() === 'complete'"
   >
     @for (bubble of displayBubbles(); track bubble.number) {
       <button
         type="button"
-        class="bubble-btn"
+        class="br-bubble"
         [style.left.%]="bubble.x"
         [style.top.%]="bubble.y"
         [class.popped]="isPopped(bubble.number)"
         [class.shaking]="isShaking(bubble.number)"
-        [disabled]="isComplete() || isPopped(bubble.number)"
+        [disabled]="phase() === 'countdown' || phase() === 'complete' || isPopped(bubble.number)"
         [attr.aria-label]="'Bubble ' + bubble.number"
         (click)="onBubbleClick(bubble.number)"
       >
         {{ bubble.number }}
       </button>
     }
+
+    <!-- ── Countdown overlay ── -->
+    @if (countdownValue() !== null) {
+      <div
+        class="absolute inset-0 z-10 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm"
+        aria-live="assertive"
+      >
+        @if (countdownValue() === 'GO') {
+          <span class="br-countdown-go">GO!</span>
+        } @else {
+          <span class="br-countdown-number">{{ countdownValue() }}</span>
+        }
+      </div>
+    }
+
+    <!-- ── Complete overlay ── -->
+    @if (phase() === 'complete') {
+      <div
+        class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-emerald-500/15 backdrop-blur-sm"
+        role="status"
+        aria-live="assertive"
+      >
+        <span class="text-7xl drop-shadow-2xl">🎉</span>
+        <span class="font-display mt-3 text-5xl font-black text-white drop-shadow-2xl sm:text-6xl">
+          Done!
+        </span>
+        <span
+          class="font-display mt-2 text-4xl font-black text-emerald-300 drop-shadow-2xl sm:text-5xl"
+          style="font-variant-numeric: tabular-nums;"
+        >
+          {{ formattedTime() }}
+        </span>
+
+        <!-- Confetti particles -->
+        @for (piece of confettiPieces(); track piece.id) {
+          <span
+            class="br-confetti"
+            [style.left.%]="piece.leftPct"
+            [style.background-color]="confettiColor(piece.colorIndex)"
+            [style.animation-delay.ms]="piece.delayMs"
+            aria-hidden="true"
+          ></span>
+        }
+      </div>
+    }
   </div>
 
-  <!-- ── Complete banner ── -->
-  @if (isComplete()) {
-    <div
-      class="qf-surface rounded-2xl px-5 py-3 text-center"
-      role="status"
-      style="border-color: var(--bubbly-warning-border); background: var(--bubbly-warning-bg)"
-    >
-      <p
-        class="font-display text-xl font-bold"
-        style="color: var(--bubbly-warning-text)"
-      >
-        Challenge Complete!
-      </p>
-      <p
-        class="font-display mt-1 text-2xl font-bold"
-        style="color: var(--bubbly-primary-deep)"
-      >
-        {{ formattedTime() }}
-      </p>
-    </div>
-  }
-
   <!-- ── Instructions ── -->
-  @if (!hasStarted()) {
-    <p class="qf-muted max-w-xs text-center text-sm">
-      Pop the bubbles in order &mdash; 1 to 6 &mdash; as fast as you can!
+  @if (phase() === 'waiting') {
+    <p class="max-w-xs text-center text-base font-bold text-white/80 drop-shadow-md">
+      Pop the bubbles in order — 1 to 6 — as fast as you can!
     </p>
   }
 </div>

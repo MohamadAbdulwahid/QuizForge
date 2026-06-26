@@ -787,10 +787,693 @@ h3,
   animation: player-option-enter 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
+/* ── Bubbly Royale: Game-show battle arena ── */
+
+.br-page-bg {
+  background: linear-gradient(135deg, #0b1120 0%, #1a1f3a 35%, #0e1a2e 70%, #050a14 100%);
+  min-height: 100vh;
+  min-height: 100dvh;
+  position: relative;
+}
+
+.br-host-bg {
+  background: linear-gradient(180deg, #00a5e0 0%, #007fb0 50%, #003a5c 100%);
+  min-height: 100vh;
+  min-height: 100dvh;
+  position: relative;
+}
+
+.br-bg-pattern {
+  background-image:
+    radial-gradient(circle at 18% 25%, rgba(0, 165, 224, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 82% 18%, rgba(205, 39, 80, 0.14) 0%, transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(99, 102, 241, 0.12) 0%, transparent 55%);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.br-floating-bubble {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.45), rgba(0, 165, 224, 0.18) 60%, rgba(0, 165, 224, 0) 100%);
+  filter: blur(0.5px);
+  animation: br-floating-bubble 12s ease-in-out infinite;
+}
+
+.br-floating-bubble.b1 { top: 8%; left: 6%; width: 80px; height: 80px; animation-delay: 0s; }
+.br-floating-bubble.b2 { top: 25%; right: 4%; width: 120px; height: 120px; animation-delay: 2s; }
+.br-floating-bubble.b3 { bottom: 18%; left: 8%; width: 100px; height: 100px; animation-delay: 4s; }
+.br-floating-bubble.b4 { top: 60%; right: 10%; width: 60px; height: 60px; animation-delay: 6s; }
+.br-floating-bubble.b5 { bottom: 6%; right: 18%; width: 90px; height: 90px; animation-delay: 8s; }
+.br-floating-bubble.b6 { top: 12%; left: 45%; width: 70px; height: 70px; animation-delay: 10s; }
+
+@keyframes br-floating-bubble {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+  25% { transform: translate(15px, -20px) scale(1.05); opacity: 0.8; }
+  50% { transform: translate(-10px, -30px) scale(0.95); opacity: 0.55; }
+  75% { transform: translate(20px, 10px) scale(1.08); opacity: 0.7; }
+}
+
+/* Life heart pop animation */
+@keyframes br-life-pop {
+  0% { transform: scale(1) rotate(0deg); opacity: 1; }
+  30% { transform: scale(1.45) rotate(-8deg); opacity: 0.95; }
+  70% { transform: scale(0.6) rotate(12deg); opacity: 0.4; }
+  100% { transform: scale(0) rotate(0deg); opacity: 0; }
+}
+
+.br-life-heart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.25rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 6px rgba(205, 39, 80, 0.5));
+  transition: filter 300ms ease;
+}
+
+.br-life-heart.lost {
+  filter: grayscale(0.7) brightness(0.7);
+  opacity: 0.45;
+}
+
+.br-life-heart.popping {
+  animation: br-life-pop 600ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Duel split-screen — YOU (cyan) vs OPPONENT (rose) */
+.br-duel-side {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.5rem 1rem;
+  border-radius: var(--bubbly-radius-xl);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 300ms ease;
+}
+
+.br-duel-side.you {
+  background: linear-gradient(180deg, rgba(0, 165, 224, 0.25), rgba(0, 165, 224, 0.05));
+  border: 2px solid rgba(0, 165, 224, 0.45);
+  box-shadow: 0 0 24px rgba(0, 165, 224, 0.18);
+}
+
+.br-duel-side.opponent {
+  background: linear-gradient(180deg, rgba(205, 39, 80, 0.25), rgba(205, 39, 80, 0.05));
+  border: 2px solid rgba(205, 39, 80, 0.45);
+  box-shadow: 0 0 24px rgba(205, 39, 80, 0.18);
+}
+
+.br-duel-side.active {
+  transform: scale(1.02);
+}
+
+.br-duel-side.opponent.active {
+  box-shadow: 0 0 36px rgba(205, 39, 80, 0.4);
+}
+
+.br-duel-side.you.active {
+  box-shadow: 0 0 36px rgba(0, 165, 224, 0.4);
+}
+
+/* Blooket-style answer option button for BR */
+.br-answer-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: none;
+  border-radius: var(--bubbly-radius-xl);
+  color: white;
+  font-family: var(--bubbly-font-body);
+  font-weight: 700;
+  font-size: 1.125rem;
+  text-align: left;
+  cursor: pointer;
+  box-shadow:
+    0 4px 0 0 rgba(0, 0, 0, 0.25),
+    0 8px 20px rgba(0, 0, 0, 0.25);
+  transition: all 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+.br-answer-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15), transparent 50%);
+  pointer-events: none;
+}
+
+.br-answer-btn:hover:not(:disabled) {
+  transform: scale(1.04) translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow:
+    0 6px 0 0 rgba(0, 0, 0, 0.25),
+    0 12px 28px rgba(0, 0, 0, 0.3);
+}
+
+.br-answer-btn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.br-answer-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.br-answer-btn.selected {
+  outline: 4px solid white;
+  outline-offset: 2px;
+  transform: scale(1.04);
+  filter: brightness(1.15);
+}
+
+.br-answer-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+  border-radius: var(--bubbly-radius-md);
+  background: rgba(0, 0, 0, 0.25);
+  color: white;
+  font-family: var(--bubbly-font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  position: relative;
+  z-index: 1;
+}
+
+.br-answer-text {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Arena: Bubble Pop challenge stage */
+.br-arena {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 540px;
+  margin: 0 auto;
+  border-radius: var(--bubbly-radius-xl);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(0, 165, 224, 0.12), rgba(15, 23, 42, 0.6) 75%),
+    rgba(15, 23, 42, 0.4);
+  border: 3px solid rgba(0, 165, 224, 0.45);
+  box-shadow:
+    inset 0 0 60px rgba(0, 165, 224, 0.2),
+    0 8px 32px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.br-arena::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-conic-gradient(
+    rgba(0, 165, 224, 0.05) 0% 25%,
+    transparent 0% 50%
+  );
+  background-size: 30px 30px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.br-arena.countdown-active {
+  border-color: rgba(245, 158, 11, 0.6);
+  box-shadow:
+    inset 0 0 60px rgba(245, 158, 11, 0.25),
+    0 8px 32px rgba(0, 0, 0, 0.5);
+  animation: br-arena-pulse 1s ease-in-out infinite;
+}
+
+@keyframes br-arena-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.01); }
+}
+
+.br-arena.complete {
+  border-color: rgba(34, 197, 94, 0.6);
+  box-shadow:
+    inset 0 0 80px rgba(34, 197, 94, 0.35),
+    0 0 48px rgba(34, 197, 94, 0.5);
+  animation: br-arena-complete 600ms ease-in-out;
+}
+
+@keyframes br-arena-complete {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+.br-bubble {
+  position: absolute;
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--bubbly-font-heading);
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: white;
+  background: linear-gradient(135deg, var(--bubbly-primary), var(--bubbly-primary-deep));
+  box-shadow:
+    0 6px 0 0 var(--bubbly-primary-deep),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.18),
+    inset 0 4px 8px rgba(255, 255, 255, 0.25),
+    0 4px 16px rgba(0, 165, 224, 0.35);
+  transform: translate(-50%, -50%);
+  transition:
+    transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 250ms ease,
+    box-shadow 300ms ease;
+  outline-offset: 3px;
+  z-index: 2;
+}
+
+.br-bubble::after {
+  content: '';
+  position: absolute;
+  top: 12%;
+  left: 18%;
+  width: 28%;
+  height: 24%;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+@media (min-width: 640px) {
+  .br-bubble {
+    width: 6.5rem;
+    height: 6.5rem;
+    font-size: 2.75rem;
+  }
+}
+
+.br-bubble:focus-visible {
+  outline: 3px solid var(--bubbly-focus);
+}
+
+.br-bubble:hover:not(:disabled):not(.popped):not(.shaking) {
+  transform: translate(-50%, -50%) scale(1.12);
+}
+
+.br-bubble:active:not(:disabled):not(.popped):not(.shaking) {
+  transform: translate(-50%, -50%) scale(0.94);
+}
+
+.br-bubble.popped {
+  transform: translate(-50%, -50%) scale(0) rotate(180deg);
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: none;
+}
+
+.br-bubble.shaking {
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  box-shadow:
+    0 6px 0 0 #7f1d1d,
+    inset 0 -4px 8px rgba(0, 0, 0, 0.25),
+    0 0 24px rgba(239, 68, 68, 0.6);
+  animation: br-bubble-shake 460ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes br-bubble-shake {
+  0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+  20%, 60% { transform: translate(calc(-50% - 10px), -50%) rotate(-4deg); }
+  40%, 80% { transform: translate(calc(-50% + 10px), -50%) rotate(4deg); }
+}
+
+/* Power-up card */
+.br-powerup-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1rem;
+  border-radius: var(--bubbly-radius-lg);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(243, 247, 251, 0.95));
+  border: 2px solid rgba(34, 197, 94, 0.45);
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.25);
+  min-width: 6.5rem;
+  transition: all 200ms ease;
+}
+
+.br-powerup-card:hover:not(.consumed) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+}
+
+.br-powerup-card.consumed {
+  opacity: 0.45;
+  filter: grayscale(0.7);
+}
+
+.br-powerup-icon {
+  font-size: 2rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+.br-powerup-name {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--bubbly-text);
+  white-space: nowrap;
+}
+
+.br-powerup-use {
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.3rem 0.6rem;
+  border: none;
+  border-radius: var(--bubbly-radius-md);
+  background: var(--bubbly-primary);
+  color: white;
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+
+.br-powerup-use:hover {
+  filter: brightness(1.1);
+  transform: scale(1.05);
+}
+
+/* Curse card */
+.br-curse-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.75rem 0.875rem;
+  border-radius: var(--bubbly-radius-lg);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(243, 247, 251, 0.95));
+  border: 2px solid rgba(139, 92, 246, 0.5);
+  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.25);
+  min-width: 6rem;
+}
+
+.br-curse-card.cast {
+  opacity: 0.5;
+  filter: grayscale(0.7);
+}
+
+.br-curse-icon {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.br-curse-name {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--bubbly-text);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+/* Royal player card (host) */
+.br-royal-player-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 0.75rem;
+  border-radius: var(--bubbly-radius-lg);
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 200ms ease;
+}
+
+.br-royal-player-card.eliminated {
+  opacity: 0.5;
+  filter: grayscale(0.7);
+}
+
+.br-royal-player-card.spectating {
+  border-color: rgba(139, 92, 246, 0.5);
+  background: rgba(139, 92, 246, 0.1);
+}
+
+.br-royal-player-avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--bubbly-primary), var(--bubbly-primary-deep));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  box-shadow: 0 4px 0 0 var(--bubbly-primary-deep);
+}
+
+.br-royal-player-card.spectating .br-royal-player-avatar {
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+  box-shadow: 0 4px 0 0 #5b21b6;
+}
+
+.br-royal-player-name {
+  font-family: var(--bubbly-font-body);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: white;
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.br-royal-player-lives {
+  display: flex;
+  gap: 2px;
+}
+
+.br-royal-player-lives .mini-heart {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.br-royal-player-lives .mini-heart.lost {
+  opacity: 0.35;
+  filter: grayscale(0.6);
+}
+
+/* Big timer display */
+.br-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--bubbly-radius-full);
+  background: rgba(0, 0, 0, 0.45);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: var(--bubbly-font-heading);
+  font-weight: 800;
+  color: white;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.br-timer-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.br-timer-value {
+  font-size: 1.15rem;
+  letter-spacing: 0.05em;
+}
+
+.br-timer.urgent {
+  border-color: rgba(239, 68, 68, 0.7);
+  background: rgba(239, 68, 68, 0.2);
+  animation: br-timer-urgent 600ms ease-in-out infinite;
+}
+
+@keyframes br-timer-urgent {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Full-screen overlay entrance */
+.br-overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: br-overlay-fade-in 350ms ease-out both;
+}
+
+@keyframes br-overlay-fade-in {
+  from { opacity: 0; backdrop-filter: blur(0); }
+  to { opacity: 1; backdrop-filter: blur(12px); }
+}
+
+.br-overlay-card {
+  position: relative;
+  text-align: center;
+  padding: 2rem 2.5rem;
+  border-radius: var(--bubbly-radius-xl);
+  background: rgba(15, 23, 42, 0.85);
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 16px 64px rgba(0, 0, 0, 0.6);
+  max-width: 36rem;
+  width: 100%;
+  animation: br-overlay-card-in 400ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes br-overlay-card-in {
+  from { transform: scale(0.7) translateY(20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Countdown overlay (3-2-1) */
+.br-countdown-number {
+  font-family: var(--bubbly-font-heading);
+  font-weight: 800;
+  font-size: clamp(8rem, 20vw, 16rem);
+  line-height: 1;
+  background: linear-gradient(180deg, white, #93c1eb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 60px rgba(0, 165, 224, 0.6);
+  animation: br-countdown-pop 1s ease-out both;
+}
+
+@keyframes br-countdown-pop {
+  0% { transform: scale(0.4) rotate(-10deg); opacity: 0; }
+  20% { transform: scale(1.2) rotate(5deg); opacity: 1; }
+  60% { transform: scale(1) rotate(0deg); opacity: 1; }
+  100% { transform: scale(1.6) rotate(0deg); opacity: 0; }
+}
+
+.br-countdown-go {
+  font-family: var(--bubbly-font-heading);
+  font-weight: 800;
+  font-size: clamp(7rem, 18vw, 14rem);
+  line-height: 1;
+  background: linear-gradient(180deg, #34d399, #10b981);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 80px rgba(52, 211, 153, 0.8);
+  animation: br-countdown-go 800ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes br-countdown-go {
+  0% { transform: scale(0.4); opacity: 0; }
+  40% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(1.05); opacity: 1; }
+}
+
+/* Confetti particles for winner overlay */
+.br-confetti {
+  position: absolute;
+  top: -20px;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  pointer-events: none;
+  animation: br-confetti-fall 3s linear forwards;
+}
+
+@keyframes br-confetti-fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Host projector — pairing reveal */
+@keyframes pairing-slide-left {
+  0% { transform: translateX(-120%); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes pairing-slide-right {
+  0% { transform: translateX(120%); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+/* VS divider pulse */
+@keyframes vs-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+/* Correct answer glow on host projector */
+.correct-glow {
+  animation: green-pulse 800ms ease-out 3;
+}
+
+@keyframes green-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+  50% { box-shadow: 0 0 32px 12px rgba(34, 197, 94, 0.7); }
+}
+
+/* Wrong answer shake on host projector */
+.wrong-shake {
+  animation: red-shake 400ms ease;
+}
+
+@keyframes red-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+/* Winner entrance */
+@keyframes crown-pop {
+  0% { transform: scale(0) rotate(-30deg); opacity: 0; }
+  60% { transform: scale(1.3) rotate(5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes winner-slide-down {
+  0% { transform: translateY(-100%); opacity: 0; }
+  60% { transform: translateY(12px); opacity: 1; }
+  80% { transform: translateY(-6px); }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
@@ -798,14 +1481,11 @@ h3,
   }
 
   .play-logo,
-  .play-float-1,
-  .play-float-2,
-  .play-float-3,
-  .play-float-4,
-  .play-float-5,
-  .play-float-6,
-  .animate-wiggle,
-  .profile-dropdown {
+  .play-float-1, .play-float-2, .play-float-3,
+  .play-float-4, .play-float-5, .play-float-6,
+  .animate-wiggle, .profile-dropdown,
+  .br-floating-bubble, .br-countdown-number, .br-countdown-go,
+  .br-confetti, .br-arena-pulse, .br-timer-urgent {
     animation: none !important;
   }
 }
