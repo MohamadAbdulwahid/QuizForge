@@ -28,12 +28,12 @@ export const SESSION_BROADCAST_MODE = pgEnum('session_broadcast_mode', [
   'selected-groups',
   'all-my-groups',
 ]);
-export const GAME_MODE = pgEnum('GAME_MODE', ['forge-classic', 'treasure-forge']);
+export const GAME_MODE = pgEnum('GAME_MODE', ['forge-classic', 'treasure-forge', 'bubbly-royale']);
 // Type exports from enum values
 export type SessionStatus = 'pending' | 'waiting' | 'playing' | 'paused' | 'in-progress' | 'ended';
 export type PlayerStatus = 'active' | 'disconnected' | 'eliminated';
 export type SessionBroadcastMode = 'private' | 'selected-groups' | 'all-my-groups';
-export type GameMode = 'forge-classic' | 'treasure-forge';
+export type GameMode = 'forge-classic' | 'treasure-forge' | 'bubbly-royale';
 
 // Session and related tables
 export const SESSION = pgTable(
@@ -57,6 +57,14 @@ export const SESSION = pgTable(
     tf_timer_minutes: integer('tf_timer_minutes'),
     /** Treasure Forge: gold goal target */
     tf_gold_goal: integer('tf_gold_goal'),
+    /** Bubbly Royale: number of top players to rank (default 3) */
+    br_top_n: integer('br_top_n').default(3),
+    /** Bubbly Royale: starting lives per player (default 3) */
+    br_starting_lives: integer('br_starting_lives').default(3),
+    /** Bubbly Royale: duel timer in seconds (default 25) */
+    br_duel_timer_s: integer('br_duel_timer_s').default(25),
+    /** Bubbly Royale: power bubble timer in seconds (default 15) */
+    br_power_bubble_timer_s: integer('br_power_bubble_timer_s').default(15),
   },
   (table) => [
     index('session_pin_idx').on(table.pin),

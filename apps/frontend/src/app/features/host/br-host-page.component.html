@@ -1,0 +1,445 @@
+<!-- Full-screen Bubbly Royale host projector — game-show feel, theatrical -->
+<div
+  class="from-bubbly-primary fixed inset-0 flex flex-col bg-gradient-to-b via-[#007fb0] to-[#003a5c]"
+>
+  <!-- ── Top bar: HOST badge + PIN + connection ── -->
+  <header
+    class="flex shrink-0 items-center justify-between gap-4 bg-black/25 px-6 py-4 backdrop-blur-sm"
+  >
+    <div class="flex items-center gap-4">
+      <span
+        class="font-display rounded-2xl bg-[var(--bubbly-accent)] px-4 py-2 text-base font-black tracking-widest text-white uppercase shadow-lg"
+      >
+        Royale Host
+      </span>
+      <span
+        class="font-display text-4xl font-black tracking-[0.15em] text-white drop-shadow-lg sm:text-5xl"
+      >
+        {{ pin() }}
+      </span>
+      <span
+        class="ml-1 inline-block h-3 w-3 rounded-full"
+        [class.bg-emerald-400]="connected()"
+        [class.bg-rose-400]="!connected()"
+      ></span>
+    </div>
+    <div class="flex items-center gap-3">
+      <div
+        class="flex items-center gap-2 rounded-full border-2 border-white/30 bg-[var(--bubbly-primary)]/40 px-5 py-2.5 backdrop-blur-sm"
+      >
+        <span class="font-display text-2xl font-black text-white drop-shadow">
+          {{ activePlayers().length }}
+        </span>
+        <span class="text-sm font-bold tracking-wide text-white/85 uppercase">players</span>
+      </div>
+
+      @if (isDuelPhase() || isBubblePopPhase()) {
+        <span
+          class="font-display rounded-2xl bg-white/15 px-4 py-2 text-lg font-black text-white/90 backdrop-blur-sm"
+        >
+          Round {{ gameState.roundNumber() }}
+        </span>
+      }
+
+      <button
+        type="button"
+        class="qf-tactile rounded-2xl bg-rose-500 px-5 py-2.5 text-base font-bold text-white shadow-lg transition-all duration-200 hover:bg-rose-600"
+        (click)="requestEndSession()"
+      >
+        End
+      </button>
+    </div>
+  </header>
+
+  <!-- ── Error / reconnecting banners ── -->
+  @if (errorMessage()) {
+    <div
+      class="mx-6 mt-3 rounded-2xl border border-rose-200 bg-rose-50 px-5 py-3 text-base font-bold text-rose-700"
+    >
+      {{ errorMessage() }}
+    </div>
+  }
+  @if (reconnecting()) {
+    <div
+      class="mx-6 mt-3 rounded-2xl border border-amber-200 bg-amber-50 px-5 py-3 text-base font-bold text-amber-700"
+    >
+      <span class="mr-2 inline-block animate-spin">⟳</span>
+      Connection lost — reconnecting...
+    </div>
+  }
+
+  <!-- ── Main content ── -->
+  @if (initialLoading()) {
+    <div class="flex flex-1 items-center justify-center">
+      <p class="font-display text-3xl font-bold text-white/70">Loading Bubbly Royale session...</p>
+    </div>
+  } @else if (isGameOver()) {
+    <!-- ── Phase: Game Over / Winner Crowned ── -->
+    <div class="flex flex-1 flex-col items-center justify-center px-6 text-center">
+      <span
+        class="crown-bounce text-8xl drop-shadow-lg"
+        style="animation-delay: 200ms"
+      >
+        👑
+      </span>
+      <h1
+        class="font-display winner-bounce mt-6 text-5xl font-black text-white drop-shadow-lg sm:text-7xl"
+        style="animation-delay: 400ms"
+      >
+        {{ gameState.royaleWinner()?.playerName }}
+      </h1>
+      <p
+        class="winner-bounce mt-3 text-3xl font-bold text-amber-300 drop-shadow"
+        style="animation-delay: 600ms"
+      >
+        WINS!
+      </p>
+      <div
+        class="winner-bounce mt-4 flex items-center gap-2"
+        style="animation-delay: 800ms"
+      >
+        <span class="text-xl font-semibold text-white/80">Lives remaining:</span>
+        @for (i of range(gameState.royaleWinner()?.livesRemaining ?? 0); track i) {
+          <span class="life-heart">❤️</span>
+        }
+      </div>
+      <div
+        class="winner-bounce mt-8"
+        style="animation-delay: 1000ms"
+      >
+        <button
+          type="button"
+          class="qf-tactile qf-button-primary rounded-2xl px-6 py-4 text-lg font-bold"
+          (click)="backToDashboard()"
+        >
+          Back to Dashboard
+        </button>
+      </div>
+    </div>
+  } @else if (isBubblePopPhase()) {
+    <!-- ── Phase: Bubble Pop Round ── -->
+    <main class="flex flex-1 flex-col gap-4 overflow-hidden px-6 pt-3 pb-4">
+      <div class="text-center">
+        <h1 class="font-display text-4xl font-black text-white drop-shadow-lg sm:text-5xl">
+          🫧 BUBBLE POP! 🫧
+        </h1>
+        <p class="mt-1 text-lg font-semibold text-white/70">
+          Click bubbles 1–6 in ascending order as fast as you can!
+        </p>
+      </div>
+
+      <div class="flex flex-1 flex-col gap-4 overflow-hidden lg:flex-row">
+        <!-- Bubble Pop challenge area -->
+        <div class="flex flex-1 items-center justify-center">
+          @if (gameState.bubblePopState(); as bpState) {
+            <app-bubble-pop [bubbles]="bpState.bubbles" />
+          }
+        </div>
+
+        <!-- Live ranking sidebar -->
+        <div
+          class="flex w-full shrink-0 flex-col overflow-hidden rounded-3xl border border-white/10 bg-black/20 backdrop-blur-sm lg:w-80"
+        >
+          <div class="shrink-0 border-b border-white/10 px-5 py-3">
+            <h2 class="font-display text-xl font-black text-white">Rankings</h2>
+          </div>
+          <div class="flex-1 space-y-2 overflow-y-auto px-4 py-3">
+            @if (gameState.bubblePopState(); as bpState) {
+              @if (bpState.rankings && bpState.rankings.length > 0) {
+                @for (rank of bpState.rankings; track rank.playerId; let i = $index) {
+                  <div
+                    class="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3"
+                    [class.border-amber-400/50]="i === 0"
+                    [class.bg-amber-400/10]="i === 0"
+                  >
+                    <div class="flex items-center gap-3">
+                      <span
+                        class="font-display text-lg font-black"
+                        [class.text-amber-300]="i === 0"
+                        [class.text-white/60]="i > 0"
+                      >
+                        #{{ i + 1 }}
+                      </span>
+                      <span class="text-sm font-bold text-white/80">{{ rank.playerId }}</span>
+                    </div>
+                    <span class="font-display text-sm font-bold text-emerald-300 tabular-nums">
+                      {{
+                        rank.timeMs !== null
+                          ? (rank.timeMs / 1000).toFixed(2) + 's'
+                          : rank.bubblesReached + ' bubbles'
+                      }}
+                    </span>
+                  </div>
+                }
+              } @else {
+                <p class="py-4 text-center text-sm font-semibold text-white/50">Still popping...</p>
+              }
+            }
+          </div>
+        </div>
+      </div>
+    </main>
+  } @else if (isDuelPhase()) {
+    <!-- ── Phase: Duel Round — Spotlight Format ── -->
+    <main class="flex flex-1 flex-col overflow-hidden px-4 pt-2 pb-4 sm:px-6">
+      @if (gameState.currentPairing(); as pairing) {
+        <!-- Pairing announcement -->
+        <div class="flex items-center justify-center gap-4 py-4 sm:gap-8 sm:py-6">
+          <div class="pairing-player left flex flex-col items-center gap-2">
+            <span class="font-display text-2xl font-black text-white drop-shadow sm:text-4xl">
+              {{ pairing.player1Name }}
+            </span>
+            <div class="flex gap-1">
+              @for (i of range(pairing.player1Lives); track i) {
+                <span class="life-heart">❤️</span>
+              }
+              @for (i of range(gameState.startingLives() - pairing.player1Lives); track i) {
+                <span class="life-heart empty">🤍</span>
+              }
+            </div>
+          </div>
+
+          <div class="vs-divider flex flex-col items-center">
+            <span
+              class="font-display rounded-2xl bg-[var(--bubbly-accent)] px-4 py-2 text-3xl font-black text-white shadow-lg sm:text-5xl"
+            >
+              VS
+            </span>
+          </div>
+
+          <div class="pairing-player right flex flex-col items-center gap-2">
+            <span class="font-display text-2xl font-black text-white drop-shadow sm:text-4xl">
+              {{ pairing.player2Name }}
+            </span>
+            <div class="flex gap-1">
+              @for (i of range(pairing.player2Lives); track i) {
+                <span class="life-heart">❤️</span>
+              }
+              @for (i of range(gameState.startingLives() - pairing.player2Lives); track i) {
+                <span class="life-heart empty">🤍</span>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Answer status indicators -->
+        <div class="mb-2 flex justify-center gap-8 text-sm font-bold sm:gap-16 sm:text-base">
+          <span
+            [class.text-emerald-300]="duelAnswerStatus().player1Answered"
+            [class.text-white/50]="!duelAnswerStatus().player1Answered"
+          >
+            {{ duelAnswerStatus().player1Answered ? '✓ Answered' : '⏳ Thinking...' }}
+          </span>
+          <span
+            [class.text-emerald-300]="duelAnswerStatus().player2Answered"
+            [class.text-white/50]="!duelAnswerStatus().player2Answered"
+          >
+            {{ duelAnswerStatus().player2Answered ? '✓ Answered' : '⏳ Thinking...' }}
+          </span>
+        </div>
+
+        <!-- Question + Options -->
+        @if (hostDuelDisplay(); as display) {
+          <div class="mx-auto flex w-full max-w-4xl flex-1 flex-col items-center gap-4">
+            <div
+              class="rounded-3xl border-2 border-white/20 bg-white/10 px-6 py-5 text-center backdrop-blur-sm sm:px-10 sm:py-8"
+            >
+              <p
+                class="font-display text-2xl leading-snug font-bold text-white drop-shadow sm:text-4xl"
+              >
+                {{ display.text }}
+              </p>
+            </div>
+
+            <!-- Options grid -->
+            <div class="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+              @for (option of display.options; track option.id; let i = $index) {
+                <div
+                  class="flex min-h-[8vh] items-center gap-3 rounded-3xl border-4 px-4 py-4 font-bold text-white shadow-lg backdrop-blur-sm sm:gap-4 sm:px-6"
+                  [ngClass]="{
+                    'border-sky-400 bg-sky-500/10': i === 0,
+                    'border-rose-400 bg-rose-500/10': i === 1,
+                    'border-emerald-400 bg-emerald-500/10': i === 2,
+                    'border-violet-400 bg-violet-500/10': i === 3,
+                    'correct-glow': showDuelResult() && display.correctAnswer === option.id,
+                    'wrong-shake':
+                      showDuelResult() &&
+                      display.correctAnswer !== null &&
+                      display.correctAnswer !== option.id,
+                  }"
+                >
+                  <span
+                    class="option-letter text-xl font-black shadow sm:text-2xl"
+                    [class.bg-sky-500/60]="i === 0"
+                    [class.bg-rose-500/60]="i === 1"
+                    [class.bg-emerald-500/60]="i === 2"
+                    [class.bg-violet-500/60]="i === 3"
+                  >
+                    {{ getOptionLabel(i) }}
+                  </span>
+                  <span class="flex-1 text-lg leading-tight sm:text-2xl">{{ option.text }}</span>
+                  @if (showDuelResult() && display.correctAnswer === option.id) {
+                    <span class="text-2xl drop-shadow">✅</span>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Result reveal bar -->
+        @if (showDuelResult() && hostDuelDisplay(); as display) {
+          <div
+            class="mx-auto mt-3 flex w-full max-w-4xl items-center justify-center gap-4 rounded-3xl border-2 border-amber-400/40 bg-black/30 px-5 py-3 backdrop-blur-sm sm:gap-8 sm:px-8 sm:py-4"
+          >
+            <div class="text-center">
+              <p class="font-display text-base font-bold text-white/90">
+                {{ pairing.player1Name }}
+              </p>
+              <p
+                class="mt-1 text-sm font-semibold tabular-nums {{
+                  display.player1Correct ? 'text-emerald-300' : 'text-rose-300'
+                }}"
+              >
+                {{ display.player1Correct ? '✓ Correct' : '✗ Wrong' }}
+              </p>
+              @if (display.player1TimeMs !== null) {
+                <p class="text-xs font-bold text-white/50 tabular-nums">
+                  {{ (display.player1TimeMs / 1000).toFixed(1) }}s
+                </p>
+              }
+            </div>
+            <span class="font-display text-2xl font-black text-amber-300">VS</span>
+            <div class="text-center">
+              <p class="font-display text-base font-bold text-white/90">
+                {{ pairing.player2Name }}
+              </p>
+              <p
+                class="mt-1 text-sm font-semibold tabular-nums {{
+                  display.player2Correct ? 'text-emerald-300' : 'text-rose-300'
+                }}"
+              >
+                {{ display.player2Correct ? '✓ Correct' : '✗ Wrong' }}
+              </p>
+              @if (display.player2TimeMs !== null) {
+                <p class="text-xs font-bold text-white/50 tabular-nums">
+                  {{ (display.player2TimeMs / 1000).toFixed(1) }}s
+                </p>
+              }
+            </div>
+          </div>
+        }
+      }
+    </main>
+  } @else {
+    <!-- ── Phase: Lobby / Waiting ── -->
+    <div class="flex flex-1 flex-col items-center justify-center px-6">
+      <!-- Game mode info card -->
+      <div
+        class="mb-8 w-full max-w-lg rounded-3xl border-2 border-white/15 bg-black/20 px-6 py-5 backdrop-blur-sm"
+      >
+        <h2 class="font-display text-center text-2xl font-black text-white drop-shadow">
+          Bubbly Royale
+        </h2>
+        <p class="mt-2 text-center text-sm leading-relaxed font-semibold text-white/70">
+          1v1 elimination tournament — 3 lives each.
+          <br />
+          Bubble Pop challenges for power-ups.
+          <br />
+          Last player standing wins! 👑
+        </p>
+      </div>
+
+      <!-- Player list -->
+      <div class="w-full max-w-2xl">
+        <div class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5">
+          @for (player of activePlayers(); track player.userId) {
+            <app-player-bubble
+              [name]="player.username"
+              [emoji]="'🫧'"
+            />
+          } @empty {
+            <div class="col-span-full py-4 text-center">
+              <p class="font-display text-xl font-bold text-white/50">
+                Waiting for players to join...
+              </p>
+              <p class="mt-2 text-sm font-semibold text-white/40">
+                Share PIN:
+                <span class="font-display text-2xl font-black text-white/70">{{ pin() }}</span>
+              </p>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Start Game button -->
+      @if (activePlayers().length >= 2) {
+        <div class="mt-8">
+          <button
+            type="button"
+            class="qf-tactile qf-button-primary rounded-3xl px-10 py-5 text-xl font-black shadow-2xl"
+            (click)="startGame()"
+          >
+            🚀 Start Bubbly Royale!
+          </button>
+        </div>
+      } @else if (activePlayers().length === 1) {
+        <p class="mt-6 text-lg font-bold text-white/50">Need at least 2 players to start</p>
+      }
+    </div>
+  }
+
+  <!-- ── Full-Screen Overlays ── -->
+
+  <!-- Life Steal overlay -->
+  @if (showLifeStealOverlay() && lifeStealMessage(); as msg) {
+    <div
+      class="overlay-fade fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4"
+      tabindex="0"
+      (click)="dismissOverlay()"
+      (keydown.escape)="dismissOverlay()"
+      (keydown.enter)="dismissOverlay()"
+      role="dialog"
+      aria-label="Life steal announcement"
+      aria-live="assertive"
+    >
+      <div
+        class="rounded-3xl border-4 border-rose-400/60 bg-black/80 px-8 py-10 text-center backdrop-blur-lg sm:px-14 sm:py-14"
+      >
+        <p class="text-6xl drop-shadow">💔</p>
+        <p class="font-display mt-4 text-3xl font-black text-white drop-shadow sm:text-5xl">
+          {{ msg.targetName }}
+        </p>
+        <p class="mt-2 text-xl font-bold text-rose-300 sm:text-2xl">just lost a life!</p>
+        <p class="mt-1 text-lg font-semibold text-white/50">
+          because of Spectator
+          <span class="text-white/80">{{ msg.casterName }}</span>
+        </p>
+      </div>
+    </div>
+  }
+
+  <!-- Elimination overlay -->
+  @if (showEliminationOverlay() && eliminatedPlayerName(); as name) {
+    <div
+      class="overlay-fade fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4"
+      tabindex="0"
+      (click)="dismissOverlay()"
+      (keydown.escape)="dismissOverlay()"
+      (keydown.enter)="dismissOverlay()"
+      role="dialog"
+      aria-label="Player eliminated announcement"
+      aria-live="assertive"
+    >
+      <div
+        class="rounded-3xl border-4 border-rose-500/40 bg-black/80 px-8 py-10 text-center backdrop-blur-lg sm:px-14 sm:py-14"
+      >
+        <p class="text-7xl drop-shadow">💀</p>
+        <p class="font-display mt-4 text-4xl font-black text-rose-300 drop-shadow sm:text-6xl">
+          {{ name }}
+        </p>
+        <p class="mt-2 text-2xl font-bold text-white sm:text-3xl">has been ELIMINATED!</p>
+      </div>
+    </div>
+  }
+</div>

@@ -39,10 +39,14 @@ export type HostSessionSummary = {
  * @param data.hostId - Host user id.
  * @param data.status - Optional session status.
  * @param data.broadcastMode - Session discovery mode.
- * @param data.gameMode - Game mode (forge-classic or treasure-forge).
+ * @param data.gameMode - Game mode (forge-classic, treasure-forge, or bubbly-royale).
  * @param data.tfEndMode - Treasure Forge end condition mode.
  * @param data.tfTimerMinutes - Treasure Forge timer in minutes.
  * @param data.tfGoldGoal - Treasure Forge gold goal.
+ * @param data.brTopN - Bubbly Royale top N players to rank.
+ * @param data.brStartingLives - Bubbly Royale starting lives per player.
+ * @param data.brDuelTimerS - Bubbly Royale duel timer in seconds.
+ * @param data.brPowerBubbleTimerS - Bubbly Royale power bubble timer in seconds.
  * @param data.groupIds - Broadcast group ids snapshot.
  * @returns Created session row.
  */
@@ -57,6 +61,10 @@ export async function createSession(data: {
   tfEndMode?: string | null;
   tfTimerMinutes?: number | null;
   tfGoldGoal?: number | null;
+  brTopN?: number | null;
+  brStartingLives?: number | null;
+  brDuelTimerS?: number | null;
+  brPowerBubbleTimerS?: number | null;
 }): Promise<Session> {
   const payload: InsertSession = {
     quiz_id: data.quizId,
@@ -68,6 +76,10 @@ export async function createSession(data: {
     tf_end_mode: data.tfEndMode ?? null,
     tf_timer_minutes: data.tfTimerMinutes ?? null,
     tf_gold_goal: data.tfGoldGoal ?? null,
+    br_top_n: data.brTopN ?? undefined,
+    br_starting_lives: data.brStartingLives ?? undefined,
+    br_duel_timer_s: data.brDuelTimerS ?? undefined,
+    br_power_bubble_timer_s: data.brPowerBubbleTimerS ?? undefined,
   };
 
   const result = await db.insert(SESSION).values(payload).returning();

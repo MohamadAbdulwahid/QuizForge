@@ -22,7 +22,7 @@ export interface CreateSessionResponse {
 }
 
 export type SessionBroadcastMode = 'private' | 'selected-groups' | 'all-my-groups';
-export type GameMode = 'forge-classic' | 'treasure-forge';
+export type GameMode = 'forge-classic' | 'treasure-forge' | 'bubbly-royale';
 
 export interface CreateSessionPayload {
   quiz_id: number;
@@ -32,6 +32,14 @@ export interface CreateSessionPayload {
   tf_end_mode?: 'timer' | 'gold_goal' | null;
   tf_timer_minutes?: number;
   tf_gold_goal?: number;
+  /** Bubbly Royale: number of top players to rank (1-8, default 3) */
+  br_top_n?: number;
+  /** Bubbly Royale: starting lives per player (2-5, default 3) */
+  br_starting_lives?: number;
+  /** Bubbly Royale: duel timer in seconds (10-45, default 25) */
+  br_duel_timer_s?: number;
+  /** Bubbly Royale: power bubble timer in seconds (8-30, default 15) */
+  br_power_bubble_timer_s?: number;
 }
 
 export interface UpdateSessionStatusResponse {

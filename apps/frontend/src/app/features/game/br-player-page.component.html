@@ -1,0 +1,564 @@
+<div
+  class="flex min-h-dvh flex-col"
+  [class.spectator-overlay]="gameState.isSpectator()"
+  [class.life-flash]="showLifeLostFlash()"
+>
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- TOP BAR: LIVES + INVENTORY                                    -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <header
+    class="relative z-20 flex flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-4"
+  >
+    <!-- ── Life bubbles ── -->
+    <div
+      class="flex items-center gap-1.5"
+      aria-label="Lives remaining"
+    >
+      @for (i of [].constructor(gameState.startingLives()); track $index; let idx = $index) {
+        <span
+          class="life-heart"
+          [class.lost]="idx >= gameState.lives()"
+          [attr.aria-label]="
+            idx < gameState.lives()
+              ? 'Life ' + (idx + 1) + ' remaining'
+              : 'Life ' + (idx + 1) + ' lost'
+          "
+        >
+          {{ idx < gameState.lives() ? '❤️' : '🤍' }}
+        </span>
+      }
+    </div>
+
+    <!-- ── Power-up inventory (active players) ── -->
+    @if (!gameState.isSpectator() && gameState.powerUps().length > 0) {
+      <div class="flex items-center gap-2">
+        @for (pu of gameState.powerUps(); track pu.id) {
+          <div
+            class="qf-surface flex items-center gap-1.5 rounded-2xl px-3 py-1.5 text-sm font-bold"
+            [class.opacity-60]="pu.consumed"
+          >
+            <span aria-hidden="true">{{ getPowerUpIcon(pu.type) }}</span>
+            <span>{{ pu.name }}</span>
+            @if (pu.type === 'BubbleHeal' && !pu.consumed) {
+              <button
+                type="button"
+                class="qf-button-primary qf-tactile ml-1 rounded-xl px-2 py-0.5 text-xs font-bold"
+                (click)="useBubbleHeal()"
+              >
+                Use
+              </button>
+            }
+            @if (pu.consumed) {
+              <span class="text-xs opacity-70">(Used)</span>
+            }
+          </div>
+        }
+      </div>
+    }
+
+    <!-- ── Curse token inventory (spectators) ── -->
+    @if (gameState.isSpectator() && gameState.curseTokens().length > 0) {
+      <div class="flex items-center gap-2">
+        @for (ct of gameState.curseTokens(); track ct.id) {
+          <div
+            class="qf-surface flex items-center gap-1.5 rounded-2xl px-3 py-1.5 text-sm font-bold"
+            [class.opacity-60]="ct.cast"
+          >
+            <span aria-hidden="true">{{ getCurseIcon(ct.type) }}</span>
+            <span>{{ ct.name }}</span>
+            @if (ct.cast) {
+              <span class="text-xs opacity-70">(Cast)</span>
+            }
+          </div>
+        }
+      </div>
+    }
+  </header>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- TOAST NOTIFICATIONS                                          -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  @if (powerUpToast()) {
+    <div
+      class="animate-slide-down fixed top-4 left-1/2 z-50 -translate-x-1/2 rounded-2xl bg-emerald-500 px-5 py-3 text-center text-white shadow-lg"
+      role="status"
+      aria-live="polite"
+    >
+      <span class="font-display text-lg font-bold">You got {{ powerUpToast() }}!</span>
+    </div>
+  }
+
+  @if (curseToast()) {
+    <div
+      class="animate-slide-down fixed top-4 left-1/2 z-50 -translate-x-1/2 rounded-2xl bg-violet-500 px-5 py-3 text-center text-white shadow-lg"
+      role="status"
+      aria-live="polite"
+    >
+      <span class="font-display text-lg font-bold">You received {{ curseToast() }} curse!</span>
+    </div>
+  }
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- MAIN CONTENT AREA                                            -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <main
+    class="relative z-10 flex flex-1 flex-col items-center justify-center px-4 py-4 sm:px-6 sm:py-6"
+  >
+    <!-- ── Reconnecting banner ── -->
+    @if (reconnecting()) {
+      <div
+        class="mb-4 w-full max-w-md rounded-2xl border border-amber-300/50 bg-amber-500/20 px-4 py-3 text-center text-base font-bold text-amber-200 sm:text-lg"
+      >
+        <span class="mr-2 inline-block animate-spin">⟳</span>
+        Connection lost — reconnecting...
+      </div>
+    }
+
+    <!-- ── Error alert ── -->
+    @if (gameState.errorMessage()) {
+      <app-bubbly-alert
+        class="mb-4 w-full max-w-md"
+        variant="error"
+        [message]="gameState.errorMessage()"
+        [dismissible]="true"
+      />
+    }
+
+    <!-- ── WAITING FOR HOST TO START ── -->
+    @if (!gameStarted()) {
+      <div class="text-center">
+        <div class="mb-6 animate-bounce">
+          <span class="text-7xl sm:text-8xl">🎮</span>
+        </div>
+        <h1 class="font-display text-4xl font-bold text-[var(--bubbly-text)] sm:text-5xl">
+          Waiting for host...
+        </h1>
+        <p class="mt-4 text-xl font-semibold text-[var(--bubbly-muted)]">
+          The host will start the game shortly.
+        </p>
+        @if (gameState.players().length > 0) {
+          <div class="mt-6 flex flex-wrap justify-center gap-2">
+            @for (player of gameState.players(); track player.userId) {
+              <span
+                class="qf-surface rounded-full px-4 py-1.5 text-sm font-bold"
+                [class.qf-surface-soft]="player.userId !== gameState.currentUserId()"
+                [class.bg-bubbly-primary]="player.userId === gameState.currentUserId()"
+                [class.text-white]="player.userId === gameState.currentUserId()"
+              >
+                {{ player.username }}
+                @if (player.userId === gameState.currentUserId()) {
+                  (You)
+                }
+              </span>
+            }
+          </div>
+        }
+      </div>
+    }
+
+    <!-- ── GAME ENDED: ROYALE WINNER ── -->
+    @if (gameState.royaleWinner(); as winner) {
+      <div class="text-center">
+        <div class="mb-4">
+          <span class="text-8xl">👑</span>
+        </div>
+        <h1 class="font-display text-4xl font-bold text-[var(--bubbly-primary)] sm:text-5xl">
+          {{ winner.playerName }} Wins!
+        </h1>
+        <p class="mt-3 text-xl font-semibold text-[var(--bubbly-muted)]">
+          @if (winner.playerId === gameState.currentUserId()) {
+            Congratulations! You are the last one standing!
+          } @else {
+            {{ winner.playerName }} is the last one standing with {{ winner.livesRemaining }} lives!
+          }
+        </p>
+        <p class="mt-2 text-lg font-bold text-[var(--bubbly-accent)]">
+          Lives remaining: {{ winner.livesRemaining }}
+        </p>
+      </div>
+    }
+
+    <!-- ── GAME ACTIVE: ROUND SWITCH ── -->
+    @if (gameStarted() && !gameState.royaleWinner()) {
+      @switch (gameState.roundType()) {
+        <!-- ── BUBBLE POP ROUND ── -->
+        @case ('bubble-pop') {
+          <div class="flex w-full max-w-xl flex-col items-center gap-4">
+            @if (gameState.bubblePopState(); as bpState) {
+              @if (bpState.status === 'active' || bpState.status === 'waiting') {
+                <app-bubble-pop
+                  class="w-full"
+                  [bubbles]="bpState.bubbles"
+                  (bubbleClick)="onBubbleClick($event)"
+                  (challengeComplete)="onBubblePopComplete($event)"
+                />
+
+                @if (bubbleSubmitted()) {
+                  <div
+                    class="rounded-2xl bg-emerald-500/20 px-5 py-3 text-center"
+                    role="status"
+                    aria-live="polite"
+                  >
+                    <p class="font-display text-xl font-bold text-emerald-300">
+                      @if (bubbleTimeMs() !== null) {
+                        You finished in {{ (bubbleTimeMs()! / 1000).toFixed(3) }}s!
+                      } @else {
+                        You reached bubble #{{ bubbleBubblesReached() }}
+                      }
+                    </p>
+                    <p class="mt-1 text-sm text-emerald-200">Waiting for other players...</p>
+                  </div>
+                }
+              }
+
+              @if (bpState.status === 'finished' && bpState.rankings; as rankings) {
+                <div class="w-full rounded-3xl bg-[var(--bubbly-surface)] p-5">
+                  <h2 class="font-display text-2xl font-bold text-[var(--bubbly-primary)]">
+                    Bubble Pop Results
+                  </h2>
+                  <div class="mt-4 space-y-2">
+                    @for (rank of rankings; track rank.playerId) {
+                      <div
+                        class="flex items-center justify-between rounded-2xl px-4 py-2"
+                        [class.bg-amber-500/20]="$index === 0"
+                        [class.bg-[var(--bubbly-surface-soft)]]="$index !== 0"
+                      >
+                        <span class="font-display text-lg font-bold">#{{ $index + 1 }}</span>
+                        <span class="text-sm font-bold">
+                          {{
+                            gameState.players().find((p) => p.userId === rank.playerId)?.username ??
+                              rank.playerId
+                          }}
+                        </span>
+                        <span class="font-display text-sm font-bold text-[var(--bubbly-muted)]">
+                          @if (rank.timeMs !== null) {
+                            {{ (rank.timeMs / 1000).toFixed(3) }}s
+                          } @else {
+                            {{ rank.bubblesReached }} bubbles
+                          }
+                        </span>
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
+            }
+          </div>
+        }
+
+        <!-- ── DUEL ROUND ── -->
+        @case ('duel') {
+          @if (isInDuel() && gameState.duelState(); as duel) {
+            <!-- IN A DUEL: Question + Options -->
+            <div class="flex w-full max-w-2xl flex-col items-center gap-4">
+              <!-- Duel header: vs opponent -->
+              <div class="flex items-center gap-3 text-center">
+                <span class="font-display text-lg font-bold text-[var(--bubbly-primary)]">You</span>
+                <span class="font-display text-2xl font-black text-[var(--bubbly-accent)]">VS</span>
+                <span class="font-display text-lg font-bold text-[var(--bubbly-muted)]">
+                  {{ duel.opponentName }}
+                </span>
+              </div>
+
+              <!-- Timer bar -->
+              <div class="flex w-full items-center gap-3">
+                <div
+                  class="h-3 flex-1 overflow-hidden rounded-full bg-[var(--bubbly-surface-soft)]"
+                >
+                  <div
+                    class="h-full rounded-full transition-all duration-100 ease-linear"
+                    [class.bg-emerald-400]="duelTimerSeconds() > 5"
+                    [class.bg-rose-400]="duelTimerSeconds() <= 5"
+                    [style.width.%]="duelTimeProgress()"
+                  ></div>
+                </div>
+                <span
+                  class="font-display text-2xl font-bold"
+                  [class.text-[var(--bubbly-text)]]="duelTimerSeconds() > 5"
+                  [class.text-rose-400]="duelTimerSeconds() <= 5"
+                >
+                  {{ duelTimerSeconds() }}
+                </span>
+              </div>
+
+              <!-- Question text -->
+              @if (duel.question; as question) {
+                <div class="w-full rounded-2xl bg-[var(--bubbly-surface)] px-4 py-3 text-center">
+                  <h2 class="font-display text-2xl font-bold text-[var(--bubbly-text)] sm:text-3xl">
+                    {{ question.text }}
+                  </h2>
+                </div>
+
+                <!-- Answer options -->
+                <div class="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+                  @for (option of question.options; track option.id; let i = $index) {
+                    <button
+                      type="button"
+                      class="duel-answer-btn"
+                      [class.selected]="selectedAnswer() === option.id"
+                      [disabled]="answerSubmitted() || duelTimerMs() <= 0"
+                      [attr.aria-label]="'Option ' + (i + 1) + ': ' + option.text"
+                      (click)="selectAnswer(option.id)"
+                    >
+                      <span class="flex items-center gap-3">
+                        <span
+                          class="font-display flex h-8 w-8 items-center justify-center rounded-full text-lg font-black"
+                          [class.bg-[var(--bubbly-primary)]]="selectedAnswer() !== option.id"
+                          [class.text-white]="selectedAnswer() !== option.id"
+                          [class.bg-[var(--bubbly-accent)]]="selectedAnswer() === option.id"
+                          [class.text-white]="selectedAnswer() === option.id"
+                        >
+                          {{ ['A', 'B', 'C', 'D'][i] ?? i + 1 }}
+                        </span>
+                        <span>{{ option.text }}</span>
+                      </span>
+                    </button>
+                  }
+                </div>
+              }
+
+              <!-- Opponent status -->
+              <div class="text-center text-sm font-bold text-[var(--bubbly-muted)]">
+                @if (duel.opponentAnswered && !duel.result) {
+                  <span class="text-emerald-400">✓ Opponent has answered</span>
+                } @else if (!duel.opponentAnswered && answerSubmitted()) {
+                  <span>Waiting for opponent... 🤔</span>
+                } @else if (!duel.opponentAnswered && !answerSubmitted()) {
+                  <span>Opponent is thinking... 🤔</span>
+                }
+              </div>
+
+              <!-- Submitted feedback -->
+              @if (answerSubmitted() && !duel.result) {
+                <div
+                  class="inline-flex items-center gap-2 rounded-full bg-[var(--bubbly-surface-soft)] px-4 py-2"
+                >
+                  <span class="animate-pulse text-xl">⏳</span>
+                  <span class="text-sm font-bold text-[var(--bubbly-muted)]">
+                    Answer submitted...
+                  </span>
+                </div>
+              }
+
+              <!-- Duel result -->
+              @if (duel.result; as result) {
+                <div
+                  class="result-banner w-full rounded-3xl px-6 py-6 text-center shadow-lg"
+                  [class.bg-emerald-500]="result === 'won'"
+                  [class.bg-rose-500]="result === 'lost'"
+                  [class.bg-amber-500]="result === 'tie'"
+                >
+                  @switch (result) {
+                    @case ('won') {
+                      <span class="text-5xl">🎉</span>
+                      <p class="font-display mt-2 text-3xl font-bold text-white">You WON!</p>
+                    }
+                    @case ('lost') {
+                      <span class="text-5xl">💔</span>
+                      <p class="font-display mt-2 text-3xl font-bold text-white">You LOST</p>
+                    }
+                    @case ('tie') {
+                      <span class="text-5xl">🤝</span>
+                      <p class="font-display mt-2 text-3xl font-bold text-white">TIE!</p>
+                    }
+                  }
+                </div>
+              }
+            </div>
+          } @else if (isWatchingDuel()) {
+            <!-- AUDIENCE VIEW: Watching someone else's duel -->
+            @if (gameState.currentPairing(); as pairing) {
+              <div class="flex w-full max-w-lg flex-col items-center gap-4 text-center">
+                <div class="rounded-2xl bg-[var(--bubbly-surface)] px-6 py-4">
+                  <h2 class="font-display text-xl font-bold text-[var(--bubbly-primary)]">
+                    Current Duel
+                  </h2>
+                  <div class="mt-2 flex items-center justify-center gap-4">
+                    <span class="font-display text-2xl font-bold text-[var(--bubbly-text)]">
+                      {{ pairing.player1Name }}
+                    </span>
+                    <span class="font-display text-xl font-black text-[var(--bubbly-accent)]">
+                      VS
+                    </span>
+                    <span class="font-display text-2xl font-bold text-[var(--bubbly-text)]">
+                      {{ pairing.player2Name }}
+                    </span>
+                  </div>
+                  <div class="mt-2 flex justify-center gap-4 text-sm text-[var(--bubbly-muted)]">
+                    <span>Lives: {{ '❤️'.repeat(pairing.player1Lives) }}</span>
+                    <span>Lives: {{ '❤️'.repeat(pairing.player2Lives) }}</span>
+                  </div>
+                </div>
+                <p class="text-lg font-bold text-[var(--bubbly-muted)]">Watch the duel unfold...</p>
+              </div>
+            }
+          } @else {
+            <!-- Waiting for duel pairing -->
+            <div class="text-center">
+              <div class="mb-4 animate-pulse">
+                <span class="text-6xl">⚔️</span>
+              </div>
+              <p class="font-display text-2xl font-bold text-[var(--bubbly-muted)]">
+                Preparing duels...
+              </p>
+            </div>
+          }
+        }
+
+        <!-- ── DEFAULT: No round active yet ── -->
+        @default {
+          <div class="text-center">
+            <div class="mb-4 animate-pulse">
+              <span class="text-6xl">🎯</span>
+            </div>
+            <p class="font-display text-2xl font-bold text-[var(--bubbly-muted)]">Get ready...</p>
+            <p class="mt-2 text-lg text-[var(--bubbly-muted)]">
+              Round {{ gameState.roundNumber() }} starting soon
+            </p>
+          </div>
+        }
+      }
+    }
+  </main>
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- SPECTATOR CURSE PANEL (bottom overlay)                       -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  @if (gameState.isSpectator() && gameState.roundType() === 'duel') {
+    <footer
+      class="relative z-20 border-t border-[var(--bubbly-border)] bg-[var(--bubbly-surface)] px-4 py-3 sm:px-6"
+    >
+      <div class="flex items-center justify-between gap-3">
+        <span class="font-display text-sm font-bold text-[var(--bubbly-muted)]">
+          😈 You&apos;re a spectator — but you can still curse the living!
+        </span>
+        @if (canCastCurse()) {
+          <button
+            type="button"
+            class="qf-button-accent qf-tactile rounded-2xl px-4 py-2 text-sm font-bold"
+            (click)="openCursePicker()"
+          >
+            Cast Curse
+          </button>
+        }
+      </div>
+    </footer>
+  }
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- LIFE STEAL ANNOUNCEMENT (full-screen)                        -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  @if (gameState.lifeStealAnnouncement(); as announcement) {
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+      role="alert"
+      aria-live="assertive"
+    >
+      <div class="rounded-3xl bg-rose-600 px-8 py-6 text-center shadow-2xl">
+        <span class="text-5xl">💀</span>
+        <p class="font-display mt-3 text-2xl font-bold text-white">
+          {{ announcement.targetName }} just lost a life
+        </p>
+        <p class="mt-2 text-lg font-bold text-rose-200">
+          because of Spectator {{ announcement.casterName }}!
+        </p>
+      </div>
+    </div>
+  }
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- CURSE CASTING MODAL                                          -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  @if (showCursePicker()) {
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+      (click)="closeCursePicker()"
+      (keydown.escape)="closeCursePicker()"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Cast a curse"
+    >
+      <div
+        class="mx-4 w-full max-w-sm rounded-3xl bg-[var(--bubbly-surface)] p-6 shadow-2xl"
+        tabindex="0"
+        (click)="$event.stopPropagation()"
+        (keydown)="$event.stopPropagation()"
+      >
+        <h2 class="font-display text-xl font-bold text-[var(--bubbly-text)]">Cast a Curse</h2>
+        <p class="mt-1 text-sm text-[var(--bubbly-muted)]">
+          Max 2 curses per duel. Life Steal only between rounds.
+        </p>
+
+        <!-- Available curses -->
+        <div class="mt-4 space-y-2">
+          <p class="text-sm font-bold text-[var(--bubbly-muted)]">Choose curse type:</p>
+          @for (curse of availableCurses(); track curse.id) {
+            <button
+              type="button"
+              class="w-full rounded-2xl px-4 py-2.5 text-left text-sm font-bold transition"
+              [class.bg-violet-500]="selectedCurseType() === curse.type"
+              [class.text-white]="selectedCurseType() === curse.type"
+              [class.bg-[var(--bubbly-surface-soft)]]="selectedCurseType() !== curse.type"
+              [class.text-[var(--bubbly-text)]]="selectedCurseType() !== curse.type"
+              (click)="selectCurseType(curse.type)"
+            >
+              <span class="mr-2">{{ getCurseIcon(curse.type) }}</span>
+              {{ curse.name }} — {{ curse.description }}
+            </button>
+          }
+        </div>
+
+        <!-- Target selection -->
+        @if (selectedCurseType()) {
+          <div class="mt-4 space-y-2">
+            <p class="text-sm font-bold text-[var(--bubbly-muted)]">Choose target:</p>
+            @for (target of gameState.curseOpportunityTargets(); track target.id) {
+              <button
+                type="button"
+                class="w-full rounded-2xl px-4 py-2.5 text-left text-sm font-bold transition"
+                [class.bg-[var(--bubbly-primary)]]="selectedCurseTarget() === target.id"
+                [class.text-white]="selectedCurseTarget() === target.id"
+                [class.bg-[var(--bubbly-surface-soft)]]="selectedCurseTarget() !== target.id"
+                [class.text-[var(--bubbly-text)]]="selectedCurseTarget() !== target.id"
+                (click)="selectCurseTarget(target.id)"
+              >
+                {{ target.name }} — {{ target.lives }} lives
+              </button>
+            }
+          </div>
+        }
+
+        <!-- Actions -->
+        <div class="mt-6 flex justify-end gap-3">
+          <button
+            type="button"
+            class="qf-button-ghost qf-tactile rounded-2xl px-5 py-3 text-sm font-bold"
+            (click)="closeCursePicker()"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="qf-button-accent qf-tactile rounded-2xl px-5 py-3 text-sm font-bold"
+            [disabled]="!selectedCurseType() || !selectedCurseTarget()"
+            (click)="castCurse()"
+          >
+            Cast!
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <!-- SESSION CLOSED MODAL                                         -->
+  <!-- ════════════════════════════════════════════════════════════ -->
+  <app-bubbly-modal
+    [visible]="showSessionClosedModal()"
+    title="Session Closed"
+    [message]="'The game has been stopped: ' + sessionClosedReason()"
+    confirmLabel="OK"
+    (confirm)="dismissSessionClosed()"
+    (dismiss)="dismissSessionClosed()"
+  />
+</div>

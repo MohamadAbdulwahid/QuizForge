@@ -49,6 +49,32 @@ const selectStealTargetMessageSchema = z.object({
   targetUserId: z.string().uuid('Target must be a valid user ID'),
 });
 
+// --- Bubbly Royale schemas ---
+
+const submitBubblePopMessageSchema = z.object({
+  pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
+  bubblesReached: z.coerce.number().int().min(0).max(6),
+  timeMs: z.coerce.number().int().min(0).nullable(),
+});
+
+const submitDuelAnswerMessageSchema = z.object({
+  pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
+  duelId: z.string().min(1),
+  answer: z.string().min(1).max(5000),
+});
+
+const usePowerUpMessageSchema = z.object({
+  pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
+  powerUpType: z.string().min(1),
+  targetId: z.string().optional(),
+});
+
+const castCurseMessageSchema = z.object({
+  pin: z.string().regex(/^\d{6}$/, 'PIN must be a 6-digit string'),
+  curseType: z.string().min(1),
+  targetPlayerId: z.string().min(1),
+});
+
 export { joinGameMessageSchema as JoinGameMessageSchema };
 export { leaveGameMessageSchema as LeaveGameMessageSchema };
 export { startGameMessageSchema as StartGameMessageSchema };
@@ -58,6 +84,10 @@ export { endSessionMessageSchema as EndSessionMessageSchema };
 export { skipQuestionMessageSchema as SkipQuestionMessageSchema };
 export { selectChestMessageSchema as SelectChestMessageSchema };
 export { selectStealTargetMessageSchema as SelectStealTargetMessageSchema };
+export { submitBubblePopMessageSchema as SubmitBubblePopMessageSchema };
+export { submitDuelAnswerMessageSchema as SubmitDuelAnswerMessageSchema };
+export { usePowerUpMessageSchema as UsePowerUpMessageSchema };
+export { castCurseMessageSchema as CastCurseMessageSchema };
 
 export type JoinGameMessage = z.infer<typeof JoinGameMessageSchema>;
 export type LeaveGameMessage = z.infer<typeof LeaveGameMessageSchema>;
@@ -68,6 +98,10 @@ export type EndSessionMessage = z.infer<typeof EndSessionMessageSchema>;
 export type SkipQuestionMessage = z.infer<typeof SkipQuestionMessageSchema>;
 export type SelectChestMessage = z.infer<typeof SelectChestMessageSchema>;
 export type SelectStealTargetMessage = z.infer<typeof SelectStealTargetMessageSchema>;
+export type SubmitBubblePopMessage = z.infer<typeof SubmitBubblePopMessageSchema>;
+export type SubmitDuelAnswerMessage = z.infer<typeof SubmitDuelAnswerMessageSchema>;
+export type UsePowerUpMessage = z.infer<typeof UsePowerUpMessageSchema>;
+export type CastCurseMessage = z.infer<typeof CastCurseMessageSchema>;
 
 /**
  * Emits a standardized socket validation payload.

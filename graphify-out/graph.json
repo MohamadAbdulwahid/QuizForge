@@ -4,151 +4,4817 @@
   "graph": {},
   "nodes": [
     {
+      "label": "quizforge-api.spec.ts",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L1",
+      "id": "api_quizforge_api_spec",
+      "community": 2,
+      "norm_label": "quizforge-api.spec.ts"
+    },
+    {
+      "label": "HealthResponse",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L15",
+      "id": "api_quizforge_api_spec_healthresponse",
+      "community": 2,
+      "norm_label": "healthresponse"
+    },
+    {
+      "label": "ErrorResponse",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L16",
+      "id": "api_quizforge_api_spec_errorresponse",
+      "community": 2,
+      "norm_label": "errorresponse"
+    },
+    {
+      "label": "ConfigResponse",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L17",
+      "id": "api_quizforge_api_spec_configresponse",
+      "community": 2,
+      "norm_label": "configresponse"
+    },
+    {
+      "label": "HealthHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L19",
+      "id": "api_quizforge_api_spec_healthhandler",
+      "community": 2,
+      "norm_label": "healthhandler"
+    },
+    {
+      "label": "ConfigHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L20",
+      "id": "api_quizforge_api_spec_confighandler",
+      "community": 2,
+      "norm_label": "confighandler"
+    },
+    {
+      "label": "SignUpHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L21",
+      "id": "api_quizforge_api_spec_signuphandler",
+      "community": 2,
+      "norm_label": "signuphandler"
+    },
+    {
+      "label": "LoginHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L22",
+      "id": "api_quizforge_api_spec_loginhandler",
+      "community": 2,
+      "norm_label": "loginhandler"
+    },
+    {
+      "label": "CreateQuizHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L23",
+      "id": "api_quizforge_api_spec_createquizhandler",
+      "community": 2,
+      "norm_label": "createquizhandler"
+    },
+    {
+      "label": "GetMyQuizzesHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L27",
+      "id": "api_quizforge_api_spec_getmyquizzeshandler",
+      "community": 2,
+      "norm_label": "getmyquizzeshandler"
+    },
+    {
+      "label": "GetQuizByIdHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L28",
+      "id": "api_quizforge_api_spec_getquizbyidhandler",
+      "community": 2,
+      "norm_label": "getquizbyidhandler"
+    },
+    {
+      "label": "PatchQuizHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L29",
+      "id": "api_quizforge_api_spec_patchquizhandler",
+      "community": 2,
+      "norm_label": "patchquizhandler"
+    },
+    {
+      "label": "DeleteQuizHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L33",
+      "id": "api_quizforge_api_spec_deletequizhandler",
+      "community": 2,
+      "norm_label": "deletequizhandler"
+    },
+    {
+      "label": "PublicQuizByCodeHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L34",
+      "id": "api_quizforge_api_spec_publicquizbycodehandler",
+      "community": 2,
+      "norm_label": "publicquizbycodehandler"
+    },
+    {
+      "label": "CreateGroupHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L38",
+      "id": "api_quizforge_api_spec_creategrouphandler",
+      "community": 2,
+      "norm_label": "creategrouphandler"
+    },
+    {
+      "label": "ListMyGroupsHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L42",
+      "id": "api_quizforge_api_spec_listmygroupshandler",
+      "community": 2,
+      "norm_label": "listmygroupshandler"
+    },
+    {
+      "label": "SearchGroupsHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L43",
+      "id": "api_quizforge_api_spec_searchgroupshandler",
+      "community": 2,
+      "norm_label": "searchgroupshandler"
+    },
+    {
+      "label": "GetGroupByIdHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L47",
+      "id": "api_quizforge_api_spec_getgroupbyidhandler",
+      "community": 2,
+      "norm_label": "getgroupbyidhandler"
+    },
+    {
+      "label": "UpdateGroupHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L48",
+      "id": "api_quizforge_api_spec_updategrouphandler",
+      "community": 2,
+      "norm_label": "updategrouphandler"
+    },
+    {
+      "label": "JoinGroupHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L52",
+      "id": "api_quizforge_api_spec_joingrouphandler",
+      "community": 2,
+      "norm_label": "joingrouphandler"
+    },
+    {
+      "label": "ListJoinRequestsHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L53",
+      "id": "api_quizforge_api_spec_listjoinrequestshandler",
+      "community": 2,
+      "norm_label": "listjoinrequestshandler"
+    },
+    {
+      "label": "RespondJoinRequestHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L54",
+      "id": "api_quizforge_api_spec_respondjoinrequesthandler",
+      "community": 2,
+      "norm_label": "respondjoinrequesthandler"
+    },
+    {
+      "label": "InviteGroupMemberHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L58",
+      "id": "api_quizforge_api_spec_invitegroupmemberhandler",
+      "community": 2,
+      "norm_label": "invitegroupmemberhandler"
+    },
+    {
+      "label": "ListMyInvitesHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L62",
+      "id": "api_quizforge_api_spec_listmyinviteshandler",
+      "community": 2,
+      "norm_label": "listmyinviteshandler"
+    },
+    {
+      "label": "RespondInviteHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L63",
+      "id": "api_quizforge_api_spec_respondinvitehandler",
+      "community": 2,
+      "norm_label": "respondinvitehandler"
+    },
+    {
+      "label": "UpdateMemberRoleHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L67",
+      "id": "api_quizforge_api_spec_updatememberrolehandler",
+      "community": 2,
+      "norm_label": "updatememberrolehandler"
+    },
+    {
+      "label": "RemoveMemberHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L71",
+      "id": "api_quizforge_api_spec_removememberhandler",
+      "community": 2,
+      "norm_label": "removememberhandler"
+    },
+    {
+      "label": "GroupActiveSessionsHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L75",
+      "id": "api_quizforge_api_spec_groupactivesessionshandler",
+      "community": 2,
+      "norm_label": "groupactivesessionshandler"
+    },
+    {
+      "label": "CreateSessionHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L76",
+      "id": "api_quizforge_api_spec_createsessionhandler",
+      "community": 2,
+      "norm_label": "createsessionhandler"
+    },
+    {
+      "label": "GetSessionByPinHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L80",
+      "id": "api_quizforge_api_spec_getsessionbypinhandler",
+      "community": 2,
+      "norm_label": "getsessionbypinhandler"
+    },
+    {
+      "label": "PatchSessionStatusHandler",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L81",
+      "id": "api_quizforge_api_spec_patchsessionstatushandler",
+      "community": 2,
+      "norm_label": "patchsessionstatushandler"
+    },
+    {
+      "label": "QuizForgeApiSpec",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L86",
+      "id": "api_quizforge_api_spec_quizforgeapispec",
+      "community": 2,
+      "norm_label": "quizforgeapispec"
+    },
+    {
+      "label": "config.routes.ts",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/routes/config.routes.ts",
+      "source_location": "L1",
+      "id": "routes_config_routes",
+      "community": 7,
+      "norm_label": "config.routes.ts"
+    },
+    {
+      "label": "configRouter",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/routes/config.routes.ts",
+      "source_location": "L4",
+      "id": "routes_config_routes_configrouter",
+      "community": 7,
+      "norm_label": "configrouter"
+    },
+    {
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/routes/index.ts",
+      "source_location": "L1",
+      "id": "routes_index",
+      "community": 7,
+      "norm_label": "index.ts"
+    },
+    {
+      "label": "registerRoutes()",
+      "file_type": "code",
+      "source_file": "apps/backend/src/api/routes/index.ts",
+      "source_location": "L17",
+      "id": "routes_index_registerroutes",
+      "community": 7,
+      "norm_label": "registerroutes()"
+    },
+    {
+      "label": "config.ts",
+      "file_type": "code",
+      "source_file": "apps/backend/src/config/config.ts",
+      "source_location": "L1",
+      "id": "config_config",
+      "community": 7,
+      "norm_label": "config.ts"
+    },
+    {
+      "label": "envSchema",
+      "file_type": "code",
+      "source_file": "apps/backend/src/config/config.ts",
+      "source_location": "L7",
+      "id": "config_config_envschema",
+      "community": 7,
+      "norm_label": "envschema"
+    },
+    {
+      "label": "Config",
+      "file_type": "code",
+      "source_file": "apps/backend/src/config/config.ts",
+      "source_location": "L26",
+      "id": "config_config_config",
+      "community": 7,
+      "norm_label": "config"
+    },
+    {
+      "label": "parsedEnv",
+      "file_type": "code",
+      "source_file": "apps/backend/src/config/config.ts",
+      "source_location": "L32",
+      "id": "config_config_parsedenv",
+      "community": 7,
+      "norm_label": "parsedenv"
+    },
+    {
+      "label": "main.ts",
+      "file_type": "code",
+      "source_file": "apps/backend/src/main.ts",
+      "source_location": "L1",
+      "id": "src_main",
+      "community": 7,
+      "norm_label": "main.ts"
+    },
+    {
+      "label": "app",
+      "file_type": "code",
+      "source_file": "apps/backend/src/main.ts",
+      "source_location": "L17",
+      "id": "src_main_app",
+      "community": 7,
+      "norm_label": "app"
+    },
+    {
+      "label": "readSwaggerSpec()",
+      "file_type": "code",
+      "source_file": "apps/backend/src/main.ts",
+      "source_location": "L35",
+      "id": "src_main_readswaggerspec",
+      "community": 7,
+      "norm_label": "readswaggerspec()"
+    },
+    {
+      "label": "server",
+      "file_type": "code",
+      "source_file": "apps/backend/src/main.ts",
+      "source_location": "L88",
+      "id": "src_main_server",
+      "community": 7,
+      "norm_label": "server"
+    },
+    {
+      "label": "io",
+      "file_type": "code",
+      "source_file": "apps/backend/src/main.ts",
+      "source_location": "L91",
+      "id": "src_main_io",
+      "community": 4,
+      "norm_label": "io"
+    },
+    {
+      "label": "stopCleanup",
+      "file_type": "code",
+      "source_file": "apps/backend/src/main.ts",
+      "source_location": "L96",
+      "id": "src_main_stopcleanup",
+      "community": 7,
+      "norm_label": "stopcleanup"
+    },
+    {
+      "label": "app.config.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/app.config.ts",
+      "source_location": "L1",
+      "id": "app_app_config",
+      "community": 10,
+      "norm_label": "app.config.ts"
+    },
+    {
+      "label": "appConfig",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/app.config.ts",
+      "source_location": "L16",
+      "id": "app_app_config_appconfig",
+      "community": 10,
+      "norm_label": "appconfig"
+    },
+    {
+      "label": "app.routes.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/app.routes.ts",
+      "source_location": "L1",
+      "id": "app_app_routes",
+      "community": 10,
+      "norm_label": "app.routes.ts"
+    },
+    {
+      "label": "appRoutes",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/app.routes.ts",
+      "source_location": "L5",
+      "id": "app_app_routes_approutes",
+      "community": 10,
+      "norm_label": "approutes"
+    },
+    {
+      "label": "auth.interceptor.spec.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/interceptors/auth.interceptor.spec.ts",
+      "source_location": "L1",
+      "id": "interceptors_auth_interceptor_spec",
+      "community": 3,
+      "norm_label": "auth.interceptor.spec.ts"
+    },
+    {
+      "label": "auth.interceptor.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/interceptors/auth.interceptor.ts",
+      "source_location": "L1",
+      "id": "interceptors_auth_interceptor",
+      "community": 3,
+      "norm_label": "auth.interceptor.ts"
+    },
+    {
+      "label": "authInterceptor()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/interceptors/auth.interceptor.ts",
+      "source_location": "L7",
+      "id": "interceptors_auth_interceptor_authinterceptor",
+      "community": 3,
+      "norm_label": "authinterceptor()"
+    },
+    {
+      "label": "api.service.spec.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/api.service.spec.ts",
+      "source_location": "L1",
+      "id": "services_api_service_spec",
+      "community": 5,
+      "norm_label": "api.service.spec.ts"
+    },
+    {
+      "label": "api.service.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L1",
+      "id": "services_api_service",
+      "community": 5,
+      "norm_label": "api.service.ts"
+    },
+    {
+      "label": "ApiService",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L6",
+      "id": "services_api_service_apiservice",
+      "community": 5,
+      "norm_label": "apiservice"
+    },
+    {
+      "label": ".get()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L10",
+      "id": "services_api_service_apiservice_get",
+      "community": 5,
+      "norm_label": ".get()"
+    },
+    {
+      "label": ".post()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L14",
+      "id": "services_api_service_apiservice_post",
+      "community": 5,
+      "norm_label": ".post()"
+    },
+    {
+      "label": ".patch()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L18",
+      "id": "services_api_service_apiservice_patch",
+      "community": 5,
+      "norm_label": ".patch()"
+    },
+    {
+      "label": ".delete()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L22",
+      "id": "services_api_service_apiservice_delete",
+      "community": 5,
+      "norm_label": ".delete()"
+    },
+    {
+      "label": ".resolveUrl()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L26",
+      "id": "services_api_service_apiservice_resolveurl",
+      "community": 5,
+      "norm_label": ".resolveurl()"
+    },
+    {
+      "label": "auth.service.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L1",
+      "id": "services_auth_service",
+      "community": 3,
+      "norm_label": "auth.service.ts"
+    },
+    {
+      "label": "SignInPayload",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L6",
+      "id": "services_auth_service_signinpayload",
+      "community": 3,
+      "norm_label": "signinpayload"
+    },
+    {
+      "label": "SignUpPayload",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L11",
+      "id": "services_auth_service_signuppayload",
+      "community": 3,
+      "norm_label": "signuppayload"
+    },
+    {
+      "label": "AuthService",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L18",
+      "id": "services_auth_service_authservice",
+      "community": 3,
+      "norm_label": "authservice"
+    },
+    {
+      "label": ".supabase()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L22",
+      "id": "services_auth_service_authservice_supabase",
+      "community": 3,
+      "norm_label": ".supabase()"
+    },
+    {
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L42",
+      "id": "services_auth_service_authservice_constructor",
+      "community": 3,
+      "norm_label": ".constructor()"
+    },
+    {
+      "label": ".signIn()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L46",
+      "id": "services_auth_service_authservice_signin",
+      "community": 3,
+      "norm_label": ".signin()"
+    },
+    {
+      "label": ".signUp()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L60",
+      "id": "services_auth_service_authservice_signup",
+      "community": 3,
+      "norm_label": ".signup()"
+    },
+    {
+      "label": ".signOut()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L79",
+      "id": "services_auth_service_authservice_signout",
+      "community": 3,
+      "norm_label": ".signout()"
+    },
+    {
+      "label": ".whenReady()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L89",
+      "id": "services_auth_service_authservice_whenready",
+      "community": 3,
+      "norm_label": ".whenready()"
+    },
+    {
+      "label": ".getAccessToken()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L93",
+      "id": "services_auth_service_authservice_getaccesstoken",
+      "community": 3,
+      "norm_label": ".getaccesstoken()"
+    },
+    {
+      "label": ".initializeSession()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L98",
+      "id": "services_auth_service_authservice_initializesession",
+      "community": 3,
+      "norm_label": ".initializesession()"
+    },
+    {
+      "label": ".markReady()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L125",
+      "id": "services_auth_service_authservice_markready",
+      "community": 3,
+      "norm_label": ".markready()"
+    },
+    {
+      "label": "config.service.spec.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.spec.ts",
+      "source_location": "L1",
+      "id": "services_config_service_spec",
+      "community": 5,
+      "norm_label": "config.service.spec.ts"
+    },
+    {
+      "label": "mockConfig",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.spec.ts",
+      "source_location": "L7",
+      "id": "services_config_service_spec_mockconfig",
+      "community": 5,
+      "norm_label": "mockconfig"
+    },
+    {
+      "label": "jsonResponse()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.spec.ts",
+      "source_location": "L13",
+      "id": "services_config_service_spec_jsonresponse",
+      "community": 5,
+      "norm_label": "jsonresponse()"
+    },
+    {
+      "label": "errorResponse()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.spec.ts",
+      "source_location": "L20",
+      "id": "services_config_service_spec_errorresponse",
+      "community": 5,
+      "norm_label": "errorresponse()"
+    },
+    {
+      "label": "stubFetch()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.spec.ts",
+      "source_location": "L24",
+      "id": "services_config_service_spec_stubfetch",
+      "community": 5,
+      "norm_label": "stubfetch()"
+    },
+    {
+      "label": "config.service.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L1",
+      "id": "services_config_service",
+      "community": 5,
+      "norm_label": "config.service.ts"
+    },
+    {
+      "label": "BackendProfile",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L5",
+      "id": "services_config_service_backendprofile",
+      "community": 5,
+      "norm_label": "backendprofile"
+    },
+    {
+      "label": "BackendProfiles",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L12",
+      "id": "services_config_service_backendprofiles",
+      "community": 5,
+      "norm_label": "backendprofiles"
+    },
+    {
+      "label": "ConfigResponse",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L16",
+      "id": "services_config_service_configresponse",
+      "community": 5,
+      "norm_label": "configresponse"
+    },
+    {
+      "label": "ConfigService",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L25",
+      "id": "services_config_service_configservice",
+      "community": 6,
+      "norm_label": "configservice"
+    },
+    {
+      "label": ".whenReady()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L52",
+      "id": "services_config_service_configservice_whenready",
+      "community": 6,
+      "norm_label": ".whenready()"
+    },
+    {
+      "label": ".getBackendUrl()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L59",
+      "id": "services_config_service_configservice_getbackendurl",
+      "community": 6,
+      "norm_label": ".getbackendurl()"
+    },
+    {
+      "label": ".getSupabaseUrl()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L66",
+      "id": "services_config_service_configservice_getsupabaseurl",
+      "community": 6,
+      "norm_label": ".getsupabaseurl()"
+    },
+    {
+      "label": ".getSupabasePublishableKey()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L73",
+      "id": "services_config_service_configservice_getsupabasepublishablekey",
+      "community": 6,
+      "norm_label": ".getsupabasepublishablekey()"
+    },
+    {
+      "label": ".getSentryDsn()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L80",
+      "id": "services_config_service_configservice_getsentrydsn",
+      "community": 6,
+      "norm_label": ".getsentrydsn()"
+    },
+    {
+      "label": ".load()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L94",
+      "id": "services_config_service_configservice_load",
+      "community": 6,
+      "norm_label": ".load()"
+    },
+    {
+      "label": ".switchBackend()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L138",
+      "id": "services_config_service_configservice_switchbackend",
+      "community": 6,
+      "norm_label": ".switchbackend()"
+    },
+    {
+      "label": ".resolveBackendUrl()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L167",
+      "id": "services_config_service_configservice_resolvebackendurl",
+      "community": 6,
+      "norm_label": ".resolvebackendurl()"
+    },
+    {
+      "label": ".applyCachedConfig()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L186",
+      "id": "services_config_service_configservice_applycachedconfig",
+      "community": 6,
+      "norm_label": ".applycachedconfig()"
+    },
+    {
+      "label": ".readCachedProfile()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L208",
+      "id": "services_config_service_configservice_readcachedprofile",
+      "community": 6,
+      "norm_label": ".readcachedprofile()"
+    },
+    {
+      "label": ".cacheProfile()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L221",
+      "id": "services_config_service_configservice_cacheprofile",
+      "community": 6,
+      "norm_label": ".cacheprofile()"
+    },
+    {
+      "label": ".readProfilesFromStorage()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L244",
+      "id": "services_config_service_configservice_readprofilesfromstorage",
+      "community": 6,
+      "norm_label": ".readprofilesfromstorage()"
+    },
+    {
+      "label": ".markReady()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L269",
+      "id": "services_config_service_configservice_markready",
+      "community": 6,
+      "norm_label": ".markready()"
+    },
+    {
+      "label": "sentry.service.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/sentry.service.ts",
+      "source_location": "L1",
+      "id": "services_sentry_service",
+      "community": 10,
+      "norm_label": "sentry.service.ts"
+    },
+    {
+      "label": "initSentry()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/sentry.service.ts",
+      "source_location": "L15",
+      "id": "services_sentry_service_initsentry",
+      "community": 10,
+      "norm_label": "initsentry()"
+    },
+    {
+      "label": "session-sse.service.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/session-sse.service.ts",
+      "source_location": "L1",
+      "id": "services_session_sse_service",
+      "community": 3,
+      "norm_label": "session-sse.service.ts"
+    },
+    {
+      "label": "SessionSseService",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/session-sse.service.ts",
+      "source_location": "L16",
+      "id": "services_session_sse_service_sessionsseservice",
+      "community": 11,
+      "norm_label": "sessionsseservice"
+    },
+    {
+      "label": ".connect()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/session-sse.service.ts",
+      "source_location": "L33",
+      "id": "services_session_sse_service_sessionsseservice_connect",
+      "community": 11,
+      "norm_label": ".connect()"
+    },
+    {
+      "label": ".disconnect()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/session-sse.service.ts",
+      "source_location": "L42",
+      "id": "services_session_sse_service_sessionsseservice_disconnect",
+      "community": 11,
+      "norm_label": ".disconnect()"
+    },
+    {
+      "label": ".startConnection()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/session-sse.service.ts",
+      "source_location": "L55",
+      "id": "services_session_sse_service_sessionsseservice_startconnection",
+      "community": 11,
+      "norm_label": ".startconnection()"
+    },
+    {
+      "label": ".scheduleReconnect()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/session-sse.service.ts",
+      "source_location": "L122",
+      "id": "services_session_sse_service_sessionsseservice_schedulereconnect",
+      "community": 11,
+      "norm_label": ".schedulereconnect()"
+    },
+    {
+      "label": "supabase.service.spec.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/supabase.service.spec.ts",
+      "source_location": "L1",
+      "id": "services_supabase_service_spec",
+      "community": 12,
+      "norm_label": "supabase.service.spec.ts"
+    },
+    {
+      "label": "unsubscribeMock",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/supabase.service.spec.ts",
+      "source_location": "L4",
+      "id": "services_supabase_service_spec_unsubscribemock",
+      "community": 12,
+      "norm_label": "unsubscribemock"
+    },
+    {
+      "label": "onAuthStateChangeMock",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/supabase.service.spec.ts",
+      "source_location": "L5",
+      "id": "services_supabase_service_spec_onauthstatechangemock",
+      "community": 12,
+      "norm_label": "onauthstatechangemock"
+    },
+    {
+      "label": "createClientMock",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/supabase.service.spec.ts",
+      "source_location": "L16",
+      "id": "services_supabase_service_spec_createclientmock",
+      "community": 12,
+      "norm_label": "createclientmock"
+    },
+    {
+      "label": "supabase.service.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/supabase.service.ts",
+      "source_location": "L1",
+      "id": "services_supabase_service",
+      "community": 3,
+      "norm_label": "supabase.service.ts"
+    },
+    {
+      "label": "AuthChangePayload",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/supabase.service.ts",
+      "source_location": "L6",
+      "id": "services_supabase_service_authchangepayload",
+      "community": 3,
+      "norm_label": "authchangepayload"
+    },
+    {
+      "label": "SupabaseService",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/supabase.service.ts",
+      "source_location": "L12",
+      "id": "services_supabase_service_supabaseservice",
+      "community": 3,
+      "norm_label": "supabaseservice"
+    },
+    {
+      "label": ".client()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/supabase.service.ts",
+      "source_location": "L16",
+      "id": "services_supabase_service_supabaseservice_client",
+      "community": 3,
+      "norm_label": ".client()"
+    },
+    {
+      "label": ".authChanges()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/supabase.service.ts",
+      "source_location": "L28",
+      "id": "services_supabase_service_supabaseservice_authchanges",
+      "community": 3,
+      "norm_label": ".authchanges()"
+    },
+    {
+      "label": "websocket.service.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L1",
+      "id": "services_websocket_service",
+      "community": 1,
+      "norm_label": "websocket.service.ts"
+    },
+    {
+      "label": "PlayerJoinedEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L6",
+      "id": "services_websocket_service_playerjoinedevent",
+      "community": 1,
+      "norm_label": "playerjoinedevent"
+    },
+    {
+      "label": "PlayerLeftEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L12",
+      "id": "services_websocket_service_playerleftevent",
+      "community": 1,
+      "norm_label": "playerleftevent"
+    },
+    {
+      "label": "SocketErrorPayload",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L17",
+      "id": "services_websocket_service_socketerrorpayload",
+      "community": 1,
+      "norm_label": "socketerrorpayload"
+    },
+    {
+      "label": "LobbyStateEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L23",
+      "id": "services_websocket_service_lobbystateevent",
+      "community": 1,
+      "norm_label": "lobbystateevent"
+    },
+    {
+      "label": "GameStartedEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L36",
+      "id": "services_websocket_service_gamestartedevent",
+      "community": 1,
+      "norm_label": "gamestartedevent"
+    },
+    {
+      "label": "RoundStartedEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L44",
+      "id": "services_websocket_service_roundstartedevent",
+      "community": 1,
+      "norm_label": "roundstartedevent"
+    },
+    {
+      "label": "GameQuestionEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L54",
+      "id": "services_websocket_service_gamequestionevent",
+      "community": 1,
+      "norm_label": "gamequestionevent"
+    },
+    {
+      "label": "AnswerAckEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L72",
+      "id": "services_websocket_service_answerackevent",
+      "community": 1,
+      "norm_label": "answerackevent"
+    },
+    {
+      "label": "LeaderboardPlayerEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L82",
+      "id": "services_websocket_service_leaderboardplayerevent",
+      "community": 1,
+      "norm_label": "leaderboardplayerevent"
+    },
+    {
+      "label": "ScoreUpdateEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L89",
+      "id": "services_websocket_service_scoreupdateevent",
+      "community": 1,
+      "norm_label": "scoreupdateevent"
+    },
+    {
+      "label": "LeaderboardUpdateEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L102",
+      "id": "services_websocket_service_leaderboardupdateevent",
+      "community": 1,
+      "norm_label": "leaderboardupdateevent"
+    },
+    {
+      "label": "RoundClosedEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L108",
+      "id": "services_websocket_service_roundclosedevent",
+      "community": 1,
+      "norm_label": "roundclosedevent"
+    },
+    {
+      "label": "GameEndedEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L115",
+      "id": "services_websocket_service_gameendedevent",
+      "community": 1,
+      "norm_label": "gameendedevent"
+    },
+    {
+      "label": "SessionClosedEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L121",
+      "id": "services_websocket_service_sessionclosedevent",
+      "community": 1,
+      "norm_label": "sessionclosedevent"
+    },
+    {
+      "label": "ChestsRevealedEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L127",
+      "id": "services_websocket_service_chestsrevealedevent",
+      "community": 1,
+      "norm_label": "chestsrevealedevent"
+    },
+    {
+      "label": "ChestEffectEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L134",
+      "id": "services_websocket_service_chesteffectevent",
+      "community": 1,
+      "norm_label": "chesteffectevent"
+    },
+    {
+      "label": "GoldUpdateEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L146",
+      "id": "services_websocket_service_goldupdateevent",
+      "community": 1,
+      "norm_label": "goldupdateevent"
+    },
+    {
+      "label": "TargetNeededEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L156",
+      "id": "services_websocket_service_targetneededevent",
+      "community": 1,
+      "norm_label": "targetneededevent"
+    },
+    {
+      "label": "ForgeActivityEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L164",
+      "id": "services_websocket_service_forgeactivityevent",
+      "community": 1,
+      "norm_label": "forgeactivityevent"
+    },
+    {
+      "label": "BrDuelPairedEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L181",
+      "id": "services_websocket_service_brduelpairedevent",
+      "community": 1,
+      "norm_label": "brduelpairedevent"
+    },
+    {
+      "label": "BrDuelQuestionEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L191",
+      "id": "services_websocket_service_brduelquestionevent",
+      "community": 1,
+      "norm_label": "brduelquestionevent"
+    },
+    {
+      "label": "BrDuelResultEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L197",
+      "id": "services_websocket_service_brduelresultevent",
+      "community": 1,
+      "norm_label": "brduelresultevent"
+    },
+    {
+      "label": "BrLifeLostEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L211",
+      "id": "services_websocket_service_brlifelostevent",
+      "community": 1,
+      "norm_label": "brlifelostevent"
+    },
+    {
+      "label": "BrPlayerEliminatedEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L218",
+      "id": "services_websocket_service_brplayereliminatedevent",
+      "community": 1,
+      "norm_label": "brplayereliminatedevent"
+    },
+    {
+      "label": "BrBubblePopStartEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L223",
+      "id": "services_websocket_service_brbubblepopstartevent",
+      "community": 1,
+      "norm_label": "brbubblepopstartevent"
+    },
+    {
+      "label": "BrBubblePopRankingEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L229",
+      "id": "services_websocket_service_brbubblepoprankingevent",
+      "community": 1,
+      "norm_label": "brbubblepoprankingevent"
+    },
+    {
+      "label": "BrPowerUpAwardedEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L234",
+      "id": "services_websocket_service_brpowerupawardedevent",
+      "community": 1,
+      "norm_label": "brpowerupawardedevent"
+    },
+    {
+      "label": "BrCurseAwardedEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L239",
+      "id": "services_websocket_service_brcurseawardedevent",
+      "community": 1,
+      "norm_label": "brcurseawardedevent"
+    },
+    {
+      "label": "BrCurseCastEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L244",
+      "id": "services_websocket_service_brcursecastevent",
+      "community": 1,
+      "norm_label": "brcursecastevent"
+    },
+    {
+      "label": "BrSpectatorModeEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L253",
+      "id": "services_websocket_service_brspectatormodeevent",
+      "community": 1,
+      "norm_label": "brspectatormodeevent"
+    },
+    {
+      "label": "BrRoyaleWinnerEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L257",
+      "id": "services_websocket_service_brroyalewinnerevent",
+      "community": 1,
+      "norm_label": "brroyalewinnerevent"
+    },
+    {
+      "label": "BrRoundTransitionEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L263",
+      "id": "services_websocket_service_brroundtransitionevent",
+      "community": 1,
+      "norm_label": "brroundtransitionevent"
+    },
+    {
+      "label": "BrCurseOpportunityEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L268",
+      "id": "services_websocket_service_brcurseopportunityevent",
+      "community": 1,
+      "norm_label": "brcurseopportunityevent"
+    },
+    {
+      "label": "BrLifeStealAnnouncementEvent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L272",
+      "id": "services_websocket_service_brlifestealannouncementevent",
+      "community": 1,
+      "norm_label": "brlifestealannouncementevent"
+    },
+    {
+      "label": "ServerToClientEvents",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L277",
+      "id": "services_websocket_service_servertoclientevents",
+      "community": 1,
+      "norm_label": "servertoclientevents"
+    },
+    {
+      "label": "ClientToServerEvents",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L314",
+      "id": "services_websocket_service_clienttoserverevents",
+      "community": 1,
+      "norm_label": "clienttoserverevents"
+    },
+    {
+      "label": "WebsocketService",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L351",
+      "id": "services_websocket_service_websocketservice",
+      "community": 4,
+      "norm_label": "websocketservice"
+    },
+    {
+      "label": ".connect()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L437",
+      "id": "services_websocket_service_websocketservice_connect",
+      "community": 4,
+      "norm_label": ".connect()"
+    },
+    {
+      "label": ".connectAsGuest()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L464",
+      "id": "services_websocket_service_websocketservice_connectasguest",
+      "community": 4,
+      "norm_label": ".connectasguest()"
+    },
+    {
+      "label": ".setupSocketListeners()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L492",
+      "id": "services_websocket_service_websocketservice_setupsocketlisteners",
+      "community": 4,
+      "norm_label": ".setupsocketlisteners()"
+    },
+    {
+      "label": ".joinGame()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L653",
+      "id": "services_websocket_service_websocketservice_joingame",
+      "community": 4,
+      "norm_label": ".joingame()"
+    },
+    {
+      "label": ".leaveGame()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L659",
+      "id": "services_websocket_service_websocketservice_leavegame",
+      "community": 4,
+      "norm_label": ".leavegame()"
+    },
+    {
+      "label": ".startGame()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L665",
+      "id": "services_websocket_service_websocketservice_startgame",
+      "community": 4,
+      "norm_label": ".startgame()"
+    },
+    {
+      "label": ".endSession()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L669",
+      "id": "services_websocket_service_websocketservice_endsession",
+      "community": 4,
+      "norm_label": ".endsession()"
+    },
+    {
+      "label": ".submitAnswer()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L673",
+      "id": "services_websocket_service_websocketservice_submitanswer",
+      "community": 4,
+      "norm_label": ".submitanswer()"
+    },
+    {
+      "label": ".skipQuestion()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L677",
+      "id": "services_websocket_service_websocketservice_skipquestion",
+      "community": 4,
+      "norm_label": ".skipquestion()"
+    },
+    {
+      "label": ".nextQuestion()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L681",
+      "id": "services_websocket_service_websocketservice_nextquestion",
+      "community": 4,
+      "norm_label": ".nextquestion()"
+    },
+    {
+      "label": ".requestNextQuestion()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L686",
+      "id": "services_websocket_service_websocketservice_requestnextquestion",
+      "community": 4,
+      "norm_label": ".requestnextquestion()"
+    },
+    {
+      "label": ".selectChest()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L690",
+      "id": "services_websocket_service_websocketservice_selectchest",
+      "community": 4,
+      "norm_label": ".selectchest()"
+    },
+    {
+      "label": ".selectStealTarget()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L694",
+      "id": "services_websocket_service_websocketservice_selectstealtarget",
+      "community": 4,
+      "norm_label": ".selectstealtarget()"
+    },
+    {
+      "label": ".submitBubblePop()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L704",
+      "id": "services_websocket_service_websocketservice_submitbubblepop",
+      "community": 4,
+      "norm_label": ".submitbubblepop()"
+    },
+    {
+      "label": ".submitDuelAnswer()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L709",
+      "id": "services_websocket_service_websocketservice_submitduelanswer",
+      "community": 4,
+      "norm_label": ".submitduelanswer()"
+    },
+    {
+      "label": ".usePowerUp()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L714",
+      "id": "services_websocket_service_websocketservice_usepowerup",
+      "community": 4,
+      "norm_label": ".usepowerup()"
+    },
+    {
+      "label": ".castCurse()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L719",
+      "id": "services_websocket_service_websocketservice_castcurse",
+      "community": 4,
+      "norm_label": ".castcurse()"
+    },
+    {
+      "label": ".disconnect()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L723",
+      "id": "services_websocket_service_websocketservice_disconnect",
+      "community": 4,
+      "norm_label": ".disconnect()"
+    },
+    {
+      "label": ".disposeSocket()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L732",
+      "id": "services_websocket_service_websocketservice_disposesocket",
+      "community": 4,
+      "norm_label": ".disposesocket()"
+    },
+    {
+      "label": "dashboard-shell.component.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L1",
+      "id": "dashboard_dashboard_shell_component",
+      "community": 3,
+      "norm_label": "dashboard-shell.component.ts"
+    },
+    {
+      "label": "AppNavItem",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L11",
+      "id": "dashboard_dashboard_shell_component_appnavitem",
+      "community": 3,
+      "norm_label": "appnavitem"
+    },
+    {
+      "label": "DashboardShellComponent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L55",
+      "id": "dashboard_dashboard_shell_component_dashboardshellcomponent",
+      "community": 9,
+      "norm_label": "dashboardshellcomponent"
+    },
+    {
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L93",
+      "id": "dashboard_dashboard_shell_component_dashboardshellcomponent_constructor",
+      "community": 9,
+      "norm_label": ".constructor()"
+    },
+    {
+      "label": ".closeMobileNav()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L137",
+      "id": "dashboard_dashboard_shell_component_dashboardshellcomponent_closemobilenav",
+      "community": 9,
+      "norm_label": ".closemobilenav()"
+    },
+    {
+      "label": ".toggleMobileNav()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L141",
+      "id": "dashboard_dashboard_shell_component_dashboardshellcomponent_togglemobilenav",
+      "community": 9,
+      "norm_label": ".togglemobilenav()"
+    },
+    {
+      "label": ".onProfileHover()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L145",
+      "id": "dashboard_dashboard_shell_component_dashboardshellcomponent_onprofilehover",
+      "community": 9,
+      "norm_label": ".onprofilehover()"
+    },
+    {
+      "label": ".logout()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L149",
+      "id": "dashboard_dashboard_shell_component_dashboardshellcomponent_logout",
+      "community": 9,
+      "norm_label": ".logout()"
+    },
+    {
+      "label": ".openSettings()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L154",
+      "id": "dashboard_dashboard_shell_component_dashboardshellcomponent_opensettings",
+      "community": 9,
+      "norm_label": ".opensettings()"
+    },
+    {
+      "label": ".iconBgFor()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L159",
+      "id": "dashboard_dashboard_shell_component_dashboardshellcomponent_iconbgfor",
+      "community": 9,
+      "norm_label": ".iconbgfor()"
+    },
+    {
+      "label": "game-lobby-page.component.spec.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts",
+      "source_location": "L1",
+      "id": "game_game_lobby_page_component_spec",
+      "community": 3,
+      "norm_label": "game-lobby-page.component.spec.ts"
+    },
+    {
+      "label": "mockConfigService",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts",
+      "source_location": "L16",
+      "id": "game_game_lobby_page_component_spec_mockconfigservice",
+      "community": 3,
+      "norm_label": "mockconfigservice"
+    },
+    {
+      "label": "mockSupabaseService",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts",
+      "source_location": "L31",
+      "id": "game_game_lobby_page_component_spec_mocksupabaseservice",
+      "community": 3,
+      "norm_label": "mocksupabaseservice"
+    },
+    {
+      "label": "mockAuthService",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts",
+      "source_location": "L42",
+      "id": "game_game_lobby_page_component_spec_mockauthservice",
+      "community": 3,
+      "norm_label": "mockauthservice"
+    },
+    {
+      "label": "mockWebsocketService",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts",
+      "source_location": "L50",
+      "id": "game_game_lobby_page_component_spec_mockwebsocketservice",
+      "community": 3,
+      "norm_label": "mockwebsocketservice"
+    },
+    {
+      "label": "backend-selector.component.spec.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.spec.ts",
+      "source_location": "L1",
+      "id": "settings_backend_selector_component_spec",
+      "community": 8,
+      "norm_label": "backend-selector.component.spec.ts"
+    },
+    {
+      "label": "createLocalStorageMock()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.spec.ts",
+      "source_location": "L7",
+      "id": "settings_backend_selector_component_spec_createlocalstoragemock",
+      "community": 8,
+      "norm_label": "createlocalstoragemock()"
+    },
+    {
+      "label": "backend-selector.component.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L1",
+      "id": "settings_backend_selector_component",
+      "community": 8,
+      "norm_label": "backend-selector.component.ts"
+    },
+    {
+      "label": "BackendProfile",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L7",
+      "id": "settings_backend_selector_component_backendprofile",
+      "community": 8,
+      "norm_label": "backendprofile"
+    },
+    {
+      "label": "BackendProfiles",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L14",
+      "id": "settings_backend_selector_component_backendprofiles",
+      "community": 8,
+      "norm_label": "backendprofiles"
+    },
+    {
+      "label": "BackendSelectorComponent",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L198",
+      "id": "settings_backend_selector_component_backendselectorcomponent",
+      "community": 8,
+      "norm_label": "backendselectorcomponent"
+    },
+    {
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L207",
+      "id": "settings_backend_selector_component_backendselectorcomponent_constructor",
+      "community": 8,
+      "norm_label": ".constructor()"
+    },
+    {
+      "label": ".switchTo()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L211",
+      "id": "settings_backend_selector_component_backendselectorcomponent_switchto",
+      "community": 8,
+      "norm_label": ".switchto()"
+    },
+    {
+      "label": ".addCustom()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L230",
+      "id": "settings_backend_selector_component_backendselectorcomponent_addcustom",
+      "community": 8,
+      "norm_label": ".addcustom()"
+    },
+    {
+      "label": ".removeProfile()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L273",
+      "id": "settings_backend_selector_component_backendselectorcomponent_removeprofile",
+      "community": 8,
+      "norm_label": ".removeprofile()"
+    },
+    {
+      "label": ".onUrlInput()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L290",
+      "id": "settings_backend_selector_component_backendselectorcomponent_onurlinput",
+      "community": 8,
+      "norm_label": ".onurlinput()"
+    },
+    {
+      "label": ".formatUrl()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L296",
+      "id": "settings_backend_selector_component_backendselectorcomponent_formaturl",
+      "community": 8,
+      "norm_label": ".formaturl()"
+    },
+    {
+      "label": ".loadProfiles()",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L305",
+      "id": "settings_backend_selector_component_backendselectorcomponent_loadprofiles",
+      "community": 8,
+      "norm_label": ".loadprofiles()"
+    },
+    {
+      "label": "environment.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/environments/environment.ts",
+      "source_location": "L1",
+      "id": "environments_environment",
+      "community": 5,
+      "norm_label": "environment.ts"
+    },
+    {
+      "label": "environment",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/environments/environment.ts",
+      "source_location": "L3",
+      "id": "environments_environment_environment",
+      "community": 5,
+      "norm_label": "environment"
+    },
+    {
+      "label": "vite-env.d.ts",
+      "file_type": "code",
+      "source_file": "apps/frontend/src/vite-env.d.ts",
+      "source_location": "L1",
+      "id": "src_vite_env_d",
+      "community": 13,
+      "norm_label": "vite-env.d.ts"
+    },
+    {
       "label": "sprint-backlog.md",
       "file_type": "document",
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L1",
-      "id": "sprint_06_sprint_backlog",
-      "community": 2,
-      "norm_label": "sprint-backlog.md"
+      "community": 0,
+      "norm_label": "sprint-backlog.md",
+      "id": "sprint_06_sprint_backlog"
     },
     {
       "label": "Sprint 6 Backlog - End-to-End Gameplay, Stability & Admin Polish",
       "file_type": "document",
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L1",
-      "id": "sprint_06_sprint_backlog_sprint_6_backlog_end_to_end_gameplay_stability_admin_polish",
-      "community": 2,
-      "norm_label": "sprint 6 backlog - end-to-end gameplay, stability & admin polish"
+      "community": 0,
+      "norm_label": "sprint 6 backlog - end-to-end gameplay, stability & admin polish",
+      "id": "sprint_06_sprint_backlog_sprint_6_backlog_end_to_end_gameplay_stability_admin_polish"
     },
     {
       "label": "Prerequisites from Sprint 5",
       "file_type": "document",
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L11",
-      "id": "sprint_06_sprint_backlog_prerequisites_from_sprint_5",
-      "community": 2,
-      "norm_label": "prerequisites from sprint 5"
+      "community": 0,
+      "norm_label": "prerequisites from sprint 5",
+      "id": "sprint_06_sprint_backlog_prerequisites_from_sprint_5"
     },
     {
       "label": "Sprint Backlog Items",
       "file_type": "document",
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L26",
-      "id": "sprint_06_sprint_backlog_sprint_backlog_items",
       "community": 0,
-      "norm_label": "sprint backlog items"
+      "norm_label": "sprint backlog items",
+      "id": "sprint_06_sprint_backlog_sprint_backlog_items"
     },
     {
       "label": "PB-39 + PB-40 + PB-44 + PB-76: Session Join Flow, Username Validation, and Live Lobby (Mohamad)",
       "file_type": "document",
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L28",
-      "id": "sprint_06_sprint_backlog_pb_39_pb_40_pb_44_pb_76_session_join_flow_username_validation_and_live_lobby_mohamad",
       "community": 0,
-      "norm_label": "pb-39 + pb-40 + pb-44 + pb-76: session join flow, username validation, and live lobby (mohamad)"
+      "norm_label": "pb-39 + pb-40 + pb-44 + pb-76: session join flow, username validation, and live lobby (mohamad)",
+      "id": "sprint_06_sprint_backlog_pb_39_pb_40_pb_44_pb_76_session_join_flow_username_validation_and_live_lobby_mohamad"
     },
     {
       "label": "PB-79 + PB-80 + PB-54: Question Screen, Answer Submission, and Live Leaderboard (David)",
       "file_type": "document",
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L55",
-      "id": "sprint_06_sprint_backlog_pb_79_pb_80_pb_54_question_screen_answer_submission_and_live_leaderboard_david",
       "community": 0,
-      "norm_label": "pb-79 + pb-80 + pb-54: question screen, answer submission, and live leaderboard (david)"
+      "norm_label": "pb-79 + pb-80 + pb-54: question screen, answer submission, and live leaderboard (david)",
+      "id": "sprint_06_sprint_backlog_pb_79_pb_80_pb_54_question_screen_answer_submission_and_live_leaderboard_david"
     },
     {
       "label": "PB-42 + PB-43 + PB-100 + PB-101 + PB-102: Stability, Performance, and Database Optimization (Nishan)",
       "file_type": "document",
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L81",
-      "id": "sprint_06_sprint_backlog_pb_42_pb_43_pb_100_pb_101_pb_102_stability_performance_and_database_optimization_nishan",
       "community": 0,
-      "norm_label": "pb-42 + pb-43 + pb-100 + pb-101 + pb-102: stability, performance, and database optimization (nishan)"
+      "norm_label": "pb-42 + pb-43 + pb-100 + pb-101 + pb-102: stability, performance, and database optimization (nishan)",
+      "id": "sprint_06_sprint_backlog_pb_42_pb_43_pb_100_pb_101_pb_102_stability_performance_and_database_optimization_nishan"
     },
     {
       "label": "PB-104 + PB-105 + PB-63: Owner Admin Dashboard, Analytics, and Monitoring (Behrang)",
       "file_type": "document",
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L107",
-      "id": "sprint_06_sprint_backlog_pb_104_pb_105_pb_63_owner_admin_dashboard_analytics_and_monitoring_behrang",
       "community": 0,
-      "norm_label": "pb-104 + pb-105 + pb-63: owner admin dashboard, analytics, and monitoring (behrang)"
+      "norm_label": "pb-104 + pb-105 + pb-63: owner admin dashboard, analytics, and monitoring (behrang)",
+      "id": "sprint_06_sprint_backlog_pb_104_pb_105_pb_63_owner_admin_dashboard_analytics_and_monitoring_behrang"
     },
     {
       "label": "PB-82 + PB-83 + PB-86: Chest Generation, Gold Economy & Validation (Backend)",
       "file_type": "document",
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L132",
-      "id": "sprint_06_sprint_backlog_pb_82_pb_83_pb_86_chest_generation_gold_economy_validation_backend",
       "community": 0,
-      "norm_label": "pb-82 + pb-83 + pb-86: chest generation, gold economy & validation (backend)"
+      "norm_label": "pb-82 + pb-83 + pb-86: chest generation, gold economy & validation (backend)",
+      "id": "sprint_06_sprint_backlog_pb_82_pb_83_pb_86_chest_generation_gold_economy_validation_backend"
     },
     {
       "label": "PB-87 + PB-88: Steal & Swap Mechanics with WebSocket Broadcast (Backend)",
       "file_type": "document",
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L174",
-      "id": "sprint_06_sprint_backlog_pb_87_pb_88_steal_swap_mechanics_with_websocket_broadcast_backend",
       "community": 0,
-      "norm_label": "pb-87 + pb-88: steal & swap mechanics with websocket broadcast (backend)"
+      "norm_label": "pb-87 + pb-88: steal & swap mechanics with websocket broadcast (backend)",
+      "id": "sprint_06_sprint_backlog_pb_87_pb_88_steal_swap_mechanics_with_websocket_broadcast_backend"
     },
     {
       "label": "PB-84 + PB-85 + PB-89 + PB-90: Treasure Chest UI, Animations & Gold Display (Frontend)",
       "file_type": "document",
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L199",
-      "id": "sprint_06_sprint_backlog_pb_84_pb_85_pb_89_pb_90_treasure_chest_ui_animations_gold_display_frontend",
       "community": 0,
-      "norm_label": "pb-84 + pb-85 + pb-89 + pb-90: treasure chest ui, animations & gold display (frontend)"
+      "norm_label": "pb-84 + pb-85 + pb-89 + pb-90: treasure chest ui, animations & gold display (frontend)",
+      "id": "sprint_06_sprint_backlog_pb_84_pb_85_pb_89_pb_90_treasure_chest_ui_animations_gold_display_frontend"
     },
     {
       "label": "Sprint 6 Test Plan",
       "file_type": "document",
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L229",
-      "id": "sprint_06_sprint_backlog_sprint_6_test_plan",
-      "community": 1,
-      "norm_label": "sprint 6 test plan"
+      "community": 0,
+      "norm_label": "sprint 6 test plan",
+      "id": "sprint_06_sprint_backlog_sprint_6_test_plan"
     },
     {
       "label": "Unit Tests",
       "file_type": "document",
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L231",
-      "id": "sprint_06_sprint_backlog_unit_tests",
-      "community": 1,
-      "norm_label": "unit tests"
+      "community": 0,
+      "norm_label": "unit tests",
+      "id": "sprint_06_sprint_backlog_unit_tests"
     },
     {
       "label": "Integration Tests",
       "file_type": "document",
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L249",
-      "id": "sprint_06_sprint_backlog_integration_tests",
-      "community": 1,
-      "norm_label": "integration tests"
+      "community": 0,
+      "norm_label": "integration tests",
+      "id": "sprint_06_sprint_backlog_integration_tests"
     },
     {
       "label": "E2E Tests",
       "file_type": "document",
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L257",
-      "id": "sprint_06_sprint_backlog_e2e_tests",
-      "community": 1,
-      "norm_label": "e2e tests"
+      "community": 0,
+      "norm_label": "e2e tests",
+      "id": "sprint_06_sprint_backlog_e2e_tests"
     }
   ],
   "links": [
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_confighandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_configresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_creategrouphandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_createquizhandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_createsessionhandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_deletequizhandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_errorresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_getgroupbyidhandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_getmyquizzeshandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_getquizbyidhandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L80",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_getsessionbypinhandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_groupactivesessionshandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_healthhandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_healthresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_invitegroupmemberhandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L52",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_joingrouphandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_listjoinrequestshandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_listmygroupshandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L62",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_listmyinviteshandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_loginhandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_patchquizhandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L81",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_patchsessionstatushandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_publicquizbycodehandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L86",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_quizforgeapispec",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_removememberhandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L63",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_respondinvitehandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_respondjoinrequesthandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_searchgroupshandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_signuphandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_updategrouphandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/quizforge-api.spec.ts",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "api_quizforge_api_spec",
+      "target": "api_quizforge_api_spec_updatememberrolehandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/routes/config.routes.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "routes_config_routes",
+      "target": "config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/routes/config.routes.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "routes_config_routes",
+      "target": "config_config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/routes/config.routes.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "routes_config_routes",
+      "target": "routes_config_routes_configrouter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/routes/index.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "routes_index",
+      "target": "routes_config_routes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/routes/index.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "routes_index",
+      "target": "routes_config_routes_configrouter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/api/routes/index.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "routes_index",
+      "target": "routes_index_registerroutes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/main.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "src_main",
+      "target": "routes_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/main.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "src_main",
+      "target": "routes_index_registerroutes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/config/config.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "config_config",
+      "target": "config_config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/config/config.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "config_config",
+      "target": "config_config_envschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/config/config.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "config_config",
+      "target": "config_config_parsedenv",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/main.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_main",
+      "target": "config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/main.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_main",
+      "target": "config_config_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/main.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "src_main",
+      "target": "src_main_app",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/main.ts",
+      "source_location": "L91",
+      "weight": 1.0,
+      "source": "src_main",
+      "target": "src_main_io",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/main.ts",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "src_main",
+      "target": "src_main_readswaggerspec",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/main.ts",
+      "source_location": "L88",
+      "weight": 1.0,
+      "source": "src_main",
+      "target": "src_main_server",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/backend/src/main.ts",
+      "source_location": "L96",
+      "weight": 1.0,
+      "source": "src_main",
+      "target": "src_main_stopcleanup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L446",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice_connect",
+      "target": "src_main_io"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L473",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice_connectasguest",
+      "target": "src_main_io"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/app.config.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "app_app_config",
+      "target": "app_app_config_appconfig",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/app.config.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "app_app_config",
+      "target": "app_app_routes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/app.config.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "app_app_config",
+      "target": "app_app_routes_approutes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/app.config.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "app_app_config",
+      "target": "interceptors_auth_interceptor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/app.config.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "app_app_config",
+      "target": "interceptors_auth_interceptor_authinterceptor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/app.config.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "app_app_config",
+      "target": "services_config_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/app.config.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "app_app_config",
+      "target": "services_config_service_configservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/app.config.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "app_app_config",
+      "target": "services_sentry_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/app.config.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "app_app_config",
+      "target": "services_sentry_service_initsentry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/app.routes.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_app_routes",
+      "target": "app_app_routes_approutes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/interceptors/auth.interceptor.spec.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "interceptors_auth_interceptor_spec",
+      "target": "interceptors_auth_interceptor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/interceptors/auth.interceptor.spec.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "interceptors_auth_interceptor_spec",
+      "target": "interceptors_auth_interceptor_authinterceptor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/interceptors/auth.interceptor.spec.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "interceptors_auth_interceptor_spec",
+      "target": "services_auth_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/interceptors/auth.interceptor.spec.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "interceptors_auth_interceptor_spec",
+      "target": "services_auth_service_authservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/interceptors/auth.interceptor.spec.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "interceptors_auth_interceptor_spec",
+      "target": "services_config_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/interceptors/auth.interceptor.spec.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "interceptors_auth_interceptor_spec",
+      "target": "services_config_service_configservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/interceptors/auth.interceptor.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "interceptors_auth_interceptor",
+      "target": "interceptors_auth_interceptor_authinterceptor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/interceptors/auth.interceptor.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "interceptors_auth_interceptor",
+      "target": "services_auth_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/interceptors/auth.interceptor.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "interceptors_auth_interceptor",
+      "target": "services_auth_service_authservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/interceptors/auth.interceptor.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "interceptors_auth_interceptor",
+      "target": "services_config_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/interceptors/auth.interceptor.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "interceptors_auth_interceptor",
+      "target": "services_config_service_configservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/api.service.spec.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "services_api_service_spec",
+      "target": "services_api_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/api.service.spec.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "services_api_service_spec",
+      "target": "services_api_service_apiservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/api.service.spec.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "services_api_service_spec",
+      "target": "services_config_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/api.service.spec.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "services_api_service_spec",
+      "target": "services_config_service_configservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "dashboard_dashboard_shell_component",
+      "target": "services_api_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "services_api_service",
+      "target": "services_api_service_apiservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "services_api_service",
+      "target": "services_config_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "services_api_service",
+      "target": "services_config_service_configservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "dashboard_dashboard_shell_component",
+      "target": "services_api_service_apiservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "services_api_service_apiservice",
+      "target": "services_api_service_apiservice_delete",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "services_api_service_apiservice",
+      "target": "services_api_service_apiservice_get",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "services_api_service_apiservice",
+      "target": "services_api_service_apiservice_patch",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "services_api_service_apiservice",
+      "target": "services_api_service_apiservice_post",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "services_api_service_apiservice",
+      "target": "services_api_service_apiservice_resolveurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "services_api_service_apiservice_get",
+      "target": "services_api_service_apiservice_resolveurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "services_api_service_apiservice_post",
+      "target": "services_api_service_apiservice_resolveurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "services_api_service_apiservice_patch",
+      "target": "services_api_service_apiservice_resolveurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/api.service.ts",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "services_api_service_apiservice_delete",
+      "target": "services_api_service_apiservice_resolveurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "dashboard_dashboard_shell_component",
+      "target": "services_auth_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "game_game_lobby_page_component_spec",
+      "target": "services_auth_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "services_auth_service",
+      "target": "services_auth_service_authservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "services_auth_service",
+      "target": "services_auth_service_signinpayload",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "services_auth_service",
+      "target": "services_auth_service_signuppayload",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "services_auth_service",
+      "target": "services_supabase_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "services_auth_service",
+      "target": "services_supabase_service_supabaseservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/session-sse.service.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "services_session_sse_service",
+      "target": "services_auth_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "dashboard_dashboard_shell_component",
+      "target": "services_auth_service_authservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "game_game_lobby_page_component_spec",
+      "target": "services_auth_service_authservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "services_auth_service_authservice",
+      "target": "services_auth_service_authservice_constructor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "services_auth_service_authservice",
+      "target": "services_auth_service_authservice_getaccesstoken",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L98",
+      "weight": 1.0,
+      "source": "services_auth_service_authservice",
+      "target": "services_auth_service_authservice_initializesession",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L125",
+      "weight": 1.0,
+      "source": "services_auth_service_authservice",
+      "target": "services_auth_service_authservice_markready",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "services_auth_service_authservice",
+      "target": "services_auth_service_authservice_signin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L79",
+      "weight": 1.0,
+      "source": "services_auth_service_authservice",
+      "target": "services_auth_service_authservice_signout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L60",
+      "weight": 1.0,
+      "source": "services_auth_service_authservice",
+      "target": "services_auth_service_authservice_signup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "services_auth_service_authservice",
+      "target": "services_auth_service_authservice_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L89",
+      "weight": 1.0,
+      "source": "services_auth_service_authservice",
+      "target": "services_auth_service_authservice_whenready",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/session-sse.service.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "services_session_sse_service",
+      "target": "services_auth_service_authservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "services_auth_service_authservice_constructor",
+      "target": "services_auth_service_authservice_initializesession",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L94",
+      "weight": 1.0,
+      "source": "services_auth_service_authservice_getaccesstoken",
+      "target": "services_auth_service_authservice_whenready",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/auth.service.ts",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "services_auth_service_authservice_initializesession",
+      "target": "services_auth_service_authservice_markready",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.spec.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "services_config_service_spec",
+      "target": "environments_environment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.spec.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "services_config_service_spec",
+      "target": "environments_environment_environment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.spec.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "services_config_service_spec",
+      "target": "services_config_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.spec.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "services_config_service_spec",
+      "target": "services_config_service_configservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.spec.ts",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "services_config_service_spec",
+      "target": "services_config_service_spec_errorresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.spec.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "services_config_service_spec",
+      "target": "services_config_service_spec_jsonresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.spec.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "services_config_service_spec",
+      "target": "services_config_service_spec_mockconfig",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.spec.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "services_config_service_spec",
+      "target": "services_config_service_spec_stubfetch",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "game_game_lobby_page_component_spec",
+      "target": "services_config_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "services_config_service",
+      "target": "environments_environment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "services_config_service",
+      "target": "environments_environment_environment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "services_config_service",
+      "target": "services_config_service_backendprofile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "services_config_service",
+      "target": "services_config_service_backendprofiles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "services_config_service",
+      "target": "services_config_service_configresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "services_config_service",
+      "target": "services_config_service_configservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/sentry.service.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "services_sentry_service",
+      "target": "services_config_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/session-sse.service.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "services_session_sse_service",
+      "target": "services_config_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/supabase.service.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "services_supabase_service",
+      "target": "services_config_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_config_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component",
+      "target": "services_config_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.spec.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component_spec",
+      "target": "services_config_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "game_game_lobby_page_component_spec",
+      "target": "services_config_service_configservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L186",
+      "weight": 1.0,
+      "source": "services_config_service_configservice",
+      "target": "services_config_service_configservice_applycachedconfig",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L221",
+      "weight": 1.0,
+      "source": "services_config_service_configservice",
+      "target": "services_config_service_configservice_cacheprofile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "services_config_service_configservice",
+      "target": "services_config_service_configservice_getbackendurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L80",
+      "weight": 1.0,
+      "source": "services_config_service_configservice",
+      "target": "services_config_service_configservice_getsentrydsn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "services_config_service_configservice",
+      "target": "services_config_service_configservice_getsupabasepublishablekey",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L66",
+      "weight": 1.0,
+      "source": "services_config_service_configservice",
+      "target": "services_config_service_configservice_getsupabaseurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L94",
+      "weight": 1.0,
+      "source": "services_config_service_configservice",
+      "target": "services_config_service_configservice_load",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L269",
+      "weight": 1.0,
+      "source": "services_config_service_configservice",
+      "target": "services_config_service_configservice_markready",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L208",
+      "weight": 1.0,
+      "source": "services_config_service_configservice",
+      "target": "services_config_service_configservice_readcachedprofile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L244",
+      "weight": 1.0,
+      "source": "services_config_service_configservice",
+      "target": "services_config_service_configservice_readprofilesfromstorage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L167",
+      "weight": 1.0,
+      "source": "services_config_service_configservice",
+      "target": "services_config_service_configservice_resolvebackendurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L138",
+      "weight": 1.0,
+      "source": "services_config_service_configservice",
+      "target": "services_config_service_configservice_switchbackend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L52",
+      "weight": 1.0,
+      "source": "services_config_service_configservice",
+      "target": "services_config_service_configservice_whenready",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/sentry.service.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "services_sentry_service",
+      "target": "services_config_service_configservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/session-sse.service.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "services_session_sse_service",
+      "target": "services_config_service_configservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/supabase.service.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "services_supabase_service",
+      "target": "services_config_service_configservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_config_service_configservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component",
+      "target": "services_config_service_configservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.spec.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component_spec",
+      "target": "services_config_service_configservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L106",
+      "weight": 1.0,
+      "source": "services_config_service_configservice_load",
+      "target": "services_config_service_configservice_applycachedconfig",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L121",
+      "weight": 1.0,
+      "source": "services_config_service_configservice_load",
+      "target": "services_config_service_configservice_cacheprofile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "services_config_service_configservice_load",
+      "target": "services_config_service_configservice_markready",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L96",
+      "weight": 1.0,
+      "source": "services_config_service_configservice_load",
+      "target": "services_config_service_configservice_resolvebackendurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L152",
+      "weight": 1.0,
+      "source": "services_config_service_configservice_switchbackend",
+      "target": "services_config_service_configservice_cacheprofile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L174",
+      "weight": 1.0,
+      "source": "services_config_service_configservice_resolvebackendurl",
+      "target": "services_config_service_configservice_readcachedprofile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L191",
+      "weight": 1.0,
+      "source": "services_config_service_configservice_applycachedconfig",
+      "target": "services_config_service_configservice_readprofilesfromstorage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L209",
+      "weight": 1.0,
+      "source": "services_config_service_configservice_readcachedprofile",
+      "target": "services_config_service_configservice_readprofilesfromstorage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/config.service.ts",
+      "source_location": "L226",
+      "weight": 1.0,
+      "source": "services_config_service_configservice_cacheprofile",
+      "target": "services_config_service_configservice_readprofilesfromstorage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/sentry.service.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "services_sentry_service",
+      "target": "services_sentry_service_initsentry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "dashboard_dashboard_shell_component",
+      "target": "services_session_sse_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/session-sse.service.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "services_session_sse_service",
+      "target": "services_session_sse_service_sessionsseservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "dashboard_dashboard_shell_component",
+      "target": "services_session_sse_service_sessionsseservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/session-sse.service.ts",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "services_session_sse_service_sessionsseservice",
+      "target": "services_session_sse_service_sessionsseservice_connect",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/session-sse.service.ts",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "services_session_sse_service_sessionsseservice",
+      "target": "services_session_sse_service_sessionsseservice_disconnect",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/session-sse.service.ts",
+      "source_location": "L122",
+      "weight": 1.0,
+      "source": "services_session_sse_service_sessionsseservice",
+      "target": "services_session_sse_service_sessionsseservice_schedulereconnect",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/session-sse.service.ts",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "services_session_sse_service_sessionsseservice",
+      "target": "services_session_sse_service_sessionsseservice_startconnection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/session-sse.service.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "services_session_sse_service_sessionsseservice_connect",
+      "target": "services_session_sse_service_sessionsseservice_disconnect",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/session-sse.service.ts",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "services_session_sse_service_sessionsseservice_connect",
+      "target": "services_session_sse_service_sessionsseservice_startconnection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/session-sse.service.ts",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "services_session_sse_service_sessionsseservice_startconnection",
+      "target": "services_session_sse_service_sessionsseservice_schedulereconnect",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/supabase.service.spec.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "services_supabase_service_spec",
+      "target": "services_supabase_service_spec_createclientmock",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/supabase.service.spec.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "services_supabase_service_spec",
+      "target": "services_supabase_service_spec_onauthstatechangemock",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/supabase.service.spec.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "services_supabase_service_spec",
+      "target": "services_supabase_service_spec_unsubscribemock",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "game_game_lobby_page_component_spec",
+      "target": "services_supabase_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/supabase.service.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "services_supabase_service",
+      "target": "services_supabase_service_authchangepayload",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/supabase.service.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "services_supabase_service",
+      "target": "services_supabase_service_supabaseservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "game_game_lobby_page_component_spec",
+      "target": "services_supabase_service_supabaseservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/supabase.service.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "services_supabase_service_supabaseservice",
+      "target": "services_supabase_service_supabaseservice_authchanges",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/supabase.service.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "services_supabase_service_supabaseservice",
+      "target": "services_supabase_service_supabaseservice_client",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "game_game_lobby_page_component_spec",
+      "target": "services_websocket_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_answerackevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L229",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_brbubblepoprankingevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L223",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_brbubblepopstartevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L239",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_brcurseawardedevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L244",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_brcursecastevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L268",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_brcurseopportunityevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L181",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_brduelpairedevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L191",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_brduelquestionevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L197",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_brduelresultevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L211",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_brlifelostevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L272",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_brlifestealannouncementevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L218",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_brplayereliminatedevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L234",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_brpowerupawardedevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L263",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_brroundtransitionevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L257",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_brroyalewinnerevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L253",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_brspectatormodeevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L134",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_chesteffectevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L127",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_chestsrevealedevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L314",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_clienttoserverevents",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L164",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_forgeactivityevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L115",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_gameendedevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_gamequestionevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_gamestartedevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L146",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_goldupdateevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L82",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_leaderboardplayerevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L102",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_leaderboardupdateevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_lobbystateevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_playerjoinedevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_playerleftevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L108",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_roundclosedevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_roundstartedevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L89",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_scoreupdateevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L277",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_servertoclientevents",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L121",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_sessionclosedevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_socketerrorpayload",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L156",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_targetneededevent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L351",
+      "weight": 1.0,
+      "source": "services_websocket_service",
+      "target": "services_websocket_service_websocketservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "game_game_lobby_page_component_spec",
+      "target": "services_websocket_service_websocketservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L719",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_castcurse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L437",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_connect",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L464",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_connectasguest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L723",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_disconnect",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L732",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_disposesocket",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L669",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_endsession",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L653",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_joingame",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L659",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_leavegame",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L681",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_nextquestion",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L686",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_requestnextquestion",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L690",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_selectchest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L694",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_selectstealtarget",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L492",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_setupsocketlisteners",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L677",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_skipquestion",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L665",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_startgame",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L673",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_submitanswer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L704",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_submitbubblepop",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L709",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_submitduelanswer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L714",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice",
+      "target": "services_websocket_service_websocketservice_usepowerup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L444",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice_connect",
+      "target": "services_websocket_service_websocketservice_disposesocket",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L455",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice_connect",
+      "target": "services_websocket_service_websocketservice_setupsocketlisteners",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L471",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice_connectasguest",
+      "target": "services_websocket_service_websocketservice_disposesocket",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L482",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice_connectasguest",
+      "target": "services_websocket_service_websocketservice_setupsocketlisteners",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/core/services/websocket.service.ts",
+      "source_location": "L727",
+      "weight": 1.0,
+      "source": "services_websocket_service_websocketservice_disconnect",
+      "target": "services_websocket_service_websocketservice_disposesocket",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "dashboard_dashboard_shell_component",
+      "target": "dashboard_dashboard_shell_component_appnavitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "dashboard_dashboard_shell_component",
+      "target": "dashboard_dashboard_shell_component_dashboardshellcomponent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L137",
+      "weight": 1.0,
+      "source": "dashboard_dashboard_shell_component_dashboardshellcomponent",
+      "target": "dashboard_dashboard_shell_component_dashboardshellcomponent_closemobilenav",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "dashboard_dashboard_shell_component_dashboardshellcomponent",
+      "target": "dashboard_dashboard_shell_component_dashboardshellcomponent_constructor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L159",
+      "weight": 1.0,
+      "source": "dashboard_dashboard_shell_component_dashboardshellcomponent",
+      "target": "dashboard_dashboard_shell_component_dashboardshellcomponent_iconbgfor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L149",
+      "weight": 1.0,
+      "source": "dashboard_dashboard_shell_component_dashboardshellcomponent",
+      "target": "dashboard_dashboard_shell_component_dashboardshellcomponent_logout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L145",
+      "weight": 1.0,
+      "source": "dashboard_dashboard_shell_component_dashboardshellcomponent",
+      "target": "dashboard_dashboard_shell_component_dashboardshellcomponent_onprofilehover",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L154",
+      "weight": 1.0,
+      "source": "dashboard_dashboard_shell_component_dashboardshellcomponent",
+      "target": "dashboard_dashboard_shell_component_dashboardshellcomponent_opensettings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts",
+      "source_location": "L141",
+      "weight": 1.0,
+      "source": "dashboard_dashboard_shell_component_dashboardshellcomponent",
+      "target": "dashboard_dashboard_shell_component_dashboardshellcomponent_togglemobilenav",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "game_game_lobby_page_component_spec",
+      "target": "game_game_lobby_page_component_spec_mockauthservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "game_game_lobby_page_component_spec",
+      "target": "game_game_lobby_page_component_spec_mockconfigservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "game_game_lobby_page_component_spec",
+      "target": "game_game_lobby_page_component_spec_mocksupabaseservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "game_game_lobby_page_component_spec",
+      "target": "game_game_lobby_page_component_spec_mockwebsocketservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.spec.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component_spec",
+      "target": "settings_backend_selector_component",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.spec.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component_spec",
+      "target": "settings_backend_selector_component_backendselectorcomponent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.spec.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component_spec",
+      "target": "settings_backend_selector_component_spec_createlocalstoragemock",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component",
+      "target": "settings_backend_selector_component_backendprofile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component",
+      "target": "settings_backend_selector_component_backendprofiles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L198",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component",
+      "target": "settings_backend_selector_component_backendselectorcomponent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L230",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component_backendselectorcomponent",
+      "target": "settings_backend_selector_component_backendselectorcomponent_addcustom",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L207",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component_backendselectorcomponent",
+      "target": "settings_backend_selector_component_backendselectorcomponent_constructor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L296",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component_backendselectorcomponent",
+      "target": "settings_backend_selector_component_backendselectorcomponent_formaturl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L305",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component_backendselectorcomponent",
+      "target": "settings_backend_selector_component_backendselectorcomponent_loadprofiles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L290",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component_backendselectorcomponent",
+      "target": "settings_backend_selector_component_backendselectorcomponent_onurlinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L273",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component_backendselectorcomponent",
+      "target": "settings_backend_selector_component_backendselectorcomponent_removeprofile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L211",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component_backendselectorcomponent",
+      "target": "settings_backend_selector_component_backendselectorcomponent_switchto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L208",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component_backendselectorcomponent_constructor",
+      "target": "settings_backend_selector_component_backendselectorcomponent_loadprofiles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/app/features/settings/backend-selector.component.ts",
+      "source_location": "L284",
+      "weight": 1.0,
+      "source": "settings_backend_selector_component_backendselectorcomponent_removeprofile",
+      "target": "settings_backend_selector_component_backendselectorcomponent_loadprofiles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/frontend/src/environments/environment.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "environments_environment",
+      "target": "environments_environment_environment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "sprint_06_sprint_backlog",
-      "target": "sprint_06_sprint_backlog_sprint_6_backlog_end_to_end_gameplay_stability_admin_polish",
-      "confidence_score": 1.0
+      "target": "sprint_06_sprint_backlog_sprint_6_backlog_end_to_end_gameplay_stability_admin_polish"
     },
     {
       "relation": "contains",
@@ -156,9 +4822,9 @@
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_6_backlog_end_to_end_gameplay_stability_admin_polish",
-      "target": "sprint_06_sprint_backlog_prerequisites_from_sprint_5",
-      "confidence_score": 1.0
+      "target": "sprint_06_sprint_backlog_prerequisites_from_sprint_5"
     },
     {
       "relation": "contains",
@@ -166,9 +4832,9 @@
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L229",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_6_backlog_end_to_end_gameplay_stability_admin_polish",
-      "target": "sprint_06_sprint_backlog_sprint_6_test_plan",
-      "confidence_score": 1.0
+      "target": "sprint_06_sprint_backlog_sprint_6_test_plan"
     },
     {
       "relation": "contains",
@@ -176,9 +4842,9 @@
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_6_backlog_end_to_end_gameplay_stability_admin_polish",
-      "target": "sprint_06_sprint_backlog_sprint_backlog_items",
-      "confidence_score": 1.0
+      "target": "sprint_06_sprint_backlog_sprint_backlog_items"
     },
     {
       "relation": "contains",
@@ -186,9 +4852,9 @@
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L107",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_backlog_items",
-      "target": "sprint_06_sprint_backlog_pb_104_pb_105_pb_63_owner_admin_dashboard_analytics_and_monitoring_behrang",
-      "confidence_score": 1.0
+      "target": "sprint_06_sprint_backlog_pb_104_pb_105_pb_63_owner_admin_dashboard_analytics_and_monitoring_behrang"
     },
     {
       "relation": "contains",
@@ -196,9 +4862,9 @@
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_backlog_items",
-      "target": "sprint_06_sprint_backlog_pb_39_pb_40_pb_44_pb_76_session_join_flow_username_validation_and_live_lobby_mohamad",
-      "confidence_score": 1.0
+      "target": "sprint_06_sprint_backlog_pb_39_pb_40_pb_44_pb_76_session_join_flow_username_validation_and_live_lobby_mohamad"
     },
     {
       "relation": "contains",
@@ -206,9 +4872,9 @@
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L81",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_backlog_items",
-      "target": "sprint_06_sprint_backlog_pb_42_pb_43_pb_100_pb_101_pb_102_stability_performance_and_database_optimization_nishan",
-      "confidence_score": 1.0
+      "target": "sprint_06_sprint_backlog_pb_42_pb_43_pb_100_pb_101_pb_102_stability_performance_and_database_optimization_nishan"
     },
     {
       "relation": "contains",
@@ -216,9 +4882,9 @@
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L55",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_backlog_items",
-      "target": "sprint_06_sprint_backlog_pb_79_pb_80_pb_54_question_screen_answer_submission_and_live_leaderboard_david",
-      "confidence_score": 1.0
+      "target": "sprint_06_sprint_backlog_pb_79_pb_80_pb_54_question_screen_answer_submission_and_live_leaderboard_david"
     },
     {
       "relation": "contains",
@@ -226,9 +4892,9 @@
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L132",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_backlog_items",
-      "target": "sprint_06_sprint_backlog_pb_82_pb_83_pb_86_chest_generation_gold_economy_validation_backend",
-      "confidence_score": 1.0
+      "target": "sprint_06_sprint_backlog_pb_82_pb_83_pb_86_chest_generation_gold_economy_validation_backend"
     },
     {
       "relation": "contains",
@@ -236,9 +4902,9 @@
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L199",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_backlog_items",
-      "target": "sprint_06_sprint_backlog_pb_84_pb_85_pb_89_pb_90_treasure_chest_ui_animations_gold_display_frontend",
-      "confidence_score": 1.0
+      "target": "sprint_06_sprint_backlog_pb_84_pb_85_pb_89_pb_90_treasure_chest_ui_animations_gold_display_frontend"
     },
     {
       "relation": "contains",
@@ -246,9 +4912,9 @@
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L174",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_backlog_items",
-      "target": "sprint_06_sprint_backlog_pb_87_pb_88_steal_swap_mechanics_with_websocket_broadcast_backend",
-      "confidence_score": 1.0
+      "target": "sprint_06_sprint_backlog_pb_87_pb_88_steal_swap_mechanics_with_websocket_broadcast_backend"
     },
     {
       "relation": "contains",
@@ -256,9 +4922,9 @@
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L257",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_6_test_plan",
-      "target": "sprint_06_sprint_backlog_e2e_tests",
-      "confidence_score": 1.0
+      "target": "sprint_06_sprint_backlog_e2e_tests"
     },
     {
       "relation": "contains",
@@ -266,9 +4932,9 @@
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L249",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_6_test_plan",
-      "target": "sprint_06_sprint_backlog_integration_tests",
-      "confidence_score": 1.0
+      "target": "sprint_06_sprint_backlog_integration_tests"
     },
     {
       "relation": "contains",
@@ -276,11 +4942,11 @@
       "source_file": "docs/sprint.06/sprint-backlog.md",
       "source_location": "L231",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "sprint_06_sprint_backlog_sprint_6_test_plan",
-      "target": "sprint_06_sprint_backlog_unit_tests",
-      "confidence_score": 1.0
+      "target": "sprint_06_sprint_backlog_unit_tests"
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "4ec8a451902d8b3c56c83446ab04b64c41ca5ad6"
+  "built_at_commit": "a1e2921240b6d0f80d6deb6ab097597ebb1a6792"
 }

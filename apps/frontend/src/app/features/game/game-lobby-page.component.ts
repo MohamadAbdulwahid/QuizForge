@@ -273,10 +273,14 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
         const isHost = this.isHost();
         let target: string;
 
+        const isBrMode = this.gameMode() === 'bubbly-royale';
+
         if (isHost) {
           target = '/host';
+          void this.router.navigate(isBrMode ? [target, this.pin(), 'br'] : [target, this.pin()]);
         } else {
-          target = '/game';
+          target = isBrMode ? '/play/br' : '/game';
+          void this.router.navigate([target, this.pin()]);
         }
 
         this.statusMessage.set(
@@ -284,7 +288,6 @@ export class GameLobbyPageComponent implements OnInit, OnDestroy {
             ? 'Game started. Displaying questions...'
             : 'Game started. Waiting for the first question...'
         );
-        void this.router.navigate([target, this.pin()]);
       });
 
     this.websocketService.sessionClosed$

@@ -66,6 +66,10 @@ export class DashboardCreateSessionPageComponent {
   protected readonly tfEndMode = signal<'timer' | 'gold_goal' | null>(null);
   protected readonly tfTimerMinutes = signal<number>(7);
   protected readonly tfGoldGoal = signal<number>(100);
+  protected readonly brTopN = signal<number>(3);
+  protected readonly brStartingLives = signal<number>(3);
+  protected readonly brDuelTimerS = signal<number>(25);
+  protected readonly brPowerBubbleTimerS = signal<number>(15);
   protected readonly quizzesError = signal<string | null>(null);
   protected readonly groupsError = signal<string | null>(null);
   protected readonly createError = signal<string | null>(null);
@@ -110,6 +114,12 @@ export class DashboardCreateSessionPageComponent {
       label: 'Treasure Forge',
       description: 'Correct answers reveal chests with gold, steals, and surprises.',
       icon: '💎',
+    },
+    {
+      id: 'bubbly-royale',
+      label: 'Bubbly Royale',
+      description: '1v1 elimination tournament with power-ups, curses, and Bubble Pop challenges.',
+      icon: '🏆',
     },
   ];
 
@@ -174,6 +184,26 @@ export class DashboardCreateSessionPageComponent {
     this.tfGoldGoal.set(value);
   }
 
+  protected onBrTopNInput(event: Event): void {
+    const value = Number((event.target as HTMLInputElement).value);
+    this.brTopN.set(value);
+  }
+
+  protected onBrStartingLivesInput(event: Event): void {
+    const value = Number((event.target as HTMLInputElement).value);
+    this.brStartingLives.set(value);
+  }
+
+  protected onBrDuelTimerSInput(event: Event): void {
+    const value = Number((event.target as HTMLInputElement).value);
+    this.brDuelTimerS.set(value);
+  }
+
+  protected onBrPowerBubbleTimerSInput(event: Event): void {
+    const value = Number((event.target as HTMLInputElement).value);
+    this.brPowerBubbleTimerS.set(value);
+  }
+
   protected nextStep(): void {
     if (!this.canAdvance()) {
       this.createError.set(this.stepValidationMessage());
@@ -225,6 +255,14 @@ export class DashboardCreateSessionPageComponent {
               tf_end_mode: this.tfEndMode(),
               tf_timer_minutes: this.tfTimerMinutes(),
               tf_gold_goal: this.tfGoldGoal(),
+            }
+          : {}),
+        ...(this.gameMode() === 'bubbly-royale'
+          ? {
+              br_top_n: this.brTopN(),
+              br_starting_lives: this.brStartingLives(),
+              br_duel_timer_s: this.brDuelTimerS(),
+              br_power_bubble_timer_s: this.brPowerBubbleTimerS(),
             }
           : {}),
       })

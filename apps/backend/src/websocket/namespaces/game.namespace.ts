@@ -24,6 +24,43 @@ import {
 import { generateChests } from '../../game/engine/chest-generation';
 import type { ChestOutcome } from '../../game/engine/chest-generation';
 import { stealGold, swapGold } from '../../game/engine/gold-calculation';
+import {
+  pairPlayers,
+  determineDuelOutcome,
+  generatePowerUp,
+  generateCurse,
+  scoreBubblePop,
+  manageLives,
+  DEFAULT_MAX_POWER_UPS,
+  DEFAULT_MAX_CURSES,
+  DEFAULT_MAX_REMATCHES,
+  DUEL_TIE_THRESHOLD_MS,
+  type BubblyRoyalePlayerState,
+  type DuelAnswer,
+  type BubblePopEntry,
+  type PowerUp,
+  type Curse,
+  type PowerUpType,
+  type CurseType,
+  type DuelOutcome,
+} from '../../game/engine/bubbly-royale.engine';
+import {
+  type BrDuelPairedEvent,
+  type BrDuelQuestionEvent,
+  type BrDuelResultEvent,
+  type BrLifeLostEvent,
+  type BrPlayerEliminatedEvent,
+  type BrBubblePopStartEvent,
+  type BrBubblePopRankingEvent,
+  type BrPowerUpAwardedEvent,
+  type BrCurseAwardedEvent,
+  type BrCurseCastEvent,
+  type BrSpectatorModeEvent,
+  type BrRoyaleWinnerEvent,
+  type BrRoundTransitionEvent,
+  type BrCurseOpportunityEvent,
+  type BrLifeStealAnnouncementEvent,
+} from '../types/br-events';
 import * as quizRepository from '../../database/repositories/quiz.repository';
 import * as sessionRepository from '../../database/repositories/session.repository';
 import type { QUESTION } from '../../database/schema/quiz';
@@ -45,6 +82,10 @@ import {
   SubmitAnswerMessageSchema,
   SelectChestMessageSchema,
   SelectStealTargetMessageSchema,
+  SubmitBubblePopMessageSchema,
+  SubmitDuelAnswerMessageSchema,
+  UsePowerUpMessageSchema,
+  CastCurseMessageSchema,
 } from '../validation/schemas';
 import type {
   SubmitAnswerMessage,
@@ -110,6 +151,65 @@ interface ActiveRoundState {
   treasureForge: TreasureForgeRoundState | null;
 }
 
+/** Per-player state tracked during a Bubbly Royale game. */
+interface BrPlayerState {
+  lives: number;
+  powerUps: PowerUp[];
+  curses: Curse[];
+  eliminated: boolean;
+  lastDuelOpponent?: string;
+  /** Whether this player has answered the current duel question. */
+  duelAnswered?: boolean;
+  /** The answer submitted in the current duel (for processing after both submit). */
+  duelAnswer?: string;
+  /** Time in ms when the answer was submitted (server timestamp). */
+  duelAnswerTimeMs?: number;
+}
+
+/** Current state of an active duel. */
+interface DuelState {
+  duelId: string;
+  player1Id: string;
+  player2Id: string;
+  question: QUESTION;
+  questionStartTimeMs: number;
+  baseTimerMs: number;
+  player1TimerMs: number;
+  player2TimerMs: number;
+  player1Answer: string | null;
+  player2Answer: string | null;
+  player1TimeMs: number | null;
+  player2TimeMs: number | null;
+  rematchCount: number;
+  resolved: boolean;
+  duelTimer: ReturnType<typeof setTimeout> | null;
+  /** Power-ups applied to this duel (for announcement). */
+  activePowerUps: { playerId: string; type: string }[];
+}
+
+/** Full Bubbly Royale game state, attached to ActiveGameState. */
+interface BubblyRoyaleGameState {
+  round: number;
+  phase: 'bubble-pop' | 'curse-phase' | 'duel' | 'ended';
+  startingLives: number;
+  topN: number;
+  duelTimerS: number;
+  bubblePopTimerS: number;
+  playerStates: Map<string, BrPlayerState>;
+  currentDuels: DuelState[];
+  currentDuelIndex: number;
+  bubblePopResults: BubblePopEntry[];
+  recentRematches: Map<string, Set<string>>;
+  pendingCurseWindows: ReturnType<typeof setTimeout>[];
+  activeCursesThisRound: number;
+  /** Players who submitted in the current bubble pop round. */
+  bubblePopSubmitted: Set<string>;
+  /** Timer for the current bubble pop round. */
+  bubblePopTimer: ReturnType<typeof setTimeout> | null;
+  /** Curses cast during curse phase that apply at duel start (slow_motion, jumble). */
+  pendingDuelCurses: { casterId: string; targetId: string; curseType: string }[];
+}
+
 interface ActiveGameState {
   pin: string;
   sessionId: number;
@@ -135,6 +235,8 @@ interface ActiveGameState {
   tfGoldGoal?: number | null;
   /** Continuous TF: reference to game end timer. */
   gameEndTimer?: ReturnType<typeof setTimeout> | null;
+  /** Bubbly Royale: active game round state (null for non-BR modes). */
+  brState?: BubblyRoyaleGameState | null;
 }
 
 interface ServerToClientEvents {
@@ -158,6 +260,22 @@ interface ServerToClientEvents {
   'gold-update': (payload: GoldUpdateEvent) => void;
   'target-needed': (payload: TargetNeededEvent) => void;
   'forge-activity': (payload: ForgeActivityEvent) => void;
+  // Bubbly Royale events
+  'br-duel-paired': (payload: BrDuelPairedEvent) => void;
+  'br-duel-question': (payload: BrDuelQuestionEvent) => void;
+  'br-duel-result': (payload: BrDuelResultEvent) => void;
+  'br-life-lost': (payload: BrLifeLostEvent) => void;
+  'br-player-eliminated': (payload: BrPlayerEliminatedEvent) => void;
+  'br-bubble-pop-start': (payload: BrBubblePopStartEvent) => void;
+  'br-bubble-pop-ranking': (payload: BrBubblePopRankingEvent) => void;
+  'br-power-up-awarded': (payload: BrPowerUpAwardedEvent) => void;
+  'br-curse-awarded': (payload: BrCurseAwardedEvent) => void;
+  'br-curse-cast': (payload: BrCurseCastEvent) => void;
+  'br-spectator-mode': (payload: BrSpectatorModeEvent) => void;
+  'br-royale-winner': (payload: BrRoyaleWinnerEvent) => void;
+  'br-round-transition': (payload: BrRoundTransitionEvent) => void;
+  'br-curse-opportunity': (payload: BrCurseOpportunityEvent) => void;
+  'br-life-steal-announcement': (payload: BrLifeStealAnnouncementEvent) => void;
 }
 
 interface ClientToServerEvents {
@@ -172,6 +290,11 @@ interface ClientToServerEvents {
   // Treasure Forge events
   'select-chest': (payload: unknown) => void;
   'select-steal-target': (payload: unknown) => void;
+  // Bubbly Royale events
+  'submit-bubble-pop': (payload: unknown) => void;
+  'submit-duel-answer': (payload: unknown) => void;
+  'use-power-up': (payload: unknown) => void;
+  'cast-curse': (payload: unknown) => void;
 }
 
 interface SocketData {
@@ -769,6 +892,21 @@ export function registerGameNamespace(
         );
         return;
       }
+
+      // Branch for Bubbly Royale
+      if (gameState.gameMode === 'bubbly-royale') {
+        await handleBubblyRoyaleStartGame(
+          typedNamespace,
+          socket,
+          resolvedDependencies,
+          gameState,
+          activeGames,
+          session
+        );
+        return;
+      }
+
+      // Default: Forge Classic
 
       typedNamespace.to(pin).emit('game-started', {
         pin,
@@ -1562,6 +1700,163 @@ export function registerGameNamespace(
       tryAutoAdvance(gameState, typedNamespace, resolvedDependencies, activeGames);
     });
 
+    // --- BUBBLY ROYALE: Bubble Pop Submission ---
+    socket.on('submit-bubble-pop', async (payload) => {
+      const parsed = SubmitBubblePopMessageSchema.safeParse(payload);
+
+      if (!parsed.success) {
+        emitSocketValidationError(socket, parsed.error);
+        return;
+      }
+
+      const { pin, bubblesReached, timeMs } = parsed.data;
+      const userId = socket.data.userId;
+      const gameState = activeGames.get(pin);
+
+      if (!userId || socket.data.joinedPin !== pin || !gameState) {
+        emitError(socket, 'NOT_IN_ACTIVE_GAME', 'Join the active game first');
+        return;
+      }
+
+      if (gameState.status === 'ended') {
+        emitError(socket, 'GAME_ENDED', 'This game has ended');
+        return;
+      }
+
+      if (gameState.gameMode !== 'bubbly-royale' || !gameState.brState) {
+        emitError(socket, 'INVALID_GAME_MODE', 'Not a Bubbly Royale game');
+        return;
+      }
+
+      handleBubblePopSubmit(
+        gameState,
+        userId,
+        bubblesReached,
+        timeMs,
+        typedNamespace,
+        resolvedDependencies,
+        activeGames
+      );
+    });
+
+    // --- BUBBLY ROYALE: Duel Answer Submission ---
+    socket.on('submit-duel-answer', async (payload) => {
+      const parsed = SubmitDuelAnswerMessageSchema.safeParse(payload);
+
+      if (!parsed.success) {
+        emitSocketValidationError(socket, parsed.error);
+        return;
+      }
+
+      const { pin, duelId, answer } = parsed.data;
+      const userId = socket.data.userId;
+      const gameState = activeGames.get(pin);
+
+      if (!userId || socket.data.joinedPin !== pin || !gameState) {
+        emitError(socket, 'NOT_IN_ACTIVE_GAME', 'Join the active game first');
+        return;
+      }
+
+      if (gameState.status === 'ended') {
+        emitError(socket, 'GAME_ENDED', 'This game has ended');
+        return;
+      }
+
+      if (gameState.gameMode !== 'bubbly-royale' || !gameState.brState) {
+        emitError(socket, 'INVALID_GAME_MODE', 'Not a Bubbly Royale game');
+        return;
+      }
+
+      handleDuelAnswerSubmit(
+        socket,
+        gameState,
+        userId,
+        duelId,
+        answer,
+        typedNamespace,
+        resolvedDependencies,
+        activeGames
+      );
+    });
+
+    // --- BUBBLY ROYALE: Use Power-Up ---
+    socket.on('use-power-up', async (payload) => {
+      const parsed = UsePowerUpMessageSchema.safeParse(payload);
+
+      if (!parsed.success) {
+        emitSocketValidationError(socket, parsed.error);
+        return;
+      }
+
+      const { pin, powerUpType, targetId } = parsed.data;
+      const userId = socket.data.userId;
+      const gameState = activeGames.get(pin);
+
+      if (!userId || socket.data.joinedPin !== pin || !gameState) {
+        emitError(socket, 'NOT_IN_ACTIVE_GAME', 'Join the active game first');
+        return;
+      }
+
+      if (gameState.status === 'ended') {
+        emitError(socket, 'GAME_ENDED', 'This game has ended');
+        return;
+      }
+
+      if (gameState.gameMode !== 'bubbly-royale' || !gameState.brState) {
+        emitError(socket, 'INVALID_GAME_MODE', 'Not a Bubbly Royale game');
+        return;
+      }
+
+      handleUsePowerUp(
+        gameState,
+        userId,
+        powerUpType,
+        targetId,
+        socket,
+        typedNamespace,
+        activeGames
+      );
+    });
+
+    // --- BUBBLY ROYALE: Cast Curse ---
+    socket.on('cast-curse', async (payload) => {
+      const parsed = CastCurseMessageSchema.safeParse(payload);
+
+      if (!parsed.success) {
+        emitSocketValidationError(socket, parsed.error);
+        return;
+      }
+
+      const { pin, curseType, targetPlayerId } = parsed.data;
+      const userId = socket.data.userId;
+      const gameState = activeGames.get(pin);
+
+      if (!userId || socket.data.joinedPin !== pin || !gameState) {
+        emitError(socket, 'NOT_IN_ACTIVE_GAME', 'Join the active game first');
+        return;
+      }
+
+      if (gameState.status === 'ended') {
+        emitError(socket, 'GAME_ENDED', 'This game has ended');
+        return;
+      }
+
+      if (gameState.gameMode !== 'bubbly-royale' || !gameState.brState) {
+        emitError(socket, 'INVALID_GAME_MODE', 'Not a Bubbly Royale game');
+        return;
+      }
+
+      handleCastCurse(
+        gameState,
+        userId,
+        curseType,
+        targetPlayerId,
+        socket,
+        typedNamespace,
+        activeGames
+      );
+    });
+
     socket.on('disconnect', async () => {
       const pin = socket.data.joinedPin;
       const userId = socket.data.userId;
@@ -1643,6 +1938,28 @@ export function registerGameNamespace(
       }
 
       // Case 3: Regular player disconnect
+      // Bubbly Royale: eliminated player — instant elimination
+      if (
+        pin &&
+        activeGame &&
+        userId &&
+        activeGame.gameMode === 'bubbly-royale' &&
+        activeGame.brState
+      ) {
+        handleBubblyRoyaleDisconnect(
+          typedNamespace,
+          resolvedDependencies,
+          activeGame,
+          activeGames,
+          pin,
+          userId,
+          socket.data.username
+        );
+        // Emit standard player-left as well so lobby-aware UI knows
+        typedNamespace.to(pin).emit('player-left', { userId });
+        return;
+      }
+
       if (pin) {
         typedNamespace.to(pin).emit('player-left', { userId });
       }
@@ -3020,6 +3337,1375 @@ function formatUsername(userId: string | undefined): string {
   }
 
   return `Player-${userId.replace(/-/g, '').slice(0, 6).toUpperCase()}`;
+}
+
+// ===========================================================================
+// Bubbly Royale Game Flow Helpers
+// ===========================================================================
+
+/**
+ * Initializes Bubbly Royale game state and starts the first Bubble Pop round (round 0).
+ */
+async function handleBubblyRoyaleStartGame(
+  typedNamespace: GameNamespace,
+  socket: GameSocket,
+  resolvedDependencies: GameNamespaceDependencies,
+  gameState: ActiveGameState,
+  activeGames: Map<string, ActiveGameState>,
+  session: Session
+): Promise<void> {
+  const pin = gameState.pin;
+  const startingLives = session.br_starting_lives ?? 3;
+  const topN = session.br_top_n ?? 3;
+  const duelTimerS = session.br_duel_timer_s ?? 25;
+  const bubblePopTimerS = session.br_power_bubble_timer_s ?? 15;
+
+  // Initialize BR state
+  const playerStates = new Map<string, BrPlayerState>();
+  for (const [userId] of gameState.playersByUserId) {
+    playerStates.set(userId, {
+      lives: startingLives,
+      powerUps: [],
+      curses: [],
+      eliminated: false,
+    });
+  }
+
+  // Load questions (shuffle for variety)
+  const shuffledQuestions = [...gameState.questions].sort(() => Math.random() - 0.5);
+
+  gameState.brState = {
+    round: 0,
+    phase: 'bubble-pop',
+    startingLives,
+    topN,
+    duelTimerS,
+    bubblePopTimerS,
+    playerStates,
+    currentDuels: [],
+    currentDuelIndex: 0,
+    bubblePopResults: [],
+    recentRematches: new Map(),
+    pendingCurseWindows: [],
+    activeCursesThisRound: 0,
+    bubblePopSubmitted: new Set(),
+    bubblePopTimer: null,
+    pendingDuelCurses: [],
+  };
+
+  // Replace questions with shuffled set for BR
+  gameState.questions = shuffledQuestions;
+
+  await logGameEvent(resolvedDependencies, gameState.sessionId, null, 'session-started', {
+    pin,
+    questionCount: shuffledQuestions.length,
+    gameMode: 'bubbly-royale',
+    startingLives,
+    topN,
+    duelTimerS,
+    bubblePopTimerS,
+  });
+
+  typedNamespace.to(pin).emit('game-started', {
+    pin,
+    sessionId: gameState.sessionId,
+    startedByUserId: socket.data.userId,
+    playerCount: gameState.playersByUserId.size,
+    gameMode: 'bubbly-royale',
+  });
+
+  // Start first Bubble Pop round (round 0)
+  await startBubblyRoyaleBubblePopRound(
+    typedNamespace,
+    resolvedDependencies,
+    gameState,
+    activeGames
+  );
+}
+
+/**
+ * Starts a Bubble Pop round — generates random bubble positions and sets a timer.
+ */
+async function startBubblyRoyaleBubblePopRound(
+  typedNamespace: GameNamespace,
+  resolvedDependencies: GameNamespaceDependencies,
+  gameState: ActiveGameState,
+  activeGames: Map<string, ActiveGameState>
+): Promise<void> {
+  const br = gameState.brState;
+  if (!br) return;
+
+  br.phase = 'bubble-pop';
+  br.bubblePopSubmitted = new Set();
+  br.bubblePopResults = [];
+  br.activeCursesThisRound = 0;
+
+  // Clear any stale pending curse windows
+  for (const timer of br.pendingCurseWindows) {
+    clearTimeout(timer);
+  }
+  br.pendingCurseWindows = [];
+
+  // Clear old bubble pop timer
+  if (br.bubblePopTimer) {
+    clearTimeout(br.bubblePopTimer);
+    br.bubblePopTimer = null;
+  }
+
+  // Generate 6 bubbles (numbers 1-6) with random non-overlapping positions
+  const bubbles = generateBubblePositions(6, 300, 400);
+
+  const timerMs = br.bubblePopTimerS * 1000;
+
+  // Emit round transition
+  typedNamespace.to(gameState.pin).emit('br-round-transition', {
+    round: br.round,
+    type: 'bubble-pop',
+  });
+
+  // Emit bubble pop start to all players in room
+  typedNamespace.to(gameState.pin).emit('br-bubble-pop-start', {
+    round: br.round,
+    bubbles,
+    timerMs,
+  });
+
+  await logGameEvent(resolvedDependencies, gameState.sessionId, null, 'br-bubble-pop-started', {
+    pin: gameState.pin,
+    round: br.round,
+    timerMs,
+  });
+
+  // Set timer to force-close submissions
+  br.bubblePopTimer = setTimeout(() => {
+    endBubblePopRound(typedNamespace, resolvedDependencies, gameState, activeGames);
+  }, timerMs + 500); // Extra 500ms buffer for last submissions
+}
+
+/**
+ * Records a player's bubble pop submission. If all players have submitted, ends the round early.
+ */
+function handleBubblePopSubmit(
+  gameState: ActiveGameState,
+  userId: string,
+  bubblesReached: number,
+  timeMs: number | null,
+  typedNamespace: GameNamespace,
+  resolvedDependencies: GameNamespaceDependencies,
+  activeGames: Map<string, ActiveGameState>
+): void {
+  const br = gameState.brState;
+  if (!br || br.phase !== 'bubble-pop') {
+    return; // Not accepting submissions
+  }
+
+  // Prevent duplicate submissions
+  if (br.bubblePopSubmitted.has(userId)) {
+    return;
+  }
+
+  br.bubblePopSubmitted.add(userId);
+  br.bubblePopResults.push({
+    playerId: userId,
+    completionTimeMs: timeMs,
+    bubblesReached,
+    serverTimestamp: Date.now(),
+  });
+
+  // If all active players (including eliminated) submitted, end early
+  const totalPlayers = gameState.playersByUserId.size;
+  if (br.bubblePopSubmitted.size >= totalPlayers) {
+    if (br.bubblePopTimer) {
+      clearTimeout(br.bubblePopTimer);
+      br.bubblePopTimer = null;
+    }
+    endBubblePopRound(typedNamespace, resolvedDependencies, gameState, activeGames);
+  }
+}
+
+/**
+ * Ends a Bubble Pop round: computes rankings, awards power-ups/curses, then transitions
+ * to Curse Phase or Duel Phase.
+ */
+function endBubblePopRound(
+  typedNamespace: GameNamespace,
+  resolvedDependencies: GameNamespaceDependencies,
+  gameState: ActiveGameState,
+  activeGames: Map<string, ActiveGameState>
+): void {
+  const br = gameState.brState;
+  if (!br || br.phase !== 'bubble-pop') return;
+
+  if (br.bubblePopTimer) {
+    clearTimeout(br.bubblePopTimer);
+    br.bubblePopTimer = null;
+  }
+
+  // Compute rankings via pure engine function
+  const rankings = scoreBubblePop(br.bubblePopResults);
+  const topN = br.topN;
+  const pin = gameState.pin;
+
+  // Emit rankings to all
+  typedNamespace.to(pin).emit('br-bubble-pop-ranking', {
+    round: br.round,
+    rankings: rankings.map((r) => {
+      const entry = br.bubblePopResults.find((e) => e.playerId === r.playerId);
+      return {
+        playerId: r.playerId,
+        timeMs: entry?.completionTimeMs ?? null,
+        bubblesReached: entry?.bubblesReached ?? 0,
+      };
+    }),
+  });
+
+  // Award power-ups to top N active players, curses to top N eliminated players
+  const activeTopPlayers = rankings
+    .filter((r) => {
+      const ps = br.playerStates.get(r.playerId);
+      return ps && !ps.eliminated;
+    })
+    .slice(0, topN);
+
+  const eliminatedTopPlayers = rankings
+    .filter((r) => {
+      const ps = br.playerStates.get(r.playerId);
+      return ps && ps.eliminated;
+    })
+    .slice(0, topN);
+
+  // Award power-ups to active top players (privately)
+  for (const ranked of activeTopPlayers) {
+    const ps = br.playerStates.get(ranked.playerId);
+    if (!ps) continue;
+
+    const result = generatePowerUp(ps.powerUps);
+    if (!result.forfeited && result.inventory.length > ps.powerUps.length) {
+      ps.powerUps = [...result.inventory];
+      const newPowerUp = result.inventory[result.inventory.length - 1];
+      // Sent to room — clients filter by playerId
+      typedNamespace.to(pin).emit('br-power-up-awarded', {
+        playerId: ranked.playerId,
+        powerUp: newPowerUp,
+      });
+    }
+  }
+
+  // Award curses to eliminated top players
+  for (const ranked of eliminatedTopPlayers) {
+    const ps = br.playerStates.get(ranked.playerId);
+    if (!ps) continue;
+
+    const result = generateCurse(ps.curses);
+    if (result.curseType && result.curses.length > ps.curses.length) {
+      ps.curses = [...result.curses];
+      const newCurse = result.curses[result.curses.length - 1];
+      // Sent to room — clients filter by playerId
+      typedNamespace.to(pin).emit('br-curse-awarded', {
+        playerId: ranked.playerId,
+        curse: newCurse,
+      });
+    }
+  }
+
+  // Auto-apply Bubble Heal between rounds for active players who have it
+  for (const [playerId, ps] of br.playerStates) {
+    if (ps.eliminated) continue;
+    const healIndex = ps.powerUps.findIndex((p) => p.type === 'bubble_heal');
+    if (healIndex !== -1) {
+      const heal = manageLives(
+        { playerId, currentLives: ps.lives, startingLives: br.startingLives },
+        1
+      );
+      ps.lives = heal.newLives;
+      // Remove the consumed Bubble Heal
+      ps.powerUps = ps.powerUps.filter((_, i) => i !== healIndex);
+      gameNamespaceLogger.info(
+        { playerId, lives: ps.lives },
+        'BR Bubble Heal auto-consumed between rounds'
+      );
+    }
+  }
+
+  // Transition to Curse Phase if there are eliminated players with curses
+  const eliminatedWithCurses = [...br.playerStates.entries()]
+    .filter(([, ps]) => ps.eliminated && ps.curses.length > 0)
+    .map(([id]) => id);
+
+  if (eliminatedWithCurses.length > 0) {
+    startCursePhase(typedNamespace, resolvedDependencies, gameState, activeGames);
+  } else {
+    // Skip curse phase, go directly to duel phase
+    br.round++;
+    startBubbleRoyaleDuelRound(typedNamespace, resolvedDependencies, gameState, activeGames);
+  }
+}
+
+/**
+ * Starts the Curse Phase — gives eliminated players an opportunity to cast curses.
+ */
+function startCursePhase(
+  typedNamespace: GameNamespace,
+  resolvedDependencies: GameNamespaceDependencies,
+  gameState: ActiveGameState,
+  activeGames: Map<string, ActiveGameState>
+): void {
+  const br = gameState.brState;
+  if (!br) return;
+
+  br.phase = 'curse-phase';
+  br.activeCursesThisRound = 0;
+  const pin = gameState.pin;
+
+  // Build target list: active players with >1 life, not already at 2 curses this round
+  const targetPlayers: { id: string; name: string; lives: number }[] = [];
+  for (const [playerId, ps] of br.playerStates) {
+    if (ps.eliminated) continue;
+    if (ps.lives <= 1) continue;
+    const player = gameState.playersByUserId.get(playerId);
+    targetPlayers.push({
+      id: playerId,
+      name: player?.username ?? 'Unknown',
+      lives: ps.lives,
+    });
+  }
+
+  if (targetPlayers.length === 0) {
+    // No valid targets — skip to duel phase
+    br.round++;
+    startBubbleRoyaleDuelRound(typedNamespace, resolvedDependencies, gameState, activeGames);
+    return;
+  }
+
+  // Send curse opportunity to eliminated players with curse tokens
+  typedNamespace.to(pin).emit('br-curse-opportunity', { targetPlayers });
+
+  // Set a 10-second window for curse casting, then move to duel phase
+  const curseWindowMs = 10_000;
+  const curseTimer = setTimeout(() => {
+    // Curse window closed — transition to duel phase
+    br.round++;
+    startBubbleRoyaleDuelRound(typedNamespace, resolvedDependencies, gameState, activeGames);
+  }, curseWindowMs);
+
+  br.pendingCurseWindows.push(curseTimer);
+}
+
+/**
+ * Processes a cast-curse event from an eliminated player.
+ */
+function handleCastCurse(
+  gameState: ActiveGameState,
+  casterId: string,
+  curseType: string,
+  targetPlayerId: string,
+  socket: GameSocket,
+  typedNamespace: GameNamespace,
+  activeGames: Map<string, ActiveGameState>
+): void {
+  const br = gameState.brState;
+  if (!br || br.phase !== 'curse-phase') {
+    emitError(socket, 'INVALID_PHASE', 'Curse casting is not available right now');
+    return;
+  }
+
+  // Max 2 curses per round
+  if (br.activeCursesThisRound >= 2) {
+    emitError(socket, 'CURSE_LIMIT_REACHED', 'Max 2 curses this round');
+    return;
+  }
+
+  const casterState = br.playerStates.get(casterId);
+  if (!casterState || !casterState.eliminated) {
+    emitError(socket, 'NOT_ELIMINATED', 'Only eliminated players can cast curses');
+    return;
+  }
+
+  // Find the curse in caster's inventory
+  const curseIndex = casterState.curses.findIndex((c) => c.type === curseType);
+  if (curseIndex === -1) {
+    emitError(socket, 'CURSE_NOT_FOUND', 'You do not have that curse');
+    return;
+  }
+
+  const targetState = br.playerStates.get(targetPlayerId);
+  if (!targetState || targetState.eliminated) {
+    emitError(socket, 'INVALID_TARGET', 'Target not found or already eliminated');
+    return;
+  }
+
+  const targetPlayer = gameState.playersByUserId.get(targetPlayerId);
+  const casterPlayer = gameState.playersByUserId.get(casterId);
+
+  const curse = casterState.curses[curseIndex];
+
+  if (curseType === 'life_steal') {
+    // Life Steal: applied immediately during Curse Phase
+    if (targetState.lives <= 1) {
+      emitError(socket, 'INVALID_TARGET', 'Target must have more than 1 life for Life Steal');
+      return;
+    }
+
+    const result = manageLives(
+      {
+        playerId: targetPlayerId,
+        currentLives: targetState.lives,
+        startingLives: br.startingLives,
+      },
+      -1
+    );
+    targetState.lives = result.newLives;
+
+    // Remove curse from caster's inventory
+    casterState.curses = casterState.curses.filter((_, i) => i !== curseIndex);
+
+    // Full-screen announcement
+    typedNamespace.to(gameState.pin).emit('br-life-steal-announcement', {
+      targetName: targetPlayer?.username ?? 'Unknown',
+      casterName: casterPlayer?.username ?? 'Spectator',
+    });
+
+    typedNamespace.to(gameState.pin).emit('br-life-lost', {
+      playerId: targetPlayerId,
+      lives: targetState.lives,
+      reason: 'curse',
+      cursedBy: casterId,
+    });
+
+    typedNamespace.to(gameState.pin).emit('br-curse-cast', {
+      curseType: 'life_steal',
+      targetId: targetPlayerId,
+      targetName: targetPlayer?.username ?? 'Unknown',
+      casterId,
+      casterName: casterPlayer?.username ?? 'Spectator',
+      effect: `${casterPlayer?.username ?? 'Spectator'} stole a life from ${targetPlayer?.username ?? 'Unknown'}!`,
+    });
+
+    // Check for elimination
+    if (result.isEliminated) {
+      targetState.eliminated = true;
+      typedNamespace.to(gameState.pin).emit('br-player-eliminated', {
+        playerId: targetPlayerId,
+        playerName: targetPlayer?.username ?? 'Unknown',
+      });
+
+      // Send spectator mode to eliminated player
+      const targetSockets = getPlayerSockets(typedNamespace, gameState.pin, targetPlayerId);
+      for (const s of targetSockets) {
+        s.emit('br-spectator-mode', { playerId: targetPlayerId });
+      }
+    }
+
+    br.activeCursesThisRound++;
+  } else {
+    // Slow Motion / Jumble: stored for duel start, consume now
+    casterState.curses = casterState.curses.filter((_, i) => i !== curseIndex);
+
+    // Store for application at duel start
+    br.pendingDuelCurses.push({
+      casterId,
+      targetId: targetPlayerId,
+      curseType,
+    });
+
+    typedNamespace.to(gameState.pin).emit('br-curse-cast', {
+      curseType,
+      targetId: targetPlayerId,
+      targetName: targetPlayer?.username ?? 'Unknown',
+      casterId,
+      casterName: casterPlayer?.username ?? 'Spectator',
+      effect: `${casterPlayer?.username ?? 'Spectator'} cast ${curseType} on ${targetPlayer?.username ?? 'Unknown'}!`,
+    });
+
+    br.activeCursesThisRound++;
+  }
+
+  // Check end condition
+  checkBubblyRoyaleEndCondition(typedNamespace, gameState, activeGames);
+}
+
+/**
+ * Starts a Bubbly Royale duel round — pairs players and processes duels spotlight style.
+ */
+async function startBubbleRoyaleDuelRound(
+  typedNamespace: GameNamespace,
+  resolvedDependencies: GameNamespaceDependencies,
+  gameState: ActiveGameState,
+  activeGames: Map<string, ActiveGameState>
+): Promise<void> {
+  const br = gameState.brState;
+  if (!br || gameState.status === 'ended') return;
+
+  br.phase = 'duel';
+  br.currentDuels = [];
+  br.currentDuelIndex = 0;
+
+  // Build active player states for pairing
+  const activePlayers: BubblyRoyalePlayerState[] = [];
+  for (const [playerId, ps] of br.playerStates) {
+    if (ps.eliminated) continue;
+    activePlayers.push({
+      id: playerId,
+      lives: ps.lives,
+      lastOpponentId: ps.lastDuelOpponent ?? null,
+    });
+  }
+
+  // Check end condition before pairing
+  if (checkBubblyRoyaleEndCondition(typedNamespace, gameState, activeGames, true)) {
+    return;
+  }
+
+  // Pair players
+  const duelRoundNumber = Math.floor(br.round / 2); // Round 1, 3, 5... → 0, 1, 2...
+  const pairing = pairPlayers(activePlayers, duelRoundNumber);
+
+  if (pairing.pairs.length === 0) {
+    // Only one player remaining — they win
+    endBubblyRoyaleGame(typedNamespace, resolvedDependencies, gameState, activeGames);
+    return;
+  }
+
+  // Emit round transition
+  typedNamespace.to(gameState.pin).emit('br-round-transition', {
+    round: br.round,
+    type: 'duel',
+  });
+
+  // Create duel states from pairing results (including odd player)
+  const allPairs = [...pairing.pairs];
+  if (pairing.oddPlayerId && pairing.oddPartnerId) {
+    allPairs.push([pairing.oddPlayerId, pairing.oddPartnerId]);
+  }
+
+  // Find a dedicated question for each duel (cycle through questions)
+  let questionIndex = 0;
+  const questions = gameState.questions;
+
+  for (const [p1Id, p2Id] of allPairs) {
+    const question = questions[questionIndex % questions.length];
+    if (!question) continue;
+    questionIndex++;
+
+    const p1State = br.playerStates.get(p1Id);
+    const p2State = br.playerStates.get(p2Id);
+
+    let p1TimerMs = br.duelTimerS * 1000;
+    let p2TimerMs = br.duelTimerS * 1000;
+
+    const activePowerUps: { playerId: string; type: string }[] = [];
+
+    // Auto-consume duel-start power-ups: Quick Bubble, Double Pop, Freeze
+    // Player 1's power-ups
+    if (p1State) {
+      const qbIdx = p1State.powerUps.findIndex((p) => p.type === 'quick_bubble');
+      if (qbIdx !== -1) {
+        p2TimerMs = Math.max(5000, p2TimerMs - 5000);
+        p1State.powerUps = p1State.powerUps.filter((_, i) => i !== qbIdx);
+        activePowerUps.push({ playerId: p1Id, type: 'quick_bubble' });
+      }
+      const dpIdx = p1State.powerUps.findIndex((p) => p.type === 'double_pop');
+      if (dpIdx !== -1) {
+        // Flag as active for outcome handling
+        activePowerUps.push({ playerId: p1Id, type: 'double_pop' });
+        // Keep in inventory, consumed on win
+      }
+      const fzIdx = p1State.powerUps.findIndex((p) => p.type === 'freeze');
+      if (fzIdx !== -1) {
+        activePowerUps.push({ playerId: p1Id, type: 'freeze' });
+      }
+    }
+
+    // Player 2's power-ups
+    if (p2State) {
+      const qbIdx = p2State.powerUps.findIndex((p) => p.type === 'quick_bubble');
+      if (qbIdx !== -1) {
+        p1TimerMs = Math.max(5000, p1TimerMs - 5000);
+        p2State.powerUps = p2State.powerUps.filter((_, i) => i !== qbIdx);
+        activePowerUps.push({ playerId: p2Id, type: 'quick_bubble' });
+      }
+      const dpIdx = p2State.powerUps.findIndex((p) => p.type === 'double_pop');
+      if (dpIdx !== -1) {
+        activePowerUps.push({ playerId: p2Id, type: 'double_pop' });
+      }
+      const fzIdx = p2State.powerUps.findIndex((p) => p.type === 'freeze');
+      if (fzIdx !== -1) {
+        activePowerUps.push({ playerId: p2Id, type: 'freeze' });
+      }
+    }
+
+    // Apply Slow Motion / Jumble curses (stored from curse phase) at duel start
+    // Slow Motion: reduce target's timer by 5s
+    // Jumble: shuffle opponent's options (tracked for per-socket emission)
+    for (const pendingCurse of br.pendingDuelCurses) {
+      if (pendingCurse.targetId === p1Id) {
+        if (pendingCurse.curseType === 'slow_motion') {
+          p1TimerMs = Math.max(5000, p1TimerMs - 5000);
+        }
+        activePowerUps.push({ playerId: p1Id, type: `curse_${pendingCurse.curseType}` });
+      } else if (pendingCurse.targetId === p2Id) {
+        if (pendingCurse.curseType === 'slow_motion') {
+          p2TimerMs = Math.max(5000, p2TimerMs - 5000);
+        }
+        activePowerUps.push({ playerId: p2Id, type: `curse_${pendingCurse.curseType}` });
+      }
+    }
+
+    const duelId = `duel_${br.round}_${questionIndex}`;
+
+    const duel: DuelState = {
+      duelId,
+      player1Id: p1Id,
+      player2Id: p2Id,
+      question,
+      questionStartTimeMs: 0, // Set when duel starts
+      baseTimerMs: br.duelTimerS * 1000,
+      player1TimerMs: p1TimerMs,
+      player2TimerMs: p2TimerMs,
+      player1Answer: null,
+      player2Answer: null,
+      player1TimeMs: null,
+      player2TimeMs: null,
+      rematchCount: 0,
+      resolved: false,
+      duelTimer: null,
+      activePowerUps,
+    };
+
+    br.currentDuels.push(duel);
+  }
+
+  // Reset player answer states
+  for (const [, ps] of br.playerStates) {
+    ps.duelAnswered = false;
+    ps.duelAnswer = undefined;
+    ps.duelAnswerTimeMs = undefined;
+  }
+
+  // Process duels sequentially (spotlight)
+  await processNextDuel(typedNamespace, resolvedDependencies, gameState, activeGames);
+}
+
+/**
+ * Processes the next duel in the round (spotlight — one at a time).
+ */
+async function processNextDuel(
+  typedNamespace: GameNamespace,
+  resolvedDependencies: GameNamespaceDependencies,
+  gameState: ActiveGameState,
+  activeGames: Map<string, ActiveGameState>
+): Promise<void> {
+  const br = gameState.brState;
+  if (!br || br.phase !== 'duel' || gameState.status === 'ended') return;
+
+  if (br.currentDuelIndex >= br.currentDuels.length) {
+    // All duels processed — move to next round
+    br.round++;
+    // Next round is always Bubble Pop (rounds alternate: BP → Duels → BP → ...)
+    await startBubblyRoyaleBubblePopRound(
+      typedNamespace,
+      resolvedDependencies,
+      gameState,
+      activeGames
+    );
+    return;
+  }
+
+  const duel = br.currentDuels[br.currentDuelIndex];
+  if (!duel) return;
+
+  // Check if either player was eliminated during previous duel
+  const p1State = br.playerStates.get(duel.player1Id);
+  const p2State = br.playerStates.get(duel.player2Id);
+
+  if (p1State?.eliminated || p2State?.eliminated) {
+    // A player was eliminated — skip this duel and move to next
+    br.currentDuelIndex++;
+    await processNextDuel(typedNamespace, resolvedDependencies, gameState, activeGames);
+    return;
+  }
+
+  const pin = gameState.pin;
+  const p1 = gameState.playersByUserId.get(duel.player1Id);
+  const p2 = gameState.playersByUserId.get(duel.player2Id);
+
+  // Announce pairing
+  typedNamespace.to(pin).emit('br-duel-paired', {
+    duelId: duel.duelId,
+    player1Id: duel.player1Id,
+    player1Name: p1?.username ?? 'Unknown',
+    player2Id: duel.player2Id,
+    player2Name: p2?.username ?? 'Unknown',
+    player1Lives: p1State?.lives ?? 0,
+    player2Lives: p2State?.lives ?? 0,
+  });
+
+  // Build public question payload
+  const publicQuestion = buildPublicQuestion(
+    gameState,
+    duel.question,
+    br.round,
+    Date.now(),
+    duel.baseTimerMs
+  );
+
+  // Emit duel question to the room
+  duel.questionStartTimeMs = Date.now();
+  typedNamespace.to(pin).emit('br-duel-question', {
+    duelId: duel.duelId,
+    question: {
+      text: publicQuestion.text,
+      options: publicQuestion.options,
+      timerMs: duel.baseTimerMs,
+    },
+    activePowerUps: duel.activePowerUps,
+  });
+
+  // Set per-player timers: the max of the two timers, plus 1s buffer
+  const maxTimerMs = Math.max(duel.player1TimerMs, duel.player2TimerMs) + 1000;
+
+  duel.duelTimer = setTimeout(() => {
+    resolveDuel(typedNamespace, resolvedDependencies, gameState, activeGames);
+  }, maxTimerMs);
+
+  await logGameEvent(resolvedDependencies, gameState.sessionId, null, 'br-duel-started', {
+    pin,
+    duelId: duel.duelId,
+    player1Id: duel.player1Id,
+    player2Id: duel.player2Id,
+    questionId: duel.question.id,
+  });
+}
+
+/**
+ * Records a player's answer for the current duel.
+ */
+function handleDuelAnswerSubmit(
+  socket: GameSocket,
+  gameState: ActiveGameState,
+  userId: string,
+  duelId: string,
+  answer: string,
+  typedNamespace: GameNamespace,
+  resolvedDependencies: GameNamespaceDependencies,
+  activeGames: Map<string, ActiveGameState>
+): void {
+  const br = gameState.brState;
+  if (!br || br.phase !== 'duel') {
+    emitRejection(socket, 'NOT_IN_DUEL', 'Not currently in a duel phase');
+    return;
+  }
+
+  const duel = br.currentDuels[br.currentDuelIndex];
+  if (!duel || duel.duelId !== duelId) {
+    emitRejection(socket, 'INVALID_DUEL', 'Not the current duel');
+    return;
+  }
+
+  if (duel.resolved) {
+    emitRejection(socket, 'DUEL_ALREADY_RESOLVED', 'This duel has already been resolved');
+    return;
+  }
+
+  const ps = br.playerStates.get(userId);
+  if (!ps || ps.eliminated) {
+    emitRejection(socket, 'NOT_IN_DUEL', 'You are not in this duel');
+    return;
+  }
+
+  // Prevent duplicate submission
+  if (ps.duelAnswered) {
+    return; // Silently ignore duplicate
+  }
+
+  const elapsedMs = Date.now() - duel.questionStartTimeMs;
+  ps.duelAnswered = true;
+  ps.duelAnswer = answer;
+  ps.duelAnswerTimeMs = elapsedMs;
+
+  if (userId === duel.player1Id) {
+    duel.player1Answer = answer;
+    duel.player1TimeMs = elapsedMs;
+  } else if (userId === duel.player2Id) {
+    duel.player2Answer = answer;
+    duel.player2TimeMs = elapsedMs;
+  }
+
+  gameNamespaceLogger.info({ userId, duelId, elapsedMs }, 'BR duel answer submitted');
+
+  // Check if both answered — resolve immediately
+  if (duel.player1Answer !== null && duel.player2Answer !== null) {
+    if (duel.duelTimer) {
+      clearTimeout(duel.duelTimer);
+      duel.duelTimer = null;
+    }
+    resolveDuel(typedNamespace, resolvedDependencies, gameState, activeGames);
+    return;
+  }
+
+  // Check if the other player timed out (no answer after their timer expired)
+  const otherPlayerId = userId === duel.player1Id ? duel.player2Id : duel.player1Id;
+  const otherPs = br.playerStates.get(otherPlayerId);
+  const otherTimerMs = otherPlayerId === duel.player1Id ? duel.player1TimerMs : duel.player2TimerMs;
+
+  if (elapsedMs >= otherTimerMs + 2000 && !otherPs?.duelAnswered) {
+    // Other player exceeded their timer — resolve
+    if (duel.duelTimer) {
+      clearTimeout(duel.duelTimer);
+      duel.duelTimer = null;
+    }
+    resolveDuel(typedNamespace, resolvedDependencies, gameState, activeGames);
+  }
+}
+
+/**
+ * Resolves the current duel after both players answered or timed out.
+ */
+function resolveDuel(
+  typedNamespace: GameNamespace,
+  resolvedDependencies: GameNamespaceDependencies,
+  gameState: ActiveGameState,
+  activeGames: Map<string, ActiveGameState>
+): void {
+  const br = gameState.brState;
+  if (!br || br.phase !== 'duel') return;
+
+  const duel = br.currentDuels[br.currentDuelIndex];
+  if (!duel || duel.resolved) return;
+
+  duel.resolved = true;
+
+  if (duel.duelTimer) {
+    clearTimeout(duel.duelTimer);
+    duel.duelTimer = null;
+  }
+
+  const pin = gameState.pin;
+  const p1State = br.playerStates.get(duel.player1Id);
+  const p2State = br.playerStates.get(duel.player2Id);
+  const p1 = gameState.playersByUserId.get(duel.player1Id);
+  const p2 = gameState.playersByUserId.get(duel.player2Id);
+
+  // Grade answers
+  const p1Correct =
+    duel.player1Answer !== null ? gradeAnswer(duel.question, duel.player1Answer).correct : false;
+  const p2Correct =
+    duel.player2Answer !== null ? gradeAnswer(duel.question, duel.player2Answer).correct : false;
+
+  // Determine outcome
+  const outcome = determineDuelOutcome(
+    {
+      playerId: duel.player1Id,
+      isCorrect: p1Correct,
+      elapsedMs: duel.player1TimeMs ?? duel.player1TimerMs + 1,
+    },
+    {
+      playerId: duel.player2Id,
+      isCorrect: p2Correct,
+      elapsedMs: duel.player2TimeMs ?? duel.player2TimerMs + 1,
+    },
+    duel.rematchCount
+  );
+
+  const livesLost: { playerId: string; lives: number }[] = [];
+  let powerUpConsumed: { playerId: string; type: string } | undefined;
+
+  // Apply outcome
+  if (outcome.outcome === 'player1_wins') {
+    const livesToLose = hasActiveDoublePop(duel.player1Id, duel) ? 2 : 1;
+    applyDuelLoss(duel.player2Id, livesToLose, br, livesLost, pin, typedNamespace);
+    powerUpConsumed = consumeDoublePop(duel.player1Id, br);
+    // Consume Freeze if player1 used it
+    consumeFreeze(duel.player1Id, br);
+  } else if (outcome.outcome === 'player2_wins') {
+    const livesToLose = hasActiveDoublePop(duel.player2Id, duel) ? 2 : 1;
+    applyDuelLoss(duel.player1Id, livesToLose, br, livesLost, pin, typedNamespace);
+    powerUpConsumed = consumeDoublePop(duel.player2Id, br);
+    consumeFreeze(duel.player2Id, br);
+  } else if (outcome.outcome === 'both_lose') {
+    applyDuelLoss(duel.player1Id, 1, br, livesLost, pin, typedNamespace);
+    applyDuelLoss(duel.player2Id, 1, br, livesLost, pin, typedNamespace);
+    // Check for Shield auto-consumption
+    autoConsumeShield(duel.player1Id, br);
+    autoConsumeShield(duel.player2Id, br);
+  } else if (outcome.outcome === 'tie') {
+    // Rematch
+    duel.rematchCount++;
+    duel.resolved = false;
+    duel.player1Answer = null;
+    duel.player2Answer = null;
+    duel.player1TimeMs = null;
+    duel.player2TimeMs = null;
+
+    const p1StateRef = br.playerStates.get(duel.player1Id);
+    const p2StateRef = br.playerStates.get(duel.player2Id);
+    if (p1StateRef) p1StateRef.duelAnswered = false;
+    if (p2StateRef) p2StateRef.duelAnswered = false;
+
+    // Get a new question
+    const questions = gameState.questions;
+    const nextQ = questions[(br.round + duel.rematchCount) % questions.length];
+    if (nextQ) {
+      duel.question = nextQ;
+    }
+
+    // Set new timers
+    const maxTimerMs = Math.max(duel.player1TimerMs, duel.player2TimerMs) + 1000;
+    duel.duelTimer = setTimeout(() => {
+      resolveDuel(typedNamespace, resolvedDependencies, gameState, activeGames);
+    }, maxTimerMs);
+
+    typedNamespace.to(pin).emit('br-duel-question', {
+      duelId: duel.duelId,
+      question: {
+        text: buildPublicQuestion(gameState, duel.question, br.round, Date.now(), duel.baseTimerMs)
+          .text,
+        options: buildPublicQuestion(
+          gameState,
+          duel.question,
+          br.round,
+          Date.now(),
+          duel.baseTimerMs
+        ).options,
+        timerMs: duel.baseTimerMs,
+      },
+      activePowerUps: duel.activePowerUps,
+    });
+
+    gameNamespaceLogger.info(
+      { duelId: duel.duelId, rematchCount: duel.rematchCount },
+      'BR duel tie — rematching'
+    );
+    return;
+  }
+  // both_advance: no life lost, continues normally
+
+  // Record opponent history
+  if (p1State) p1State.lastDuelOpponent = duel.player2Id;
+  if (p2State) p2State.lastDuelOpponent = duel.player1Id;
+
+  // Emit duel result
+  const correctAnswer = duel.question.options
+    ? Array.isArray(duel.question.options)
+      ? duel.question.options.map((o: { id: string; text: string }) => o.text).join(', ')
+      : ''
+    : '';
+
+  typedNamespace.to(pin).emit('br-duel-result', {
+    duelId: duel.duelId,
+    winnerId: outcome.winnerId,
+    loserId: outcome.loserId,
+    correctAnswer,
+    player1TimeMs: duel.player1TimeMs,
+    player2TimeMs: duel.player2TimeMs,
+    player1Correct: p1Correct,
+    player2Correct: p2Correct,
+    tie: outcome.outcome === 'tie' || outcome.outcome === 'both_advance',
+    livesLost,
+    ...(powerUpConsumed ? { powerUpConsumed } : {}),
+  });
+
+  // Emit life lost events
+  for (const ll of livesLost) {
+    typedNamespace.to(pin).emit('br-life-lost', {
+      playerId: ll.playerId,
+      lives: ll.lives,
+      reason: livesLost.length > 1 && ll.lives < br.startingLives ? 'double-pop' : 'duel',
+    });
+
+    // Check for elimination
+    const ps = br.playerStates.get(ll.playerId);
+    if (ps && ps.eliminated) {
+      const player = gameState.playersByUserId.get(ll.playerId);
+      typedNamespace.to(pin).emit('br-player-eliminated', {
+        playerId: ll.playerId,
+        playerName: player?.username ?? 'Unknown',
+      });
+
+      // Send spectator mode to entire room — clients filter by playerId
+      typedNamespace.to(pin).emit('br-spectator-mode', { playerId: ll.playerId });
+    }
+  }
+
+  // Check end condition
+  if (
+    checkBubblyRoyaleEndCondition(
+      typedNamespace,
+      gameState,
+      activeGames,
+      false,
+      resolvedDependencies
+    )
+  ) {
+    return;
+  }
+
+  // Move to next duel
+  br.currentDuelIndex++;
+  void processNextDuel(typedNamespace, resolvedDependencies, gameState, activeGames);
+}
+
+/**
+ * Applies a life loss to a player in a duel context, checking for Shield auto-consumption.
+ */
+function applyDuelLoss(
+  playerId: string,
+  livesToLose: number,
+  br: BubblyRoyaleGameState,
+  livesLost: { playerId: string; lives: number }[],
+  pin: string,
+  typedNamespace: GameNamespace
+): void {
+  const ps = br.playerStates.get(playerId);
+  if (!ps) return;
+
+  // Check for Shield auto-consumption
+  const shieldIdx = ps.powerUps.findIndex((p) => p.type === 'shield');
+  if (shieldIdx !== -1) {
+    // Shield absorbs the loss
+    ps.powerUps = ps.powerUps.filter((_, i) => i !== shieldIdx);
+    gameNamespaceLogger.info({ playerId }, 'BR Shield auto-consumed to prevent life loss');
+    return;
+  }
+
+  const result = manageLives(
+    { playerId, currentLives: ps.lives, startingLives: br.startingLives },
+    -livesToLose
+  );
+  ps.lives = result.newLives;
+  livesLost.push({ playerId, lives: ps.lives });
+
+  if (result.isEliminated) {
+    ps.eliminated = true;
+  }
+}
+
+/**
+ * Checks if a player has an active Double Pop power-up.
+ */
+function hasActiveDoublePop(playerId: string, duel: DuelState): boolean {
+  const dpEntry = duel.activePowerUps.find(
+    (p) => p.playerId === playerId && p.type === 'double_pop'
+  );
+  return !!dpEntry;
+}
+
+/**
+ * Consumes a Double Pop power-up from the winner's inventory.
+ */
+function consumeDoublePop(
+  playerId: string,
+  br: BubblyRoyaleGameState
+): { playerId: string; type: string } | undefined {
+  const ps = br.playerStates.get(playerId);
+  if (!ps) return undefined;
+  const dpIdx = ps.powerUps.findIndex((p) => p.type === 'double_pop');
+  if (dpIdx !== -1) {
+    ps.powerUps = ps.powerUps.filter((_, i) => i !== dpIdx);
+    return { playerId, type: 'double_pop' };
+  }
+  return undefined;
+}
+
+/**
+ * Consumes a Freeze power-up from a player's inventory.
+ */
+function consumeFreeze(playerId: string, br: BubblyRoyaleGameState): void {
+  const ps = br.playerStates.get(playerId);
+  if (!ps) return;
+  const fzIdx = ps.powerUps.findIndex((p) => p.type === 'freeze');
+  if (fzIdx !== -1) {
+    ps.powerUps = ps.powerUps.filter((_, i) => i !== fzIdx);
+  }
+}
+
+/**
+ * Auto-consumes Shield for a losing player if they have one.
+ */
+function autoConsumeShield(playerId: string, br: BubblyRoyaleGameState): void {
+  const ps = br.playerStates.get(playerId);
+  if (!ps) return;
+  const shieldIdx = ps.powerUps.findIndex((p) => p.type === 'shield');
+  if (shieldIdx !== -1) {
+    ps.powerUps = ps.powerUps.filter((_, i) => i !== shieldIdx);
+  }
+}
+
+/**
+ * Handles a player using a power-up (non-auto power-ups like Life Steal curses,
+ * or manual activation if a power-up type requires it).
+ */
+function handleUsePowerUp(
+  gameState: ActiveGameState,
+  userId: string,
+  powerUpType: string,
+  targetId: string | undefined,
+  socket: GameSocket,
+  typedNamespace: GameNamespace,
+  activeGames: Map<string, ActiveGameState>
+): void {
+  const br = gameState.brState;
+  if (!br) {
+    emitError(socket, 'NOT_BR_GAME', 'Not a Bubbly Royale game');
+    return;
+  }
+
+  // Most power-ups are auto-consumed. This handler mainly handles manual curse usage
+  // which is covered by cast-curse. Only allow if there's a valid manual use case.
+  emitError(socket, 'POWER_UP_AUTO', 'Power-ups are auto-consumed — no manual activation needed');
+}
+
+/**
+ * Handles BR-specific player disconnect.
+ * Marks player as eliminated. If mid-duel, opponent auto-wins.
+ */
+function handleBubblyRoyaleDisconnect(
+  typedNamespace: GameNamespace,
+  resolvedDependencies: GameNamespaceDependencies,
+  gameState: ActiveGameState,
+  activeGames: Map<string, ActiveGameState>,
+  pin: string,
+  userId: string,
+  username?: string
+): void {
+  const br = gameState.brState;
+  if (!br) return;
+
+  const ps = br.playerStates.get(userId);
+  if (!ps || ps.eliminated) return;
+
+  // Mark as eliminated
+  ps.eliminated = true;
+  ps.lives = 0;
+  gameState.playersByUserId.delete(userId);
+
+  gameNamespaceLogger.info({ userId, pin }, 'BR player disconnected — eliminated');
+
+  // If they were in the current active duel, opponent auto-wins
+  if (br.phase === 'duel') {
+    const duel = br.currentDuels[br.currentDuelIndex];
+    if (duel && !duel.resolved && (duel.player1Id === userId || duel.player2Id === userId)) {
+      const opponentId = duel.player1Id === userId ? duel.player2Id : duel.player1Id;
+
+      // Resolve duel immediately — opponent wins
+      duel.resolved = true;
+      if (duel.duelTimer) {
+        clearTimeout(duel.duelTimer);
+        duel.duelTimer = null;
+      }
+
+      typedNamespace.to(pin).emit('br-life-lost', {
+        playerId: userId,
+        lives: 0,
+        reason: 'duel',
+      });
+
+      typedNamespace.to(pin).emit('br-player-eliminated', {
+        playerId: userId,
+        playerName: username ?? 'Unknown',
+      });
+
+      // Process next duel
+      br.currentDuelIndex++;
+      void processNextDuel(typedNamespace, resolvedDependencies, gameState, activeGames);
+    }
+  }
+
+  // Emit elimination
+  typedNamespace.to(pin).emit('br-player-eliminated', {
+    playerId: userId,
+    playerName: username ?? 'Unknown',
+  });
+
+  // Check end condition
+  checkBubblyRoyaleEndCondition(typedNamespace, gameState, activeGames);
+
+  // If no BR players remain, end the game
+  const activeCount = [...br.playerStates.values()].filter((s) => !s.eliminated).length;
+  if (activeCount === 0) {
+    gameState.status = 'ended';
+    activeGames.delete(pin);
+    void resolvedDependencies.updateStatus(gameState.sessionId, 'ended');
+  }
+}
+
+/**
+ * Checks if only one player remains (≥1 life). If so, ends the game.
+ * Returns true if the game has ended.
+ */
+function checkBubblyRoyaleEndCondition(
+  typedNamespace: GameNamespace,
+  gameState: ActiveGameState,
+  activeGames: Map<string, ActiveGameState>,
+  silent = false,
+  dependencies?: GameNamespaceDependencies | null
+): boolean {
+  const br = gameState.brState;
+  if (!br || gameState.status === 'ended') return true;
+
+  const alivePlayers = [...br.playerStates.entries()].filter(
+    ([, ps]) => !ps.eliminated && ps.lives > 0
+  );
+
+  if (alivePlayers.length <= 1) {
+    if (!silent) {
+      endBubblyRoyaleGame(typedNamespace, dependencies ?? null, gameState, activeGames);
+    }
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * Emits the winner and ends the Bubbly Royale game.
+ */
+async function endBubblyRoyaleGame(
+  typedNamespace: GameNamespace,
+  dependencies: GameNamespaceDependencies | null,
+  gameState: ActiveGameState,
+  activeGames: Map<string, ActiveGameState>
+): Promise<void> {
+  const br = gameState.brState;
+  if (!br || gameState.status === 'ended') return;
+
+  gameState.status = 'ended';
+  br.phase = 'ended';
+
+  // Clear all timers
+  if (br.bubblePopTimer) {
+    clearTimeout(br.bubblePopTimer);
+    br.bubblePopTimer = null;
+  }
+  for (const timer of br.pendingCurseWindows) {
+    clearTimeout(timer);
+  }
+  br.pendingCurseWindows = [];
+  for (const duel of br.currentDuels) {
+    if (duel.duelTimer) {
+      clearTimeout(duel.duelTimer);
+      duel.duelTimer = null;
+    }
+  }
+
+  const pin = gameState.pin;
+
+  // Find the winner (last player with ≥1 life)
+  const alivePlayers = [...br.playerStates.entries()].filter(
+    ([, ps]) => !ps.eliminated && ps.lives > 0
+  );
+
+  let winnerId = 'unknown';
+  let winnerName = 'Nobody';
+  let livesRemaining = 0;
+
+  if (alivePlayers.length > 0) {
+    const [id, ps] = alivePlayers[0]!;
+    winnerId = id;
+    winnerName = gameState.playersByUserId.get(id)?.username ?? 'Unknown';
+    livesRemaining = ps.lives;
+  }
+
+  typedNamespace.to(pin).emit('br-royale-winner', {
+    playerId: winnerId,
+    playerName: winnerName,
+    livesRemaining,
+  });
+
+  // Emit standard game-ended for compatibility
+  typedNamespace.to(pin).emit('game-ended', {
+    pin,
+    sessionId: gameState.sessionId,
+    leaderboard: [
+      {
+        userId: winnerId,
+        username: winnerName,
+        score: livesRemaining,
+        rank: 1,
+      },
+    ],
+  });
+
+  gameNamespaceLogger.info(
+    { pin, winnerId, winnerName, livesRemaining },
+    'Bubbly Royale game ended'
+  );
+
+  // Update session status in DB
+  if (dependencies) {
+    void dependencies.updateStatus(gameState.sessionId, 'ended');
+  }
+
+  // Clean up after delay
+  setTimeout(() => {
+    activeGames.delete(pin);
+  }, 60_000);
+}
+
+/**
+ * Helper: fetch all sockets belonging to a specific player in a room.
+ */
+function getPlayerSockets(namespace: GameNamespace, pin: string, userId: string): GameSocket[] {
+  // We cannot call fetchSockets synchronously in a non-async context.
+  // Instead, emit to the room with a filter by emitting to the room
+  // and letting the client filter — or we return an empty array and
+  // use a different pattern. For private events we use the `to()` pattern.
+  // Return empty array — callers should handle.
+  // The to() pattern: namespace.to(pin).emit(...) sends to all in room.
+  // For private events, we need individual socket emit which requires async.
+  // We handle this by marking the event as "private" in the caller and
+  // using async patterns where needed.
+  return [];
+}
+
+/**
+ * Helper: fetch all sockets for a player using async fetchSockets.
+ */
+async function getPlayerSocketsAsync(
+  namespace: GameNamespace,
+  pin: string,
+  userId: string
+): Promise<GameSocket[]> {
+  const sockets = await namespace.in(pin).fetchSockets();
+  return sockets.filter((s): s is GameSocket => s.data.userId === userId);
+}
+
+/**
+ * Generates random non-overlapping bubble positions for a Bubble Pop round.
+ * Each bubble is placed within a container (maxWidth x maxHeight) with minimum
+ * spacing to prevent overlap.
+ */
+function generateBubblePositions(
+  count: number,
+  maxWidth: number,
+  maxHeight: number
+): { number: number; x: number; y: number }[] {
+  const bubbles: { number: number; x: number; y: number }[] = [];
+  const minDistance = 70; // Minimum pixel distance between bubble centers
+  const margin = 60; // Margin from container edges
+
+  for (let i = 1; i <= count; i++) {
+    let x: number;
+    let y: number;
+    let attempts = 0;
+    const maxAttempts = 50;
+
+    do {
+      x = margin + Math.random() * (maxWidth - margin * 2);
+      y = margin + Math.random() * (maxHeight - margin * 2);
+      attempts++;
+    } while (
+      attempts < maxAttempts &&
+      bubbles.some((b) => Math.hypot(b.x - x, b.y - y) < minDistance)
+    );
+
+    bubbles.push({ number: i, x, y });
+  }
+
+  // Sort by number ascending (1-6) for consistent display
+  bubbles.sort((a, b) => a.number - b.number);
+
+  return bubbles;
 }
 
 /**

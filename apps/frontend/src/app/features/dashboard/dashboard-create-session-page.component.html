@@ -229,23 +229,6 @@
                 <p class="qf-muted text-sm">{{ mode.description }}</p>
               </button>
             }
-
-            <!-- Coming Soon card -->
-            <div
-              aria-disabled="true"
-              class="flex flex-col items-center gap-3 rounded-2xl border-2 border-dashed border-[var(--bubbly-border)] bg-[var(--bubbly-surface)] p-6 text-center opacity-60"
-            >
-              <span
-                class="text-4xl"
-                aria-hidden="true"
-              >
-                🏆
-              </span>
-              <h3 class="font-display text-lg font-bold text-[var(--bubbly-text)]">
-                Bubbly Royale
-              </h3>
-              <p class="qf-muted text-sm">Coming Soon</p>
-            </div>
           </div>
 
           @if (gameMode() === 'treasure-forge') {
@@ -337,6 +320,97 @@
                     />
                   </div>
                 }
+              </div>
+            </div>
+          }
+
+          @if (gameMode() === 'bubbly-royale') {
+            <div class="qf-tint-surface mt-5 rounded-3xl p-5">
+              <p class="text-sm font-bold text-[var(--bubbly-text)]">Bubbly Royale Settings</p>
+              <p class="qf-muted mt-1 text-xs">Configure the tournament rules and timers.</p>
+
+              <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                <!-- Top N -->
+                <div>
+                  <label
+                    for="br-top-n"
+                    class="qf-eyebrow block"
+                  >
+                    Top N Power-Up Earners
+                  </label>
+                  <input
+                    id="br-top-n"
+                    type="number"
+                    class="qf-input mt-2 w-full"
+                    [value]="brTopN()"
+                    min="1"
+                    max="8"
+                    (input)="onBrTopNInput($event)"
+                  />
+                  <p class="qf-muted mt-1 text-xs">
+                    Players who earn power-ups each Bubble Pop round.
+                  </p>
+                </div>
+
+                <!-- Starting Lives -->
+                <div>
+                  <label
+                    for="br-starting-lives"
+                    class="qf-eyebrow block"
+                  >
+                    Starting Lives
+                  </label>
+                  <input
+                    id="br-starting-lives"
+                    type="number"
+                    class="qf-input mt-2 w-full"
+                    [value]="brStartingLives()"
+                    min="2"
+                    max="5"
+                    (input)="onBrStartingLivesInput($event)"
+                  />
+                  <p class="qf-muted mt-1 text-xs">Lives each player begins with.</p>
+                </div>
+
+                <!-- Duel Timer -->
+                <div>
+                  <label
+                    for="br-duel-timer"
+                    class="qf-eyebrow block"
+                  >
+                    Duel Timer (seconds)
+                  </label>
+                  <input
+                    id="br-duel-timer"
+                    type="number"
+                    class="qf-input mt-2 w-full"
+                    [value]="brDuelTimerS()"
+                    min="10"
+                    max="45"
+                    (input)="onBrDuelTimerSInput($event)"
+                  />
+                  <p class="qf-muted mt-1 text-xs">Time limit for each 1v1 duel.</p>
+                </div>
+
+                <!-- Power Bubble Timer -->
+                <div>
+                  <label
+                    for="br-power-bubble-timer"
+                    class="qf-eyebrow block"
+                  >
+                    Power Bubble Timer (seconds)
+                  </label>
+                  <input
+                    id="br-power-bubble-timer"
+                    type="number"
+                    class="qf-input mt-2 w-full"
+                    [value]="brPowerBubbleTimerS()"
+                    min="8"
+                    max="30"
+                    (input)="onBrPowerBubbleTimerSInput($event)"
+                  />
+                  <p class="qf-muted mt-1 text-xs">Time limit for the Bubble Pop challenge.</p>
+                </div>
               </div>
             </div>
           }

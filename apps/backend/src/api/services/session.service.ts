@@ -72,6 +72,13 @@ export async function createSession(
     tfEndMode: data.game_mode === 'treasure-forge' ? (data.tf_end_mode ?? null) : null,
     tfTimerMinutes: data.game_mode === 'treasure-forge' ? (data.tf_timer_minutes ?? null) : null,
     tfGoldGoal: data.game_mode === 'treasure-forge' ? (data.tf_gold_goal ?? null) : null,
+    brTopN: data.game_mode === 'bubbly-royale' ? (data.br_top_n ?? undefined) : undefined,
+    brStartingLives:
+      data.game_mode === 'bubbly-royale' ? (data.br_starting_lives ?? undefined) : undefined,
+    brDuelTimerS:
+      data.game_mode === 'bubbly-royale' ? (data.br_duel_timer_s ?? undefined) : undefined,
+    brPowerBubbleTimerS:
+      data.game_mode === 'bubbly-royale' ? (data.br_power_bubble_timer_s ?? undefined) : undefined,
   });
 
   sessionServiceLogger.info(
