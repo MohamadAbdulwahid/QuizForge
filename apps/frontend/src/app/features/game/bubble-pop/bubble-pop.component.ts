@@ -65,6 +65,25 @@ export class BubblePopComponent implements OnInit, OnDestroy {
    */
   readonly skipCountdown = input<boolean>(false);
 
+  /**
+   * Read-only display mode for the host projector. When true:
+   *  - Bubbles are non-interactive (no clicks, no hover effects)
+   *  - No countdown overlay (host is just showing the game)
+   *  - No completion overlay (host shows player results separately)
+   *  - No "click 1 to start" instructions
+   * Defaults to false (interactive player mode).
+   */
+  readonly displayOnly = input<boolean>(false);
+
+  /**
+   * Visual size of the arena. The host projector uses 'huge' so the
+   * bubble board fills the projector screen. Defaults to 'normal'.
+   *  - 'normal'  : 640px max, square
+   *  - 'large'   : 900px max, 16:10
+   *  - 'huge'    : full container width, 16:10
+   */
+  readonly size = input<'normal' | 'large' | 'huge'>('normal');
+
   /** Emits the bubble number (1–6) each time a correct bubble is clicked. */
   readonly bubbleClick = output<number>();
 
@@ -105,6 +124,15 @@ export class BubblePopComponent implements OnInit, OnDestroy {
 
   protected readonly isResetting = computed(() => this.wrongBubbles().size > 0);
 
+  protected readonly arenaClasses = computed(() => {
+    const classes = ['br-arena'];
+    if (this.size() === 'large') classes.push('br-arena-large');
+    if (this.size() === 'huge') classes.push('br-arena-huge');
+    if (this.phase() === 'countdown' && !this.displayOnly()) classes.push('countdown-active');
+    if (this.phase() === 'complete' && !this.displayOnly()) classes.push('complete');
+    return classes.join(' ');
+  });
+
   protected readonly formattedTime = computed(() => {
     const ms = this.elapsedTimeMs();
     const secs = Math.floor(ms / 1000);
@@ -133,9 +161,9 @@ export class BubblePopComponent implements OnInit, OnDestroy {
     if (this.bubbles().length < 6) {
       this.internalBubbles.set(this.generateRandomBubbles());
     }
-    // Start the countdown on mount unless caller opts out.
-    // The challenge becomes interactive after 3-2-1-GO completes.
-    if (this.isBrowser && !this.skipCountdown()) {
+    // Skip the countdown when caller opts out, or in read-only display mode
+    // (the host projector doesn't need the per-player 3-2-1-GO).
+    if (this.isBrowser && !this.skipCountdown() && !this.displayOnly()) {
       this.startCountdown();
     }
   }
@@ -149,6 +177,8 @@ export class BubblePopComponent implements OnInit, OnDestroy {
   // ── Click handler ──
 
   protected onBubbleClick(num: number): void {
+    // Read-only display (host projector) — ignore all clicks
+    if (this.displayOnly()) return;
     // Block clicks during countdown overlay, wrong-reset animation, and after completion
     if (this.phase() === 'countdown') return;
     if (this.isResetting()) return;

@@ -471,6 +471,88 @@
     </div>
   }
 
+  <!-- ── Big per-player result announcement (theatrical reveal) ── -->
+  @if (bigAnnouncement(); as ann) {
+    <div
+      class="br-overlay-backdrop"
+      role="status"
+      aria-live="assertive"
+      aria-label="Player result announcement"
+    >
+      <div
+        class="rounded-3xl border-2 px-8 py-7 text-center shadow-2xl backdrop-blur-md sm:px-12 sm:py-9"
+        [class.border-emerald-400]="ann.type === 'round-correct'"
+        [class.bg-gradient-to-b]="true"
+        [class.from-emerald-600]="ann.type === 'round-correct'"
+        [class.to-emerald-900]="ann.type === 'round-correct'"
+        [class.border-rose-400]="ann.type === 'round-incorrect'"
+        [class.from-rose-600]="ann.type === 'round-incorrect'"
+        [class.to-rose-900]="ann.type === 'round-incorrect'"
+        [class.border-amber-400]="
+          ann.type === 'chest-picked' || ann.type === 'steal' || ann.type === 'swap'
+        "
+        [class.from-amber-600]="
+          ann.type === 'chest-picked' || ann.type === 'steal' || ann.type === 'swap'
+        "
+        [class.to-amber-900]="
+          ann.type === 'chest-picked' || ann.type === 'steal' || ann.type === 'swap'
+        "
+        style="max-width: 36rem; width: 100%"
+      >
+        <p class="text-7xl drop-shadow-2xl sm:text-8xl">
+          @switch (ann.type) {
+            @case ('round-correct') {
+              ✅
+            }
+            @case ('round-incorrect') {
+              ❌
+            }
+            @case ('chest-picked') {
+              🏆
+            }
+            @case ('steal') {
+              💀
+            }
+            @case ('swap') {
+              🔄
+            }
+          }
+        </p>
+        <p class="font-display mt-3 text-3xl font-black text-white drop-shadow-lg sm:text-5xl">
+          {{ ann.playerUsername }}
+        </p>
+        <p class="mt-2 text-xl font-black text-white drop-shadow sm:text-2xl">
+          @switch (ann.type) {
+            @case ('round-correct') {
+              got it RIGHT!
+            }
+            @case ('round-incorrect') {
+              got it WRONG!
+            }
+            @case ('chest-picked') {
+              opened a chest!
+            }
+            @case ('steal') {
+              stole gold!
+            }
+            @case ('swap') {
+              swapped gold!
+            }
+          }
+        </p>
+        @if (ann.goldDelta !== undefined && ann.goldDelta !== 0) {
+          <p
+            class="font-display mt-2 text-2xl font-black drop-shadow sm:text-3xl"
+            [class.text-emerald-200]="ann.goldDelta > 0"
+            [class.text-rose-200]="ann.goldDelta < 0"
+          >
+            {{ ann.goldDelta > 0 ? '+' : '' }}{{ ann.goldDelta }} 🪙
+          </p>
+        }
+      </div>
+    </div>
+  }
+
   <!-- ── Modals ── -->
   <app-bubbly-modal
     [visible]="showEndConfirmModal()"

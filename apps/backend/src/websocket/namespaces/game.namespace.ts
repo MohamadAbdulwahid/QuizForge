@@ -4677,26 +4677,32 @@ async function getPlayerSocketsAsync(
  */
 function generateBubblePositions(
   count: number,
-  maxWidth: number,
-  maxHeight: number
+  _maxWidth: number,
+  _maxHeight: number
 ): { number: number; x: number; y: number }[] {
+  // The frontend renders bubbles as absolute-positioned elements inside a
+  // responsive square container using percentage-based left/top. So we emit
+  // x/y as percentages 0–100 (not pixels) so the layout scales correctly
+  // across screen sizes.
   const bubbles: { number: number; x: number; y: number }[] = [];
-  const minDistance = 70; // Minimum pixel distance between bubble centers
-  const margin = 60; // Margin from container edges
+  // Min distance in percentage units (~12% of the arena width to avoid clumping)
+  const minDistancePct = 12;
+  // Keep bubbles inside an 8%–92% safe zone so they don't sit on the edge
+  const marginPct = 8;
 
   for (let i = 1; i <= count; i++) {
     let x: number;
     let y: number;
     let attempts = 0;
-    const maxAttempts = 50;
+    const maxAttempts = 80;
 
     do {
-      x = margin + Math.random() * (maxWidth - margin * 2);
-      y = margin + Math.random() * (maxHeight - margin * 2);
+      x = marginPct + Math.random() * (100 - marginPct * 2);
+      y = marginPct + Math.random() * (100 - marginPct * 2);
       attempts++;
     } while (
       attempts < maxAttempts &&
-      bubbles.some((b) => Math.hypot(b.x - x, b.y - y) < minDistance)
+      bubbles.some((b) => Math.hypot(b.x - x, b.y - y) < minDistancePct)
     );
 
     bubbles.push({ number: i, x, y });

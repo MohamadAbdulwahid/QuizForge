@@ -87,16 +87,21 @@
         <div
           class="flex w-full max-w-5xl flex-1 flex-col items-center justify-center gap-4 sm:gap-6"
         >
-          <!-- Question text -->
-          <div
-            class="w-full rounded-2xl bg-white/5 px-4 py-3 text-center backdrop-blur-sm sm:px-6 sm:py-4"
-          >
-            <h2
-              class="font-display text-3xl font-bold text-white drop-shadow-lg sm:text-4xl md:text-5xl lg:text-6xl"
+          <!-- MC/TF: prompt on host, letter cards here -->
+          @if (question.type === 'multiple-choice' || question.type === 'true-false') {
+            <div
+              class="w-full rounded-2xl border-2 border-white/20 bg-black/40 px-4 py-3 text-center backdrop-blur-sm sm:px-6 sm:py-4"
             >
-              {{ question.text }}
-            </h2>
-          </div>
+              <h2
+                class="font-display text-2xl font-black text-white drop-shadow-lg sm:text-3xl md:text-4xl"
+              >
+                Pick your answer!
+              </h2>
+              <p class="mt-1 text-base font-semibold text-white/80 drop-shadow sm:text-lg">
+                Read the question on the host screen, then tap your letter.
+              </p>
+            </div>
+          }
 
           <!-- Answer area: switches on question type. MC/TF keep immediate-submit
                on tile click; the structured types render their own panel and rely
@@ -108,22 +113,18 @@
                   @if (optionEntered().has(option.id)) {
                     <button
                       type="button"
-                      class="player-option-btn player-option-enter relative"
+                      class="player-option-btn player-option-letter relative"
                       [class]="getOptionClasses(i, gameState.submissionState() !== 'idle')"
                       [class.ring-4]="selectedAnswerId() === option.id"
                       [class.ring-white]="selectedAnswerId() === option.id"
                       [disabled]="gameState.submissionState() !== 'idle'"
                       (click)="selectAnswer(option.id)"
+                      [attr.aria-label]="'Option ' + getOptionStyle(i).label"
                     >
                       <span
-                        class="font-display text-5xl font-black text-white drop-shadow-md sm:text-6xl"
+                        class="font-display text-6xl font-black text-white drop-shadow-md sm:text-7xl"
                       >
                         {{ getOptionStyle(i).label }}
-                      </span>
-                      <span
-                        class="flex-1 text-xl font-bold text-white drop-shadow-md sm:text-2xl lg:text-3xl"
-                      >
-                        {{ option.text }}
                       </span>
                     </button>
                   }
@@ -136,22 +137,18 @@
                   @if (optionEntered().has(option.id)) {
                     <button
                       type="button"
-                      class="player-option-btn player-option-enter relative"
+                      class="player-option-btn player-option-letter relative"
                       [class]="getOptionClasses(i, gameState.submissionState() !== 'idle')"
                       [class.ring-4]="selectedAnswerId() === option.id"
                       [class.ring-white]="selectedAnswerId() === option.id"
                       [disabled]="gameState.submissionState() !== 'idle'"
                       (click)="selectAnswer(option.id)"
+                      [attr.aria-label]="'Option ' + getOptionStyle(i).label"
                     >
                       <span
-                        class="font-display text-5xl font-black text-white drop-shadow-md sm:text-6xl"
+                        class="font-display text-6xl font-black text-white drop-shadow-md sm:text-7xl"
                       >
                         {{ getOptionStyle(i).label }}
-                      </span>
-                      <span
-                        class="flex-1 text-xl font-bold text-white drop-shadow-md sm:text-2xl lg:text-3xl"
-                      >
-                        {{ option.text }}
                       </span>
                     </button>
                   }

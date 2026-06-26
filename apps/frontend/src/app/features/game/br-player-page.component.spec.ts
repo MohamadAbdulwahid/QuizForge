@@ -210,15 +210,18 @@ describe('BrPlayerPageComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    // Verify question is displayed
+    // The player does NOT see the question text (anti-cheat — only the
+    // host projector shows the question). Instead, they see a prompt
+    // to read it on the host screen and tap a letter.
     const body = fixture.nativeElement.textContent;
-    expect(body).toContain('What is the capital of France?');
+    expect(body).toContain('Pick your answer!');
+    expect(body).not.toContain('What is the capital of France?');
 
-    // Find answer buttons
+    // Find answer buttons — should be 4 letter cards
     const buttons = fixture.nativeElement.querySelectorAll('.br-answer-btn');
     expect(buttons.length).toBe(4);
 
-    // Click the first answer (Paris)
+    // Click the first answer (A = Paris)
     buttons[0].click();
     fixture.detectChanges();
 

@@ -1,37 +1,48 @@
 <div class="flex w-full flex-col items-center gap-5">
-  <!-- ── Timer display ── -->
-  <div
-    class="br-timer"
-    [class.urgent]="isComplete() === false && hasStarted() && elapsedTimeMs() > 5000"
-    aria-live="polite"
-  >
-    <span class="br-timer-icon" aria-hidden="true">⏱️</span>
-    @if (phase() === 'waiting') {
-      <span class="br-timer-value">Click bubble 1 to start!</span>
-    } @else if (phase() === 'countdown') {
-      <span class="br-timer-value">Get Ready...</span>
-    } @else if (phase() === 'complete') {
-      <span class="br-timer-value">{{ formattedTime() }}</span>
-    } @else {
-      <span class="br-timer-value">{{ formattedTime() }}</span>
-    }
-  </div>
+  <!-- ── Timer display (interactive mode only) ── -->
+  @if (!displayOnly()) {
+    <div
+      class="br-timer"
+      [class.urgent]="isComplete() === false && hasStarted() && elapsedTimeMs() > 5000"
+      aria-live="polite"
+    >
+      <span
+        class="br-timer-icon"
+        aria-hidden="true"
+      >
+        ⏱️
+      </span>
+      @if (phase() === 'waiting') {
+        <span class="br-timer-value">Click bubble 1 to start!</span>
+      } @else if (phase() === 'countdown') {
+        <span class="br-timer-value">Get Ready...</span>
+      } @else if (phase() === 'complete') {
+        <span class="br-timer-value">{{ formattedTime() }}</span>
+      } @else {
+        <span class="br-timer-value">{{ formattedTime() }}</span>
+      }
+    </div>
+  }
 
   <!-- ── Bubble play area ── -->
-  <div
-    class="br-arena"
-    [class.countdown-active]="phase() === 'countdown'"
-    [class.complete]="phase() === 'complete'"
-  >
+  <div [class]="arenaClasses()">
     @for (bubble of displayBubbles(); track bubble.number) {
       <button
         type="button"
         class="br-bubble"
+        [class.br-bubble-large]="size() === 'large'"
+        [class.br-bubble-huge]="size() === 'huge'"
+        [class.display-only]="displayOnly()"
         [style.left.%]="bubble.x"
         [style.top.%]="bubble.y"
         [class.popped]="isPopped(bubble.number)"
         [class.shaking]="isShaking(bubble.number)"
-        [disabled]="phase() === 'countdown' || phase() === 'complete' || isPopped(bubble.number)"
+        [disabled]="
+          displayOnly() ||
+          phase() === 'countdown' ||
+          phase() === 'complete' ||
+          isPopped(bubble.number)
+        "
         [attr.aria-label]="'Bubble ' + bubble.number"
         (click)="onBubbleClick(bubble.number)"
       >
@@ -39,8 +50,8 @@
       </button>
     }
 
-    <!-- ── Countdown overlay ── -->
-    @if (countdownValue() !== null) {
+    <!-- ── Countdown overlay (interactive mode only) ── -->
+    @if (countdownValue() !== null && !displayOnly()) {
       <div
         class="absolute inset-0 z-10 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm"
         aria-live="assertive"
@@ -53,8 +64,8 @@
       </div>
     }
 
-    <!-- ── Complete overlay ── -->
-    @if (phase() === 'complete') {
+    <!-- ── Complete overlay (interactive mode only) ── -->
+    @if (phase() === 'complete' && !displayOnly()) {
       <div
         class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-emerald-500/15 backdrop-blur-sm"
         role="status"
@@ -66,12 +77,11 @@
         </span>
         <span
           class="font-display mt-2 text-4xl font-black text-emerald-300 drop-shadow-2xl sm:text-5xl"
-          style="font-variant-numeric: tabular-nums;"
+          style="font-variant-numeric: tabular-nums"
         >
           {{ formattedTime() }}
         </span>
 
-        <!-- Confetti particles -->
         @for (piece of confettiPieces(); track piece.id) {
           <span
             class="br-confetti"
@@ -85,8 +95,8 @@
     }
   </div>
 
-  <!-- ── Instructions ── -->
-  @if (phase() === 'waiting') {
+  <!-- ── Instructions (interactive mode only) ── -->
+  @if (phase() === 'waiting' && !displayOnly()) {
     <p class="max-w-xs text-center text-base font-bold text-white/80 drop-shadow-md">
       Pop the bubbles in order — 1 to 6 — as fast as you can!
     </p>

@@ -165,6 +165,10 @@ export class HostPageComponent implements OnInit, OnDestroy {
   protected readonly forgeActivities = signal<ForgeActivityEvent[]>([]);
   protected readonly isTreasureForge = computed(() => this.gameMode() === 'treasure-forge');
 
+  // ── Big per-player result announcement (theatrical) ──
+  protected readonly bigAnnouncement = signal<ForgeActivityEvent | null>(null);
+  private bigAnnouncementTimeout: ReturnType<typeof setTimeout> | null = null;
+
   // ── Treasure Forge timer ──
   private readonly tfStartedAt = signal<number | null>(null);
   protected readonly tfTimerMinutes = signal<number | null>(null);
@@ -239,6 +243,10 @@ export class HostPageComponent implements OnInit, OnDestroy {
     this.stopTfTimer();
     this.clearAnimationTimeouts();
     this.clearRoundSummaryTimeout();
+    if (this.bigAnnouncementTimeout) {
+      clearTimeout(this.bigAnnouncementTimeout);
+      this.bigAnnouncementTimeout = null;
+    }
     this.leaveInternal();
   }
 
@@ -397,6 +405,23 @@ export class HostPageComponent implements OnInit, OnDestroy {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((event) => {
         this.forgeActivities.update((prev) => [...prev, event]);
+        // Fire the big theatrical announcement for correct/incorrect (Classic & TF)
+        if (
+          event.type === 'round-correct' ||
+          event.type === 'round-incorrect' ||
+          event.type === 'chest-picked' ||
+          event.type === 'steal' ||
+          event.type === 'swap'
+        ) {
+          this.bigAnnouncement.set(event);
+          if (this.bigAnnouncementTimeout) {
+            clearTimeout(this.bigAnnouncementTimeout);
+          }
+          this.bigAnnouncementTimeout = setTimeout(() => {
+            this.bigAnnouncement.set(null);
+            this.bigAnnouncementTimeout = null;
+          }, 2200);
+        }
       });
 
     this.websocketService.goldUpdate$

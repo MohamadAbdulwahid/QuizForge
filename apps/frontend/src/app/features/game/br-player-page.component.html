@@ -3,13 +3,34 @@
   [class.spectator-overlay]="gameState.isSpectator()"
 >
   <!-- ── Decorative background pattern + floating bubbles ── -->
-  <div class="br-bg-pattern" aria-hidden="true"></div>
-  <span class="br-floating-bubble b1" aria-hidden="true"></span>
-  <span class="br-floating-bubble b2" aria-hidden="true"></span>
-  <span class="br-floating-bubble b3" aria-hidden="true"></span>
-  <span class="br-floating-bubble b4" aria-hidden="true"></span>
-  <span class="br-floating-bubble b5" aria-hidden="true"></span>
-  <span class="br-floating-bubble b6" aria-hidden="true"></span>
+  <div
+    class="br-bg-pattern"
+    aria-hidden="true"
+  ></div>
+  <span
+    class="br-floating-bubble b1"
+    aria-hidden="true"
+  ></span>
+  <span
+    class="br-floating-bubble b2"
+    aria-hidden="true"
+  ></span>
+  <span
+    class="br-floating-bubble b3"
+    aria-hidden="true"
+  ></span>
+  <span
+    class="br-floating-bubble b4"
+    aria-hidden="true"
+  ></span>
+  <span
+    class="br-floating-bubble b5"
+    aria-hidden="true"
+  ></span>
+  <span
+    class="br-floating-bubble b6"
+    aria-hidden="true"
+  ></span>
 
   <!-- ════════════════════════════════════════════════════════════ -->
   <!-- TOP BAR: LIVES + INVENTORY                                    -->
@@ -40,7 +61,10 @@
     @if (gameState.isSpectator() && gameState.curseTokens().length > 0) {
       <div class="flex flex-wrap items-center gap-2">
         @for (ct of gameState.curseTokens(); track ct.id) {
-          <app-br-curse-token-card [type]="$any(ct.type)" [cast]="ct.cast" />
+          <app-br-curse-token-card
+            [type]="$any(ct.type)"
+            [cast]="ct.cast"
+          />
         }
       </div>
     }
@@ -164,9 +188,7 @@
         @case ('bubble-pop') {
           <div class="flex w-full max-w-xl flex-col items-center gap-5">
             <div class="text-center">
-              <h1
-                class="font-display text-3xl font-black text-white drop-shadow-lg sm:text-4xl"
-              >
+              <h1 class="font-display text-3xl font-black text-white drop-shadow-lg sm:text-4xl">
                 🫧 BUBBLE POP! 🫧
               </h1>
               <p class="mt-1 text-base font-semibold text-white/80 drop-shadow sm:text-lg">
@@ -338,37 +360,55 @@
                   class="br-timer"
                   [class.urgent]="duelTimerSeconds() <= 5"
                 >
-                  <span class="br-timer-icon" aria-hidden="true">⏱️</span>
+                  <span
+                    class="br-timer-icon"
+                    aria-hidden="true"
+                  >
+                    ⏱️
+                  </span>
                   <span class="br-timer-value">{{ duelTimerSeconds() }}s</span>
                 </div>
               </div>
 
-              <!-- Question -->
+              <!-- Prompt: read the question on the host projector -->
               @if (duel.question; as question) {
                 <div
-                  class="w-full rounded-3xl border-2 border-white/20 bg-black/30 px-5 py-4 text-center shadow-2xl backdrop-blur-md sm:px-8 sm:py-5"
+                  class="w-full rounded-3xl border-2 border-white/20 bg-black/40 px-5 py-4 text-center shadow-2xl backdrop-blur-md sm:px-8 sm:py-5"
                 >
                   <h2
-                    class="font-display text-2xl font-bold leading-tight text-white drop-shadow-lg sm:text-3xl md:text-4xl"
+                    class="font-display text-2xl leading-tight font-black text-white drop-shadow-lg sm:text-3xl md:text-4xl"
                   >
-                    {{ question.text }}
+                    Pick your answer!
                   </h2>
+                  <p class="mt-2 text-base font-semibold text-white/80 drop-shadow sm:text-lg">
+                    Read the question on the host screen, then tap your answer.
+                  </p>
                 </div>
 
-                <!-- Answer options — Blooket-style colored cards -->
-                <div class="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+                <!-- Answer options — colored letter cards (no text, no question) -->
+                <div
+                  class="grid w-full gap-3 sm:gap-4"
+                  [class.grid-cols-2]="question.options.length === 2"
+                  [class.grid-cols-2]="
+                    question.options.length === 3 || question.options.length === 4
+                  "
+                  [class.sm:grid-cols-2]="question.options.length > 4"
+                  [class.grid-cols-3]="question.options.length >= 5"
+                  [class.sm:grid-cols-3]="question.options.length >= 5"
+                >
                   @for (option of question.options; track option.id; let i = $index) {
                     <button
                       type="button"
-                      class="br-answer-btn"
+                      class="br-answer-btn br-answer-btn-letter"
                       [class]="getOptionColor(i)"
                       [class.selected]="selectedAnswer() === option.id"
-                      [disabled]="answerSubmitted() || duelTimerMs() <= 0"
-                      [attr.aria-label]="'Option ' + (i + 1) + ': ' + option.text"
+                      [class.correct]="duel.result === 'won' && selectedAnswer() === option.id"
+                      [class.wrong]="duel.result === 'lost' && selectedAnswer() === option.id"
+                      [disabled]="answerSubmitted() || duelTimerMs() <= 0 || duel.result !== null"
+                      [attr.aria-label]="'Option ' + getOptionLetter(i)"
                       (click)="selectAnswer(option.id)"
                     >
                       <span class="br-answer-letter">{{ getOptionLetter(i) }}</span>
-                      <span class="br-answer-text">{{ option.text }}</span>
                     </button>
                   }
                 </div>
@@ -433,9 +473,7 @@
                 >
                   ⚔️ Current Duel
                 </h2>
-                <div
-                  class="flex w-full items-center gap-3 sm:gap-5"
-                >
+                <div class="flex w-full items-center gap-3 sm:gap-5">
                   <div class="br-duel-side you flex-1">
                     <span
                       class="font-display text-sm font-black tracking-widest text-cyan-200 uppercase drop-shadow"
@@ -491,9 +529,7 @@
               <div class="mb-4 animate-pulse">
                 <span class="text-7xl drop-shadow-2xl">⚔️</span>
               </div>
-              <p
-                class="font-display text-2xl font-black text-white drop-shadow-lg sm:text-3xl"
-              >
+              <p class="font-display text-2xl font-black text-white drop-shadow-lg sm:text-3xl">
                 Preparing duels...
               </p>
             </div>
@@ -506,9 +542,7 @@
             <div class="mb-4 animate-pulse">
               <span class="text-7xl drop-shadow-2xl">🎯</span>
             </div>
-            <p
-              class="font-display text-2xl font-black text-white drop-shadow-lg sm:text-3xl"
-            >
+            <p class="font-display text-2xl font-black text-white drop-shadow-lg sm:text-3xl">
               Get ready...
             </p>
             <p class="mt-2 text-lg text-white/70 drop-shadow">
@@ -528,9 +562,7 @@
       class="relative z-20 border-t-2 border-white/20 bg-black/50 px-4 py-3 backdrop-blur-md sm:px-6"
     >
       <div class="flex items-center justify-between gap-3">
-        <span
-          class="font-display text-sm font-bold text-violet-200 drop-shadow sm:text-base"
-        >
+        <span class="font-display text-sm font-bold text-violet-200 drop-shadow sm:text-base">
           😈 You&apos;re a spectator — but you can still curse the living!
         </span>
         @if (canCastCurse()) {
@@ -559,14 +591,13 @@
         class="rounded-3xl border-4 border-rose-400/60 bg-gradient-to-b from-rose-500 to-rose-700 px-8 py-8 text-center shadow-2xl sm:px-12 sm:py-10"
       >
         <p class="text-7xl drop-shadow-2xl">💀</p>
-        <p
-          class="font-display mt-3 text-2xl font-black text-white drop-shadow-lg sm:text-3xl"
-        >
+        <p class="font-display mt-3 text-2xl font-black text-white drop-shadow-lg sm:text-3xl">
           {{ announcement.targetName }} just lost a life
         </p>
         <p class="mt-2 text-lg font-bold text-rose-200 drop-shadow sm:text-xl">
           because of Spectator
-          <span class="text-white">{{ announcement.casterName }}</span>!
+          <span class="text-white">{{ announcement.casterName }}</span>
+          !
         </p>
       </div>
     </div>
@@ -590,9 +621,7 @@
         (click)="$event.stopPropagation()"
         (keydown)="$event.stopPropagation()"
       >
-        <h2
-          class="font-display text-2xl font-black text-violet-200 drop-shadow sm:text-3xl"
-        >
+        <h2 class="font-display text-2xl font-black text-violet-200 drop-shadow sm:text-3xl">
           💀 Cast a Curse
         </h2>
         <p class="mt-1 text-sm font-semibold text-white/70">
@@ -601,9 +630,7 @@
 
         <!-- Available curses -->
         <div class="mt-5 space-y-2">
-          <p
-            class="font-display text-sm font-bold tracking-wider text-white/60 uppercase"
-          >
+          <p class="font-display text-sm font-bold tracking-wider text-white/60 uppercase">
             Choose curse type
           </p>
           @for (curse of availableCurses(); track curse.id) {
@@ -618,7 +645,12 @@
               [class.text-white/85]="selectedCurseType() !== curse.type"
               (click)="selectCurseType(curse.type)"
             >
-              <span class="text-xl" aria-hidden="true">{{ getCurseIcon(curse.type) }}</span>
+              <span
+                class="text-xl"
+                aria-hidden="true"
+              >
+                {{ getCurseIcon(curse.type) }}
+              </span>
               <span class="flex-1">
                 {{ curse.name }} —
                 <span class="font-normal text-white/70">{{ curse.description }}</span>
@@ -630,9 +662,7 @@
         <!-- Target selection -->
         @if (selectedCurseType()) {
           <div class="mt-5 space-y-2">
-            <p
-              class="font-display text-sm font-bold tracking-wider text-white/60 uppercase"
-            >
+            <p class="font-display text-sm font-bold tracking-wider text-white/60 uppercase">
               Choose target
             </p>
             @for (target of gameState.curseOpportunityTargets(); track target.id) {
@@ -647,7 +677,12 @@
                 [class.text-white/85]="selectedCurseTarget() !== target.id"
                 (click)="selectCurseTarget(target.id)"
               >
-                <span class="text-lg" aria-hidden="true">🫧</span>
+                <span
+                  class="text-lg"
+                  aria-hidden="true"
+                >
+                  🫧
+                </span>
                 <span class="flex-1">{{ target.name }}</span>
                 <span class="text-sm font-normal text-white/60">
                   {{ target.lives }} {{ target.lives === 1 ? 'life' : 'lives' }}

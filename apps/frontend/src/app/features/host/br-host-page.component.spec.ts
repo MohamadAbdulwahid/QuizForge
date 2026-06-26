@@ -21,6 +21,10 @@ function createMockSubjects() {
     playerEliminated$: new Subject(),
     lifeStealAnnouncement$: new Subject(),
     royaleWinner$: new Subject(),
+    powerUpAwarded$: new Subject(),
+    curseAwarded$: new Subject(),
+    bubblePopStart$: new Subject(),
+    bubblePopRanking$: new Subject(),
   };
 }
 
@@ -52,6 +56,10 @@ function createMockWebsocketService(subjects: ReturnType<typeof createMockSubjec
     playerEliminated$: subjects.playerEliminated$.asObservable(),
     lifeStealAnnouncement$: subjects.lifeStealAnnouncement$.asObservable(),
     royaleWinner$: subjects.royaleWinner$.asObservable(),
+    powerUpAwarded$: subjects.powerUpAwarded$.asObservable(),
+    curseAwarded$: subjects.curseAwarded$.asObservable(),
+    bubblePopStart$: subjects.bubblePopStart$.asObservable(),
+    bubblePopRanking$: subjects.bubblePopRanking$.asObservable(),
   };
 }
 
