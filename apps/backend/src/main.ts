@@ -18,7 +18,12 @@ const app = express();
 
 // Global middleware
 app.use(express.json());
-app.use(cors({ origin: config.FRONTEND_URL, credentials: true }));
+app.use(
+  cors({
+    origin: config.FRONTEND_URL,
+    credentials: true,
+  })
+);
 
 // Health check (no auth required)
 app.get('/health', (_req, res) => {

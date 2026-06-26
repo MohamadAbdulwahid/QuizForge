@@ -23,6 +23,13 @@ export const appRoutes: Route[] = [
     redirectTo: 'login',
     pathMatch: 'full',
   },
+  {
+    path: 'settings/backend',
+    loadComponent: () =>
+      import('./features/settings/backend-selector.component').then(
+        (m) => m.BackendSelectorComponent
+      ),
+  },
   // Public guest-play routes — anyone with a PIN can join, no account required.
   {
     path: 'play',
@@ -38,6 +45,12 @@ export const appRoutes: Route[] = [
     path: 'game/:pin',
     loadComponent: () =>
       import('./features/game/game-play-page.component').then((m) => m.GamePlayPageComponent),
+  },
+  // Bubbly Royale player view — public guest-play
+  {
+    path: 'play/br/:pin',
+    loadComponent: () =>
+      import('./features/game/br-player-page.component').then((m) => m.BrPlayerPageComponent),
   },
   {
     path: 'leaderboards',
@@ -144,6 +157,12 @@ export const appRoutes: Route[] = [
         path: 'host/:pin',
         loadComponent: () =>
           import('./features/host/host-page.component').then((m) => m.HostPageComponent),
+      },
+      // Bubbly Royale host view — game-show projector (auth required)
+      {
+        path: 'host/:pin/br',
+        loadComponent: () =>
+          import('./features/host/br-host-page.component').then((m) => m.BrHostPageComponent),
       },
     ],
   },

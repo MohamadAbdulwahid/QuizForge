@@ -1,6 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { computed, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
-import type { Session } from '@supabase/supabase-js';
+import type { Session, SupabaseClient } from '@supabase/supabase-js';
 import { SupabaseService } from './supabase.service';
 
 export interface SignInPayload {
@@ -16,8 +16,16 @@ export interface SignUpPayload {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly supabase = inject(SupabaseService).client;
+  private readonly supabaseService = inject(SupabaseService);
   private readonly platformId = inject(PLATFORM_ID);
+
+  private get supabase(): SupabaseClient {
+    const client = this.supabaseService.client;
+    if (!client) {
+      throw new Error('Supabase client not available — config may not be loaded yet');
+    }
+    return client;
+  }
 
   private readonly session = signal<Session | null>(null);
   private readonly ready = signal(false);

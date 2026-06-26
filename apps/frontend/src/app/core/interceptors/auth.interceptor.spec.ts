@@ -4,13 +4,16 @@ import { HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injector, runInInjectionContext } from '@angular/core';
 import { firstValueFrom, of } from 'rxjs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { environment } from '../../../environments/environment';
+import { ConfigService } from '../services/config.service';
 import { AuthService } from '../services/auth.service';
 import { authInterceptor } from './auth.interceptor';
 
 describe('authInterceptor', () => {
+  let configServiceStub: { getBackendUrl: () => string };
+
   beforeEach(() => {
     vi.clearAllMocks();
+    configServiceStub = { getBackendUrl: vi.fn().mockReturnValue('http://localhost:3333') } as { getBackendUrl: () => string };
   });
 
   it('attaches the Supabase access token to backend API requests', async () => {
@@ -22,10 +25,13 @@ describe('authInterceptor', () => {
     );
 
     const injector = Injector.create({
-      providers: [{ provide: AuthService, useValue: authServiceStub }],
+      providers: [
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: AuthService, useValue: authServiceStub },
+      ],
     });
 
-    const request = new HttpRequest('GET', `${environment.apiBaseUrl}/api/quizzes`);
+    const request = new HttpRequest('GET', `${configServiceStub.getBackendUrl()}/api/quizzes`);
     const response = await runInInjectionContext(injector, () =>
       firstValueFrom(authInterceptor(request, next))
     );
@@ -47,7 +53,10 @@ describe('authInterceptor', () => {
     );
 
     const injector = Injector.create({
-      providers: [{ provide: AuthService, useValue: authServiceStub }],
+      providers: [
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: AuthService, useValue: authServiceStub },
+      ],
     });
 
     const request = new HttpRequest('GET', 'https://example.com/assets/logo.svg');

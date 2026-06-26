@@ -14,8 +14,10 @@ import type { SignInDto, SignUpDto } from './dtos/auth.dto';
 
 type HealthResponse = { status: string; timestamp: number };
 type ErrorResponse = { error: string; code: string; statusCode: number };
+type ConfigResponse = { supabaseUrl: string; supabasePublishableKey: string; sentryDsn: string };
 
 type HealthHandler = (_req: Request, res: Response<HealthResponse>) => void;
+type ConfigHandler = (_req: Request, res: Response<ConfigResponse>) => void;
 type SignUpHandler = (_req: Request<unknown, unknown, SignUpDto>, res: Response<unknown>) => void;
 type LoginHandler = (_req: Request<unknown, unknown, SignInDto>, res: Response<unknown>) => void;
 type CreateQuizHandler = (
@@ -82,7 +84,7 @@ type PatchSessionStatusHandler = (
 ) => void;
 
 export type QuizForgeApiSpec = Tspec.DefineApiSpec<{
-  tags: ['Auth', 'Quiz', 'Session', 'Group'];
+  tags: ['Auth', 'Quiz', 'Session', 'Group', 'Config'];
   paths: {
     '/health': {
       get: {
@@ -91,6 +93,16 @@ export type QuizForgeApiSpec = Tspec.DefineApiSpec<{
         handler: HealthHandler;
         responses: {
           200: HealthResponse;
+        };
+      };
+    };
+    '/api/config': {
+      get: {
+        tags: ['Config'];
+        summary: 'Get public backend configuration';
+        handler: ConfigHandler;
+        responses: {
+          200: ConfigResponse;
         };
       };
     };

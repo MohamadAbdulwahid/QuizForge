@@ -3,11 +3,56 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { GameLobbyPageComponent } from './game-lobby-page.component';
+import { ConfigService } from '../../core/services/config.service';
+import { SupabaseService } from '../../core/services/supabase.service';
+import { AuthService } from '../../core/services/auth.service';
+import { WebsocketService } from '../../core/services/websocket.service';
 
 /**
  * Component tests for GameLobbyPageComponent.
  * Verifies lobby rendering, error handling, and edge cases.
  */
+
+const mockConfigService = {
+  getBackendUrl: vi.fn().mockReturnValue('http://localhost:3333'),
+  getSupabaseUrl: vi.fn().mockReturnValue('https://test.supabase.co'),
+  getSupabasePublishableKey: vi.fn().mockReturnValue('test-key'),
+  getSentryDsn: vi.fn().mockReturnValue(''),
+  isReady: vi.fn().mockReturnValue(true),
+  whenReady: vi.fn().mockResolvedValue(undefined),
+  load: vi.fn().mockResolvedValue(undefined),
+  switchBackend: vi.fn().mockResolvedValue(undefined),
+  backendUrl: vi.fn().mockReturnValue('http://localhost:3333'),
+  supabaseUrl: vi.fn().mockReturnValue('https://test.supabase.co'),
+  supabasePublishableKey: vi.fn().mockReturnValue('test-key'),
+  sentryDsn: vi.fn().mockReturnValue(''),
+};
+
+const mockSupabaseService = {
+  client: {
+    auth: {
+      onAuthStateChange: vi.fn().mockReturnValue({
+        data: { subscription: { unsubscribe: vi.fn() } },
+      }),
+    },
+  },
+  authChanges: vi.fn().mockReturnValue({ subscribe: vi.fn().mockReturnValue({ unsubscribe: vi.fn() }) }),
+};
+
+const mockAuthService = {
+  isReady: vi.fn().mockReturnValue(true),
+  whenReady: vi.fn().mockResolvedValue(undefined),
+  currentUser: vi.fn().mockReturnValue(null),
+  isAnonymous: vi.fn().mockReturnValue(true),
+  getAccessToken: vi.fn().mockResolvedValue(null),
+};
+
+const mockWebsocketService = {
+  connect: vi.fn(),
+  disconnect: vi.fn(),
+  on: vi.fn(),
+  emit: vi.fn(),
+};
 
 describe('GameLobbyPageComponent', () => {
   let component: GameLobbyPageComponent;
@@ -27,6 +72,10 @@ describe('GameLobbyPageComponent', () => {
           },
         },
         { provide: Router, useValue: { navigate: vi.fn() } },
+        { provide: ConfigService, useValue: mockConfigService },
+        { provide: SupabaseService, useValue: mockSupabaseService },
+        { provide: AuthService, useValue: mockAuthService },
+        { provide: WebsocketService, useValue: mockWebsocketService },
       ],
     }).compileComponents();
 

@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { environment } from '../../../environments/environment';
 
 const unsubscribeMock = vi.fn();
 const onAuthStateChangeMock = vi.fn((callback: (event: 'SIGNED_IN', session: null) => void) => {
@@ -25,33 +24,66 @@ vi.mock('@supabase/supabase-js', () => ({
 }));
 
 describe('SupabaseService', () => {
-  let supabaseService: typeof import('./supabase.service').SupabaseService;
-  let createClient: typeof import('@supabase/supabase-js').createClient;
+  const mockConfigService = {
+    getSupabaseUrl: vi.fn(() => 'https://test.supabase.co'),
+    getSupabasePublishableKey: vi.fn(() => 'test-anon-key'),
+  };
 
   beforeEach(() => {
-    TestBed.resetTestingModule();
     vi.clearAllMocks();
   });
 
-  beforeEach(async () => {
+  it('creates client lazily on first access to client getter', async () => {
     vi.resetModules();
-    ({ SupabaseService: supabaseService } = await import('./supabase.service'));
-    ({ createClient } = await import('@supabase/supabase-js'));
+    const supabaseModule = await import('./supabase.service');
+    const { createClient } = await import('@supabase/supabase-js');
+    const configModule = await import('./config.service');
+
+    TestBed.configureTestingModule({
+      providers: [{ provide: configModule.ConfigService, useValue: mockConfigService }],
+    });
+
+    const service = TestBed.inject(supabaseModule.SupabaseService);
+
+    expect(createClient).not.toHaveBeenCalled();
+    const client = service.client;
+    expect(createClient).toHaveBeenCalledWith('https://test.supabase.co', 'test-anon-key');
+    expect(client).toBeDefined();
   });
 
-  it('instantiates with environment values', () => {
-    const service = TestBed.inject(supabaseService);
+  it('creates client only once (singleton behavior)', async () => {
+    vi.resetModules();
+    const supabaseModule = await import('./supabase.service');
+    const { createClient } = await import('@supabase/supabase-js');
+    const configModule = await import('./config.service');
 
-    expect(service).toBeTruthy();
-    expect(createClient).toHaveBeenCalledWith(
-      environment.supabaseUrl,
-      environment.supabasePublishableKey
-    );
+    TestBed.configureTestingModule({
+      providers: [{ provide: configModule.ConfigService, useValue: mockConfigService }],
+    });
+
+    const service = TestBed.inject(supabaseModule.SupabaseService);
+
+    void service.client;
+    void service.client;
+    void service.client;
+
+    expect(createClient).toHaveBeenCalledTimes(1);
   });
 
-  it('authChanges returns an observable stream', () => {
-    const service = TestBed.inject(supabaseService);
+  it('authChanges returns an observable stream', async () => {
+    vi.resetModules();
+    const supabaseModule = await import('./supabase.service');
+    const configModule = await import('./config.service');
+
+    TestBed.configureTestingModule({
+      providers: [{ provide: configModule.ConfigService, useValue: mockConfigService }],
+    });
+
+    const service = TestBed.inject(supabaseModule.SupabaseService);
     const emittedEvents: string[] = [];
+
+    // Access client to initialize the SupabaseClient
+    void service.client;
 
     const subscription = service.authChanges().subscribe((payload) => {
       emittedEvents.push(payload.event);
@@ -63,9 +95,17 @@ describe('SupabaseService', () => {
     expect(unsubscribeMock).toHaveBeenCalledTimes(1);
   });
 
-  it('exposes typed client wrapper without using any', () => {
-    const service = TestBed.inject(supabaseService);
+  it('exposes typed client wrapper without using any', async () => {
+    vi.resetModules();
+    const supabaseModule = await import('./supabase.service');
+    const configModule = await import('./config.service');
 
-    expect(service.client.auth).toBeDefined();
+    TestBed.configureTestingModule({
+      providers: [{ provide: configModule.ConfigService, useValue: mockConfigService }],
+    });
+
+    const service = TestBed.inject(supabaseModule.SupabaseService);
+
+    expect(service.client!.auth).toBeDefined();
   });
 });

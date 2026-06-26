@@ -3,7 +3,7 @@ import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { catchError, of } from 'rxjs';
-import { AdminApiService } from '../../core/services/admin-api.service';
+import { ApiService } from '../../core/services/api.service';
 import { AuthService } from '../../core/services/auth.service';
 import { SessionSseService } from '../../core/services/session-sse.service';
 import { buildDisplayName } from '../../shared/utils/display-name';
@@ -55,7 +55,7 @@ interface AppNavItem {
 export class DashboardShellComponent {
   private readonly authService = inject(AuthService);
   private readonly sessionSse = inject(SessionSseService);
-  private readonly adminApi = inject(AdminApiService);
+  private readonly api = inject(ApiService);
   private readonly router = inject(Router);
 
   protected readonly currentUser = this.authService.currentUser;
@@ -95,15 +95,15 @@ export class DashboardShellComponent {
     this.sessionSse.connect();
     inject(DestroyRef).onDestroy(() => this.sessionSse.disconnect());
 
-    // Check admin status (non-blocking)
-    this.adminApi
-      .getStats()
+    // Check admin status using lightweight /api/admin/check (non-blocking)
+    this.api
+      .get<{ isAdmin: boolean }>('/api/admin/check')
       .pipe(
         takeUntilDestroyed(),
         catchError(() => of(null))
       )
-      .subscribe((stats) => {
-        if (stats) this.isAdmin.set(true);
+      .subscribe((res) => {
+        if (res?.isAdmin) this.isAdmin.set(true);
       });
   }
 

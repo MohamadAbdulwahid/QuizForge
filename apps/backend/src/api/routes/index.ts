@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { authMiddleware } from '../middleware/auth';
 import { adminRouter } from './admin.routes';
 import { authRoutes } from './auth.routes';
+import { configRouter } from './config.routes';
 import { groupRouter } from './group.routes';
 import { quizPublicRouter, quizRouter } from './quiz.routes';
 import { hostSessionRouter } from './host-session.routes';
@@ -16,7 +17,9 @@ import { sessionEventsRouter } from './session-events.routes';
 export function registerRoutes(): Router {
   const router = Router();
 
+  // Public routes (no auth required)
   router.use('/auth', authRoutes);
+  router.use('/config', configRouter);
 
   // Public quiz preview route.
   router.use('/quizzes', quizPublicRouter);

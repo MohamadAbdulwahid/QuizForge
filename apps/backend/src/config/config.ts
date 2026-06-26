@@ -20,6 +20,7 @@ const envSchema = z.object({
   AI_API_URL: z.string().url().optional(),
   AI_API_KEY: z.string().min(1).optional(),
   AI_MODEL: z.string().min(1).default('gpt-4o'),
+
 });
 
 type Config = z.infer<typeof envSchema>;

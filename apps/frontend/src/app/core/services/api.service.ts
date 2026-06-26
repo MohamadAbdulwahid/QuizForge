@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { ConfigService } from './config.service';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private readonly httpClient = inject(HttpClient);
+  private readonly configService = inject(ConfigService);
 
   get<T>(path: string) {
     return this.httpClient.get<T>(this.resolveUrl(path));
@@ -27,6 +28,6 @@ export class ApiService {
       return path;
     }
 
-    return `${environment.apiBaseUrl}${path}`;
+    return `${this.configService.getBackendUrl()}${path}`;
   }
 }

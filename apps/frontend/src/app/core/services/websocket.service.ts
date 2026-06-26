@@ -1,7 +1,7 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
-import { environment } from '../../../environments/environment';
+import { ConfigService } from './config.service';
 
 export interface PlayerJoinedEvent {
   userId?: string;
@@ -174,6 +174,106 @@ export interface ForgeActivityEvent {
   targetUsername?: string;
 }
 
+// ---------------------------------------------------------------------------
+// Bubbly Royale Event Interfaces
+// ---------------------------------------------------------------------------
+
+export interface BrDuelPairedEvent {
+  duelId: string;
+  player1Id: string;
+  player1Name: string;
+  player2Id: string;
+  player2Name: string;
+  player1Lives: number;
+  player2Lives: number;
+}
+
+export interface BrDuelQuestionEvent {
+  duelId: string;
+  question: { text: string; options: Array<{ id: string; text: string }>; timerMs: number };
+  activePowerUps?: Array<{ playerId: string; type: string }>;
+}
+
+export interface BrDuelResultEvent {
+  duelId: string;
+  winnerId: string | null;
+  loserId: string | null;
+  correctAnswer: string;
+  player1TimeMs: number | null;
+  player2TimeMs: number | null;
+  player1Correct: boolean;
+  player2Correct: boolean;
+  tie: boolean;
+  livesLost: Array<{ playerId: string; lives: number }>;
+  powerUpConsumed?: { playerId: string; type: string };
+}
+
+export interface BrLifeLostEvent {
+  playerId: string;
+  lives: number;
+  reason: 'duel' | 'curse' | 'double-pop';
+  cursedBy?: string;
+}
+
+export interface BrPlayerEliminatedEvent {
+  playerId: string;
+  playerName: string;
+}
+
+export interface BrBubblePopStartEvent {
+  round: number;
+  bubbles: Array<{ number: number; x: number; y: number }>;
+  timerMs: number;
+}
+
+export interface BrBubblePopRankingEvent {
+  round: number;
+  rankings: Array<{ playerId: string; timeMs: number | null; bubblesReached: number }>;
+}
+
+export interface BrPowerUpAwardedEvent {
+  playerId: string;
+  powerUp: { type: string; name: string; description: string };
+}
+
+export interface BrCurseAwardedEvent {
+  playerId: string;
+  curse: { type: string; name: string; description: string };
+}
+
+export interface BrCurseCastEvent {
+  curseType: string;
+  targetId: string;
+  targetName: string;
+  casterId: string;
+  casterName: string;
+  effect: string;
+}
+
+export interface BrSpectatorModeEvent {
+  playerId: string;
+}
+
+export interface BrRoyaleWinnerEvent {
+  playerId: string;
+  playerName: string;
+  livesRemaining: number;
+}
+
+export interface BrRoundTransitionEvent {
+  round: number;
+  type: 'bubble-pop' | 'duel';
+}
+
+export interface BrCurseOpportunityEvent {
+  targetPlayers: Array<{ id: string; name: string; lives: number }>;
+}
+
+export interface BrLifeStealAnnouncementEvent {
+  targetName: string;
+  casterName: string;
+}
+
 type ServerToClientEvents = {
   'player-joined': (payload: PlayerJoinedEvent) => void;
   'player-left': (payload: PlayerLeftEvent) => void;
@@ -194,6 +294,21 @@ type ServerToClientEvents = {
   'gold-update': (payload: GoldUpdateEvent) => void;
   'target-needed': (payload: TargetNeededEvent) => void;
   'forge-activity': (payload: ForgeActivityEvent) => void;
+  'br-duel-paired': (payload: BrDuelPairedEvent) => void;
+  'br-duel-question': (payload: BrDuelQuestionEvent) => void;
+  'br-duel-result': (payload: BrDuelResultEvent) => void;
+  'br-life-lost': (payload: BrLifeLostEvent) => void;
+  'br-player-eliminated': (payload: BrPlayerEliminatedEvent) => void;
+  'br-bubble-pop-start': (payload: BrBubblePopStartEvent) => void;
+  'br-bubble-pop-ranking': (payload: BrBubblePopRankingEvent) => void;
+  'br-power-up-awarded': (payload: BrPowerUpAwardedEvent) => void;
+  'br-curse-awarded': (payload: BrCurseAwardedEvent) => void;
+  'br-curse-cast': (payload: BrCurseCastEvent) => void;
+  'br-spectator-mode': (payload: BrSpectatorModeEvent) => void;
+  'br-royale-winner': (payload: BrRoyaleWinnerEvent) => void;
+  'br-round-transition': (payload: BrRoundTransitionEvent) => void;
+  'br-curse-opportunity': (payload: BrCurseOpportunityEvent) => void;
+  'br-life-steal-announcement': (payload: BrLifeStealAnnouncementEvent) => void;
 };
 
 type ClientToServerEvents = {
@@ -222,6 +337,10 @@ type ClientToServerEvents = {
     questionId: number;
     targetUserId: string;
   }) => void;
+  'submit-bubble-pop': (payload: { pin: string; bubblesReached: number; timeMs: number | null }) => void;
+  'submit-duel-answer': (payload: { pin: string; duelId: string; answer: string }) => void;
+  'use-power-up': (payload: { pin: string; powerUpType: string; targetId?: string }) => void;
+  'cast-curse': (payload: { pin: string; curseType: string; targetPlayerId: string }) => void;
 };
 
 const RECONNECT_BASE_DELAY = 1000;
@@ -230,6 +349,7 @@ const RECONNECT_MAX_ATTEMPTS = 20;
 
 @Injectable({ providedIn: 'root' })
 export class WebsocketService {
+  private readonly configService = inject(ConfigService);
   private socket: Socket<ServerToClientEvents, ClientToServerEvents> | null = null;
   private token: string | null = null;
   private lastJoinPin = '';
@@ -255,6 +375,21 @@ export class WebsocketService {
   private readonly goldUpdateSubject = new Subject<GoldUpdateEvent>();
   private readonly targetNeededSubject = new Subject<TargetNeededEvent>();
   private readonly forgeActivitySubject = new Subject<ForgeActivityEvent>();
+  private readonly duelPairedSubject = new Subject<BrDuelPairedEvent>();
+  private readonly duelQuestionSubject = new Subject<BrDuelQuestionEvent>();
+  private readonly duelResultSubject = new Subject<BrDuelResultEvent>();
+  private readonly lifeLostSubject = new Subject<BrLifeLostEvent>();
+  private readonly playerEliminatedSubject = new Subject<BrPlayerEliminatedEvent>();
+  private readonly bubblePopStartSubject = new Subject<BrBubblePopStartEvent>();
+  private readonly bubblePopRankingSubject = new Subject<BrBubblePopRankingEvent>();
+  private readonly powerUpAwardedSubject = new Subject<BrPowerUpAwardedEvent>();
+  private readonly curseAwardedSubject = new Subject<BrCurseAwardedEvent>();
+  private readonly curseCastSubject = new Subject<BrCurseCastEvent>();
+  private readonly spectatorModeSubject = new Subject<BrSpectatorModeEvent>();
+  private readonly royaleWinnerSubject = new Subject<BrRoyaleWinnerEvent>();
+  private readonly roundTransitionSubject = new Subject<BrRoundTransitionEvent>();
+  private readonly curseOpportunitySubject = new Subject<BrCurseOpportunityEvent>();
+  private readonly lifeStealAnnouncementSubject = new Subject<BrLifeStealAnnouncementEvent>();
 
   readonly playerJoined$: Observable<PlayerJoinedEvent> = this.playerJoinedSubject.asObservable();
   readonly playerLeft$: Observable<PlayerLeftEvent> = this.playerLeftSubject.asObservable();
@@ -280,6 +415,21 @@ export class WebsocketService {
   readonly targetNeeded$: Observable<TargetNeededEvent> = this.targetNeededSubject.asObservable();
   readonly forgeActivity$: Observable<ForgeActivityEvent> =
     this.forgeActivitySubject.asObservable();
+  readonly duelPaired$ = this.duelPairedSubject.asObservable();
+  readonly duelQuestion$ = this.duelQuestionSubject.asObservable();
+  readonly duelResult$ = this.duelResultSubject.asObservable();
+  readonly lifeLost$ = this.lifeLostSubject.asObservable();
+  readonly playerEliminated$ = this.playerEliminatedSubject.asObservable();
+  readonly bubblePopStart$ = this.bubblePopStartSubject.asObservable();
+  readonly bubblePopRanking$ = this.bubblePopRankingSubject.asObservable();
+  readonly powerUpAwarded$ = this.powerUpAwardedSubject.asObservable();
+  readonly curseAwarded$ = this.curseAwardedSubject.asObservable();
+  readonly curseCast$ = this.curseCastSubject.asObservable();
+  readonly spectatorMode$ = this.spectatorModeSubject.asObservable();
+  readonly royaleWinner$ = this.royaleWinnerSubject.asObservable();
+  readonly roundTransition$ = this.roundTransitionSubject.asObservable();
+  readonly curseOpportunity$ = this.curseOpportunitySubject.asObservable();
+  readonly lifeStealAnnouncement$ = this.lifeStealAnnouncementSubject.asObservable();
 
   readonly connected = signal(false);
   readonly reconnecting = signal(false);
@@ -293,7 +443,7 @@ export class WebsocketService {
     this.intentionalDisconnect = false;
     this.disposeSocket();
 
-    this.socket = io(`${environment.websocketUrl}/game`, {
+    this.socket = io(`${this.configService.getBackendUrl()}/game`, {
       auth: { token },
       transports: ['websocket'],
       reconnection: true,
@@ -320,7 +470,7 @@ export class WebsocketService {
     this.intentionalDisconnect = false;
     this.disposeSocket();
 
-    this.socket = io(`${environment.websocketUrl}/game`, {
+    this.socket = io(`${this.configService.getBackendUrl()}/game`, {
       auth: { guest: true, username },
       transports: ['websocket'],
       reconnection: true,
@@ -438,6 +588,66 @@ export class WebsocketService {
     socket.on('forge-activity', (payload) => {
       this.forgeActivitySubject.next(payload);
     });
+
+    socket.on('br-duel-paired', (payload) => {
+      this.duelPairedSubject.next(payload);
+    });
+
+    socket.on('br-duel-question', (payload) => {
+      this.duelQuestionSubject.next(payload);
+    });
+
+    socket.on('br-duel-result', (payload) => {
+      this.duelResultSubject.next(payload);
+    });
+
+    socket.on('br-life-lost', (payload) => {
+      this.lifeLostSubject.next(payload);
+    });
+
+    socket.on('br-player-eliminated', (payload) => {
+      this.playerEliminatedSubject.next(payload);
+    });
+
+    socket.on('br-bubble-pop-start', (payload) => {
+      this.bubblePopStartSubject.next(payload);
+    });
+
+    socket.on('br-bubble-pop-ranking', (payload) => {
+      this.bubblePopRankingSubject.next(payload);
+    });
+
+    socket.on('br-power-up-awarded', (payload) => {
+      this.powerUpAwardedSubject.next(payload);
+    });
+
+    socket.on('br-curse-awarded', (payload) => {
+      this.curseAwardedSubject.next(payload);
+    });
+
+    socket.on('br-curse-cast', (payload) => {
+      this.curseCastSubject.next(payload);
+    });
+
+    socket.on('br-spectator-mode', (payload) => {
+      this.spectatorModeSubject.next(payload);
+    });
+
+    socket.on('br-royale-winner', (payload) => {
+      this.royaleWinnerSubject.next(payload);
+    });
+
+    socket.on('br-round-transition', (payload) => {
+      this.roundTransitionSubject.next(payload);
+    });
+
+    socket.on('br-curse-opportunity', (payload) => {
+      this.curseOpportunitySubject.next(payload);
+    });
+
+    socket.on('br-life-steal-announcement', (payload) => {
+      this.lifeStealAnnouncementSubject.next(payload);
+    });
   }
 
   joinGame(pin: string, username?: string): void {
@@ -488,6 +698,26 @@ export class WebsocketService {
     targetUserId: string
   ): void {
     this.socket?.emit('select-steal-target', { pin, sessionId, questionId, targetUserId });
+  }
+
+  /** Submits a Bubble Pop challenge result. */
+  submitBubblePop(pin: string, bubblesReached: number, timeMs: number | null): void {
+    this.socket?.emit('submit-bubble-pop', { pin, bubblesReached, timeMs });
+  }
+
+  /** Submits an answer during a Bubbly Royale duel. */
+  submitDuelAnswer(pin: string, duelId: string, answer: string): void {
+    this.socket?.emit('submit-duel-answer', { pin, duelId, answer });
+  }
+
+  /** Uses a power-up or curse from the player's inventory. */
+  usePowerUp(pin: string, powerUpType: string, targetId?: string): void {
+    this.socket?.emit('use-power-up', { pin, powerUpType, targetId });
+  }
+
+  /** Casts a curse on a target player (eliminated players only). */
+  castCurse(pin: string, curseType: string, targetPlayerId: string): void {
+    this.socket?.emit('cast-curse', { pin, curseType, targetPlayerId });
   }
 
   disconnect(): void {

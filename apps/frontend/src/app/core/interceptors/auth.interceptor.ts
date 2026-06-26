@@ -1,11 +1,13 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { from, switchMap } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { ConfigService } from '../services/config.service';
 import { AuthService } from '../services/auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  if (!req.url.startsWith(environment.apiBaseUrl)) {
+  const configService = inject(ConfigService);
+
+  if (!req.url.startsWith(configService.getBackendUrl())) {
     return next(req);
   }
 

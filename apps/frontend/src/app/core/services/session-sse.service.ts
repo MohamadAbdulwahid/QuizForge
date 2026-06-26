@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { ConfigService } from './config.service';
 import { AuthService } from './auth.service';
 import { SessionEventBus } from './session-event-bus.service';
 
@@ -16,6 +16,7 @@ import { SessionEventBus } from './session-event-bus.service';
 export class SessionSseService {
   private readonly authService = inject(AuthService);
   private readonly sessionEventBus = inject(SessionEventBus);
+  private readonly configService = inject(ConfigService);
 
   private abortController: AbortController | null = null;
   private retryTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -64,7 +65,7 @@ export class SessionSseService {
     this.abortController = new AbortController();
 
     try {
-      const response = await fetch(`${environment.apiBaseUrl}/api/sessions/events`, {
+      const response = await fetch(`${this.configService.getBackendUrl()}/api/sessions/events`, {
         headers: { Authorization: `Bearer ${token}` },
         signal: this.abortController.signal,
       });
