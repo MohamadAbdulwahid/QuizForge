@@ -102,6 +102,18 @@ export const appRoutes: Route[] = [
                 (m) => m.DashboardQuizzesPageComponent
               ),
           },
+          // Dashboard-internal alias of the public /quizzes/discover route.
+          // Renders the same component but inside the dashboard shell so the
+          // sidebar stays visible and the auth-aware Host Session CTA is shown.
+          // Must be declared BEFORE `quizzes/:id` so the router doesn't match
+          // "discover" as a quiz id and route to the builder.
+          {
+            path: 'quizzes/discover',
+            loadComponent: () =>
+              import('./features/discover/discover-quizzes-page.component').then(
+                (m) => m.DiscoverQuizzesPageComponent
+              ),
+          },
           {
             path: 'quizzes/new',
             loadComponent: () =>
@@ -135,16 +147,6 @@ export const appRoutes: Route[] = [
             loadComponent: () =>
               import('./features/dashboard/dashboard-group-discovery-page.component').then(
                 (m) => m.DashboardGroupDiscoveryPageComponent
-              ),
-          },
-          // Dashboard-internal alias of the public /quizzes/discover route.
-          // Renders the same component but inside the dashboard shell so the
-          // sidebar stays visible and the auth-aware Host Session CTA is shown.
-          {
-            path: 'quizzes/discover',
-            loadComponent: () =>
-              import('./features/discover/discover-quizzes-page.component').then(
-                (m) => m.DiscoverQuizzesPageComponent
               ),
           },
           {
