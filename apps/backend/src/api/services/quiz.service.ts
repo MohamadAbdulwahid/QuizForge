@@ -133,10 +133,16 @@ export async function deleteQuiz(quizId: number, userId: string): Promise<void> 
 }
 
 /**
- * Returns quiz details with questions for an owner.
+ * Returns quiz details with questions for an owner, OR for any authenticated
+ * user when the quiz is public+published (so they can host it from the
+ * discover feed). Drafts, private, and unlisted quizzes return 404 to
+ * non-owners — we do not leak the existence of hidden quizzes.
+ *
+ * For non-owners, `correct_answer` is stripped from each question so the
+ * caller can't read the answer key.
  * @param quizId - Quiz id.
  * @param userId - Authenticated user id.
- * @returns Quiz and questions.
+ * @returns Quiz and questions (with correct_answer stripped for non-owners).
  */
 export async function getQuizById(
   quizId: number,
@@ -148,11 +154,25 @@ export async function getQuizById(
     throw new NotFoundError('Quiz not found', 'QUIZ_NOT_FOUND');
   }
 
-  if (quiz.creator_id !== userId) {
-    throw new ForbiddenError('You do not own this quiz', 'QUIZ_FORBIDDEN');
+  const isOwner = quiz.creator_id === userId;
+  const isPubliclyHostable = quiz.status === 'published' && quiz.visibility === 'public';
+
+  if (!isOwner && !isPubliclyHostable) {
+    throw new NotFoundError('Quiz not found', 'QUIZ_NOT_FOUND');
   }
 
-  return quiz;
+  if (isOwner) {
+    return quiz;
+  }
+
+  // Non-owner of a public+published quiz: strip `correct_answer` from each
+  // question and strip the owner's `creator_id` from the quiz payload.
+  const { creator_id: _ownerId, ...publicQuiz } = quiz;
+  void _ownerId;
+  const strippedQuestions = quiz.questions.map(
+    ({ correct_answer: _correctAnswer, ...question }) => question
+  );
+  return { ...publicQuiz, questions: strippedQuestions };
 }
 
 /**

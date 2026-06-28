@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, effect, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
@@ -126,13 +126,26 @@ export class DashboardCreateSessionPageComponent {
   /** Network/load errors only — `createError` is surfaced inline in the footer. */
   protected readonly pageError = computed(() => this.quizzesError() ?? this.groupsError());
 
+  /**
+   * A quiz the user wants to host but doesn't own (e.g. one they clicked
+   * on the Discover feed). Filled in by `ensureHostableQuizLoaded()` when
+   * the URL `?quizId=` doesn't match any of the user's own quizzes.
+   * Surfaces in the picker as a separate "Hosting a public quiz" entry.
+   */
+  protected readonly hostedQuiz = signal<QuizSummary | null>(null);
+  protected readonly hostableQuizError = signal<string | null>(null);
+
   protected readonly selectedQuiz = computed(() => {
     const selectedId = this.selectedQuizId();
     if (selectedId === null) {
       return null;
     }
 
-    return this.quizzes().find((quiz) => quiz.id === selectedId) ?? null;
+    return (
+      this.quizzes().find((quiz) => quiz.id === selectedId) ??
+      (this.hostedQuiz()?.id === selectedId ? this.hostedQuiz() : null) ??
+      null
+    );
   });
 
   protected readonly canAdvance = computed<boolean>(() => {
@@ -160,6 +173,46 @@ export class DashboardCreateSessionPageComponent {
     if (parsedQuizId && Number.isInteger(parsedQuizId) && parsedQuizId > 0) {
       this.selectedQuizId.set(parsedQuizId);
     }
+
+    // If the URL quizId isn't in the user's own quizzes, the user clicked
+    // Host on a discovered public quiz. Fetch its info so the picker can
+    // show it and the user can proceed to host. We re-evaluate when the
+    // user's own list or the hosted list changes (e.g. de-dup if the
+    // fetch finishes after the user's own list loaded).
+    effect(() => {
+      if (parsedQuizId === null) {
+        return;
+      }
+      const own = this.quizzes();
+      if (own.some((q) => q.id === parsedQuizId)) {
+        return; // user owns it — no hostable fetch needed
+      }
+      if (this.hostedQuiz()?.id === parsedQuizId) {
+        return; // already fetched
+      }
+
+      this.quizApiService.getQuizById(parsedQuizId).subscribe({
+        next: (quiz) => {
+          this.hostedQuiz.set({
+            id: quiz.id,
+            title: quiz.title,
+            description: quiz.description,
+            share_code: quiz.share_code,
+            created_at: quiz.created_at,
+            questionCount: quiz.questions.length,
+            visibility: quiz.visibility,
+            status: quiz.status,
+            playCount: quiz.playCount,
+          });
+          this.hostableQuizError.set(null);
+        },
+        error: (err: unknown) => {
+          const message =
+            err instanceof Error ? err.message : 'This quiz is not available to host.';
+          this.hostableQuizError.set(message);
+        },
+      });
+    });
   }
 
   protected selectQuiz(quizId: number): void {

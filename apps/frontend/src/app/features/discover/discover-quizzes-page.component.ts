@@ -176,24 +176,28 @@ export class DiscoverQuizzesPageComponent {
   }
 
   /**
-   * Returns the host/preview URL for a quiz card. Logged-in users get a
+   * RouterLink + queryParams for the host CTA. Logged-in users get a
    * direct link to the create-session page with the quiz pre-selected;
-   * logged-out users get a login redirect with a `next` param so they
+   * logged-out users get the login page with a `next` param so they
    * land back on discover after signing in.
+   *
+   * NOTE: `RouterLink` does NOT parse `?key=value` out of a string. A
+   * `[routerLink]="'/path?x=1'"` treats the whole thing as the literal
+   * path (URL-encoded), no route matches, and the catch-all redirects
+   * to home. We therefore return path + queryParams as two separate
+   * values and bind them to `[routerLink]` and `[queryParams]`.
    */
-  protected hostUrlFor(quiz: DiscoverQuizSummary): string {
-    if (this.isLoggedIn()) {
-      return `/dashboard/create-session?quizId=${quiz.id}`;
-    }
-    return '/login?next=/quizzes/discover';
+  protected hostLinkFor(quiz: DiscoverQuizSummary): string[] {
+    return this.isLoggedIn() ? ['/dashboard/create-session'] : ['/login'];
   }
 
-  /**
-   * Public preview URL — joining a game with the share code. Available
-   * to anyone (the player page itself is public per the route config).
-   */
-  protected previewUrlFor(quiz: DiscoverQuizSummary): string {
-    return `/play?code=${quiz.share_code}`;
+  protected hostQueryParamsFor(
+    quiz: DiscoverQuizSummary
+  ): Record<string, string | number> {
+    if (this.isLoggedIn()) {
+      return { quizId: quiz.id };
+    }
+    return { next: '/quizzes/discover' };
   }
 
   protected visibilityTone(visibility: QuizVisibility | undefined): 'success' | 'info' | 'neutral' {

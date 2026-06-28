@@ -42,8 +42,14 @@ export async function createSession(
     throw new NotFoundError('Quiz not found', 'QUIZ_NOT_FOUND');
   }
 
-  if (quiz.creator_id !== hostId) {
-    throw new ForbiddenError('You do not own this quiz', 'QUIZ_FORBIDDEN');
+  // Hosting permission: owners can always host their own quizzes. Any
+  // authenticated user can also host a public+published quiz (the discover
+  // feed points at exactly these quizzes) so the host-vs-owner model is
+  // not 1:1 — like Kahoot, anyone can host a public quiz they find.
+  const isOwner = quiz.creator_id === hostId;
+  const isPubliclyHostable = quiz.status === 'published' && quiz.visibility === 'public';
+  if (!isOwner && !isPubliclyHostable) {
+    throw new ForbiddenError('You cannot host this quiz', 'QUIZ_FORBIDDEN');
   }
 
   const activeSession = await sessionRepository.findActiveByQuiz(data.quiz_id);
