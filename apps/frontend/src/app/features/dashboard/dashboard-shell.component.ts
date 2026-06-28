@@ -70,6 +70,11 @@ export class DashboardShellComponent {
       { label: 'Groups', route: '/dashboard/groups', icon: 'groups' },
       { label: 'Discover', route: '/dashboard/groups/discover', icon: 'discover' },
       {
+        label: 'Discover Quizzes',
+        route: '/dashboard/quizzes/discover',
+        icon: 'discover-quizzes',
+      },
+      {
         label: 'Create Session',
         route: '/dashboard/create-session',
         icon: 'create-session',
@@ -123,6 +128,9 @@ export class DashboardShellComponent {
     // Discover — compass
     discover:
       'M10.5 2.25a8.25 8.25 0 1 0 4.5 15.114l4.616 1.65a.75.75 0 0 0 .97-.97l-1.65-4.616A8.25 8.25 0 0 0 10.5 2.25Zm-3 11.25a.75.75 0 0 1 .514-.706l3-1a.75.75 0 0 1 .723.162l2.21 1.95a.75.75 0 0 1-.073 1.156l-3 2.25a.75.75 0 0 1-1.156-.073l-2-2.667a.75.75 0 0 1-.218-1.072Z',
+    // Discover Quizzes — stack of three question cards (mirrors quizzes icon, repeated)
+    'discover-quizzes':
+      'M7 4h10a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 6h10a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2zm0 6h10a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2z',
     // Create Session — rocket
     'create-session':
       'M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z',

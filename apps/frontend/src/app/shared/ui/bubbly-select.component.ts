@@ -40,7 +40,7 @@ let nextId = 0;
         (change)="onSelect($event)"
         (focus)="onFocus()"
         (blur)="onBlur()"
-        class="qf-input w-full appearance-none px-4 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-60"
+        class="qf-input w-full appearance-none cursor-pointer px-4 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-60"
         [ngClass]="selectClasses()"
       >
         @if (placeholder()) {

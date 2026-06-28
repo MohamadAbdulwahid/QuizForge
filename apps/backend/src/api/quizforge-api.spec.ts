@@ -8,7 +8,12 @@ import type {
   UpdateGroupRequest,
   UpdateMemberRoleRequest,
 } from './dtos/group.dto';
-import type { CreateQuizRequest, UpdateQuizRequest } from './dtos/quiz.dto';
+import type {
+  CreateQuizRequest,
+  DiscoverQuizzesQuery,
+  DiscoverQuizzesResponse,
+  UpdateQuizRequest,
+} from './dtos/quiz.dto';
 import type { CreateSessionRequest, UpdateSessionStatusRequest } from './dtos/session.dto';
 import type { SignInDto, SignUpDto } from './dtos/auth.dto';
 
@@ -34,6 +39,10 @@ type DeleteQuizHandler = (_req: Request<{ id: string }>, res: Response<unknown>)
 type PublicQuizByCodeHandler = (
   _req: Request<{ shareCode: string }>,
   res: Response<unknown>
+) => void;
+type DiscoverQuizzesHandler = (
+  _req: Request<unknown, unknown, unknown, DiscoverQuizzesQuery>,
+  res: Response<DiscoverQuizzesResponse>
 ) => void;
 type CreateGroupHandler = (
   _req: Request<unknown, unknown, CreateGroupRequest>,
@@ -148,6 +157,17 @@ export type QuizForgeApiSpec = Tspec.DefineApiSpec<{
         responses: {
           200: unknown;
           401: ErrorResponse;
+        };
+      };
+    };
+    '/api/quizzes/discover': {
+      get: {
+        tags: ['Quiz'];
+        summary: 'Discover public quizzes';
+        handler: DiscoverQuizzesHandler;
+        responses: {
+          200: unknown;
+          400: ErrorResponse;
         };
       };
     };

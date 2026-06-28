@@ -1,6 +1,18 @@
-import { and, desc, eq } from 'drizzle-orm';
+import { and, asc, count, desc, eq, ilike, sql } from 'drizzle-orm';
 import { db } from '../client';
-import { QUESTION, QUIZ } from '../schema/quiz';
+import { PROFILE } from '../schema/profile';
+import { QUESTION, QUIZ, quizStatus, quizVisibility } from '../schema/quiz';
+
+/**
+ * A discoverable quiz row joined with the creator profile (may be null
+ * if the creator's profile has been deleted).
+ */
+export type DiscoverableQuizRow = QUIZ & {
+  creator: { userId: string; username: string } | null;
+};
+
+/** Sort options accepted by the discover feed. */
+export type QuizSearchSort = 'newest' | 'popular' | 'alpha';
 
 /**
  * Retrieves a single quiz by primary key.
@@ -85,6 +97,8 @@ export async function findByShareCode(
  * @param data.description - Optional quiz description.
  * @param data.creatorId - Creator user id.
  * @param data.shareCode - Unique quiz share code.
+ * @param data.visibility - Optional visibility override (defaults to schema default 'unlisted' when undefined).
+ * @param data.status - Optional status override (defaults to schema default 'published' when undefined).
  * @returns Created quiz row.
  */
 export async function create(data: {
@@ -92,39 +106,69 @@ export async function create(data: {
   description?: string;
   creatorId: string;
   shareCode: string;
+  visibility?: quizVisibility;
+  status?: quizStatus;
 }): Promise<QUIZ> {
-  const result = await db
-    .insert(QUIZ)
-    .values({
-      title: data.title,
-      description: data.description,
-      creator_id: data.creatorId,
-      share_code: data.shareCode,
-    })
-    .returning();
+  const values: {
+    title: string;
+    description: string | undefined;
+    creator_id: string;
+    share_code: string;
+    visibility?: quizVisibility;
+    status?: quizStatus;
+  } = {
+    title: data.title,
+    description: data.description,
+    creator_id: data.creatorId,
+    share_code: data.shareCode,
+  };
+
+  if (data.visibility !== undefined) {
+    values.visibility = data.visibility;
+  }
+  if (data.status !== undefined) {
+    values.status = data.status;
+  }
+
+  const result = await db.insert(QUIZ).values(values).returning();
 
   return result[0];
 }
 
 /**
- * Updates quiz title/description.
+ * Updates quiz title/description/visibility/status (any subset).
  * @param id - Quiz id.
  * @param data - Partial update payload.
  * @param data.title - New title.
  * @param data.description - New description.
+ * @param data.visibility - New visibility.
+ * @param data.status - New status.
  * @returns Updated quiz or null when not found.
  */
 export async function update(
   id: number,
-  data: { title?: string; description?: string }
+  data: {
+    title?: string;
+    description?: string;
+    visibility?: quizVisibility;
+    status?: quizStatus;
+  }
 ): Promise<QUIZ | null> {
-  const fieldsToUpdate: Partial<Pick<QUIZ, 'title' | 'description'>> = {};
+  const fieldsToUpdate: Partial<
+    Pick<QUIZ, 'title' | 'description' | 'visibility' | 'status'>
+  > = {};
 
   if (data.title !== undefined) {
     fieldsToUpdate.title = data.title;
   }
   if (data.description !== undefined) {
     fieldsToUpdate.description = data.description;
+  }
+  if (data.visibility !== undefined) {
+    fieldsToUpdate.visibility = data.visibility;
+  }
+  if (data.status !== undefined) {
+    fieldsToUpdate.status = data.status;
   }
 
   if (Object.keys(fieldsToUpdate).length === 0) {
@@ -183,4 +227,126 @@ export async function belongsToCreator(quizId: number, creatorId: string): Promi
     .limit(1);
 
   return result.length > 0;
+}
+
+/**
+ * Search the public discover feed for published + public quizzes.
+ * Optionally filters by case-insensitive substring on title. Joins the creator
+ * profile for display name and username.
+ *
+ * The `status='published' AND visibility='public'` filter is enforced
+ * server-side and is the security boundary for the discover feed — drafts,
+ * private, and unlisted quizzes are never returned.
+ *
+ * @param params - Search parameters.
+ * @param params.query - Free-text search term (trimmed; empty = no ilike).
+ * @param params.sort - 'newest' (desc created_at), 'popular' (desc play_count
+ *   then desc created_at), or 'alpha' (asc title).
+ * @param params.limit - Page size.
+ * @param params.offset - Page offset.
+ * @returns Discoverable quiz rows with creator profile joined.
+ */
+export async function searchPublicQuizzes(params: {
+  query: string;
+  sort: QuizSearchSort;
+  limit: number;
+  offset: number;
+}): Promise<DiscoverableQuizRow[]> {
+  const normalizedQuery = params.query.trim();
+
+  const visibilityPredicate = and(
+    eq(QUIZ.status, 'published' as quizStatus),
+    eq(QUIZ.visibility, 'public' as quizVisibility)
+  );
+
+  const whereClause = normalizedQuery
+    ? and(visibilityPredicate, ilike(QUIZ.title, `%${normalizedQuery}%`))
+    : visibilityPredicate;
+
+  const orderByClause =
+    params.sort === 'popular'
+      ? [desc(QUIZ.play_count), desc(QUIZ.created_at)]
+      : params.sort === 'alpha'
+        ? [asc(QUIZ.title)]
+        : [desc(QUIZ.created_at)];
+
+  const rows = await db
+    .select({
+      id: QUIZ.id,
+      title: QUIZ.title,
+      description: QUIZ.description,
+      visibility: QUIZ.visibility,
+      status: QUIZ.status,
+      play_count: QUIZ.play_count,
+      creator_id: QUIZ.creator_id,
+      share_code: QUIZ.share_code,
+      created_at: QUIZ.created_at,
+      creator_user_id: PROFILE.user_id,
+      creator_username: PROFILE.username,
+    })
+    .from(QUIZ)
+    .leftJoin(PROFILE, eq(QUIZ.creator_id, PROFILE.user_id))
+    .where(whereClause)
+    .orderBy(...orderByClause)
+    .limit(params.limit)
+    .offset(params.offset);
+
+  return rows.map((row) => ({
+    id: row.id,
+    title: row.title,
+    description: row.description,
+    visibility: row.visibility,
+    status: row.status,
+    play_count: row.play_count,
+    creator_id: row.creator_id,
+    share_code: row.share_code,
+    created_at: row.created_at,
+    creator:
+      row.creator_user_id && row.creator_username
+        ? { userId: row.creator_user_id, username: row.creator_username }
+        : null,
+  }));
+}
+
+/**
+ * Counts public, published quizzes matching the same search predicate as
+ * {@link searchPublicQuizzes} (sans pagination / sort / join) for the
+ * `total` field of the discover response.
+ *
+ * @param query - Free-text search term (trimmed; empty = no ilike).
+ * @returns Total matching row count.
+ */
+export async function countPublicQuizzes(query: string): Promise<number> {
+  const normalizedQuery = query.trim();
+
+  const whereClause = normalizedQuery
+    ? and(
+        eq(QUIZ.status, 'published' as quizStatus),
+        eq(QUIZ.visibility, 'public' as quizVisibility),
+        ilike(QUIZ.title, `%${normalizedQuery}%`)
+      )
+    : and(eq(QUIZ.status, 'published' as quizStatus), eq(QUIZ.visibility, 'public' as quizVisibility));
+
+  const result = await db.select({ value: count() }).from(QUIZ).where(whereClause);
+  return result[0]?.value ?? 0;
+}
+
+/**
+ * Atomically increments the play_count counter for a quiz.
+ * Used by the session-creation flow to record public plays.
+ *
+ * @param quizId - Quiz id to increment.
+ * @returns The updated quiz's id and new play_count, or null when the
+ *   quiz does not exist.
+ */
+export async function incrementPlayCount(
+  quizId: number
+): Promise<{ id: number; playCount: number } | null> {
+  const result = await db
+    .update(QUIZ)
+    .set({ play_count: sql`${QUIZ.play_count} + 1` })
+    .where(eq(QUIZ.id, quizId))
+    .returning({ id: QUIZ.id, playCount: QUIZ.play_count });
+
+  return result[0] ?? null;
 }

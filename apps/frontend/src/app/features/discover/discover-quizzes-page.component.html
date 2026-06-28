@@ -1,0 +1,380 @@
+<div class="qf-page-stack">
+  <!-- ── Sticky public top-bar (acts as the missing navbar) ── -->
+  <header
+    class="sticky top-0 z-10 -mx-4 mb-2 flex items-center justify-between gap-3 rounded-3xl border px-4 py-3 backdrop-blur md:-mx-8 md:px-6"
+    style="border-color: var(--bubbly-border); background: color-mix(in srgb, var(--bubbly-surface) 92%, transparent)"
+  >
+    <a
+      routerLink="/"
+      class="qf-tactile flex items-center gap-2 rounded-2xl px-2 py-1.5"
+      aria-label="QuizForge home"
+    >
+      <span
+        class="flex h-9 w-9 items-center justify-center rounded-2xl font-display text-lg font-bold text-white shadow-[0_4px_0_0_var(--bubbly-primary-deep)]"
+        style="background: var(--bubbly-primary)"
+        aria-hidden="true"
+      >
+        Q
+      </span>
+      <span
+        class="font-display text-lg font-bold"
+        style="color: var(--bubbly-primary-deep)"
+      >
+        QuizForge
+      </span>
+    </a>
+    <nav
+      class="flex items-center gap-2"
+      aria-label="Discover"
+    >
+      <a
+        routerLink="/quizzes/discover"
+        class="qf-tactile hidden rounded-2xl px-4 py-2 text-sm font-bold sm:inline-flex"
+        style="color: var(--bubbly-primary-deep)"
+        aria-current="page"
+      >
+        Discover
+      </a>
+      @if (isLoggedIn()) {
+        <a
+          routerLink="/dashboard"
+          class="qf-tactile hidden rounded-2xl px-4 py-2 text-sm font-bold sm:inline-flex"
+          style="color: var(--bubbly-primary-deep)"
+        >
+          Dashboard
+        </a>
+        <a
+          routerLink="/dashboard/create-session"
+          class="qf-tactile rounded-2xl px-4 py-2 text-sm font-bold"
+          style="color: var(--bubbly-primary-deep)"
+        >
+          Host
+        </a>
+      } @else {
+        <a
+          routerLink="/login"
+          class="qf-tactile rounded-2xl px-4 py-2 text-sm font-bold"
+          style="color: var(--bubbly-primary-deep)"
+        >
+          Log in
+        </a>
+        <a
+          routerLink="/register"
+          class="qf-tactile qf-button-primary inline-flex items-center justify-center rounded-2xl px-4 py-2 text-sm font-bold text-white"
+        >
+          Sign up
+        </a>
+      }
+    </nav>
+  </header>
+
+  <!-- ── Hero header ── -->
+  <app-page-heading
+    eyebrow="Browse"
+    title="Discover Quizzes"
+    description="Find quizzes shared by the community. Search by title, sort by newest or most played, and dive in. Anonymous browsing is welcome — sign in to host a session."
+  />
+
+  @if (errorMessage()) {
+    <div class="qf-alert-error">{{ errorMessage() }}</div>
+  }
+
+  <!-- ── Search & Sort ── -->
+  <app-bubbly-card>
+    <div class="grid gap-3 md:grid-cols-[1fr_240px]">
+      <app-bubbly-input
+        type="text"
+        placeholder="Search by quiz title"
+        label="Search"
+        [ngModel]="query()"
+        (ngModelChange)="onSearchChange($event)"
+      />
+
+      <app-bubbly-select
+        label="Sort by"
+        [options]="sortOptions"
+        [ngModel]="sort()"
+        (ngModelChange)="onSortChange($event)"
+      />
+    </div>
+  </app-bubbly-card>
+
+  @if (loading()) {
+    <!-- ── Skeleton loader ── -->
+    <div
+      class="grid gap-4 motion-safe:animate-pulse md:grid-cols-2 xl:grid-cols-3"
+      aria-busy="true"
+      aria-live="polite"
+    >
+      @for (placeholder of [1, 2, 3, 4, 5, 6]; track placeholder) {
+        <div class="qf-soft-surface flex h-52 flex-col gap-3 rounded-3xl p-5">
+          <div
+            class="qf-muted h-6 w-3/4 rounded-full"
+            style="background: color-mix(in srgb, var(--bubbly-surface) 70%, white)"
+          ></div>
+          <div
+            class="qf-muted h-4 w-full rounded-full"
+            style="background: color-mix(in srgb, var(--bubbly-surface) 70%, white)"
+          ></div>
+          <div
+            class="qf-muted h-4 w-2/3 rounded-full"
+            style="background: color-mix(in srgb, var(--bubbly-surface) 70%, white)"
+          ></div>
+          <div class="mt-auto flex gap-2">
+            <div
+              class="qf-muted h-6 w-16 rounded-full"
+              style="background: color-mix(in srgb, var(--bubbly-surface) 70%, white)"
+            ></div>
+            <div
+              class="qf-muted h-6 w-20 rounded-full"
+              style="background: color-mix(in srgb, var(--bubbly-surface) 70%, white)"
+            ></div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <!-- ── Result card grid ── -->
+    <section
+      class="grid gap-4 md:grid-cols-2 xl:grid-cols-3"
+      aria-label="Discoverable quizzes"
+    >
+      @for (quiz of items(); track quiz.id) {
+        <app-bubbly-card [interactive]="true">
+          <div class="flex flex-col gap-3">
+            <div class="flex items-start justify-between gap-3">
+              <h3
+                class="font-display line-clamp-2 min-w-0 text-2xl font-bold"
+                style="color: var(--bubbly-primary-deep)"
+              >
+                {{ quiz.title }}
+              </h3>
+              <app-status-pill [tone]="visibilityTone('public')">
+                {{ visibilityLabel('public') }}
+              </app-status-pill>
+            </div>
+
+            <p class="qf-muted line-clamp-2 min-h-10 text-sm font-semibold">
+              {{ quiz.description || 'No description provided.' }}
+            </p>
+
+            <div class="flex flex-wrap gap-2">
+              <span class="qf-chip text-sm">{{ quiz.question_count }} Qs</span>
+              <span class="qf-chip text-sm">{{ quiz.play_count }} plays</span>
+            </div>
+
+            <p class="qf-muted text-xs font-bold">
+              by {{ creatorDisplayName(quiz.creator) }}
+            </p>
+          </div>
+
+          <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+            <span
+              class="qf-chip text-sm"
+              style="cursor: default"
+              aria-label="Share code"
+            >
+              <svg
+                class="mr-1 inline h-3.5 w-3.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.2"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M8 5H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M8 5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2M8 5a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2"
+                />
+              </svg>
+              {{ quiz.share_code }}
+            </span>
+            <a
+              [routerLink]="hostUrlFor(quiz)"
+              [attr.aria-label]="
+                isLoggedIn() ? 'Host a session with ' + quiz.title : 'Log in to host ' + quiz.title
+              "
+              class="qf-tactile qf-button-primary inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-bold text-white"
+            >
+              @if (isLoggedIn()) {
+                <svg
+                  class="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84"
+                  />
+                </svg>
+                Host Session
+              } @else {
+                <svg
+                  class="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
+                  />
+                </svg>
+                Login to host
+              }
+            </a>
+          </div>
+
+          <!-- Secondary action: public preview by share code. Kept visually
+               subordinate to the Host Session button. -->
+          <a
+            [routerLink]="previewUrlFor(quiz)"
+            class="mt-3 inline-flex items-center gap-1.5 text-xs font-bold"
+            style="color: var(--bubbly-muted)"
+          >
+            <svg
+              class="h-3.5 w-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.2"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+              />
+            </svg>
+            Preview with code {{ quiz.share_code }}
+          </a>
+        </app-bubbly-card>
+      }
+    </section>
+
+    <!-- ── Empty state ── -->
+    @if (items().length === 0) {
+      <app-bubbly-card
+        tone="soft"
+        [padded]="false"
+      >
+        <div class="qf-empty-state flex flex-col items-center gap-4 py-16 text-center">
+          <div
+            class="flex h-24 w-24 items-center justify-center rounded-3xl"
+            style="background: color-mix(in srgb, var(--bubbly-primary) 15%, transparent); color: var(--bubbly-primary-deep)"
+            aria-hidden="true"
+          >
+            <svg
+              class="h-12 w-12"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+              />
+            </svg>
+          </div>
+          <div>
+            @if (query()) {
+              <p
+                class="font-display text-2xl font-bold"
+                style="color: var(--bubbly-text)"
+              >
+                No quizzes match "{{ query() }}"
+              </p>
+              <p class="qf-muted mt-2 text-base">
+                Try a different search term or clear the search to see everything.
+              </p>
+            } @else {
+              <p
+                class="font-display text-2xl font-bold"
+                style="color: var(--bubbly-text)"
+              >
+                No public quizzes yet
+              </p>
+              <p class="qf-muted mt-2 text-base">
+                Be the first — build a quiz and share it with the community.
+              </p>
+            }
+          </div>
+          @if (isLoggedIn()) {
+            <a
+              routerLink="/dashboard/quizzes/new"
+              class="qf-tactile qf-button-primary inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-bold text-white"
+            >
+              <svg
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.2"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 4.5v15m7.5-7.5h-15"
+                />
+              </svg>
+              Create your first quiz
+            </a>
+          } @else {
+            <a
+              routerLink="/register"
+              class="qf-tactile qf-button-primary inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-bold text-white"
+            >
+              Get started
+            </a>
+          }
+        </div>
+      </app-bubbly-card>
+    }
+
+    <!-- ── Pagination ── -->
+    @if (total() > limit) {
+      <div
+        class="flex flex-wrap items-center justify-between gap-3 rounded-3xl border px-5 py-4"
+        style="border-color: var(--bubbly-border); background: var(--bubbly-surface)"
+      >
+        <p class="qf-muted text-sm font-bold">
+          Showing {{ offset() + 1 }}–{{ offset() + items().length }} of {{ total() }}
+        </p>
+        <div class="flex flex-wrap items-center gap-3">
+          <app-bubbly-button
+            tone="ghost"
+            size="md"
+            [disabled]="!canPrev()"
+            (click)="onPrev()"
+          >
+            ← Prev
+          </app-bubbly-button>
+          <app-bubbly-button
+            tone="primary"
+            size="md"
+            [disabled]="!canNext()"
+            (click)="onNext()"
+          >
+            Next →
+          </app-bubbly-button>
+        </div>
+      </div>
+    }
+  }
+</div>

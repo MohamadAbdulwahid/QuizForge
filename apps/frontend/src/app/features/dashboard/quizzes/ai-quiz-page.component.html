@@ -277,6 +277,30 @@
         }
       </div>
 
+      <!-- Save controls (Quiz Visibility & Discovery) -->
+      <div class="mt-6">
+        <app-bubbly-select
+          label="Visibility"
+          [options]="[
+            { value: 'private', label: 'Private (only you)' },
+            { value: 'unlisted', label: 'Unlisted (share code only)' },
+            { value: 'public', label: 'Public (in discovery feed)' },
+          ]"
+          [ngModel]="visibility()"
+          (ngModelChange)="visibility.set($event)"
+        />
+
+        <label class="mt-3 flex items-center gap-2">
+          <input
+            type="checkbox"
+            class="checkbox"
+            [checked]="status() === 'draft'"
+            (change)="onStatusToggle($any($event.target).checked)"
+          />
+          <span class="text-sm font-semibold">Save as draft</span>
+        </label>
+      </div>
+
       <!-- Save button (bottom) -->
       <div class="mt-6 flex justify-end">
         <app-bubbly-button

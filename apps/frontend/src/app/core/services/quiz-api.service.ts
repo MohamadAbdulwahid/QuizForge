@@ -2,6 +2,10 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 
+export type QuizVisibility = 'private' | 'unlisted' | 'public';
+export type QuizStatus = 'draft' | 'published';
+export type QuizSort = 'newest' | 'popular' | 'alpha';
+
 export interface QuizSummary {
   id: number;
   title: string;
@@ -9,6 +13,9 @@ export interface QuizSummary {
   share_code: string | null;
   created_at: string;
   questionCount: number;
+  visibility?: QuizVisibility;
+  status?: QuizStatus;
+  playCount?: number;
 }
 
 /**
@@ -74,6 +81,9 @@ export interface QuizDetailDto {
   share_code: string | null;
   created_at: string;
   questions: QuizQuestionDto[];
+  visibility?: QuizVisibility;
+  status?: QuizStatus;
+  playCount?: number;
 }
 
 export interface QuizSaveResponse {
@@ -84,6 +94,9 @@ export interface QuizSaveResponse {
     creator_id: string;
     share_code: string | null;
     created_at: string;
+    visibility?: QuizVisibility;
+    status?: QuizStatus;
+    playCount?: number;
   };
   shareCode: string;
 }
@@ -124,6 +137,8 @@ export interface QuizSavePayload {
   title: string;
   description?: string;
   questions: QuizQuestionPayload[];
+  visibility?: QuizVisibility;
+  status?: QuizStatus;
 }
 
 // ---------------------------------------------------------------------------
@@ -154,6 +169,41 @@ export interface AiGenerateResponse {
   };
 }
 
+// ---------------------------------------------------------------------------
+// Discovery (public discover feed)
+// ---------------------------------------------------------------------------
+
+export interface DiscoverQuizzesQuery {
+  query?: string;
+  sort?: QuizSort;
+  limit?: number;
+  offset?: number;
+}
+
+export interface DiscoverQuizCreator {
+  user_id: string;
+  username: string;
+  display_name: string;
+}
+
+export interface DiscoverQuizSummary {
+  id: number;
+  title: string;
+  description: string | null;
+  question_count: number;
+  creator: DiscoverQuizCreator | null;
+  play_count: number;
+  created_at: string;
+  share_code: string;
+}
+
+export interface DiscoverQuizzesResponse {
+  items: DiscoverQuizSummary[];
+  total: number;
+  limit: number;
+  offset: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class QuizApiService {
   private readonly apiService = inject(ApiService);
@@ -180,5 +230,30 @@ export class QuizApiService {
 
   aiGenerateQuiz(payload: AiGenerateRequest): Observable<AiGenerateResponse> {
     return this.apiService.post<AiGenerateResponse>('/api/quizzes/ai-generate', payload);
+  }
+
+  searchPublicQuizzes(
+    query = '',
+    sort: QuizSort = 'newest',
+    limit = 24,
+    offset = 0
+  ): Observable<DiscoverQuizzesResponse> {
+    const params = new URLSearchParams();
+    if (query.trim()) {
+      params.set('query', query.trim());
+    }
+    if (sort) {
+      params.set('sort', sort);
+    }
+    if (limit) {
+      params.set('limit', String(limit));
+    }
+    if (offset) {
+      params.set('offset', String(offset));
+    }
+    const qs = params.toString();
+    return this.apiService.get<DiscoverQuizzesResponse>(
+      `/api/quizzes/discover${qs ? `?${qs}` : ''}`
+    );
   }
 }

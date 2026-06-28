@@ -131,6 +131,31 @@
           + Add description
         </button>
       }
+
+      <!-- Visibility selector — controls public discover feed eligibility. -->
+      <div class="mt-3">
+        <app-bubbly-select
+          label="Visibility"
+          [options]="[
+            { value: 'private', label: 'Private (only you)' },
+            { value: 'unlisted', label: 'Unlisted (share code only)' },
+            { value: 'public', label: 'Public (in discovery feed)' },
+          ]"
+          [ngModel]="visibility()"
+          (ngModelChange)="visibility.set($event)"
+        />
+      </div>
+
+      <!-- Save as draft — drafts are always owner-only, regardless of visibility. -->
+      <label class="mt-3 flex items-center gap-2">
+        <input
+          type="checkbox"
+          class="checkbox"
+          [checked]="status() === 'draft'"
+          (change)="onStatusToggle($any($event.target).checked)"
+        />
+        <span class="text-sm font-semibold">Save as draft</span>
+      </label>
     </app-bubbly-card>
 
     <!-- Questions list header -->

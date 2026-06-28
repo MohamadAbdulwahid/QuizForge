@@ -1,4 +1,4 @@
-import type { Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import type { AuthenticatedRequest } from '../middleware/auth';
 import { generateQuizQuestions } from '../services/ai-quiz-generator.service';
@@ -8,8 +8,10 @@ import {
   getQuizById,
   getQuizzesByCreator,
   getQuizByShareCode,
+  searchPublicQuizzes,
   updateQuiz,
 } from '../services/quiz.service';
+import { DiscoverQuizzesQuerySchema } from '../dtos/quiz.dto';
 
 /**
  * HTTP handlers for quiz endpoints.
@@ -96,6 +98,20 @@ export class QuizController {
     const shareCode = Array.isArray(shareCodeParam) ? shareCodeParam[0] : shareCodeParam;
     const quiz = await getQuizByShareCode(shareCode);
     res.status(StatusCodes.OK).json(quiz);
+  }
+
+  /**
+   * Returns a paginated feed of public, published quizzes for the discover page.
+   * Public endpoint — no auth required.
+   */
+  async discoverQuizzes(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const query = DiscoverQuizzesQuerySchema.parse(req.query);
+      const result = await searchPublicQuizzes(query);
+      res.status(StatusCodes.OK).json(result);
+    } catch (err) {
+      next(err);
+    }
   }
 }
 

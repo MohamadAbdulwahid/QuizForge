@@ -19,21 +19,44 @@ mock.module('../../src/config/supabase', () => ({
   },
 }));
 
-mock.module('../../src/api/controllers/quiz.controller', () => ({
-  quizController: {
-    createQuiz: (_req: express.Request, res: express.Response) =>
-      res.status(201).json({ quiz: { id: 1 }, shareCode: 'ABCDEFGH' }),
-    getMyQuizzes: (_req: express.Request, res: express.Response) =>
-      res.status(200).json([{ id: 1, questionCount: 2 }]),
-    getQuizById: (_req: express.Request, res: express.Response) =>
-      res.status(200).json({ id: 1, questions: [{ id: 10 }] }),
-    updateQuiz: (_req: express.Request, res: express.Response) =>
-      res.status(200).json({ id: 1, title: 'Updated' }),
-    deleteQuiz: (_req: express.Request, res: express.Response) => res.status(204).send(),
-    getQuizByShareCode: (_req: express.Request, res: express.Response) =>
-      res.status(200).json({ id: 1, questions: [{ id: 10 }] }),
-  },
-}));
+mock.module('../../src/api/controllers/quiz.controller', () => {
+  // getQuizByShareCode mock simulates the service's visibility gating: hidden
+  // codes (private/draft) are not findable and return 404. The service tests
+  // in quiz.service.spec.ts are the source of truth for the gating logic;
+  // this mock just provides a representative response shape.
+  const getQuizByShareCode = (req: express.Request, res: express.Response): void => {
+    const code = req.params.shareCode;
+    if (code === 'PRIVATECODE' || code === 'DRAFTCODE') {
+      res.status(404).json({ error: 'Quiz not found', code: 'QUIZ_NOT_FOUND' });
+      return;
+    }
+    res.status(200).json({ id: 1, questions: [{ id: 10 }] });
+  };
+
+  // discoverQuizzes mock echoes back the validated limit/offset so callers
+  // can assert the request shape was preserved end-to-end.
+  const discoverQuizzes = (req: express.Request, res: express.Response): void => {
+    const limit = Number(req.query.limit) || 24;
+    const offset = Number(req.query.offset) || 0;
+    res.status(200).json({ items: [], total: 0, limit, offset });
+  };
+
+  return {
+    quizController: {
+      createQuiz: (_req: express.Request, res: express.Response) =>
+        res.status(201).json({ quiz: { id: 1 }, shareCode: 'ABCDEFGH' }),
+      getMyQuizzes: (_req: express.Request, res: express.Response) =>
+        res.status(200).json([{ id: 1, questionCount: 2 }]),
+      getQuizById: (_req: express.Request, res: express.Response) =>
+        res.status(200).json({ id: 1, questions: [{ id: 10 }] }),
+      updateQuiz: (_req: express.Request, res: express.Response) =>
+        res.status(200).json({ id: 1, title: 'Updated' }),
+      deleteQuiz: (_req: express.Request, res: express.Response) => res.status(204).send(),
+      getQuizByShareCode,
+      discoverQuizzes,
+    },
+  };
+});
 
 mock.module('../../src/api/controllers/session.controller', () => ({
   sessionController: {
@@ -178,5 +201,67 @@ describe('quiz endpoints integration', () => {
     });
 
     expect(response.status).toBe(200);
+  });
+});
+
+describe('GET /api/quizzes/discover', () => {
+  const headers = {
+    'API-Version': '1.0',
+  };
+
+  it('returns 200 with default pagination', async () => {
+    const response = await fetch(`${baseUrl}/api/quizzes/discover`, { headers });
+    expect(response.status).toBe(200);
+    const body = (await response.json()) as {
+      items: unknown[];
+      total: number;
+      limit: number;
+      offset: number;
+    };
+    expect(Array.isArray(body.items)).toBe(true);
+    expect(typeof body.total).toBe('number');
+    expect(body.limit).toBe(24);
+    expect(body.offset).toBe(0);
+  });
+
+  it('returns 200 with custom query/sort/limit/offset', async () => {
+    const response = await fetch(
+      `${baseUrl}/api/quizzes/discover?query=math&sort=popular&limit=10&offset=0`,
+      { headers }
+    );
+    expect(response.status).toBe(200);
+    const body = (await response.json()) as { limit: number; offset: number };
+    expect(body.limit).toBe(10);
+    expect(body.offset).toBe(0);
+  });
+
+  it('returns 400 on invalid sort', async () => {
+    const response = await fetch(`${baseUrl}/api/quizzes/discover?sort=invalid`, { headers });
+    expect(response.status).toBe(400);
+  });
+
+  it('returns 400 when limit out of range', async () => {
+    const response = await fetch(`${baseUrl}/api/quizzes/discover?limit=999`, { headers });
+    expect(response.status).toBe(400);
+  });
+});
+
+describe('GET /api/quizzes/share/:code visibility gating', () => {
+  const headers = {
+    'API-Version': '1.0',
+  };
+
+  it('returns 404 for private quiz', async () => {
+    // The mock controller returns 404 for codes flagged as private to mirror
+    // the real service's NotFoundError behavior. The service tests in
+    // quiz.service.spec.ts are the source of truth for the gating logic.
+    const response = await fetch(`${baseUrl}/api/quizzes/share/PRIVATECODE`, { headers });
+    expect(response.status).toBe(404);
+  });
+
+  it('returns 404 for draft quiz', async () => {
+    // Same approach: draft visibility is also 404 in the service.
+    const response = await fetch(`${baseUrl}/api/quizzes/share/DRAFTCODE`, { headers });
+    expect(response.status).toBe(404);
   });
 });

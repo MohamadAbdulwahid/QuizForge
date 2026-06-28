@@ -12,10 +12,13 @@ import {
   QuizOptionDto,
   QuizQuestionPayload,
   QuizSavePayload,
+  QuizStatus,
+  QuizVisibility,
 } from '../../../core/services/quiz-api.service';
 import { BubblyAlertComponent } from '../../../shared/ui/bubbly-alert.component';
 import { BubblyButtonComponent } from '../../../shared/ui/bubbly-button.component';
 import { BubblyCardComponent } from '../../../shared/ui/bubbly-card.component';
+import { BubblySelectComponent } from '../../../shared/ui/bubbly-select.component';
 import { QUESTION_TYPES } from '../../quiz/types/question-types';
 
 @Component({
@@ -27,6 +30,7 @@ import { QUESTION_TYPES } from '../../quiz/types/question-types';
     BubblyButtonComponent,
     BubblyAlertComponent,
     BubblyCardComponent,
+    BubblySelectComponent,
   ],
   templateUrl: './ai-quiz-page.component.html',
 })
@@ -39,6 +43,10 @@ export class AiQuizPageComponent {
   protected readonly title = signal('');
   protected readonly notes = signal('');
   protected readonly instructions = signal('');
+
+  /* ─── Visibility & status (Quiz Visibility & Discovery) ─── */
+  protected readonly visibility = signal<QuizVisibility>('unlisted');
+  protected readonly status = signal<QuizStatus>('published');
 
   /* ─── Generation state ─── */
   protected readonly isLoading = signal(false);
@@ -143,6 +151,8 @@ export class AiQuizPageComponent {
     const payload: QuizSavePayload = {
       title: this.title().trim(),
       questions: questionsPayload,
+      visibility: this.visibility(),
+      status: this.status(),
     };
 
     this.quizApi
@@ -173,6 +183,11 @@ export class AiQuizPageComponent {
   /* ─── Event handlers ─── */
   protected onTitleInput(event: Event): void {
     this.title.set((event.target as HTMLInputElement).value);
+  }
+
+  /** Mirrors the manual builder: checkbox → draft / published. */
+  protected onStatusToggle(checked: boolean): void {
+    this.status.set(checked ? 'draft' : 'published');
   }
 
   protected onNotesInput(event: Event): void {

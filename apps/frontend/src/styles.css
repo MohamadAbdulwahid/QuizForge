@@ -140,6 +140,7 @@ h3,
   }
 
   .qf-tactile {
+    cursor: pointer;
     transition:
       transform 160ms ease,
       box-shadow 160ms ease,

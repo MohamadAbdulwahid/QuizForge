@@ -99,6 +99,14 @@
             [routerLink]="['/dashboard/quizzes', quiz.id]"
             class="block"
           >
+            <div class="mb-3 flex flex-wrap items-center gap-2">
+              <app-status-pill [tone]="visibilityTone(quiz.visibility)">
+                {{ visibilityLabel(quiz.visibility) }}
+              </app-status-pill>
+              @if (quiz.status === 'draft') {
+                <app-status-pill tone="warning">Draft</app-status-pill>
+              }
+            </div>
             <h3
               class="font-display text-2xl font-bold"
               style="color: var(--bubbly-primary-deep)"

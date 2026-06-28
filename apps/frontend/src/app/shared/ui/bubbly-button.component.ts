@@ -11,7 +11,7 @@ type BubblyButtonSize = 'sm' | 'md' | 'lg';
   template: `
     <button
       [type]="type()"
-      class="qf-tactile inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl font-bold disabled:pointer-events-none disabled:opacity-60"
+      class="qf-tactile inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-2 rounded-2xl font-bold disabled:pointer-events-none disabled:opacity-60"
       [ngClass]="classes()"
       [disabled]="disabled()"
     >

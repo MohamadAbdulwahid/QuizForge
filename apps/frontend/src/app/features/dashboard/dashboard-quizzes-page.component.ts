@@ -3,10 +3,11 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { QuizApiService, QuizSummary } from '../../core/services/quiz-api.service';
+import { QuizApiService, QuizSummary, QuizVisibility } from '../../core/services/quiz-api.service';
 import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
 import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
 import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
+import { StatusPillComponent } from '../../shared/ui/status-pill.component';
 
 type QuizSortMode = 'newest' | 'oldest' | 'title';
 
@@ -20,6 +21,7 @@ type QuizSortMode = 'newest' | 'oldest' | 'title';
     BubblyButtonComponent,
     BubblyCardComponent,
     PageHeadingComponent,
+    StatusPillComponent,
   ],
   templateUrl: './dashboard-quizzes-page.component.html',
 })
@@ -82,5 +84,20 @@ export class DashboardQuizzesPageComponent {
 
   protected refresh(): void {
     this.quizzesResource.reload();
+  }
+
+  /* ─── Visibility pill helpers (Quiz Visibility & Discovery) ─── */
+
+  /** Maps a quiz's visibility to the StatusPill tone. */
+  protected visibilityTone(visibility: QuizVisibility | undefined): 'info' | 'success' | 'neutral' {
+    if (visibility === 'public') return 'success';
+    if (visibility === 'unlisted') return 'info';
+    return 'neutral';
+  }
+
+  /** Human-readable label for the visibility pill. */
+  protected visibilityLabel(visibility: QuizVisibility | undefined): string {
+    if (!visibility) return 'Unlisted';
+    return visibility.charAt(0).toUpperCase() + visibility.slice(1);
   }
 }

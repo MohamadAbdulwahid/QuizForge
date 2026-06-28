@@ -13,6 +13,7 @@ import { generateUniquePin } from '../../shared/utils/pin';
 import { SessionState, transitionState } from '../../game/engine/game-state';
 import type { CreateSessionRequest, UpdateSessionStatusRequest } from '../dtos/session.dto';
 import { emitSessionEvent } from './session-event.service';
+import { incrementQuizPlayCount } from './quiz.service';
 
 const sessionServiceLogger = createChildLogger('session-service');
 
@@ -85,6 +86,19 @@ export async function createSession(
     { sessionId: session.id, quizId: data.quiz_id, hostId },
     'Session created'
   );
+
+  // Bump play_count for discover ranking — but only when the quiz is publicly
+  // visible. A counter hiccup must never block a real session start.
+  if (quiz.status === 'published' && quiz.visibility === 'public') {
+    try {
+      await incrementQuizPlayCount(data.quiz_id);
+    } catch (err) {
+      sessionServiceLogger.warn(
+        { err, quizId: data.quiz_id },
+        'Failed to increment quiz play_count'
+      );
+    }
+  }
 
   // Notify SSE subscribers so dashboards update in real-time
   if (broadcastGroupIds.length > 0) {

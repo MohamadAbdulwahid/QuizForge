@@ -18,12 +18,21 @@ export type questionType =
   | 'matching'
   | 'fill-in-blank';
 
+export const quizVisibility = pgEnum('quiz_visibility', ['private', 'unlisted', 'public']);
+export type quizVisibility = 'private' | 'unlisted' | 'public';
+
+export const quizStatus = pgEnum('quiz_status', ['draft', 'published']);
+export type quizStatus = 'draft' | 'published';
+
 export const QUIZ = pgTable(
   'quiz',
   {
     id: bigint('id', { mode: 'number' }).primaryKey().generatedAlwaysAsIdentity(),
     title: text('title').notNull(),
     description: text('description'),
+    visibility: quizVisibility('visibility').notNull().default('unlisted'),
+    status: quizStatus('status').notNull().default('published'),
+    play_count: bigint('play_count', { mode: 'number' }).notNull().default(0),
     creator_id: uuid('creator_id')
       .references(() => USER.id, { onDelete: 'cascade' })
       .notNull(),
@@ -33,6 +42,7 @@ export const QUIZ = pgTable(
   (table) => [
     index('quiz_creator_idx').on(table.creator_id),
     index('quiz_share_code_idx').on(table.share_code),
+    index('quiz_discover_feed_idx').on(table.status, table.visibility, table.created_at.desc()),
   ]
 );
 

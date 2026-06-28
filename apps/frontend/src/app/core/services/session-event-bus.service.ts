@@ -17,12 +17,21 @@ import { Subject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class SessionEventBus {
   private readonly sessionChanges = new Subject<void>();
+  private readonly knowledgeAnalysisCompleted = new Subject<unknown>();
 
   /** Subscribe to be notified when a session is created or ended. */
   readonly sessionChanges$ = this.sessionChanges.asObservable();
 
+  /** Subscribe to be notified when knowledge analysis has completed. */
+  readonly knowledgeAnalysisCompleted$ = this.knowledgeAnalysisCompleted.asObservable();
+
   /** Call after a session is created or has transitioned to an ended state. */
   emit(): void {
     this.sessionChanges.next();
+  }
+
+  /** Call after a knowledge analysis has completed. */
+  emitKnowledgeAnalysisCompleted(): void {
+    this.knowledgeAnalysisCompleted.next(null);
   }
 }

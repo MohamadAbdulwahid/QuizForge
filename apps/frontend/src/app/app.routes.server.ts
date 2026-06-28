@@ -62,6 +62,10 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client,
   },
   {
+    path: 'quizzes/discover',
+    renderMode: RenderMode.Client,
+  },
+  {
     path: 'game-lobby/:pin',
     renderMode: RenderMode.Client,
   },

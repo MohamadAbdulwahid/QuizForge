@@ -12,6 +12,16 @@ const questionTypeSchema = z.enum([
   'fill-in-blank',
 ]);
 
+// ---------------------------------------------------------------------------
+// Quiz visibility / status / discover sort enums
+// ---------------------------------------------------------------------------
+/** Visibility determines who can see a quiz and whether it appears in the discover feed. */
+const quizVisibilitySchema = z.enum(['private', 'unlisted', 'public']);
+/** Lifecycle status — drafts are owner-only regardless of `visibility`. */
+const quizStatusSchema = z.enum(['draft', 'published']);
+/** Sort orders accepted by the public discover feed. */
+const quizSortSchema = z.enum(['newest', 'popular', 'alpha']);
+
 /** Maximum length for the `correct_answer` text field. Sized to fit JSON-encoded payloads for Ordering and Matching. */
 const CORRECT_ANSWER_MAX = 5000;
 
@@ -255,6 +265,8 @@ const questionSchema = z.discriminatedUnion('type', [
 const createQuizRequestSchema = z.object({
   title: z.string().min(1, 'Title is required').max(200),
   description: z.string().max(2000).optional(),
+  visibility: quizVisibilitySchema.optional(),
+  status: quizStatusSchema.optional(),
   questions: z.array(questionSchema).min(1, 'At least one question is required').max(100),
 });
 
@@ -262,6 +274,8 @@ const updateQuizRequestSchema = z
   .object({
     title: z.string().min(1, 'Title is required').max(200).optional(),
     description: z.string().max(2000).optional(),
+    visibility: quizVisibilitySchema.optional(),
+    status: quizStatusSchema.optional(),
     questions: z.array(questionSchema).min(1).max(100).optional(),
   })
   .refine((value) => Object.keys(value).length > 0, {
@@ -276,9 +290,53 @@ const shareCodeParamSchema = z.object({
   shareCode: z.string().min(1).max(16),
 });
 
+// ---------------------------------------------------------------------------
+// Public discover feed schemas
+// ---------------------------------------------------------------------------
+/**
+ * Query string for `GET /api/quizzes/discover`. Coerces numeric fields
+ * (query strings arrive as `string`) and clamps pagination to safe ranges.
+ */
+const discoverQuizzesQuerySchema = z.object({
+  query: z.string().trim().max(120).default(''),
+  sort: quizSortSchema.default('newest'),
+  limit: z.coerce.number().int().min(1).max(60).default(24),
+  offset: z.coerce.number().int().min(0).default(0),
+});
+
+/** Card shape for one item in the public discover feed. */
+const discoverQuizSummarySchema = z.object({
+  id: z.number().int(),
+  title: z.string(),
+  description: z.string().nullable(),
+  question_count: z.number().int().min(0),
+  creator: z
+    .object({
+      user_id: z.string(),
+      username: z.string(),
+      display_name: z.string(),
+    })
+    .nullable(),
+  play_count: z.number().int().min(0),
+  created_at: z.string(),
+  share_code: z.string(),
+});
+
+/** Response envelope for the public discover feed. */
+const discoverQuizzesResponseSchema = z.object({
+  items: z.array(discoverQuizSummarySchema),
+  total: z.number().int().min(0),
+  limit: z.number().int().min(1),
+  offset: z.number().int().min(0),
+});
+
 // Re-export the discriminated union type enum for runtime usage by callers
 // that need to switch on the question type without re-importing from the schema.
 export { questionTypeSchema as QuestionTypeSchema };
+
+export { quizVisibilitySchema as QuizVisibilitySchema };
+export { quizStatusSchema as QuizStatusSchema };
+export { quizSortSchema as QuizSortSchema };
 
 export {
   questionSchema as QuestionSchema,
@@ -286,9 +344,18 @@ export {
   updateQuizRequestSchema as UpdateQuizRequestSchema,
   quizIdParamSchema as QuizIdParamSchema,
   shareCodeParamSchema as ShareCodeParamSchema,
+  discoverQuizzesQuerySchema as DiscoverQuizzesQuerySchema,
+  discoverQuizSummarySchema as DiscoverQuizSummarySchema,
+  discoverQuizzesResponseSchema as DiscoverQuizzesResponseSchema,
 };
 
 export type CreateQuizRequest = z.infer<typeof createQuizRequestSchema>;
 export type UpdateQuizRequest = z.infer<typeof updateQuizRequestSchema>;
 export type QuestionInput = z.infer<typeof questionSchema>;
 export type QuestionType = z.infer<typeof questionTypeSchema>;
+export type QuizVisibility = z.infer<typeof quizVisibilitySchema>;
+export type QuizStatus = z.infer<typeof quizStatusSchema>;
+export type QuizSort = z.infer<typeof quizSortSchema>;
+export type DiscoverQuizzesQuery = z.infer<typeof discoverQuizzesQuerySchema>;
+export type DiscoverQuizSummary = z.infer<typeof discoverQuizSummarySchema>;
+export type DiscoverQuizzesResponse = z.infer<typeof discoverQuizzesResponseSchema>;

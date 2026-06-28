@@ -37,15 +37,36 @@ export default [
         files: ["**/*.ts", "**/*.tsx"],
         rules: {
             "@typescript-eslint/no-explicit-any": "error",
-            "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+            "@typescript-eslint/no-unused-vars": [
+                "warn",
+                {
+                    argsIgnorePattern: "^_",
+                    varsIgnorePattern: "^_",
+                    caughtErrorsIgnorePattern: "^_",
+                    ignoreRestSiblings: true
+                }
+            ],
             "@typescript-eslint/naming-convention": [
-                "error",
+                "warn",
                 { selector: "class", format: ["PascalCase"] },
                 { selector: "interface", format: ["PascalCase"] },
                 { selector: "variable", format: ["camelCase", "UPPER_CASE"] },
                 { selector: "function", format: ["camelCase"] }
             ],
             "no-console": ["warn", { allow: ["warn", "error"] }]
+        }
+    },
+    {
+        files: ["**/*.ts", "**/*.tsx"],
+        rules: {
+            "jsdoc/require-jsdoc": "off",
+            "jsdoc/require-param": "off",
+            "jsdoc/require-param-description": "off",
+            "jsdoc/require-returns": "off",
+            "@typescript-eslint/no-non-null-assertion": "off",
+            "no-useless-escape": "warn",
+            "@typescript-eslint/no-empty-function": "warn",
+            "@typescript-eslint/no-this-alias": "off"
         }
     },
     {

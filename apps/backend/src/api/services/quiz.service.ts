@@ -4,7 +4,13 @@ import * as quizRepository from '../../database/repositories/quiz.repository';
 import type { QUESTION, QUIZ } from '../../database/schema/quiz';
 import { ConflictError, ForbiddenError, NotFoundError } from '../../shared/errors';
 import { generateUniqueShareCode } from '../../shared/utils/share-code';
-import type { CreateQuizRequest, UpdateQuizRequest } from '../dtos/quiz.dto';
+import type {
+  CreateQuizRequest,
+  DiscoverQuizSummary,
+  DiscoverQuizzesQuery,
+  DiscoverQuizzesResponse,
+  UpdateQuizRequest,
+} from '../dtos/quiz.dto';
 
 const quizServiceLogger = createChildLogger('quiz-service');
 
@@ -28,6 +34,8 @@ export async function createQuiz(
     description: data.description,
     creatorId,
     shareCode,
+    visibility: data.visibility ?? 'unlisted',
+    status: data.status ?? 'published',
   });
 
   await questionRepository.createMany(
@@ -76,6 +84,8 @@ export async function updateQuiz(
   await quizRepository.update(quizId, {
     title: data.title,
     description: data.description,
+    visibility: data.visibility,
+    status: data.status,
   });
 
   if (data.questions) {
@@ -170,6 +180,8 @@ export async function getQuizzesByCreator(
 
 /**
  * Returns a quiz by share code with answers stripped.
+ * Draft and private quizzes are invisible to non-owners — we 404 instead of 403
+ * so the share code does not leak the existence of hidden quizzes.
  * @param shareCode - Share code.
  * @returns Quiz for public preview.
  */
@@ -180,12 +192,14 @@ export async function getQuizByShareCode(shareCode: string): Promise<QuizWithPub
     throw new NotFoundError('Quiz not found', 'QUIZ_NOT_FOUND');
   }
 
+  if (quiz.status === 'draft' || quiz.visibility === 'private') {
+    throw new NotFoundError('Quiz not found', 'QUIZ_NOT_FOUND');
+  }
+
+  const publicQuiz = { ...quiz };
+  delete (publicQuiz as { creator_id?: unknown }).creator_id;
   return {
-    id: quiz.id,
-    title: quiz.title,
-    description: quiz.description,
-    share_code: quiz.share_code,
-    created_at: quiz.created_at,
+    ...publicQuiz,
     questions: quiz.questions.map(({ correct_answer: _correctAnswer, ...question }) => question),
   };
 }
@@ -225,4 +239,47 @@ export async function createQuizWithCollisionGuard(
     }
     throw error;
   }
+}
+
+/**
+ * Returns a paginated feed of public, published quizzes for the discover page.
+ * Joins the creator profile and counts questions per quiz in parallel.
+ * @param query - Discover query (query string, sort, limit, offset).
+ * @returns Paginated quiz summaries with creator info and question counts.
+ */
+export async function searchPublicQuizzes(
+  query: DiscoverQuizzesQuery
+): Promise<DiscoverQuizzesResponse> {
+  const [rows, total] = await Promise.all([
+    quizRepository.searchPublicQuizzes(query),
+    quizRepository.countPublicQuizzes(query.query),
+  ]);
+  const ids = rows.map((r) => r.id);
+  const counts = await Promise.all(ids.map((id) => questionRepository.findByQuizId(id)));
+  const items: DiscoverQuizSummary[] = rows.map((row, i) => ({
+    id: row.id,
+    title: row.title,
+    description: row.description,
+    question_count: counts[i].length,
+    creator: row.creator
+      ? {
+          user_id: row.creator.userId,
+          username: row.creator.username,
+          display_name: row.creator.username,
+        }
+      : null,
+    play_count: row.play_count,
+    created_at: row.created_at.toISOString(),
+    share_code: row.share_code ?? '',
+  }));
+  return { items, total, limit: query.limit, offset: query.offset };
+}
+
+/**
+ * Atomically increments the play_count counter for a quiz.
+ * Thin pass-through used by session creation; never throws to callers.
+ * @param quizId - Quiz id to increment.
+ */
+export async function incrementQuizPlayCount(quizId: number): Promise<void> {
+  await quizRepository.incrementPlayCount(quizId);
 }

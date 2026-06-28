@@ -10,10 +10,13 @@ import {
   QuizOptionDto,
   QuizQuestionPayload,
   QuizSavePayload,
+  QuizStatus,
+  QuizVisibility,
 } from '../../../core/services/quiz-api.service';
 import { BubblyAlertComponent } from '../../../shared/ui/bubbly-alert.component';
 import { BubblyButtonComponent } from '../../../shared/ui/bubbly-button.component';
 import { BubblyCardComponent } from '../../../shared/ui/bubbly-card.component';
+import { BubblySelectComponent } from '../../../shared/ui/bubbly-select.component';
 import { QUESTION_TYPES, QuestionTypeConfig } from '../../quiz/types/question-types';
 
 /* ─── Types ─── */
@@ -282,6 +285,7 @@ function validateQuestion(q: QuestionDraft): FieldError[] {
     BubblyCardComponent,
     BubblyButtonComponent,
     BubblyAlertComponent,
+    BubblySelectComponent,
   ],
   templateUrl: './quiz-builder-page.component.html',
 })
@@ -299,6 +303,17 @@ export class QuizBuilderPageComponent {
   protected readonly isSaving = signal(false);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly successMessage = signal<string | null>(null);
+  /**
+   * Visibility controls whether a quiz appears in the public discover feed.
+   * Defaults to `unlisted` so share codes work for testing without leaking
+   * the quiz to anonymous browse.
+   */
+  protected readonly visibility = signal<QuizVisibility>('unlisted');
+  /**
+   * Drafts are always owner-only regardless of `visibility`. The toggle in
+   * the Quiz Details card flips this between `'draft'` and `'published'`.
+   */
+  protected readonly status = signal<QuizStatus>('published');
 
   /* ─── Selection state ─── */
   protected readonly selectedQuestionId = signal<string | null>(null);
@@ -365,6 +380,11 @@ export class QuizBuilderPageComponent {
         next: (quiz) => {
           this.title.set(quiz.title);
           this.description.set(quiz.description ?? '');
+          // Hydrate visibility + status from the loaded detail DTO. Fall back
+          // to the create-mode defaults so older payloads (no visibility
+          // column) still render sensibly in the editor.
+          this.visibility.set(quiz.visibility ?? 'unlisted');
+          this.status.set(quiz.status ?? 'published');
 
           const rawQuestions = quiz.questions;
           if (!Array.isArray(rawQuestions) || rawQuestions.length === 0) {
@@ -930,13 +950,16 @@ export class QuizBuilderPageComponent {
       title: this.title().trim(),
       description: this.description().trim() || undefined,
       questions: questionsPayload,
+      visibility: this.visibility(),
+      status: this.status(),
     };
 
-    const isEdit = this.isEditMode() && this.quizId() !== null;
+    const quizId = this.quizId();
+    const isEdit = this.isEditMode() && quizId !== null;
 
-    if (isEdit) {
+    if (isEdit && quizId !== null) {
       this.quizApi
-        .updateQuiz(this.quizId()!, payload)
+        .updateQuiz(quizId, payload)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(this.saveHandler('Quiz updated successfully!'));
     } else {
@@ -978,6 +1001,16 @@ export class QuizBuilderPageComponent {
   /* ─── Description toggle ─── */
   protected toggleDescription(): void {
     this.showDescription.update((v) => !v);
+  }
+
+  /* ─── Visibility / status toggle ─── */
+  /**
+   * Flips the status between `'draft'` (checked) and `'published'`
+   * (unchecked). Used by the "Save as draft" checkbox in the Quiz Details
+   * card. Drafts are always owner-only regardless of `visibility`.
+   */
+  protected onStatusToggle(checked: boolean): void {
+    this.status.set(checked ? 'draft' : 'published');
   }
 
   /* ─── Template helpers for `$event` casting ─── */
