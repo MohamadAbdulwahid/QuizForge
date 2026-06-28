@@ -1,0 +1,174 @@
+<!-- Knowledge Graph Visualization -->
+<div class="kg-container" role="img" aria-label="Knowledge graph showing concept mastery levels">
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="kg-loading" role="status">
+      <div class="kg-spinner" aria-hidden="true"></div>
+      <span class="qf-muted text-sm font-semibold">Loading knowledge graph...</span>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (errorMessage()) {
+    <div class="kg-empty" role="alert">
+      <div class="kg-empty-icon">
+        <svg
+          class="h-8 w-8 text-bubbly-error"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+          />
+        </svg>
+      </div>
+      <p class="text-base font-bold text-slate-700">Unable to load graph</p>
+      <p class="text-sm font-semibold text-slate-500">{{ errorMessage() }}</p>
+    </div>
+  }
+
+  <!-- Empty State -->
+  @if (!isLoading() && !errorMessage() && nodes().length === 0) {
+    <div class="kg-empty">
+      <div class="kg-empty-icon">
+        <svg
+          class="text-bubbly-primary-deep h-8 w-8"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="1.8"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+          />
+        </svg>
+      </div>
+      <p class="text-base font-bold text-slate-700">No concepts yet</p>
+      <p class="text-sm font-semibold text-slate-500">
+        Complete quizzes to build your knowledge graph
+      </p>
+    </div>
+  }
+
+  <!-- Graph SVG -->
+  @if (hasData()) {
+    <svg class="kg-svg" aria-hidden="true"></svg>
+
+    <!-- Tooltip -->
+    <div
+      class="kg-tooltip"
+      [class.visible]="tooltipVisible()"
+      [style.left.px]="tooltipX()"
+      [style.top.px]="tooltipY()"
+      role="tooltip"
+    >
+      @if (tooltipNode(); as node) {
+        <div class="kg-tooltip-label">{{ node.label }}</div>
+        <div class="kg-tooltip-mastery">
+          <span
+            class="kg-tooltip-dot"
+            [style.background]="getMasteryColor(node.mastery)"
+          ></span>
+          <span>{{ masteryLabel(node.mastery) }} · {{ node.mastery }}%</span>
+        </div>
+        @if (node.totalQuestions !== undefined) {
+          <div class="mt-1 text-xs font-semibold text-slate-500">
+            {{ node.correctAnswers ?? 0 }}/{{ node.totalQuestions }} correct
+          </div>
+        }
+      }
+    </div>
+
+    <!-- Legend -->
+    <div class="kg-legend" aria-label="Graph legend">
+      <div class="kg-legend-item">
+        <span class="kg-legend-dot" style="background: #22c55e"></span>
+        <span class="text-bubbly-muted">Mastered (≥80%)</span>
+      </div>
+      <div class="kg-legend-item">
+        <span class="kg-legend-dot" style="background: #eab308"></span>
+        <span class="text-bubbly-muted">Learning (50-79%)</span>
+      </div>
+      <div class="kg-legend-item">
+        <span class="kg-legend-dot" style="background: #ef4444"></span>
+        <span class="text-bubbly-muted">Needs Practice (&lt;50%)</span>
+      </div>
+      <div class="kg-legend-item">
+        <span class="kg-legend-dot" style="background: #eab308; opacity: 0.5"></span>
+        <span class="text-bubbly-muted">Connection</span>
+      </div>
+    </div>
+
+    <!-- Detail Panel -->
+    @if (selectedNode(); as selected) {
+      <div
+        class="kg-detail-panel"
+        role="dialog"
+        aria-label="Concept details: {{ selected.label }}"
+      >
+        <div class="kg-detail-header">
+          <h3 class="font-display text-bubbly-primary-deep text-base font-bold">
+            {{ selected.label }}
+          </h3>
+          <button
+            type="button"
+            class="kg-detail-close"
+            (click)="closeDetail()"
+            aria-label="Close details"
+          >
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mastery bar -->
+        <div class="mb-3">
+          <div class="flex items-center justify-between text-xs font-bold">
+            <span class="text-bubbly-muted">Mastery</span>
+            <span [style.color]="getMasteryColor(selected.mastery)">
+              {{ selected.mastery }}% · {{ masteryLabel(selected.mastery) }}
+            </span>
+          </div>
+          <div class="kg-detail-bar">
+            <div
+              class="kg-detail-bar-fill"
+              [style.width.%]="selected.mastery"
+              [style.background]="getMasteryColor(selected.mastery)"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        @if (selected.totalQuestions !== undefined) {
+          <div class="grid grid-cols-2 gap-2">
+            <div class="rounded-xl bg-slate-50 p-2.5 text-center">
+              <p class="text-bubbly-muted text-xs font-bold">Questions</p>
+              <p class="font-display text-bubbly-primary-deep text-lg font-bold">
+                {{ selected.totalQuestions }}
+              </p>
+            </div>
+            <div class="rounded-xl bg-slate-50 p-2.5 text-center">
+              <p class="text-bubbly-muted text-xs font-bold">Correct</p>
+              <p class="font-display text-lg font-bold" style="color: #22c55e">
+                {{ selected.correctAnswers ?? 0 }}
+              </p>
+            </div>
+          </div>
+        }
+
+        @if (selected.lastPracticed) {
+          <p class="text-bubbly-muted mt-2.5 text-xs font-semibold">
+            Last practiced: {{ selected.lastPracticed }}
+          </p>
+        }
+      </div>
+    }
+  }
+</div>

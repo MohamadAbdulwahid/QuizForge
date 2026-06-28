@@ -1,96 +1,96 @@
 {
   "/home/mohamad/coding/QuizForge/.husky/_/applypatch-msg": {
-    "mtime": 1781213509.3001556,
+    "mtime": 1782666037.6518614,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.husky/_/commit-msg": {
-    "mtime": 1781213509.3001556,
+    "mtime": 1782666037.6508613,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.husky/_/h": {
-    "mtime": 1781213509.2998357,
+    "mtime": 1782666037.6508613,
     "ast_hash": "15239a01c5554e56ff745570fb583a91",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.husky/_/husky.sh": {
-    "mtime": 1781213509.3001556,
+    "mtime": 1782666037.6518614,
     "ast_hash": "13871d2ab13e8423790ecb2c01c78c18",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.husky/_/post-applypatch": {
-    "mtime": 1781213509.3001556,
+    "mtime": 1782666037.6518614,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.husky/_/post-checkout": {
-    "mtime": 1781213509.3001556,
+    "mtime": 1782666037.6518614,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.husky/_/post-commit": {
-    "mtime": 1781213509.3001556,
+    "mtime": 1782666037.6518614,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.husky/_/post-merge": {
-    "mtime": 1781213509.3001556,
+    "mtime": 1782666037.6518614,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.husky/_/post-rewrite": {
-    "mtime": 1781213509.3001556,
+    "mtime": 1782666037.6518614,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.husky/_/pre-applypatch": {
-    "mtime": 1781213509.3001556,
+    "mtime": 1782666037.6518614,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.husky/_/pre-auto-gc": {
-    "mtime": 1781213509.3001556,
+    "mtime": 1782666037.6518614,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.husky/_/pre-commit": {
-    "mtime": 1781213509.3001556,
+    "mtime": 1782666037.6508613,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.husky/_/pre-merge-commit": {
-    "mtime": 1781213509.3001556,
+    "mtime": 1782666037.6508613,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.husky/_/pre-push": {
-    "mtime": 1781213509.3001556,
+    "mtime": 1782666037.6518614,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.husky/_/pre-rebase": {
-    "mtime": 1781213509.3001556,
+    "mtime": 1782666037.6518614,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.husky/_/prepare-commit-msg": {
-    "mtime": 1781213509.3001556,
+    "mtime": 1782666037.6508613,
     "ast_hash": "0b71c2e7d39daa010985d529f1320b37",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.husky/post-checkout": {
-    "mtime": 1782469516.5885334,
+    "mtime": 1782677751.799331,
     "ast_hash": "b72ecc084ad45a75646393fd854fecfc",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.husky/post-commit": {
-    "mtime": 1782469516.5886157,
+    "mtime": 1782677751.799331,
     "ast_hash": "6d528f7bce3ecad04572333bd8bc1e68",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/opencode.json": {
-    "mtime": 1782469516.5891907,
+    "mtime": 1782677751.799331,
     "ast_hash": "e5f74d14a81702b55bdf53b33ec991d7",
     "semantic_hash": ""
   },
@@ -100,1167 +100,1167 @@
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/plugins/graphify.js": {
-    "mtime": 1782469516.589266,
+    "mtime": 1782677751.799331,
     "ast_hash": "64ccd3c03dbfe0980b6095766f5c4e52",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/skills/monitor-ci/scripts/ci-poll-decide.mjs": {
-    "mtime": 1782469516.5896683,
+    "mtime": 1782677751.8003309,
     "ast_hash": "e003c4b193d3199616ac6d018fa4deb4",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/skills/monitor-ci/scripts/ci-state-update.mjs": {
-    "mtime": 1782469516.5897465,
+    "mtime": 1782677751.8003309,
     "ast_hash": "4c0917b013496795890e4621d8d61229",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend-e2e/eslint.config.mjs": {
-    "mtime": 1782469516.5916488,
+    "mtime": 1782677751.802331,
     "ast_hash": "be32f987d2e1523854958ae87c918c1d",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend-e2e/project.json": {
-    "mtime": 1782469516.5918095,
+    "mtime": 1782677751.802331,
     "ast_hash": "3ba20ac63d8db055cae5be6fd829c047",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend-e2e/src/backend/backend.spec.ts": {
-    "mtime": 1782469516.591906,
+    "mtime": 1782677751.802331,
     "ast_hash": "c98bf43e7c899b1bc8a26e15fd163b65",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend-e2e/tsconfig.json": {
-    "mtime": 1782469516.5919883,
+    "mtime": 1782677751.802331,
     "ast_hash": "df88139201493bcf49989886e406c36a",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend-e2e/tsconfig.spec.json": {
-    "mtime": 1782469516.5920599,
+    "mtime": 1782677751.802331,
     "ast_hash": "697066cd7e70118e43aa5f41fff060a3",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/drizzle.config.ts": {
-    "mtime": 1782469516.5923047,
+    "mtime": 1782677751.802331,
     "ast_hash": "73c0a6a6255e3b6262013a2343ef3daf",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/eslint.config.mjs": {
-    "mtime": 1782469516.5924509,
+    "mtime": 1782677751.802331,
     "ast_hash": "a3a826326fd1ec2f9639ecd5849f715c",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/project.json": {
-    "mtime": 1782469516.5925326,
+    "mtime": 1782684626.2455337,
     "ast_hash": "3a99783ba7aff7af3dcf7265d9f2ce3e",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/scripts/test-socket-auth.ts": {
-    "mtime": 1782469516.592618,
+    "mtime": 1782677751.803331,
     "ast_hash": "4ded534b4931f9c6f62161384c9640b5",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/controllers/admin.controller.ts": {
-    "mtime": 1782469516.592701,
+    "mtime": 1782677751.803331,
     "ast_hash": "0671b56c7880dc1642b256ba7580039f",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/controllers/group.controller.ts": {
-    "mtime": 1782469516.592773,
+    "mtime": 1782677751.803331,
     "ast_hash": "7ceacbd97bb53727282c5ff8132be722",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/controllers/quiz.controller.ts": {
-    "mtime": 1782469516.592844,
-    "ast_hash": "24bef59cad558a08bd6ee716a77ba275",
+    "mtime": 1782685493.3078048,
+    "ast_hash": "011ad9ccb4efe3f5b429a6243e855586",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/controllers/session.controller.ts": {
-    "mtime": 1782469516.5929103,
+    "mtime": 1782677751.803331,
     "ast_hash": "2fbeffa9467d3bde2b2c6dd0243cfa02",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/dtos/ai-generate.dto.ts": {
-    "mtime": 1782469516.5929809,
+    "mtime": 1782677751.803331,
     "ast_hash": "08c774b2dce6bca92f24c8375755028b",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/dtos/auth.dto.ts": {
-    "mtime": 1782469516.5930464,
+    "mtime": 1782677751.803331,
     "ast_hash": "1eeced437e3cb37f57f947878fe95aa7",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/dtos/group.dto.ts": {
-    "mtime": 1782469516.5931137,
+    "mtime": 1782677751.803331,
     "ast_hash": "686496f2ffd52009a26a7611df189dc0",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/dtos/quiz.dto.ts": {
-    "mtime": 1782469516.593195,
-    "ast_hash": "44e2b64945edac74fd5415d6d00072d2",
+    "mtime": 1782686613.8280163,
+    "ast_hash": "2dae92e0215def0b93f21ce6c89e4203",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/dtos/session.dto.ts": {
-    "mtime": 1782470389.2324414,
+    "mtime": 1782677751.803331,
     "ast_hash": "a7154e1a7321439dafdd683ea74f3543",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/middleware/admin.ts": {
-    "mtime": 1782469516.593346,
+    "mtime": 1782677751.803331,
     "ast_hash": "508f67010d65f11d1b1c477dfa4084ea",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/middleware/api-version.ts": {
-    "mtime": 1782469516.5934136,
+    "mtime": 1782677751.803331,
     "ast_hash": "4560ff7854e5c70ca19a3a565c69496a",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/middleware/auth.ts": {
-    "mtime": 1782469516.5934834,
+    "mtime": 1782677751.804331,
     "ast_hash": "a0c2daf84bec9b732581b93a02e14b7c",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/middleware/error-handler.ts": {
-    "mtime": 1782469516.5935552,
+    "mtime": 1782677751.804331,
     "ast_hash": "ad54a6af41f7c69a94b26e4961a99717",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/middleware/validation.ts": {
-    "mtime": 1782469516.59362,
+    "mtime": 1782677751.804331,
     "ast_hash": "fa2c485b97c87a75f2b17e3120f9bdee",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/quizforge-api.spec.ts": {
-    "mtime": 1782469516.5936997,
-    "ast_hash": "dbdaadad95ebd0f4d256e38fbdc2067c",
+    "mtime": 1782684959.37494,
+    "ast_hash": "88bf07de0ce280dcbaa0333f43e09c92",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/routes/admin.routes.ts": {
-    "mtime": 1782469516.593776,
+    "mtime": 1782677751.804331,
     "ast_hash": "069a16482e5f6953f2da753c269e1816",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/routes/auth.routes.ts": {
-    "mtime": 1782469516.5938406,
+    "mtime": 1782677751.804331,
     "ast_hash": "d17005cd152bf160102611a73f413ed3",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/routes/group.routes.ts": {
-    "mtime": 1782469516.5939715,
+    "mtime": 1782677751.804331,
     "ast_hash": "a2c165c6c630c23ccd143bc64fc47e5e",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/routes/host-session.routes.ts": {
-    "mtime": 1782469516.594039,
+    "mtime": 1782677751.804331,
     "ast_hash": "4872e2f2b6777c20147336218118cb31",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/routes/index.ts": {
-    "mtime": 1782469516.5941024,
+    "mtime": 1782684626.2475338,
     "ast_hash": "5ec025307cff60a58dbc40eaa0c527c3",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/routes/quiz.routes.ts": {
-    "mtime": 1782469516.594167,
-    "ast_hash": "ecc5ff5c9bd90c2b40841c02742f9040",
+    "mtime": 1782685497.700853,
+    "ast_hash": "59667aa4574fec644ba1b23db7175ebd",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/routes/session-events.routes.ts": {
-    "mtime": 1782469516.594237,
+    "mtime": 1782684626.2475338,
     "ast_hash": "836148702699687ecda2abe884b4f1fa",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/routes/session.routes.ts": {
-    "mtime": 1782469516.5942984,
+    "mtime": 1782677751.804331,
     "ast_hash": "323e517fe0981d60c1862babd1c0dbf3",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/services/admin.service.ts": {
-    "mtime": 1782469516.5944328,
+    "mtime": 1782677751.805331,
     "ast_hash": "c33eb624a93d2be1625b22605c57f667",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/services/ai-quiz-generator.service.ts": {
-    "mtime": 1782469516.5944946,
+    "mtime": 1782677751.805331,
     "ast_hash": "6d37930971936109997e352d801abb2c",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/services/auth.service.ts": {
-    "mtime": 1782469516.594609,
+    "mtime": 1782677751.805331,
     "ast_hash": "bf4443fb0ea0b34cfe99055105600d0d",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/services/group.service.ts": {
-    "mtime": 1782469516.594817,
+    "mtime": 1782677751.805331,
     "ast_hash": "14ab5d40c378d3d186acc86e8a7a9e55",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/services/profile.service.ts": {
-    "mtime": 1782469516.594883,
+    "mtime": 1782677751.805331,
     "ast_hash": "1122e99d9d312c83f83f1683375c0e4b",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/services/quiz.service.ts": {
-    "mtime": 1782469516.594957,
-    "ast_hash": "6e6f92f35ee48e4e08dfb0c5f534d785",
+    "mtime": 1782685476.1776166,
+    "ast_hash": "ef3309df731c85f6de1dac32cd2aa2bf",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/services/session-event.service.ts": {
-    "mtime": 1782469516.5950236,
+    "mtime": 1782684626.248534,
     "ast_hash": "931d014ca581b3ba363ceaaddddb16e6",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/services/session.service.ts": {
-    "mtime": 1782470389.4304438,
-    "ast_hash": "e334bf4a60107183358878feee49253a",
+    "mtime": 1782685485.674721,
+    "ast_hash": "e95df424113d4bd3705354a159d881f4",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/assets/swagger.json": {
-    "mtime": 1782469516.5952218,
+    "mtime": 1782684990.7962852,
     "ast_hash": "ddfcec1f33b6757cb991ada5ef82b795",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/config/config.ts": {
-    "mtime": 1782469516.5952926,
+    "mtime": 1782677751.806331,
     "ast_hash": "7e6fa6309ce5ed1403180b270a5240ac",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/config/logger.example.ts": {
-    "mtime": 1782469516.5953684,
+    "mtime": 1782677751.806331,
     "ast_hash": "eb36443da7c52ba7e8a138eb37a2e8e1",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/config/logger.ts": {
-    "mtime": 1782469516.5954347,
+    "mtime": 1782677751.806331,
     "ast_hash": "ff055284593f8da2a2b3b7b530b9714c",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/config/sentry.ts": {
-    "mtime": 1782469516.595497,
+    "mtime": 1782677751.806331,
     "ast_hash": "3a5a8e3dc4e8d250a051f30c20ce5854",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/config/supabase.ts": {
-    "mtime": 1782469516.5955582,
+    "mtime": 1782677751.806331,
     "ast_hash": "72fc776892e84a217d457af5fc6f74e1",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/database/client.ts": {
-    "mtime": 1782469516.5956318,
+    "mtime": 1782677751.806331,
     "ast_hash": "90b6544313be9ea79ae64c4612d9b771",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/database/repositories/admin.repository.ts": {
-    "mtime": 1782469516.5957103,
+    "mtime": 1782677751.806331,
     "ast_hash": "d79527161025506f6c63a044ef5c0633",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/database/repositories/group.repository.ts": {
-    "mtime": 1782469516.5957878,
+    "mtime": 1782677751.806331,
     "ast_hash": "1f4f109da933d5428d11bfe44c9e35dd",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/database/repositories/profile.repository.ts": {
-    "mtime": 1782469516.5958533,
+    "mtime": 1782677751.806331,
     "ast_hash": "61901880c4bb0dd2fcb8d1ad9187d390",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/database/repositories/question.repository.ts": {
-    "mtime": 1782469516.5959206,
+    "mtime": 1782677751.806331,
     "ast_hash": "17bebbac3eb845f5f2bf573432e71484",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/database/repositories/quiz.repository.ts": {
-    "mtime": 1782469516.5959904,
-    "ast_hash": "7ed21d944b8c4f5b68c33ae387af20af",
+    "mtime": 1782685673.4057832,
+    "ast_hash": "7383fb249b6aa9bb2c36222a16744a56",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/database/repositories/session.repository.ts": {
-    "mtime": 1782469516.5960777,
+    "mtime": 1782677751.807331,
     "ast_hash": "2ec1146683037b9e9c0c30d08060d213",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/database/repositories/user.repository.ts": {
-    "mtime": 1782469516.596147,
+    "mtime": 1782677751.807331,
     "ast_hash": "fd0463c18e98dfa3008e1a5755ef5569",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/database/schema/auth/user.ts": {
-    "mtime": 1782469516.5962195,
+    "mtime": 1782677751.807331,
     "ast_hash": "304aed5f78f22646b5f6beefffdeb511",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/database/schema/group.ts": {
-    "mtime": 1782469516.5962963,
+    "mtime": 1782677751.807331,
     "ast_hash": "a67a4d82c640a8ed77b94006ab4429ed",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/database/schema/profile.ts": {
-    "mtime": 1782469516.5964143,
+    "mtime": 1782677751.807331,
     "ast_hash": "319665b5f7a0b29cc295b69e7a6110f4",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/database/schema/quiz.ts": {
-    "mtime": 1782469516.5964801,
-    "ast_hash": "0028858eaace32158950a2b83f861e1c",
+    "mtime": 1782685412.567918,
+    "ast_hash": "9d9dd230656c50ce8d8f3a871a7f5de6",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/database/schema/session.ts": {
-    "mtime": 1782469516.5965552,
+    "mtime": 1782677751.807331,
     "ast_hash": "6f415c0cd5dd2ebfc4e5cd31abc4553b",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/database/seeds/quizzes.seed.ts": {
-    "mtime": 1782469516.5966337,
+    "mtime": 1782677751.807331,
     "ast_hash": "642f0f7024dc7ac185c3c4eef14cb6f0",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/database/seeds/seed.ts": {
-    "mtime": 1782469516.5966964,
+    "mtime": 1782677751.807331,
     "ast_hash": "ff7d4f8ac13fa7a9487fed2438bf21dd",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/database/seeds/users.seed.ts": {
-    "mtime": 1782469516.596761,
+    "mtime": 1782677751.807331,
     "ast_hash": "676ccd31a9befa7223616f994e27e3ae",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/game/engine/answer-grading.ts": {
-    "mtime": 1782469516.596845,
+    "mtime": 1782677751.807331,
     "ast_hash": "1fc24ac1430ec3181170463566a8f9cc",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/game/engine/answer-validation.ts": {
-    "mtime": 1782469516.5969148,
+    "mtime": 1782677751.808331,
     "ast_hash": "db387338157129dc8a5b6f9a34fc923e",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/game/engine/chest-generation.ts": {
-    "mtime": 1782469516.597095,
+    "mtime": 1782684626.2535338,
     "ast_hash": "6b79a1107493a2c98c704d6dea087031",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/game/engine/chest-validation.ts": {
-    "mtime": 1782469516.5971632,
+    "mtime": 1782677751.808331,
     "ast_hash": "b73efb633a1860f8248205deb38fc0fc",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/game/engine/game-state.ts": {
-    "mtime": 1782469516.5972269,
+    "mtime": 1782677751.808331,
     "ast_hash": "fe9c0a203ecf583579e840c4dafa394f",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/game/engine/gold-calculation.ts": {
-    "mtime": 1782469516.5972977,
+    "mtime": 1782677751.808331,
     "ast_hash": "8a3bd57baac6a084c0f149d62b96cd95",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/game/engine/scoring.ts": {
-    "mtime": 1782469516.5973678,
+    "mtime": 1782677751.808331,
     "ast_hash": "9220f66afd1bca0cb97050ac4aecaab7",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/game/engine/treasure-forge.engine.ts": {
-    "mtime": 1782469516.5974562,
+    "mtime": 1782677751.808331,
     "ast_hash": "d8f03b91d189d077f1c90119ed303d96",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/main.ts": {
-    "mtime": 1782469516.5975304,
+    "mtime": 1782684626.254534,
     "ast_hash": "a48e95d84a150d7e26da8de08469b12f",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/shared/errors.ts": {
-    "mtime": 1782469516.597599,
+    "mtime": 1782677751.808331,
     "ast_hash": "9caaabc3b3aea2aa4b9ac49cad0eff1a",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/shared/utils/pin.ts": {
-    "mtime": 1782469516.5976686,
+    "mtime": 1782677751.808331,
     "ast_hash": "5527a7705770f597441244e2aa73414e",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/shared/utils/share-code.ts": {
-    "mtime": 1782469516.5977337,
+    "mtime": 1782677751.809331,
     "ast_hash": "0c7f4fabacd243fe227e1c85ff34b0fc",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/tests/unit/config/environment.spec.ts": {
-    "mtime": 1782469516.5978553,
+    "mtime": 1782677751.809331,
     "ast_hash": "3547d6b62bec05e16a91d95d3a50588e",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/tests/unit/config/logger.spec.ts": {
-    "mtime": 1782469516.5979192,
+    "mtime": 1782677751.809331,
     "ast_hash": "507db3e49357c238e1875fe6045a5fbb",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/tests/unit/dtos/auth.dto.spec.ts": {
-    "mtime": 1782469516.5979888,
+    "mtime": 1782677751.809331,
     "ast_hash": "c2fdcb8ffd8c5a751f28468cc2fd5bba",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/tests/unit/game/engine/chest-generation.spec.ts": {
-    "mtime": 1782469516.59821,
+    "mtime": 1782677751.809331,
     "ast_hash": "08ef40b0ead0de9ee5bfa27ead353fec",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/tests/unit/game/engine/chest-validation.spec.ts": {
-    "mtime": 1782469516.5982761,
+    "mtime": 1782677751.809331,
     "ast_hash": "f828a3246f272484ab9f1b925c49dae9",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/tests/unit/game/engine/gold-calculation.spec.ts": {
-    "mtime": 1782469516.598354,
+    "mtime": 1782677751.809331,
     "ast_hash": "50de3d13cf54a650920d6b2b32d83060",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/tests/unit/game/engine/treasure-forge.engine.spec.ts": {
-    "mtime": 1782469516.5984275,
+    "mtime": 1782677751.809331,
     "ast_hash": "6fd25a8f55646519330d783b7e58315f",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/tests/unit/middleware/api-version.spec.ts": {
-    "mtime": 1782469516.5985231,
+    "mtime": 1782677751.809331,
     "ast_hash": "796099395309ab97169261c67a142ccb",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/tests/unit/middleware/auth.spec.ts": {
-    "mtime": 1782469516.5985987,
+    "mtime": 1782677751.809331,
     "ast_hash": "c5d01dec57fa7d5dd768f61dc0f311a7",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/tests/unit/middleware/error-handler.spec.ts": {
-    "mtime": 1782469516.5985987,
+    "mtime": 1782677751.809331,
     "ast_hash": "ef1dbb87ae1ba3e3ef0c14197ab97a62",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/websocket/middleware/socket-auth.ts": {
-    "mtime": 1782469516.5987477,
+    "mtime": 1782677751.809331,
     "ast_hash": "407e24540821fa1a184b3968167e6da6",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/websocket/namespaces/game.namespace.ts": {
-    "mtime": 1782470391.3554645,
-    "ast_hash": "60c8a91993f72d60de533507dbc771c1",
+    "mtime": 1782684626.257534,
+    "ast_hash": "fb9d2c594b5389becd539f12986adcce",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/websocket/rate-limit.ts": {
-    "mtime": 1782469516.5992618,
+    "mtime": 1782677751.810331,
     "ast_hash": "b3541c270fd44dff0c0eaebeba76678a",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/websocket/server.ts": {
-    "mtime": 1782469516.5993285,
+    "mtime": 1782677751.810331,
     "ast_hash": "c7ced24db809d6a63a3cfe166c57ed25",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/websocket/validation/schemas.ts": {
-    "mtime": 1782469516.599506,
+    "mtime": 1782677751.810331,
     "ast_hash": "4db966a6e2143772decc7220897b53cb",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/0000_lonely_the_twelve.sql": {
-    "mtime": 1782469516.599774,
+    "mtime": 1782677751.811331,
     "ast_hash": "e327738479883cbc7f67a08c66c75b04",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/0002_glossy_impossible_man.sql": {
-    "mtime": 1782469516.5998394,
+    "mtime": 1782677751.811331,
     "ast_hash": "c462ac1e7af608d568fc84c766372d1b",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/0003_abnormal_the_twelve.sql": {
-    "mtime": 1782469516.5999086,
+    "mtime": 1782677751.811331,
     "ast_hash": "cd2dfe6ab7e4592886fbc414512e9610",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/0004_fair_colleen_wing.sql": {
-    "mtime": 1782469516.5999768,
+    "mtime": 1782677751.811331,
     "ast_hash": "9ab43e9a748ce8f923f2fc3fcb878c3a",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/meta/0000_snapshot.json": {
-    "mtime": 1782469516.6002078,
+    "mtime": 1782677751.811331,
     "ast_hash": "5cd45bf8cef1927c9506e9b4aaaffdeb",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/meta/0001_snapshot.json": {
-    "mtime": 1782469516.6002867,
+    "mtime": 1782677751.811331,
     "ast_hash": "01466ab494a942d81f4f686114f0ebc2",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/meta/0002_snapshot.json": {
-    "mtime": 1782469516.600388,
+    "mtime": 1782677751.811331,
     "ast_hash": "22cd56b8c634ad654c07ce436c80d5b3",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/meta/0003_snapshot.json": {
-    "mtime": 1782469516.6004596,
+    "mtime": 1782677751.811331,
     "ast_hash": "d4fc6ad8d6da632cc1ad0e5883856549",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/meta/0004_snapshot.json": {
-    "mtime": 1782469516.600556,
+    "mtime": 1782677751.812331,
     "ast_hash": "175d95d3470d61697f62755f9532a372",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/meta/_journal.json": {
-    "mtime": 1782469516.6007197,
+    "mtime": 1782684626.258534,
     "ast_hash": "afaa1879c1810a9bcf8358cecc1ea44e",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/integration/admin-dashboard.spec.ts": {
-    "mtime": 1782469516.6008847,
+    "mtime": 1782677751.812331,
     "ast_hash": "6ca30d695483263cdefd34c4df1f2aa1",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/integration/leaderboard-sync.spec.ts": {
-    "mtime": 1782469516.6009603,
+    "mtime": 1782677751.812331,
     "ast_hash": "1420f5a5b109a71f36e256cb79a56f75",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/integration/quiz-auth.spec.ts": {
-    "mtime": 1782469516.601038,
+    "mtime": 1782677751.812331,
     "ast_hash": "d0f5f03d433ca5d1d65bc6010d9164fb",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/integration/quiz-endpoints.spec.ts": {
-    "mtime": 1782469516.601139,
-    "ast_hash": "57b7e7aac95cde130b8731ba6d35e328",
+    "mtime": 1782686313.799767,
+    "ast_hash": "a6900f653772b78c8f7cd81dd4fe2f0b",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/integration/session-endpoints.spec.ts": {
-    "mtime": 1782469516.601139,
+    "mtime": 1782677751.812331,
     "ast_hash": "0e43dd81eda18a9b65540d6f1ec9ac83",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/integration/session-join.spec.ts": {
-    "mtime": 1782469516.6013672,
+    "mtime": 1782677751.812331,
     "ast_hash": "2cbcf81ba9b7d9fc57e1c0f77c085629",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/integration/websocket-rooms.spec.ts": {
-    "mtime": 1782469516.601452,
+    "mtime": 1782677751.812331,
     "ast_hash": "619f2a2da92dcd54d66ebf13c735b662",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/database/optimization.spec.ts": {
-    "mtime": 1782469516.6015341,
+    "mtime": 1782677751.8133311,
     "ast_hash": "c17621c4c6072354e6aa52ab9b9e1665",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/dtos/quiz.dto.spec.ts": {
-    "mtime": 1782469516.6016035,
+    "mtime": 1782677751.8133311,
     "ast_hash": "92356e30807351ae52fb20f999413912",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/game/answer-validation.spec.ts": {
-    "mtime": 1782469516.601673,
+    "mtime": 1782677751.8133311,
     "ast_hash": "5f76cb3a2c7a603f5e945a910691025b",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/game/game-state.spec.ts": {
-    "mtime": 1782469516.6017342,
+    "mtime": 1782677751.8133311,
     "ast_hash": "2ce1bea29a2b56c368cb0b345cedecf8",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/game/scoring.spec.ts": {
-    "mtime": 1782469516.6017957,
+    "mtime": 1782677751.8133311,
     "ast_hash": "1abf49e76fa74ac9353fefc5fda487c6",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/maintenance/session-cleanup.spec.ts": {
-    "mtime": 1782469516.601874,
+    "mtime": 1782677751.8133311,
     "ast_hash": "a46173586a11f6def5961f1954f31925",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/monitoring/sentry.spec.ts": {
-    "mtime": 1782469516.6019444,
+    "mtime": 1782677751.8133311,
     "ast_hash": "80a02dee4e8681d4bd2499e87af01369",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/repositories/question.repository.spec.ts": {
-    "mtime": 1782469516.6020184,
+    "mtime": 1782677751.8133311,
     "ast_hash": "56d0d15b227f7add7e0fdbe3a2c5f178",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/repositories/quiz.repository.spec.ts": {
-    "mtime": 1782469516.6021013,
-    "ast_hash": "bb9926e550eeba9df91bc0c273c04202",
+    "mtime": 1782686294.7255604,
+    "ast_hash": "4c1b55b3da131744f8052f9a757e5989",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/repositories/session.repository.spec.ts": {
-    "mtime": 1782469516.6021013,
+    "mtime": 1782677751.8133311,
     "ast_hash": "94444a9c39d5eaccd5b6d8a470dee4e7",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/services/ai-quiz-generator.service.spec.ts": {
-    "mtime": 1782469516.6022375,
+    "mtime": 1782677751.8133311,
     "ast_hash": "f709d24e66873895732a142a0695cacb",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/services/group.service.spec.ts": {
-    "mtime": 1782469516.60231,
+    "mtime": 1782677751.8133311,
     "ast_hash": "f379948e5cae4c1b6ff258c9f7e51cf8",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/services/quiz.service.spec.ts": {
-    "mtime": 1782469516.6023853,
-    "ast_hash": "5f303dfb8c96cd028db425d0196aaae5",
+    "mtime": 1782686275.2603495,
+    "ast_hash": "f0af02ef70e37b24bdae130594ab0368",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/shared/pin.spec.ts": {
-    "mtime": 1782469516.6024508,
+    "mtime": 1782677751.814331,
     "ast_hash": "e2db69e44d8810c89e98541d3cb381e0",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/shared/share-code.spec.ts": {
-    "mtime": 1782469516.6025162,
+    "mtime": 1782677751.814331,
     "ast_hash": "5530575852a720368b4ede761b3d76b0",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/websocket/rate-limit.spec.ts": {
-    "mtime": 1782469516.6025844,
+    "mtime": 1782677751.814331,
     "ast_hash": "d2157a6b3eec4807eca9dc4d933b5a89",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/websocket/socket-auth.spec.ts": {
-    "mtime": 1782469516.6026525,
+    "mtime": 1782677751.814331,
     "ast_hash": "0a2700969edb383f8a91347212462e29",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tests/unit/websocket/zod-schemas.spec.ts": {
-    "mtime": 1782469516.602718,
+    "mtime": 1782677751.814331,
     "ast_hash": "e208a59c0505e551cfa3b39385a6af0b",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tsconfig.app.json": {
-    "mtime": 1782469516.6027794,
+    "mtime": 1782677751.814331,
     "ast_hash": "33111dd035d7d2d3912bfcc4340ae2e1",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/tsconfig.json": {
-    "mtime": 1782469516.6027794,
+    "mtime": 1782677751.814331,
     "ast_hash": "eb861d196c0a66e971cff78f53d621ee",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend-e2e/eslint.config.mjs": {
-    "mtime": 1782469516.602896,
+    "mtime": 1782677751.814331,
     "ast_hash": "0f1d803e920c7daa8bad5b7b4854f3fb",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend-e2e/playwright.config.ts": {
-    "mtime": 1782469516.602961,
+    "mtime": 1782677751.814331,
     "ast_hash": "a9bcdf66ef3554cf6b946e8327204b3a",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend-e2e/project.json": {
-    "mtime": 1782469516.6030211,
+    "mtime": 1782677751.814331,
     "ast_hash": "7b8ba15358a6bbdba4c7a82bd3f11163",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend-e2e/src/e2e/admin-dashboard.spec.ts": {
-    "mtime": 1782469516.603092,
+    "mtime": 1782677751.814331,
     "ast_hash": "9c7671da4024f22fbd295aef8b124ed1",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend-e2e/src/e2e/app.spec.ts": {
-    "mtime": 1782469516.6031532,
+    "mtime": 1782677751.814331,
     "ast_hash": "c06b6d33b35911b0c3ce0f5ebbec3162",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend-e2e/src/e2e/forge-classic.spec.ts": {
-    "mtime": 1782469516.6032174,
+    "mtime": 1782677751.814331,
     "ast_hash": "22214a9672c1b90103e366db3a651efb",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend-e2e/src/e2e/game-reconnect.spec.ts": {
-    "mtime": 1782469516.603279,
+    "mtime": 1782677751.814331,
     "ast_hash": "ddf21a7bb37b0ccba9c70c3eb4196fc2",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend-e2e/tsconfig.json": {
-    "mtime": 1782469516.603346,
+    "mtime": 1782677751.814331,
     "ast_hash": "0762052b61de3e06840598876fe1cebc",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/eslint.config.mjs": {
-    "mtime": 1782469516.603413,
+    "mtime": 1782677751.814331,
     "ast_hash": "b8d1c4b227ef6693c239aff51592a233",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/postcss.config.json": {
-    "mtime": 1782469516.603413,
+    "mtime": 1782677751.815331,
     "ast_hash": "0910552d06a7988426456203a1d9357e",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/project.json": {
-    "mtime": 1782469516.6035314,
+    "mtime": 1782677751.815331,
     "ast_hash": "670da9d70cd060ca3b2e37b83dd3b191",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/app.config.server.ts": {
-    "mtime": 1782469516.6037087,
+    "mtime": 1782677751.815331,
     "ast_hash": "3970e45a18d96e13afe0e0f10cbda945",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/app.config.ts": {
-    "mtime": 1782469516.6037722,
+    "mtime": 1782677751.815331,
     "ast_hash": "95c4d3f81408ec6384992e8ff9cab199",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/app.routes.server.ts": {
-    "mtime": 1782469516.6038854,
-    "ast_hash": "89b8f42ebce6407f6192f254356f9a90",
+    "mtime": 1782685447.9263062,
+    "ast_hash": "7ee34963331b0aeef00ecdadb3d8c683",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/app.routes.ts": {
-    "mtime": 1782469815.8823555,
-    "ast_hash": "fa4586516aad471a95a840a951b21f80",
+    "mtime": 1782687511.7507427,
+    "ast_hash": "1c1a2190c2a718cfd4725e2094262477",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/app.spec.ts": {
-    "mtime": 1782469516.604017,
+    "mtime": 1782677751.815331,
     "ast_hash": "687a9452535b8e5a4a5f726d00549418",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/app.ts": {
-    "mtime": 1782469516.6040802,
+    "mtime": 1782677751.815331,
     "ast_hash": "edd918163fb1635c0de9a7df91db0307",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/guards/admin.guard.ts": {
-    "mtime": 1782469516.604163,
+    "mtime": 1782677751.815331,
     "ast_hash": "0f1320a60a0934b59d7084d918510727",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/guards/auth.guard.spec.ts": {
-    "mtime": 1782469516.6042268,
+    "mtime": 1782677751.815331,
     "ast_hash": "65df4fafc513b0cca4f2908f2bb39e47",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/guards/auth.guard.ts": {
-    "mtime": 1782469516.6042902,
+    "mtime": 1782677751.8163311,
     "ast_hash": "440f6b37cd3a47b301505e6f709caafc",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/interceptors/auth.interceptor.spec.ts": {
-    "mtime": 1782469516.6044056,
+    "mtime": 1782677751.8163311,
     "ast_hash": "34c0de0e87a5cc6e3710742330e0ad18",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/interceptors/auth.interceptor.ts": {
-    "mtime": 1782469516.6044738,
+    "mtime": 1782677751.8163311,
     "ast_hash": "9a3a7d8a6b3295eab75e5976dc719ea7",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/services/admin-api.service.ts": {
-    "mtime": 1782469516.6045468,
+    "mtime": 1782677751.8163311,
     "ast_hash": "430a1df140251cfa2b50081cf5c71a01",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/services/api.service.ts": {
-    "mtime": 1782469516.604818,
+    "mtime": 1782677751.8163311,
     "ast_hash": "b19e72c552a9041605e312415b620555",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/services/auth.service.spec.ts": {
-    "mtime": 1782469516.6048877,
+    "mtime": 1782677751.8163311,
     "ast_hash": "3b9124d9330623b14e698c42ea7a9014",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/services/auth.service.ts": {
-    "mtime": 1782469516.6049562,
+    "mtime": 1782677751.8163311,
     "ast_hash": "e3e1768b569fe27e62b87e1d66c74a89",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/services/dashboard-cache.service.ts": {
-    "mtime": 1782469516.6051888,
+    "mtime": 1782677751.817331,
     "ast_hash": "772df24b770fde3f98fee09a24ec7979",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/services/group-api.service.ts": {
-    "mtime": 1782469516.6052606,
+    "mtime": 1782677751.817331,
     "ast_hash": "68ed33891d976f3f78ed008ebbb4ead1",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/services/quiz-api.service.ts": {
-    "mtime": 1782469516.6053522,
-    "ast_hash": "319afa663947fa680e95d4ea34e84175",
+    "mtime": 1782685084.1573105,
+    "ast_hash": "ca5bf8328779bc4e03fb386c87821e48",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/services/sentry.service.ts": {
-    "mtime": 1782469516.6054204,
+    "mtime": 1782677751.817331,
     "ast_hash": "3ed4149669c956db22f9745e85cfcaf8",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/services/session-api.service.ts": {
-    "mtime": 1782469516.6054902,
+    "mtime": 1782677751.817331,
     "ast_hash": "bccc651f74e928f755f0658aeb42adef",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/services/session-event-bus.service.ts": {
-    "mtime": 1782469516.6055546,
-    "ast_hash": "17d83b8c058b770396ac32feedb98a77",
+    "mtime": 1782685977.4131224,
+    "ast_hash": "bac545bf07adc39e1b5b70187c7fcf1f",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/services/session-sse.service.ts": {
-    "mtime": 1782469516.6056283,
+    "mtime": 1782684626.261534,
     "ast_hash": "6ba22ff60fd396f694c03413dfb419bf",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/services/supabase.service.spec.ts": {
-    "mtime": 1782469516.6056974,
+    "mtime": 1782677751.817331,
     "ast_hash": "193785a2d47263688db15e71ac5296ae",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/services/supabase.service.ts": {
-    "mtime": 1782469516.60576,
+    "mtime": 1782677751.817331,
     "ast_hash": "f12baf15cfcceec8d356aabba42c23bf",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/services/websocket.service.ts": {
-    "mtime": 1782469516.60586,
+    "mtime": 1782684626.262534,
     "ast_hash": "030c589a4d5b68a01d0de433ece7141d",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/auth/login.component.spec.ts": {
-    "mtime": 1782469516.6060302,
+    "mtime": 1782677751.8183312,
     "ast_hash": "e144245009fe7fcb9925dc0b908a3c24",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/auth/login.component.ts": {
-    "mtime": 1782469516.6061018,
+    "mtime": 1782677751.8183312,
     "ast_hash": "36cf7c3da5de4d6021a938247097c75c",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/auth/register.component.spec.ts": {
-    "mtime": 1782469516.606174,
+    "mtime": 1782677751.8183312,
     "ast_hash": "dbe5f44e33b9755e46f4da21047f770b",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/auth/register.component.ts": {
-    "mtime": 1782469516.606174,
+    "mtime": 1782677751.8183312,
     "ast_hash": "8a15f7fa65aece513b056289985225b5",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/admin-dashboard.component.spec.ts": {
-    "mtime": 1782469516.6063871,
+    "mtime": 1782677751.8183312,
     "ast_hash": "d37812a34133535c88f52a4613f658e1",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/admin-dashboard.component.ts": {
-    "mtime": 1782469516.6064665,
+    "mtime": 1782677751.8183312,
     "ast_hash": "fa262a779e1abe49d86a1eddf6da0685",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.ts": {
-    "mtime": 1782469516.6066468,
+    "mtime": 1782677751.8183312,
     "ast_hash": "d1ca82691ef3f7cd1a6b628749c0c001",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/dashboard-group-discovery-page.component.ts": {
-    "mtime": 1782469516.6068377,
+    "mtime": 1782677751.8193312,
     "ast_hash": "52ec58b4f3b0bbb4b549c4034dce0288",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/dashboard-groups-page.component.ts": {
-    "mtime": 1782469516.6069274,
+    "mtime": 1782677751.8193312,
     "ast_hash": "8b2763d6fd6226833ea0dafa6aaa2a77",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/dashboard-marketplace-page.component.ts": {
-    "mtime": 1782469516.607142,
+    "mtime": 1782677751.8193312,
     "ast_hash": "e27758db88fbd72d1781d1cbdb210d1e",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/dashboard-page.component.ts": {
-    "mtime": 1782469516.6072948,
+    "mtime": 1782677751.8193312,
     "ast_hash": "e70df79717387944fb0c4c8b791d5b1d",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/dashboard-quizzes-page.component.ts": {
-    "mtime": 1782469516.607429,
-    "ast_hash": "104e18d27845e26349179c247ce0fc5a",
+    "mtime": 1782685534.8502612,
+    "ast_hash": "d9e8792622c625f8490a1463e7afc7ae",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/dashboard-shell.component.ts": {
-    "mtime": 1782469731.5132585,
-    "ast_hash": "603782e353d60f761286c842fd0e0632",
+    "mtime": 1782687515.017778,
+    "ast_hash": "3792ecba5dd46d0db0d1552cf4bcb9d5",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/groups/groups-create-page.component.ts": {
-    "mtime": 1782469516.6077433,
+    "mtime": 1782677751.820331,
     "ast_hash": "77467e7f17572a2bb9a2dd0f301144d8",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/groups/groups-detail-page.component.ts": {
-    "mtime": 1782469516.6079352,
+    "mtime": 1782677751.820331,
     "ast_hash": "745a26e1c66a660d5dc18c5140e67be7",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/quizzes/ai-quiz-page.component.ts": {
-    "mtime": 1782469516.6081595,
-    "ast_hash": "3d35b7038dba639e37600e1ac02d0e14",
+    "mtime": 1782685510.792997,
+    "ast_hash": "072394d07cdc1aa7c0557441b83ed1f6",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.ts": {
-    "mtime": 1782469516.6084714,
-    "ast_hash": "ae76b3bf6c82366be298134aa85205c0",
+    "mtime": 1782686723.1161997,
+    "ast_hash": "9eaf3ccb08d42dec67df696f95df969f",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/game/game-lobby-page.component.spec.ts": {
-    "mtime": 1782469516.6093917,
+    "mtime": 1782677751.8223312,
     "ast_hash": "ea2e296a7e37a3f709bd7825b6873568",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/game/game-lobby-page.component.ts": {
-    "mtime": 1782470394.1934953,
+    "mtime": 1782684626.2775342,
     "ast_hash": "4268b8c7569254651c4aff7fb85a39cb",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/game/game-play-page.component.ts": {
-    "mtime": 1782469516.6096706,
+    "mtime": 1782684626.279534,
     "ast_hash": "5a7b2a2dc23256806fd0a8ef022f6d10",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/game/services/game-state.service.spec.ts": {
-    "mtime": 1782469516.6097598,
+    "mtime": 1782677751.8223312,
     "ast_hash": "d2f1937dde76e2d0e9dc5eb91a0f0b3c",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/game/services/game-state.service.ts": {
-    "mtime": 1782470394.5794995,
+    "mtime": 1782684626.279534,
     "ast_hash": "16101676f4f1a855a7aaeea5ac3cd920",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/game/treasure-forge-play-page.component.ts": {
-    "mtime": 1782469516.6100144,
+    "mtime": 1782684626.2805343,
     "ast_hash": "16db2d0aa87a43b60a6c04b038c1166d",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/host/host-page.component.ts": {
-    "mtime": 1782469516.6105244,
-    "ast_hash": "95ae59c6962c2bbc0bdefba721dff160",
+    "mtime": 1782684626.2825341,
+    "ast_hash": "9c32c18b44cc5bde78ae5bf5906b8793",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/landing/landing-page.component.spec.ts": {
-    "mtime": 1782469516.6106904,
+    "mtime": 1782677751.8243313,
     "ast_hash": "86b3dd7433436642d801ffe9c3257061",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/landing/landing-page.component.ts": {
-    "mtime": 1782469516.6107607,
+    "mtime": 1782677751.8243313,
     "ast_hash": "e77d526c8a0e556bab0008c27af13d39",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/leaderboards/leaderboards-page.component.ts": {
-    "mtime": 1782469516.610916,
+    "mtime": 1782684626.2825341,
     "ast_hash": "1c3f3b0dc1bdbc78dbd043aada9e3de8",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/play/play-page.component.ts": {
-    "mtime": 1782469516.6110628,
+    "mtime": 1782677751.8243313,
     "ast_hash": "9c96da720aad1df58c266c98c2317fa6",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/quiz/answer-panels/fill-in-blank-answer-panel.component.ts": {
-    "mtime": 1782469516.6111429,
+    "mtime": 1782677751.8243313,
     "ast_hash": "6b4dc3466e8566fd36c65a206f414ce5",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/quiz/answer-panels/matching-answer-panel.component.ts": {
-    "mtime": 1782469516.6112196,
+    "mtime": 1782677751.8243313,
     "ast_hash": "a0270c3de50dd63bf3f7ed62399c00c7",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/quiz/answer-panels/ordering-answer-panel.component.ts": {
-    "mtime": 1782469516.6112974,
+    "mtime": 1782677751.8243313,
     "ast_hash": "3a8a464508bf8b493750223bda646b43",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/quiz/types/question-types.ts": {
-    "mtime": 1782469516.6115098,
+    "mtime": 1782677751.8253312,
     "ast_hash": "32d4ad1a03dff2d6c6579a5656c634e3",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/ui/bubbly-alert.component.ts": {
-    "mtime": 1782469516.6117525,
+    "mtime": 1782677751.8253312,
     "ast_hash": "cfd493e44c7d3df992b943196e468d3f",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/ui/bubbly-badge.component.ts": {
-    "mtime": 1782469516.611822,
+    "mtime": 1782677751.8253312,
     "ast_hash": "951075d35255be1475727300cd7f99fc",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/ui/bubbly-button.component.ts": {
-    "mtime": 1782469516.6118865,
-    "ast_hash": "acc2f367157fd72e814db21f772a0baf",
+    "mtime": 1782687306.2905166,
+    "ast_hash": "493ff4d34df2f4162c6d6f9eeb0d245d",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/ui/bubbly-card.component.ts": {
-    "mtime": 1782469516.6119473,
+    "mtime": 1782677751.8253312,
     "ast_hash": "00b6639772f821dc97bdf8097ebcb22c",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/ui/bubbly-input.component.ts": {
-    "mtime": 1782469516.6120162,
+    "mtime": 1782677751.8263311,
     "ast_hash": "bb089fcdd55ab37c64a8e5f4ce619e1a",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/ui/bubbly-modal.component.ts": {
-    "mtime": 1782469516.6120832,
+    "mtime": 1782677751.8263311,
     "ast_hash": "a6e8f3c5b7fad9c85bbbf3e3d9c15007",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/ui/bubbly-select.component.ts": {
-    "mtime": 1782469516.6121597,
-    "ast_hash": "ec72d626d8c4834c387e630af14c5c9d",
+    "mtime": 1782687305.8715122,
+    "ast_hash": "f852c1896da1cb786a4725c2a52c1800",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/ui/chest-effect-announcement.component.ts": {
-    "mtime": 1782469516.612232,
+    "mtime": 1782677751.8263311,
     "ast_hash": "51632354dc99eb2035abf859d551f1da",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/ui/chest-picker.component.ts": {
-    "mtime": 1782469516.6123102,
+    "mtime": 1782677751.8263311,
     "ast_hash": "b7bd1d6d1d95ff94801fcbfad61fd1d5",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/ui/gold-counter.component.ts": {
-    "mtime": 1782469516.6123874,
+    "mtime": 1782677751.8263311,
     "ast_hash": "a18cb965900643010f28522b30026b74",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/ui/page-heading.component.ts": {
-    "mtime": 1782469516.612451,
+    "mtime": 1782677751.8263311,
     "ast_hash": "d5f972b45ab226b054856f05402f82dc",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/ui/player-bubble.component.ts": {
-    "mtime": 1782469516.6125135,
+    "mtime": 1782677751.8263311,
     "ast_hash": "74cf5358d5a081410c7f853baa4e9bbe",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/ui/status-pill.component.ts": {
-    "mtime": 1782469516.6125767,
+    "mtime": 1782677751.8263311,
     "ast_hash": "ea19c73b32c5c2edb829e2804457529a",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/ui/steal-target-picker.component.ts": {
-    "mtime": 1782469516.6126523,
+    "mtime": 1782677751.8263311,
     "ast_hash": "52e7dae0fee950b9beb164d2e8c7d338",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/utils/auth-errors.ts": {
-    "mtime": 1782469516.6127234,
+    "mtime": 1782677751.8263311,
     "ast_hash": "4434423c9e74234a28585db5eea7f397",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/utils/display-name.ts": {
-    "mtime": 1782469516.6127858,
+    "mtime": 1782677751.8263311,
     "ast_hash": "9e850993af3166701c792f06b5b4e4b8",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/environments/environment.prod.ts": {
-    "mtime": 1782469516.6140826,
+    "mtime": 1782677751.8283312,
     "ast_hash": "4ebebd8c715d5930ac9bf0f5491fb25c",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/environments/environment.ts": {
-    "mtime": 1782469516.6142125,
+    "mtime": 1782677751.8283312,
     "ast_hash": "1785a7a4719e79ffc56a7af1f3e8de92",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/main.server.ts": {
-    "mtime": 1782469516.6143386,
+    "mtime": 1782677751.8283312,
     "ast_hash": "413965f5fdd5f62861a8d9725eed3f20",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/main.ts": {
-    "mtime": 1782469516.6143951,
+    "mtime": 1782677751.8283312,
     "ast_hash": "f3983daa46dc263bf3c8d0dd448a5a01",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/server.ts": {
-    "mtime": 1782469516.6144612,
+    "mtime": 1782677751.8283312,
     "ast_hash": "24e7d58703bebba26ec0a7e0e8a94152",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/test-setup.ts": {
-    "mtime": 1782469516.6145508,
+    "mtime": 1782677751.8283312,
     "ast_hash": "9916d8b31ddd7ab1d3b022f518eb6df6",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/vite-env.d.ts": {
-    "mtime": 1782469516.6145508,
+    "mtime": 1782677751.8283312,
     "ast_hash": "0352474ba2918efe13895edbc3780d94",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/tailwind.config.mjs": {
-    "mtime": 1782469516.6148076,
+    "mtime": 1782677751.8283312,
     "ast_hash": "2eacd900fc9e35cf851ab12779f7b4c4",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.app.json": {
-    "mtime": 1782469516.6148636,
+    "mtime": 1782677751.8293312,
     "ast_hash": "6898ea3869a7d0c2560cd8eca3410a9f",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.json": {
-    "mtime": 1782469516.6148636,
+    "mtime": 1782677751.8293312,
     "ast_hash": "2308b08a56556ba2e6e865fd9b59d9d1",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/tsconfig.spec.json": {
-    "mtime": 1782469516.6148636,
+    "mtime": 1782677751.8293312,
     "ast_hash": "ed4b730d976c7f1f8d1f5e29996e8171",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/vite.config.ts": {
-    "mtime": 1782469516.6150343,
+    "mtime": 1782677751.8293312,
     "ast_hash": "258350546e65d759cd6fab86e565a178",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/eslint.config.mjs": {
-    "mtime": 1782469516.6250181,
-    "ast_hash": "af8ea285dd94d8d6b4b02bf2fb664d6d",
+    "mtime": 1782686847.053542,
+    "ast_hash": "a4a95e5b712560d118f025a68a046c61",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/nx.json": {
-    "mtime": 1782469516.6449459,
+    "mtime": 1782677751.8563316,
     "ast_hash": "fbeb9e9be1af5ed51c7129e66f164893",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/package.json": {
-    "mtime": 1782469516.6449459,
+    "mtime": 1782684626.2925344,
     "ast_hash": "59979eadd725f4acc28d7a20c8cbcf0b",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/tsconfig.base.json": {
-    "mtime": 1782469516.6449459,
+    "mtime": 1782677751.8563316,
     "ast_hash": "31a1536b53e77b2fd8e19d8cbcf9b07b",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/agents/ci-monitor-subagent.md": {
-    "mtime": 1782469516.5888197,
+    "mtime": 1782677751.799331,
     "ast_hash": "c699186979c4a1a0322777ba864a1128",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/commands/monitor-ci.md": {
-    "mtime": 1782469516.5889366,
+    "mtime": 1782677751.799331,
     "ast_hash": "a5e71cbd3230850c9830f6f2761d76c0",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/navigation.md": {
-    "mtime": 1782469516.589035,
+    "mtime": 1782677751.799331,
     "ast_hash": "477fe4005a5b10d0896c0363cea5ab23",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/context/project-intelligence/technical-domain.md": {
-    "mtime": 1782469516.589124,
+    "mtime": 1782677751.799331,
     "ast_hash": "dc113b878f8a4998cdacb9432a6ec1d3",
     "semantic_hash": ""
   },
@@ -1275,443 +1275,533 @@
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/skills/link-workspace-packages/SKILL.md": {
-    "mtime": 1782469516.5893614,
+    "mtime": 1782677751.799331,
     "ast_hash": "17eac7d37311d0cbdf418370e5862408",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/skills/monitor-ci/SKILL.md": {
-    "mtime": 1782469516.58947,
+    "mtime": 1782677751.799331,
     "ast_hash": "4c0446a20b62e4d6ee8fa40f43566f62",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/skills/monitor-ci/references/fix-flows.md": {
-    "mtime": 1782469516.5895638,
+    "mtime": 1782677751.8003309,
     "ast_hash": "a7e1b54301da9e4c2b055392db58f690",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/skills/nx-generate/SKILL.md": {
-    "mtime": 1782469516.5898414,
+    "mtime": 1782677751.8003309,
     "ast_hash": "115a0de9651dab084e2113f0f7faa9d0",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/skills/nx-import/SKILL.md": {
-    "mtime": 1782469516.5899491,
+    "mtime": 1782677751.8003309,
     "ast_hash": "52ddd9ca335816f3316f835fc58b7555",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/skills/nx-import/references/ESLINT.md": {
-    "mtime": 1782469516.5900369,
+    "mtime": 1782677751.8003309,
     "ast_hash": "b4ac173be9ff6de169be6dde415c6791",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/skills/nx-import/references/GRADLE.md": {
-    "mtime": 1782469516.590102,
+    "mtime": 1782677751.8003309,
     "ast_hash": "248103580c6697a42edebd5ad2580445",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/skills/nx-import/references/JEST.md": {
-    "mtime": 1782469516.590182,
+    "mtime": 1782677751.8003309,
     "ast_hash": "62362f47ec70d68f68c0170c04c3cb5f",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/skills/nx-import/references/NEXT.md": {
-    "mtime": 1782469516.5902717,
+    "mtime": 1782677751.8003309,
     "ast_hash": "61c06daff3286ac63b63581c4207b728",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/skills/nx-import/references/TURBOREPO.md": {
-    "mtime": 1782469516.5903609,
+    "mtime": 1782677751.8003309,
     "ast_hash": "d0c7fd1bd9a4d05a47e3f8da5b8f0125",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/skills/nx-import/references/VITE.md": {
-    "mtime": 1782469516.590501,
+    "mtime": 1782677751.8003309,
     "ast_hash": "994226d92334cd9c41f59201eefe8cf5",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/skills/nx-plugins/SKILL.md": {
-    "mtime": 1782469516.590501,
+    "mtime": 1782677751.801331,
     "ast_hash": "d5ff52cc74ffc8393d9e7a0e7c4146a4",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/skills/nx-run-tasks/SKILL.md": {
-    "mtime": 1782469516.5906918,
+    "mtime": 1782677751.801331,
     "ast_hash": "c7c5d9c05612fe6890b5357b788ab3ee",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/skills/nx-workspace/SKILL.md": {
-    "mtime": 1782469516.5908134,
+    "mtime": 1782677751.801331,
     "ast_hash": "ccaf854841b059c71f4c987015ee28e1",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/skills/nx-workspace/references/AFFECTED.md": {
-    "mtime": 1782469516.590885,
+    "mtime": 1782677751.801331,
     "ast_hash": "c8c9a88cf27f337f6ee1cd5208292842",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/AGENTS.md": {
-    "mtime": 1782469516.5913596,
+    "mtime": 1782677751.801331,
     "ast_hash": "c8d9c10c41e48b0ed035e14c15bfb777",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/README.md": {
-    "mtime": 1782469516.5916488,
+    "mtime": 1782677751.802331,
     "ast_hash": "16614e1f49cbcbcbe8ddb3432fcd96a4",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/README.md": {
-    "mtime": 1782469516.5922322,
+    "mtime": 1782677751.802331,
     "ast_hash": "434ff2f4b3a9ac13c0bd6761f89dbb89",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/app.html": {
-    "mtime": 1782469516.6037722,
+    "mtime": 1782677751.815331,
     "ast_hash": "92b5943b800a66a310a32614ee6e4e97",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/auth/login.component.html": {
-    "mtime": 1782469823.083424,
+    "mtime": 1782677751.8183312,
     "ast_hash": "5f9e80556ca0e8e79f6fe64e279a0590",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/auth/register.component.html": {
-    "mtime": 1782469516.606174,
+    "mtime": 1782677751.8183312,
     "ast_hash": "2c84b5bfaf73f4bfa1a948bb1f914782",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/dashboard-create-session-page.component.html": {
-    "mtime": 1782470392.1154728,
+    "mtime": 1782677751.8183312,
     "ast_hash": "80988763c24e5752374458459e967bae",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/dashboard-group-discovery-page.component.html": {
-    "mtime": 1782469516.6067426,
+    "mtime": 1782677751.8193312,
     "ast_hash": "0c501383497ccc22a983e1c96b037e95",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/dashboard-groups-page.component.html": {
-    "mtime": 1782469516.6069274,
+    "mtime": 1782677751.8193312,
     "ast_hash": "835750036260ba438a6b8e24528bce6a",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/dashboard-marketplace-page.component.html": {
-    "mtime": 1782469516.6070685,
+    "mtime": 1782677751.8193312,
     "ast_hash": "49a42488ad0753b466d6cd631b22605f",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/dashboard-page.component.html": {
-    "mtime": 1782469516.6072233,
+    "mtime": 1782677751.8193312,
     "ast_hash": "0a09517c36a13aa747a6451a9794826e",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/dashboard-quizzes-page.component.html": {
-    "mtime": 1782469516.6072948,
-    "ast_hash": "1a4c12166dbf71b3bfe2765b547fd4cd",
+    "mtime": 1782685540.2613206,
+    "ast_hash": "cce24c4fcc1b3529673dabace897e4f9",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/dashboard-shell.component.html": {
-    "mtime": 1782469516.6075087,
+    "mtime": 1782677751.820331,
     "ast_hash": "43d3be247d33461a0c1b420c820de0eb",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/groups/groups-create-page.component.html": {
-    "mtime": 1782469516.607675,
+    "mtime": 1782677751.820331,
     "ast_hash": "1eaa30b72102ea923f3e476d05c1b19a",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/groups/groups-detail-page.component.html": {
-    "mtime": 1782469516.6078532,
+    "mtime": 1782677751.820331,
     "ast_hash": "934092dba50a94c192293d4793a7aa3c",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/quizzes/ai-quiz-page.component.html": {
-    "mtime": 1782469516.608027,
-    "ast_hash": "da5a5bcedef09a3bc115bbea7143b9d6",
+    "mtime": 1782685519.4310918,
+    "ast_hash": "fc05836b10506b7c1d4b9ec5094117dc",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.html": {
-    "mtime": 1782469516.6083608,
-    "ast_hash": "82a260e6dbb06974dfd69df9125e78ee",
+    "mtime": 1782685520.1771,
+    "ast_hash": "79c0a4ad6159a3bd1fd55768b8a43132",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/game/game-lobby-page.component.html": {
-    "mtime": 1782469516.6092942,
+    "mtime": 1782677751.8223312,
     "ast_hash": "10be690e960d833d40130508e5f48130",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/game/game-play-page.component.html": {
-    "mtime": 1782469516.6095753,
-    "ast_hash": "06a69188c4478cb2def31ee909ba937e",
+    "mtime": 1782684626.2785342,
+    "ast_hash": "24f141a770b121ecdb64d816054bfe51",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/host/host-page.component.html": {
-    "mtime": 1782469516.6104221,
-    "ast_hash": "5d81eebf7ad4a56c3390a8e835ef11b0",
+    "mtime": 1782684626.2825341,
+    "ast_hash": "4c35578f795978d476735b69c8e1d21b",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/landing/landing-page.component.html": {
-    "mtime": 1782469516.6106217,
+    "mtime": 1782677751.8243313,
     "ast_hash": "96fe82e305acb898ceb97e4630795597",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/leaderboards/leaderboards-page.component.html": {
-    "mtime": 1782469516.6108394,
+    "mtime": 1782677751.8243313,
     "ast_hash": "f5de02ad95895704bb597fb7bcf609e8",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/play/play-page.component.html": {
-    "mtime": 1782469516.6109965,
+    "mtime": 1782677751.8243313,
     "ast_hash": "fdab9bf61df6ea8fdf4ef7cbf6370800",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/assets/stitch/dashboard.html": {
-    "mtime": 1782469516.6128857,
+    "mtime": 1782677751.8263311,
     "ast_hash": "df65670bd12d69a2752060d28e17bf64",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/assets/stitch/game-lobby.html": {
-    "mtime": 1782469516.6132796,
+    "mtime": 1782677751.8273313,
     "ast_hash": "d5f83a718a4544809483ab7f90eff758",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/assets/stitch/leaderboards.html": {
-    "mtime": 1782469516.6137528,
+    "mtime": 1782677751.8273313,
     "ast_hash": "0dd7bc516e15377a432749146c313070",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/assets/stitch/prd-screen-a.html": {
-    "mtime": 1782469516.6139965,
+    "mtime": 1782677751.8283312,
     "ast_hash": "fda94aa8caa90168f5b2c044a7e7aa8c",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/assets/stitch/prd-screen-b.html": {
-    "mtime": 1782469516.6140826,
+    "mtime": 1782677751.8283312,
     "ast_hash": "11596db0682ab4c02f06dd264ba9d399",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/index.html": {
-    "mtime": 1782469516.6142747,
+    "mtime": 1782677751.8283312,
     "ast_hash": "caca4cdcbcf7b406f6bd7fd2fdb1bfb2",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/docs/performance.md": {
-    "mtime": 1782469516.6212294,
+    "mtime": 1782677751.8353312,
     "ast_hash": "19a4e2ebdcaf595d2c8324e27f7e79fa",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/docs/product-backlog.md": {
-    "mtime": 1782469516.621315,
+    "mtime": 1782677751.8363314,
     "ast_hash": "51af7aad24218a7068a438df478f35bc",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/docs/sprint.01/effort-plan.md": {
-    "mtime": 1782469516.6240435,
+    "mtime": 1782677751.8383315,
     "ast_hash": "9b1027c69abc52884648c1081f42134c",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/docs/sprint.01/sprint-backlog.md": {
-    "mtime": 1782469516.6241307,
+    "mtime": 1782677751.8383315,
     "ast_hash": "11e44646cc55a2a8453bffca0ab58a94",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/docs/sprint.02/effort-plan.md": {
-    "mtime": 1782469516.6242487,
+    "mtime": 1782677751.8393314,
     "ast_hash": "1b96c7f96b7d5f0f28320ebe9ff6428b",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/docs/sprint.02/sprint-backlog.md": {
-    "mtime": 1782469516.6243567,
+    "mtime": 1782677751.8393314,
     "ast_hash": "2cbe5323485364cb12571b2b6c82f81d",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/docs/sprint.03/effort-plan.md": {
-    "mtime": 1782469516.6244352,
+    "mtime": 1782677751.8393314,
     "ast_hash": "1bfddf6a85620a2546b3cdcea86c30e5",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/docs/sprint.03/sprint-backlog.md": {
-    "mtime": 1782469516.624515,
+    "mtime": 1782677751.8393314,
     "ast_hash": "bbdb466f4ae2962b55fdaf844862501d",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/docs/sprint.04/effort-plan.md": {
-    "mtime": 1782469516.6245782,
+    "mtime": 1782677751.8393314,
     "ast_hash": "ef253021b0f5eab47e1c47754377f6f7",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/docs/sprint.04/sprint-backlog.md": {
-    "mtime": 1782469516.62464,
+    "mtime": 1782677751.8393314,
     "ast_hash": "9796fef45874a186ca5ec9ffc38f4125",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/docs/sprint.05/effort-plan.md": {
-    "mtime": 1782469516.6247017,
+    "mtime": 1782677751.8393314,
     "ast_hash": "f16bfef2dd69c47821879a052bbe596d",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/docs/sprint.05/sprint-backlog.md": {
-    "mtime": 1782469516.6247704,
+    "mtime": 1782677751.8393314,
     "ast_hash": "ef6fc03682be78f80fd3cf74ffa62caa",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/docs/sprint.06/effort-plan.md": {
-    "mtime": 1782469516.624843,
+    "mtime": 1782677751.8393314,
     "ast_hash": "8ebe21b777d210d5e96068a29b59b154",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/docs/sprint.06/sprint-backlog.md": {
-    "mtime": 1782469516.6249223,
+    "mtime": 1782677751.8393314,
     "ast_hash": "1b767ad9c2d9c0f5489799af82404945",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/docs/what-changed-in-product-backlog.md": {
-    "mtime": 1782469516.624969,
+    "mtime": 1782677751.8393314,
     "ast_hash": "de860e52113d64bbd2c8550ea71fec91",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/assets/stitch/dashboard.png": {
-    "mtime": 1782469516.6131976,
+    "mtime": 1782677751.8273313,
     "ast_hash": "714f4b01ad706d428d1de9b1eee667e4",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/assets/stitch/game-lobby.png": {
-    "mtime": 1782469516.613461,
+    "mtime": 1782677751.8273313,
     "ast_hash": "745df06b0df671fb9da9f2a829bd47ea",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/assets/stitch/image.png": {
-    "mtime": 1782469516.6136131,
+    "mtime": 1782677751.8273313,
     "ast_hash": "2ec9d6c62d923eee6dcc39219e4b9ebd",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/assets/stitch/leaderboards.png": {
-    "mtime": 1782469516.6139078,
+    "mtime": 1782677751.8283312,
     "ast_hash": "f049c1432df49bc9db405f60bcf17a76",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/docs/erd.png": {
-    "mtime": 1782469516.6210413,
+    "mtime": 1782677751.8353312,
     "ast_hash": "2a77c210701ddcb77c16a710f98b0e7a",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/.opencode/skills/task-management/router.sh": {
-    "mtime": 1782469516.590885,
+    "mtime": 1782677751.801331,
     "ast_hash": "230b0e954419f9622fc8176817e4fd5f",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/api/routes/config.routes.ts": {
-    "mtime": 1782469516.593905,
+    "mtime": 1782677751.804331,
     "ast_hash": "3f8b69ffd5f6333197c457e3201f7a8d",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/game/engine/bubbly-royale.engine.ts": {
-    "mtime": 1782470389.9654496,
+    "mtime": 1782684626.252534,
     "ast_hash": "fde0648fc851584765d27f02c7312d95",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/tests/unit/game/engine/bubbly-royale.engine.spec.ts": {
-    "mtime": 1782470390.243251,
+    "mtime": 1782684626.255534,
     "ast_hash": "b4cd3388643f8aea4c43ca80c10bc850",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/src/websocket/types/br-events.ts": {
-    "mtime": 1782469516.5994225,
+    "mtime": 1782684626.257534,
     "ast_hash": "d53d30a0e57617319926c6243052b20f",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/0005_quiet_jubilee.sql": {
-    "mtime": 1782469516.600054,
+    "mtime": 1782677751.811331,
     "ast_hash": "77690856becf5f69ffd94be7f035505b",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/meta/0005_snapshot.json": {
-    "mtime": 1782469516.6006424,
+    "mtime": 1782677751.812331,
     "ast_hash": "1d8bbb07e56296f965e714360396d715",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/services/api.service.spec.ts": {
-    "mtime": 1782469516.604751,
+    "mtime": 1782677751.8163311,
     "ast_hash": "fd5916a9b3e4d3ce49d175cbdb9eaf8a",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/services/config.service.spec.ts": {
-    "mtime": 1782469516.6050308,
+    "mtime": 1782677751.8163311,
     "ast_hash": "f7dabffa88120aadd2af6092da51271e",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/services/config.service.ts": {
-    "mtime": 1782469516.605111,
+    "mtime": 1782677751.8163311,
     "ast_hash": "bcb58cc2913c27b23f62b23a86ac4bb6",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/game/br-player-page.component.spec.ts": {
-    "mtime": 1782471144.9597516,
-    "ast_hash": "7581464debdbfe246d8a4c00824ad1e3",
+    "mtime": 1782684626.276534,
+    "ast_hash": "cf7ae0259d6e8088fae3a5a179355a42",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/game/br-player-page.component.ts": {
-    "mtime": 1782471153.4498453,
+    "mtime": 1782684626.276534,
     "ast_hash": "2347573055eb940d0597b4d6f0ba36d0",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/game/bubble-pop/bubble-pop.component.spec.ts": {
-    "mtime": 1782471532.176032,
+    "mtime": 1782677751.8223312,
     "ast_hash": "96eb07dd3b91a3600b9f564bc36d08ca",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/game/bubble-pop/bubble-pop.component.ts": {
-    "mtime": 1782471590.031678,
-    "ast_hash": "7dc6e672a59db52dd7405aae75f0a2ea",
+    "mtime": 1782684626.2775342,
+    "ast_hash": "15d4612e4dad4bbf73b81469cb9c2fcd",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/host/br-host-page.component.spec.ts": {
-    "mtime": 1782470395.369508,
-    "ast_hash": "83dc7d093a4f1ad09844c137e38f8d34",
+    "mtime": 1782684626.2815342,
+    "ast_hash": "2f27d188b9635780530fbcda1844e725",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/host/br-host-page.component.ts": {
-    "mtime": 1782471177.5441113,
-    "ast_hash": "46c1b9b3d7bb4bbf58592798320b5a7b",
+    "mtime": 1782684626.2815342,
+    "ast_hash": "4daf4f939da57abea7ca833f0842c380",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/settings/backend-selector.component.spec.ts": {
-    "mtime": 1782469516.6115937,
+    "mtime": 1782677751.8253312,
     "ast_hash": "7b8be4df025f0f0df027fb1fcb07b00b",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/settings/backend-selector.component.ts": {
-    "mtime": 1782469516.6116755,
+    "mtime": 1782677751.8253312,
     "ast_hash": "31af52f4996c1f7918e20ec75df33350",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/game/br-player-page.component.html": {
-    "mtime": 1782471123.737517,
-    "ast_hash": "33b47d3941b39fbc44d60025de338f4f",
+    "mtime": 1782684626.2725341,
+    "ast_hash": "6170e2b87718fc62311e594d40bab512",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/game/bubble-pop/bubble-pop.component.html": {
-    "mtime": 1782470973.556859,
-    "ast_hash": "d945abf69389c236e3b30f76300fa343",
+    "mtime": 1782677751.8213313,
+    "ast_hash": "0f5a9269dc32dc86d0ffdc938560a440",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/host/br-host-page.component.html": {
-    "mtime": 1782471229.7966883,
-    "ast_hash": "63f948634522678f329b21008048dab4",
+    "mtime": 1782684626.2805343,
+    "ast_hash": "beca7303926988e3dfdb5507814c742a",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/ui/br-lives-bar.component.ts": {
-    "mtime": 1782470881.8566172,
+    "mtime": 1782677751.8253312,
     "ast_hash": "a8567fe9d8d7906bc1b8849675dc1a30",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/ui/br-power-up-card.component.ts": {
-    "mtime": 1782471276.1492002,
+    "mtime": 1782684626.2835343,
     "ast_hash": "1fab6b24f812a6a341008ea49ecc88e1",
     "semantic_hash": ""
   },
   "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/ui/br-royal-player-card.component.ts": {
-    "mtime": 1782470909.4461524,
+    "mtime": 1782677751.8253312,
     "ast_hash": "7b26473ce889683efaf301a5d1473c55",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/apps/backend/src/api/hooks/knowledge-analysis.hook.ts": {
+    "mtime": 1782681856.0639362,
+    "ast_hash": "7755ea48d89d9c6d841ca5a4c5714728",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/apps/backend/src/api/routes/knowledge-graph.routes.ts": {
+    "mtime": 1782681856.0639362,
+    "ast_hash": "5c13072d0f4c55f5b2c1cea35ea72e1d",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/apps/backend/src/api/services/knowledge-analysis.service.ts": {
+    "mtime": 1782681856.0649362,
+    "ast_hash": "9152c397e2aa327498e01cc1f2d4f983",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/apps/backend/src/database/repositories/knowledge.repository.ts": {
+    "mtime": 1782681856.0649362,
+    "ast_hash": "eb65664e822c8d89b708451b186942c5",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/apps/backend/src/database/schema/knowledge.ts": {
+    "mtime": 1782681856.0649362,
+    "ast_hash": "2f929d0fc3cb906beb3e16e06f5f2293",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/0006_nebulous_gunslinger.sql": {
+    "mtime": 1782681856.0649362,
+    "ast_hash": "a1ee64ae43ea4d4e282a03d717b8bc17",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/0007_quiz_visibility.sql": {
+    "mtime": 1782685413.7079306,
+    "ast_hash": "87b413d1dd91f861e6ddbb1a75a856a9",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/meta/0006_snapshot.json": {
+    "mtime": 1782681856.0649362,
+    "ast_hash": "a9e42c4c49b5c9db8c1b79c5ee883e50",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/apps/backend/supabase/migrations/meta/0007_snapshot.json": {
+    "mtime": 1782681856.0659363,
+    "ast_hash": "b0dc8f5b8878072f1b44dd6e44fd0e7b",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/apps/frontend/src/app/core/services/knowledge-graph.service.ts": {
+    "mtime": 1782681856.0659363,
+    "ast_hash": "7979e4c41c81c55562973a77b5037180",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/knowledge-graph-page.component.ts": {
+    "mtime": 1782686614.0280182,
+    "ast_hash": "c12c5c23633c6557036482c190bf42be",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/knowledge-graph/knowledge-graph.component.ts": {
+    "mtime": 1782686730.2432768,
+    "ast_hash": "03d50e076b514e814187fb341b4cbbf8",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/quizzes/quiz-builder-page.component.spec.ts": {
+    "mtime": 1782682914.93366,
+    "ast_hash": "83956954f270d5912cf8b87ddbba7e05",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/discover/discover-quizzes-page.component.spec.ts": {
+    "mtime": 1782682993.1235256,
+    "ast_hash": "757ac8775b90b58043e4e189703937a5",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/discover/discover-quizzes-page.component.ts": {
+    "mtime": 1782687486.404468,
+    "ast_hash": "b37f48a19a01778835c44a33fffdab3e",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/apps/frontend/src/app/shared/utils/player-emoji.ts": {
+    "mtime": 1782681856.0673335,
+    "ast_hash": "5b02e872250e2bd6a62729e635068f0d",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/dashboard/knowledge-graph/knowledge-graph.component.html": {
+    "mtime": 1782681856.0659363,
+    "ast_hash": "e78e4219ebbadd9c1b6ec0182256ecfe",
+    "semantic_hash": ""
+  },
+  "/home/mohamad/coding/QuizForge/apps/frontend/src/app/features/discover/discover-quizzes-page.component.html": {
+    "mtime": 1782687645.1281877,
+    "ast_hash": "317981e7fb013c603b9b8ab1d8804f18",
     "semantic_hash": ""
   }
 }
