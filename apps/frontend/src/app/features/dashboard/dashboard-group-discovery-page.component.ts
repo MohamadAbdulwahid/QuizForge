@@ -10,7 +10,6 @@ import {
 } from '../../core/services/group-api.service';
 import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
 import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
-import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
 
 @Component({
   selector: 'app-dashboard-group-discovery-page',
@@ -20,7 +19,6 @@ import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
     FormsModule,
     BubblyButtonComponent,
     BubblyCardComponent,
-    PageHeadingComponent,
   ],
   templateUrl: './dashboard-group-discovery-page.component.html',
 })

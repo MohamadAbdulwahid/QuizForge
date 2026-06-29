@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { quizController } from '../controllers/quiz.controller';
 import { AiGenerateRequestSchema } from '../dtos/ai-generate.dto';
+import { AiRemixRequestSchema } from '../dtos/ai-remix.dto';
+import { AiTranslateRequestSchema } from '../dtos/ai-translate.dto';
 import {
   DiscoverQuizzesQuerySchema,
   QuizIdParamSchema,
@@ -51,3 +53,15 @@ quizRouter.patch(
   quizController.updateQuiz
 );
 quizRouter.delete('/:id', validateParams(QuizIdParamSchema), quizController.deleteQuiz);
+quizRouter.post(
+  '/:id/ai-remix',
+  validateParams(QuizIdParamSchema),
+  validateBody(AiRemixRequestSchema),
+  quizController.aiRemixQuiz
+);
+quizRouter.post(
+  '/:id/ai-translate',
+  validateParams(QuizIdParamSchema),
+  validateBody(AiTranslateRequestSchema),
+  quizController.aiTranslateQuiz
+);

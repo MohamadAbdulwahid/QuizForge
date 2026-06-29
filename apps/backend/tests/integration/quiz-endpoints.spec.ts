@@ -41,6 +41,36 @@ mock.module('../../src/api/controllers/quiz.controller', () => {
     res.status(200).json({ items: [], total: 0, limit, offset });
   };
 
+  // AI remix mock: returns a representative remix payload so callers can
+  // assert the route reaches the controller and the response shape is right.
+  const aiRemixQuiz = (_req: express.Request, res: express.Response): void => {
+    res.status(200).json({
+      quiz: { id: 100, title: '[Remix] Demo', parent_quiz_id: 1, transformation_type: 'remix' },
+      shareCode: 'REMIXED1',
+      transformationType: 'remix',
+      reused: false,
+    });
+  };
+
+  // AI translate mock: returns a representative translate payload.
+  const aiTranslateQuiz = (_req: express.Request, res: express.Response): void => {
+    res.status(200).json({
+      quiz: { id: 101, title: '[Spanish] Demo', parent_quiz_id: 1, transformation_type: 'translate' },
+      shareCode: 'TRANSLT1',
+      transformationType: 'translate',
+      targetLanguage: 'es',
+      reused: false,
+    });
+  };
+
+  // AI generate mock: returns a representative generated-questions payload.
+  const aiGenerateQuiz = (_req: express.Request, res: express.Response): void => {
+    res.status(200).json({
+      data: { questions: [{ text: 'Q?', type: 'multiple-choice', options: [], correct_answer: 'a' }] },
+      meta: { count: 1 },
+    });
+  };
+
   return {
     quizController: {
       createQuiz: (_req: express.Request, res: express.Response) =>
@@ -54,6 +84,9 @@ mock.module('../../src/api/controllers/quiz.controller', () => {
       deleteQuiz: (_req: express.Request, res: express.Response) => res.status(204).send(),
       getQuizByShareCode,
       discoverQuizzes,
+      aiGenerateQuiz,
+      aiRemixQuiz,
+      aiTranslateQuiz,
     },
   };
 });
@@ -68,6 +101,20 @@ mock.module('../../src/api/controllers/session.controller', () => ({
       res.status(200).json({ id: 1, pin: '123456', status: 'playing' }),
     getLeaderboard: (_req: express.Request, res: express.Response) =>
       res.status(200).json({ quizTitle: 'Quiz', leaderboard: [] }),
+    getMySessions: (_req: express.Request, res: express.Response) =>
+      res.status(200).json([]),
+    abortSession: (_req: express.Request, res: express.Response) =>
+      res.status(204).send(),
+    startQuestion: (_req: express.Request, res: express.Response) =>
+      res.status(200).json({}),
+    endQuestion: (_req: express.Request, res: express.Response) =>
+      res.status(200).json({}),
+    showLeaderboard: (_req: express.Request, res: express.Response) =>
+      res.status(200).json({}),
+    showFinalLeaderboard: (_req: express.Request, res: express.Response) =>
+      res.status(200).json({}),
+    recordAnswer: (_req: express.Request, res: express.Response) =>
+      res.status(200).json({}),
   },
 }));
 
@@ -263,5 +310,97 @@ describe('GET /api/quizzes/share/:code visibility gating', () => {
     // Same approach: draft visibility is also 404 in the service.
     const response = await fetch(`${baseUrl}/api/quizzes/share/DRAFTCODE`, { headers });
     expect(response.status).toBe(404);
+  });
+});
+
+describe('AI remix/translate endpoints', () => {
+  const headers = {
+    'API-Version': '1.0',
+    Authorization: 'Bearer valid-token',
+    'Content-Type': 'application/json',
+  };
+
+  it('POST /api/quizzes/:id/ai-remix returns 200 with remixed quiz', async () => {
+    const response = await fetch(`${baseUrl}/api/quizzes/1/ai-remix`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ instructions: 'Make it easier' }),
+    });
+    expect(response.status).toBe(200);
+    const body = (await response.json()) as {
+      quiz: { parent_quiz_id: number; transformation_type: string };
+      shareCode: string;
+      transformationType: string;
+      reused: boolean;
+    };
+    expect(body.transformationType).toBe('remix');
+    expect(body.quiz.transformation_type).toBe('remix');
+    expect(body.reused).toBe(false);
+    expect(body.shareCode).toBe('REMIXED1');
+  });
+
+  it('POST /api/quizzes/:id/ai-remix returns 400 on invalid body', async () => {
+    const response = await fetch(`${baseUrl}/api/quizzes/1/ai-remix`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ instructions: 'a'.repeat(2000) }),
+    });
+    expect(response.status).toBe(400);
+  });
+
+  it('POST /api/quizzes/:id/ai-remix returns 400 on invalid id', async () => {
+    const response = await fetch(`${baseUrl}/api/quizzes/abc/ai-remix`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({}),
+    });
+    expect(response.status).toBe(400);
+  });
+
+  it('POST /api/quizzes/:id/ai-translate returns 200 with translated quiz', async () => {
+    const response = await fetch(`${baseUrl}/api/quizzes/1/ai-translate`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ targetLanguage: 'es' }),
+    });
+    expect(response.status).toBe(200);
+    const body = (await response.json()) as {
+      quiz: { parent_quiz_id: number; transformation_type: string };
+      shareCode: string;
+      transformationType: string;
+      targetLanguage: string;
+      reused: boolean;
+    };
+    expect(body.transformationType).toBe('translate');
+    expect(body.targetLanguage).toBe('es');
+    expect(body.quiz.transformation_type).toBe('translate');
+    expect(body.reused).toBe(false);
+  });
+
+  it('POST /api/quizzes/:id/ai-translate returns 400 on unsupported language', async () => {
+    const response = await fetch(`${baseUrl}/api/quizzes/1/ai-translate`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ targetLanguage: 'klingon' }),
+    });
+    expect(response.status).toBe(400);
+  });
+
+  it('POST /api/quizzes/:id/ai-translate returns 400 on missing body', async () => {
+    const response = await fetch(`${baseUrl}/api/quizzes/1/ai-translate`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({}),
+    });
+    expect(response.status).toBe(400);
+  });
+
+  it('POST /api/quizzes/:id/ai-translate returns 400 on invalid id', async () => {
+    const response = await fetch(`${baseUrl}/api/quizzes/abc/ai-translate`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ targetLanguage: 'es' }),
+    });
+    expect(response.status).toBe(400);
   });
 });

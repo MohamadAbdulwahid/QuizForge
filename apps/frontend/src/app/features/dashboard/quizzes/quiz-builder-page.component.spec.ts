@@ -212,4 +212,58 @@ describe('QuizBuilderPageComponent — visibility & status', () => {
       expect(access<QuizStatus>(editComponent, 'status')()).toBe('draft');
     });
   });
+
+  describe('delete quiz flow', () => {
+    it('does not render the delete button in create mode (no quizId)', () => {
+      fixture.detectChanges();
+      const button = fixture.nativeElement.querySelector(
+        '[data-testid="delete-quiz-button"]'
+      );
+      expect(button).toBeNull();
+    });
+
+    it('opens the confirmation modal when the delete button is clicked in edit mode', () => {
+      // Switch to edit mode by setting quizId directly (the loader is async).
+      access<number | null>(component, 'quizId').set(42);
+      access<string>(component, 'title').set('Biology Basics');
+      fixture.detectChanges();
+
+      const button = fixture.nativeElement.querySelector(
+        '[data-testid="delete-quiz-button"]'
+      ) as HTMLButtonElement;
+      expect(button).toBeTruthy();
+      button.click();
+      fixture.detectChanges();
+
+      const modal = fixture.nativeElement.textContent ?? '';
+      expect(modal).toContain('Delete this quiz?');
+      expect(modal).toContain('Biology Basics');
+    });
+
+    it('hides the modal when dismiss is fired (cancel button)', () => {
+      access<number | null>(component, 'quizId').set(42);
+      fixture.detectChanges();
+      const inst = component as unknown as {
+        openDeleteModal: () => void;
+        cancelDelete: () => void;
+        showDeleteModal: () => boolean;
+      };
+      inst.openDeleteModal();
+      fixture.detectChanges();
+      expect(inst.showDeleteModal()).toBe(true);
+      inst.cancelDelete();
+      fixture.detectChanges();
+      expect(inst.showDeleteModal()).toBe(false);
+    });
+
+    it('refuses to open the delete modal in create mode (no quizId)', () => {
+      // quizId is null in the default beforeEach.
+      const inst = component as unknown as {
+        openDeleteModal: () => void;
+        showDeleteModal: () => boolean;
+      };
+      inst.openDeleteModal();
+      expect(inst.showDeleteModal()).toBe(false);
+    });
+  });
 });

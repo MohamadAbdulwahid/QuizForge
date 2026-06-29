@@ -14,6 +14,8 @@ import type {
   DiscoverQuizzesResponse,
   UpdateQuizRequest,
 } from './dtos/quiz.dto';
+import type { AiRemixRequest } from './dtos/ai-remix.dto';
+import type { AiTranslateRequest } from './dtos/ai-translate.dto';
 import type { CreateSessionRequest, UpdateSessionStatusRequest } from './dtos/session.dto';
 import type { SignInDto, SignUpDto } from './dtos/auth.dto';
 
@@ -84,6 +86,14 @@ type RemoveMemberHandler = (
 type GroupActiveSessionsHandler = (_req: Request<{ id: string }>, res: Response<unknown>) => void;
 type CreateSessionHandler = (
   _req: Request<unknown, unknown, CreateSessionRequest>,
+  res: Response<unknown>
+) => void;
+type AiRemixQuizHandler = (
+  _req: Request<{ id: string }, unknown, AiRemixRequest>,
+  res: Response<unknown>
+) => void;
+type AiTranslateQuizHandler = (
+  _req: Request<{ id: string }, unknown, AiTranslateRequest>,
   res: Response<unknown>
 ) => void;
 type GetSessionByPinHandler = (_req: Request<{ pin: string }>, res: Response<unknown>) => void;
@@ -438,6 +448,42 @@ export type QuizForgeApiSpec = Tspec.DefineApiSpec<{
           401: ErrorResponse;
           403: ErrorResponse;
           404: ErrorResponse;
+        };
+      };
+    };
+    '/api/quizzes/{id}/ai-remix': {
+      post: {
+        tags: ['Quiz'];
+        summary: 'AI remix a quiz (creates a new owned quiz)';
+        handler: AiRemixQuizHandler;
+        responses: {
+          200: unknown;
+          400: ErrorResponse;
+          401: ErrorResponse;
+          403: ErrorResponse;
+          404: ErrorResponse;
+          429: ErrorResponse;
+          502: ErrorResponse;
+          503: ErrorResponse;
+          504: ErrorResponse;
+        };
+      };
+    };
+    '/api/quizzes/{id}/ai-translate': {
+      post: {
+        tags: ['Quiz'];
+        summary: 'AI translate a quiz to a target language (creates a new owned quiz)';
+        handler: AiTranslateQuizHandler;
+        responses: {
+          200: unknown;
+          400: ErrorResponse;
+          401: ErrorResponse;
+          403: ErrorResponse;
+          404: ErrorResponse;
+          429: ErrorResponse;
+          502: ErrorResponse;
+          503: ErrorResponse;
+          504: ErrorResponse;
         };
       };
     };

@@ -1,0 +1,76 @@
+<app-bubbly-modal
+  [visible]="visible()"
+  [title]="'AI Remix Quiz'"
+  [message]="messageText()"
+  [customFooter]="true"
+  (dismiss)="dismiss()"
+>
+  @if (errorMessage(); as err) {
+    <div class="mt-4">
+      <app-bubbly-alert
+        [message]="err"
+        variant="error"
+        [dismissible]="true"
+      />
+    </div>
+  }
+
+  @if (successMessage(); as ok) {
+    <div class="mt-4">
+      <app-bubbly-alert [message]="ok" variant="success" />
+    </div>
+  }
+
+  <div class="mt-4">
+    <label
+      for="remix-instructions"
+      class="text-base-content mb-1.5 block text-sm font-bold"
+    >
+      Remix instructions
+      <span class="text-base-content/50 font-normal">(optional)</span>
+    </label>
+    <textarea
+      id="remix-instructions"
+      class="textarea textarea-bordered min-h-28 w-full resize-y rounded-2xl"
+      placeholder="e.g. Make it easier for grade 4 · Convert all questions to true/false · Rewrite for ESL students · Focus on chapter 3 only"
+      [value]="instructions()"
+      [disabled]="isLoading()"
+      (input)="onInstructionsInput($event)"
+    ></textarea>
+    <p
+      class="mt-1 text-xs"
+      [class.text-[var(--bubbly-error-text)]]="instructionsTooLong()"
+      [class.text-base-content/50]="!instructionsTooLong()"
+    >
+      {{ instructionsLength() }} / 1000 characters
+    </p>
+    <p class="text-base-content/60 mt-2 text-xs">
+      Leave blank for a faithful rewrite. The AI keeps the same question count
+      and type distribution.
+    </p>
+  </div>
+
+  <ng-container modal-footer>
+    <button
+      type="button"
+      class="qf-button-ghost qf-tactile rounded-2xl px-5 py-3 text-sm font-bold"
+      [disabled]="isLoading()"
+      (click)="dismiss()"
+    >
+      Cancel
+    </button>
+    <app-bubbly-button
+      tone="primary"
+      size="md"
+      [disabled]="!canSubmit() || instructionsTooLong()"
+      (click)="generate()"
+    >
+      @if (isLoading()) {
+        <span class="loading loading-spinner loading-sm"></span>
+        Remixing…
+      } @else {
+        ✨ Generate Remix
+      }
+    </app-bubbly-button>
+  </ng-container>
+</app-bubbly-modal>

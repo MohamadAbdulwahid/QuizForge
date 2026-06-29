@@ -1,0 +1,64 @@
+<app-bubbly-modal
+  [visible]="visible()"
+  [title]="'AI Translate Quiz'"
+  [message]="messageText()"
+  [customFooter]="true"
+  (dismiss)="dismiss()"
+>
+  @if (errorMessage(); as err) {
+    <div class="mt-4">
+      <app-bubbly-alert
+        [message]="err"
+        variant="error"
+        [dismissible]="true"
+      />
+    </div>
+  }
+
+  @if (successMessage(); as ok) {
+    <div class="mt-4">
+      <app-bubbly-alert [message]="ok" variant="success" />
+    </div>
+  }
+
+  <div class="mt-4 space-y-3">
+    <app-bubbly-select
+      label="Target language"
+      placeholder="Pick a language…"
+      [options]="languageOptions()"
+      [ngModel]="targetLanguage()"
+      (ngModelChange)="onLanguageChange($event)"
+      [disabled]="isLoading()"
+    />
+
+    <p class="text-base-content/60 text-xs">
+      Cultural adaptation goes beyond translation: examples, idioms, and
+      references are localized for the target audience. Re-requesting an
+      existing translation will reuse your saved version.
+    </p>
+  </div>
+
+  <ng-container modal-footer>
+    <button
+      type="button"
+      class="qf-button-ghost qf-tactile rounded-2xl px-5 py-3 text-sm font-bold"
+      [disabled]="isLoading()"
+      (click)="dismiss()"
+    >
+      Cancel
+    </button>
+    <app-bubbly-button
+      tone="primary"
+      size="md"
+      [disabled]="!canSubmit()"
+      (click)="generate()"
+    >
+      @if (isLoading()) {
+        <span class="loading loading-spinner loading-sm"></span>
+        Translating…
+      } @else {
+        🌐 Generate Translation
+      }
+    </app-bubbly-button>
+  </ng-container>
+</app-bubbly-modal>

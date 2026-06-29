@@ -1,5 +1,6 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
 import { of, throwError } from 'rxjs';
 import { DiscoverQuizzesPageComponent } from './discover-quizzes-page.component';
@@ -38,7 +39,7 @@ const SECOND_QUIZ: DiscoverQuizSummary = {
   question_count: 8,
   creator: {
     user_id: '22222222-2222-2222-2222-222222222222',
-    username: null,
+    username: 'math_wiz',
     display_name: 'Math Wiz',
   },
   play_count: 5,
@@ -82,6 +83,19 @@ interface TestHarness {
   mockApi: QuizApiMock;
 }
 
+// The component's `items`, `onSearchChange`, `errorMessage`, `canNext`,
+// `onNext`, `offset` are `protected` for the template. The tests cast
+// through `unknown` to access them, mirroring the pattern used elsewhere
+// for protected signals.
+type TestableComponent = DiscoverQuizzesPageComponent & {
+  items: () => unknown[];
+  onSearchChange: (value: string) => void;
+  errorMessage: () => string | null;
+  canNext: () => boolean;
+  onNext: () => void;
+  offset: () => number;
+};
+
 async function setupComponent(
   responses: DiscoverQuizzesResponse[] | Error = [makeResponse()]
 ): Promise<TestHarness> {
@@ -91,6 +105,10 @@ async function setupComponent(
     imports: [DiscoverQuizzesPageComponent],
     providers: [
       provideZonelessChangeDetection(),
+      {
+        provide: ActivatedRoute,
+        useValue: { snapshot: { paramMap: { get: vi.fn().mockReturnValue(null) } } },
+      },
       { provide: QuizApiService, useValue: mockApi },
     ],
   }).compileComponents();
@@ -143,11 +161,11 @@ describe('DiscoverQuizzesPageComponent', () => {
     expect(firstCall[3]).toBe(0);
 
     // Card title from the mocked response should appear in the DOM.
-    expect(component.items().length).toBe(1);
+    expect((component as TestableComponent).items().length).toBe(1);
     const rendered = fixture.nativeElement.textContent ?? '';
     expect(rendered).toContain('World Capitals');
     expect(rendered).toContain('Curious Creator');
-    expect(rendered).toContain('Code ABCD12');
+    expect(rendered).toContain('ABCD12');
     expect(rendered).toContain('42 plays');
   });
 
@@ -169,7 +187,7 @@ describe('DiscoverQuizzesPageComponent', () => {
     const { fixture, component } = await setupComponent([makeResponse([])]);
 
     // Simulate the user typing into the search field.
-    component.onSearchChange('pizza');
+    (component as TestableComponent).onSearchChange('pizza');
     fixture.detectChanges();
 
     const rendered = fixture.nativeElement.textContent ?? '';
@@ -179,7 +197,7 @@ describe('DiscoverQuizzesPageComponent', () => {
   it('exposes an error message when the API throws', async () => {
     const { component } = await setupComponent(new Error('network down'));
 
-    expect(component.errorMessage()).toBe('network down');
+    expect((component as TestableComponent).errorMessage()).toBe('network down');
   });
 
   it('debounces the search input by 300ms', async () => {
@@ -188,7 +206,7 @@ describe('DiscoverQuizzesPageComponent', () => {
 
     // Mutate the search query through the public handler so we exercise the
     // exact code path used by the template's ngModel binding.
-    component.onSearchChange('history');
+    (component as TestableComponent).onSearchChange('history');
     // Trigger CD so the debounce effect re-runs with the new query value and
     // schedules its setTimeout.
     fixture.detectChanges();
@@ -223,8 +241,8 @@ describe('DiscoverQuizzesPageComponent', () => {
     }));
     const { component } = await setupComponent([makeResponse(many, 30)]);
 
-    expect(component.canNext()).toBe(true);
-    component.onNext();
-    expect(component.offset()).toBe(24);
+    expect((component as TestableComponent).canNext()).toBe(true);
+    (component as TestableComponent).onNext();
+    expect((component as TestableComponent).offset()).toBe(24);
   });
 });

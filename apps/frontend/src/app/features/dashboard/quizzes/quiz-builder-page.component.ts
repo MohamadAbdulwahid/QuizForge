@@ -16,6 +16,7 @@ import {
 import { BubblyAlertComponent } from '../../../shared/ui/bubbly-alert.component';
 import { BubblyButtonComponent } from '../../../shared/ui/bubbly-button.component';
 import { BubblyCardComponent } from '../../../shared/ui/bubbly-card.component';
+import { BubblyModalComponent } from '../../../shared/ui/bubbly-modal.component';
 import { BubblySelectComponent } from '../../../shared/ui/bubbly-select.component';
 import { QUESTION_TYPES, QuestionTypeConfig } from '../../quiz/types/question-types';
 
@@ -285,6 +286,7 @@ function validateQuestion(q: QuestionDraft): FieldError[] {
     BubblyCardComponent,
     BubblyButtonComponent,
     BubblyAlertComponent,
+    BubblyModalComponent,
     BubblySelectComponent,
   ],
   templateUrl: './quiz-builder-page.component.html',
@@ -318,6 +320,25 @@ export class QuizBuilderPageComponent {
   /* ─── Selection state ─── */
   protected readonly selectedQuestionId = signal<string | null>(null);
   protected readonly showDescription = signal(false);
+
+  /* ─── Delete state ─── */
+  /** Whether the delete-confirmation modal is open. */
+  protected readonly showDeleteModal = signal(false);
+  /** True while the DELETE /api/quizzes/:id call is in flight. */
+  protected readonly isDeleting = signal(false);
+  /** Inline error rendered in the delete modal (separate from the page-level errorMessage). */
+  protected readonly deleteErrorMessage = signal<string | null>(null);
+
+  /**
+   * Body of the delete confirmation message. Lives in a computed so the
+   * Angular template parser doesn't choke on inline string interpolation
+   * with embedded quotes (we had the same issue with the AI modals).
+   */
+  protected readonly deleteMessage = computed(() => {
+    const t = this.title().trim();
+    const label = t.length > 0 ? t : 'Untitled Quiz';
+    return `This will permanently delete "${label}" and all of its questions. This cannot be undone.`;
+  });
 
   /* ─── Computed ─── */
   protected readonly isEditMode = computed(() => this.quizId() !== null);
@@ -991,6 +1012,69 @@ export class QuizBuilderPageComponent {
   /* ─── Navigation ─── */
   protected goBack(): void {
     void this.router.navigate(['/dashboard/quizzes']);
+  }
+
+  /* ─── Delete (with confirmation) ─── */
+
+  /**
+   * Opens the delete-confirmation modal. Only callable in edit mode
+   * (the button is hidden otherwise) — but the guard is here too as
+   * defence in depth.
+   */
+  protected openDeleteModal(): void {
+    if (!this.isEditMode() || this.quizId() === null) {
+      return;
+    }
+    this.deleteErrorMessage.set(null);
+    this.showDeleteModal.set(true);
+  }
+
+  /** Closes the modal without deleting. */
+  protected cancelDelete(): void {
+    if (this.isDeleting()) {
+      return; // ignore dismiss while a delete is in flight
+    }
+    this.showDeleteModal.set(false);
+    this.deleteErrorMessage.set(null);
+  }
+
+  /**
+   * Performs the actual delete: calls `DELETE /api/quizzes/:id`, then
+   * navigates back to the dashboard on success. Errors stay inline in
+   * the modal so the user can retry without losing context.
+   */
+  protected confirmDelete(): void {
+    const id = this.quizId();
+    if (id === null) {
+      this.showDeleteModal.set(false);
+      return;
+    }
+
+    this.isDeleting.set(true);
+    this.deleteErrorMessage.set(null);
+
+    this.quizApi
+      .deleteQuiz(id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.isDeleting.set(false);
+          this.showDeleteModal.set(false);
+          // Navigate away so the user isn't left on a page for a deleted quiz.
+          void this.router.navigate(['/dashboard/quizzes']);
+        },
+        error: (err: unknown) => {
+          this.isDeleting.set(false);
+          const status = (err as { status?: number } | null)?.status;
+          if (status === 403) {
+            this.deleteErrorMessage.set('You do not have permission to delete this quiz.');
+          } else if (status === 404) {
+            this.deleteErrorMessage.set('This quiz no longer exists.');
+          } else {
+            this.deleteErrorMessage.set('Failed to delete quiz. Please try again.');
+          }
+        },
+      });
   }
 
   /* ─── Selection helpers ─── */

@@ -242,6 +242,163 @@ export async function assertQuizOwnership(quizId: number, userId: string): Promi
 }
 
 /**
+ * Loads a quiz for AI transformation (remix/translate). Unlike `getQuizById`,
+ * this requires the caller to be the owner — non-owners cannot remix/translate
+ * a quiz they don't own (per the current QuizForge product scope).
+ *
+ * Returns the full quiz (with correct_answer) so the AI has the answer key
+ * to work with when generating replacements.
+ *
+ * @param quizId - Source quiz id.
+ * @param userId - Authenticated user id.
+ * @returns Quiz with questions.
+ * @throws NotFoundError when the quiz doesn't exist.
+ * @throws ForbiddenError when the user is not the owner.
+ */
+export async function getOwnedQuiz(
+  quizId: number,
+  userId: string
+): Promise<QUIZ & { questions: QUESTION[] }> {
+  const quiz = await quizRepository.findByIdWithQuestions(quizId);
+
+  if (!quiz) {
+    throw new NotFoundError('Quiz not found', 'QUIZ_NOT_FOUND');
+  }
+
+  if (quiz.creator_id !== userId) {
+    throw new ForbiddenError('You can only transform your own quizzes', 'QUIZ_NOT_OWNED');
+  }
+
+  if (quiz.questions.length === 0) {
+    throw new NotFoundError('Source quiz has no questions to transform', 'QUIZ_EMPTY');
+  }
+
+  return quiz;
+}
+
+/**
+ * Computes the title prefix for an AI-transformed quiz.
+ * - "remix"     → "[Remix] {original}"
+ * - "translate" → "[{Language name}] {original}"
+ *
+ * Caps the result at 200 characters (the `quiz.title` Zod max).
+ */
+export function transformTitle(
+  originalTitle: string,
+  transformationType: 'remix' | 'translate',
+  languageName?: string
+): string {
+  const prefix =
+    transformationType === 'remix' ? '[Remix]' : languageName ? `[${languageName}]` : '[Translated]';
+  const candidate = `${prefix} ${originalTitle}`;
+  return candidate.length > 200 ? candidate.slice(0, 200) : candidate;
+}
+
+/**
+ * Creates a new quiz as an AI transformation of a source quiz. The new quiz
+ * inherits the source's visibility/status (defaulting to `unlisted` /
+ * `published`) but is owned by the calling user. Lineage fields
+ * (`parent_quiz_id`, `transformation_type`, `language`) are persisted.
+ *
+ * Used by both the AI remixer and translator endpoints.
+ *
+ * @param params - Transformation parameters.
+ * @param params.creatorId - The user creating the new quiz (becomes the owner).
+ * @param params.sourceQuiz - The quiz being remixed/translated (lineage parent).
+ * @param params.questions - Validated QuestionInput list to persist on the new quiz.
+ * @param params.transformationType - 'remix' or 'translate' — written to `transformation_type` column.
+ * @param params.languageCode - BCP-47 code of the new quiz content (e.g. 'en', 'es').
+ * @param params.languageName - Optional human-readable language name used in titles/descriptions.
+ * @returns Created quiz and its freshly generated share code.
+ */
+export async function createTransformedQuiz(params: {
+  creatorId: string;
+  sourceQuiz: QUIZ;
+  questions: ReadonlyArray<{
+    text: string;
+    type: import('../dtos/quiz.dto').QuestionType;
+    options: unknown;
+    correct_answer: string | null;
+    time_limit: number | null;
+    points: number;
+  }>;
+  transformationType: 'remix' | 'translate';
+  languageCode: string;
+  languageName?: string;
+}): Promise<{ quiz: QUIZ; shareCode: string }> {
+  const shareCode = await generateUniqueShareCode();
+
+  const quiz = await quizRepository.create({
+    title: transformTitle(
+      params.sourceQuiz.title,
+      params.transformationType,
+      params.languageName
+    ),
+    description: params.sourceQuiz.description
+      ? prependLineageDescription(
+          params.sourceQuiz.description,
+          params.transformationType,
+          params.languageName ?? params.languageCode
+        )
+      : undefined,
+    creatorId: params.creatorId,
+    shareCode,
+    visibility: params.sourceQuiz.visibility,
+    status: params.sourceQuiz.status,
+    parentQuizId: params.sourceQuiz.id,
+    transformationType: params.transformationType,
+    language: params.languageCode,
+  });
+
+  await import('../../database/repositories/question.repository').then(
+    async ({ createMany }) => {
+      await createMany(
+        quiz.id,
+        params.questions.map((question) => ({
+          text: question.text,
+          type: question.type,
+          options: question.options ?? [],
+          correct_answer: question.correct_answer,
+          time_limit: question.time_limit,
+          points: question.points,
+          order_index: 0,
+        }))
+      );
+    }
+  );
+
+  quizServiceLogger.info(
+    {
+      newQuizId: quiz.id,
+      sourceQuizId: params.sourceQuiz.id,
+      creatorId: params.creatorId,
+      transformationType: params.transformationType,
+      language: params.languageCode,
+    },
+    'Transformed quiz created'
+  );
+
+  return { quiz, shareCode };
+}
+
+/**
+ * Prepends a one-line lineage header to the description of a transformed
+ * quiz so the user can see at a glance where it came from.
+ */
+function prependLineageDescription(
+  original: string,
+  transformationType: 'remix' | 'translate',
+  target: string
+): string {
+  const header =
+    transformationType === 'remix'
+      ? `Remixed from the original quiz.`
+      : `Translated to ${target} from the original quiz.`;
+  const combined = `${header}\n\n${original}`;
+  return combined.length > 2000 ? combined.slice(0, 2000) : combined;
+}
+
+/**
  * Creates quiz with collision-protected share code and maps collision to conflict.
  * @param creatorId - creator id.
  * @param data - payload.

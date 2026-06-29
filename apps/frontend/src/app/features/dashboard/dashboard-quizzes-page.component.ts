@@ -6,8 +6,16 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { QuizApiService, QuizSummary, QuizVisibility } from '../../core/services/quiz-api.service';
 import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
 import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
-import { PageHeadingComponent } from '../../shared/ui/page-heading.component';
 import { StatusPillComponent } from '../../shared/ui/status-pill.component';
+import { BubblyAlertComponent } from '../../shared/ui/bubbly-alert.component';
+import {
+  RemixQuizEvent,
+  RemixQuizModalComponent,
+} from './quizzes/remix-quiz-modal.component';
+import {
+  TranslateQuizEvent,
+  TranslateQuizModalComponent,
+} from './quizzes/translate-quiz-modal.component';
 
 type QuizSortMode = 'newest' | 'oldest' | 'title';
 
@@ -20,8 +28,10 @@ type QuizSortMode = 'newest' | 'oldest' | 'title';
     RouterLink,
     BubblyButtonComponent,
     BubblyCardComponent,
-    PageHeadingComponent,
     StatusPillComponent,
+    BubblyAlertComponent,
+    RemixQuizModalComponent,
+    TranslateQuizModalComponent,
   ],
   templateUrl: './dashboard-quizzes-page.component.html',
 })
@@ -42,6 +52,17 @@ export class DashboardQuizzesPageComponent {
     this.quizzesResource.error() ? 'Could not load your quizzes. Please try again.' : null
   );
   protected readonly quizzes = computed(() => this.quizzesResource.value() ?? []);
+
+  /* ─── AI transform modal state ─── */
+  protected readonly remixModalVisible = signal(false);
+  protected readonly translateModalVisible = signal(false);
+  protected readonly remixSource = signal<{ id: number; title: string } | null>(null);
+  protected readonly translateSource = signal<{
+    id: number;
+    title: string;
+    language: string;
+  } | null>(null);
+  protected readonly toastMessage = signal<string | null>(null);
 
   protected readonly filteredQuizzes = computed(() => {
     const term = this.searchTerm().trim().toLowerCase();
@@ -84,6 +105,64 @@ export class DashboardQuizzesPageComponent {
 
   protected refresh(): void {
     this.quizzesResource.reload();
+  }
+
+  /* ─── AI transform actions ─── */
+
+  protected openRemix(quiz: QuizSummary): void {
+    this.remixSource.set({ id: quiz.id, title: quiz.title });
+    this.remixModalVisible.set(true);
+  }
+
+  protected openTranslate(quiz: QuizSummary): void {
+    this.translateSource.set({
+      id: quiz.id,
+      title: quiz.title,
+      language: quiz.language ?? 'en',
+    });
+    this.translateModalVisible.set(true);
+  }
+
+  protected closeRemix(): void {
+    this.remixModalVisible.set(false);
+    this.remixSource.set(null);
+  }
+
+  protected closeTranslate(): void {
+    this.translateModalVisible.set(false);
+    this.translateSource.set(null);
+  }
+
+  protected onRemixSuccess(event: RemixQuizEvent): void {
+    if (event.newQuizId > 0) {
+      this.toastMessage.set(
+        event.reused
+          ? 'Reusing your existing remix.'
+          : 'Remix created! Opening it now…'
+      );
+      // Re-fetch the quiz list so the new quiz appears, then navigate.
+      this.refresh();
+      void this.router.navigate(['/dashboard/quizzes', event.newQuizId]);
+    } else {
+      // Fallback when the new quiz id wasn't available.
+      this.refresh();
+    }
+    setTimeout(() => this.toastMessage.set(null), 4000);
+  }
+
+  protected onTranslateSuccess(event: TranslateQuizEvent): void {
+    if (event.newQuizId > 0) {
+      this.toastMessage.set(
+        event.reused
+          ? 'You already had a translation in this language — opening it.'
+          : 'Translation created! Opening it now…'
+      );
+      this.refresh();
+      void this.router.navigate(['/dashboard/quizzes', event.newQuizId]);
+    } else {
+      this.refresh();
+    }
+    setTimeout(() => this.toastMessage.set(null), 4000);
   }
 
   /* ─── Visibility pill helpers (Quiz Visibility & Discovery) ─── */

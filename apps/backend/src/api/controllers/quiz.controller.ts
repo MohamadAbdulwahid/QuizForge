@@ -2,6 +2,8 @@ import type { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import type { AuthenticatedRequest } from '../middleware/auth';
 import { generateQuizQuestions } from '../services/ai-quiz-generator.service';
+import { remixOwnedQuiz } from '../services/ai-quiz-remixer.service';
+import { translateOwnedQuiz } from '../services/ai-quiz-translator.service';
 import {
   createQuizWithCollisionGuard,
   deleteQuiz,
@@ -87,6 +89,50 @@ export class QuizController {
     res.status(StatusCodes.OK).json({
       data: { questions },
       meta: { count: questions.length },
+    });
+  }
+
+  /**
+   * Remixes one of the authenticated user's quizzes via AI, creating a new
+   * owned quiz with `transformation_type = 'remix'`. The new quiz is
+   * persisted server-side and returned (no preview step — unlike
+   * `ai-generate`, the AI only sees the user's own data so the result is
+   * safe to save directly).
+   */
+  async aiRemixQuiz(req: AuthenticatedRequest, res: Response): Promise<void> {
+    const userId = req.user!.id;
+    const sourceQuizId = Number(req.params.id);
+    const { instructions } = req.body as { instructions?: string };
+
+    const result = await remixOwnedQuiz(sourceQuizId, userId, instructions);
+
+    res.status(StatusCodes.OK).json({
+      quiz: result.quiz,
+      shareCode: result.shareCode,
+      transformationType: result.transformationType,
+      reused: result.reused,
+    });
+  }
+
+  /**
+   * Translates one of the authenticated user's quizzes to a target language
+   * via AI, creating a new owned quiz with
+   * `transformation_type = 'translate'`. Dedup: re-requests for the same
+   * (source, target language) pair return the existing translated quiz.
+   */
+  async aiTranslateQuiz(req: AuthenticatedRequest, res: Response): Promise<void> {
+    const userId = req.user!.id;
+    const sourceQuizId = Number(req.params.id);
+    const { targetLanguage } = req.body as { targetLanguage: string };
+
+    const result = await translateOwnedQuiz(sourceQuizId, userId, targetLanguage);
+
+    res.status(StatusCodes.OK).json({
+      quiz: result.quiz,
+      shareCode: result.shareCode,
+      transformationType: result.transformationType,
+      targetLanguage: result.targetLanguage,
+      reused: result.reused,
     });
   }
 

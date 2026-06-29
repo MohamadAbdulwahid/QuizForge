@@ -11,6 +11,8 @@ describe('LandingPageComponent', () => {
   it('renders introductory Forge text', async () => {
     await render(LandingPageComponent);
 
-    expect(screen.getByText(/Forge/i)).toBeTruthy();
+    // The page contains the QuizForge brand in multiple places (header, hero,
+    // footer) — use `getAllByText` to assert at least one match exists.
+    expect(screen.getAllByText(/Forge/i).length).toBeGreaterThan(0);
   });
 });

@@ -6,7 +6,6 @@ import { AuthService } from '../../core/services/auth.service';
 import { resolveAuthError } from '../../shared/utils/auth-errors';
 import { BubblyAlertComponent } from '../../shared/ui/bubbly-alert.component';
 import { BubblyButtonComponent } from '../../shared/ui/bubbly-button.component';
-import { BubblyCardComponent } from '../../shared/ui/bubbly-card.component';
 import { BubblyInputComponent } from '../../shared/ui/bubbly-input.component';
 
 @Component({
@@ -18,7 +17,6 @@ import { BubblyInputComponent } from '../../shared/ui/bubbly-input.component';
     RouterLink,
     BubblyAlertComponent,
     BubblyButtonComponent,
-    BubblyCardComponent,
     BubblyInputComponent,
   ],
   templateUrl: './login.component.html',

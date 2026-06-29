@@ -2,6 +2,7 @@ import { and, asc, count, desc, eq, ilike, sql } from 'drizzle-orm';
 import { db } from '../client';
 import { PROFILE } from '../schema/profile';
 import { QUESTION, QUIZ, quizStatus, quizVisibility } from '../schema/quiz';
+import type { quizTransformationType } from '../schema/quiz';
 
 /**
  * A discoverable quiz row joined with the creator profile (may be null
@@ -99,6 +100,9 @@ export async function findByShareCode(
  * @param data.shareCode - Unique quiz share code.
  * @param data.visibility - Optional visibility override (defaults to schema default 'unlisted' when undefined).
  * @param data.status - Optional status override (defaults to schema default 'published' when undefined).
+ * @param data.parentQuizId - Optional source quiz id (for AI remixes/translations).
+ * @param data.transformationType - Optional AI transformation type ('remix' | 'translate').
+ * @param data.language - Optional BCP-47 language tag of the quiz content (defaults to schema default 'en').
  * @returns Created quiz row.
  */
 export async function create(data: {
@@ -108,6 +112,9 @@ export async function create(data: {
   shareCode: string;
   visibility?: quizVisibility;
   status?: quizStatus;
+  parentQuizId?: number;
+  transformationType?: quizTransformationType;
+  language?: string;
 }): Promise<QUIZ> {
   const values: {
     title: string;
@@ -116,6 +123,9 @@ export async function create(data: {
     share_code: string;
     visibility?: quizVisibility;
     status?: quizStatus;
+    parent_quiz_id?: number;
+    transformation_type?: quizTransformationType;
+    language?: string;
   } = {
     title: data.title,
     description: data.description,
@@ -128,6 +138,15 @@ export async function create(data: {
   }
   if (data.status !== undefined) {
     values.status = data.status;
+  }
+  if (data.parentQuizId !== undefined) {
+    values.parent_quiz_id = data.parentQuizId;
+  }
+  if (data.transformationType !== undefined) {
+    values.transformation_type = data.transformationType;
+  }
+  if (data.language !== undefined) {
+    values.language = data.language;
   }
 
   const result = await db.insert(QUIZ).values(values).returning();
@@ -227,6 +246,47 @@ export async function belongsToCreator(quizId: number, creatorId: string): Promi
     .limit(1);
 
   return result.length > 0;
+}
+
+/**
+ * Finds an existing transformation of a source quiz owned by a specific
+ * creator. Used by the AI translate flow to short-circuit re-requests
+ * (saves AI tokens and prevents duplicate translated quizzes).
+ *
+ * For translations, also matches on `language` to ensure we dedup the
+ * specific (source, target language) pair — translating to Spanish twice
+ * returns the same quiz; translating to French creates a new one.
+ *
+ * @param params - Lookup parameters.
+ * @param params.parentQuizId - Source quiz id.
+ * @param params.creatorId - Owner (transformer) user id.
+ * @param params.transformationType - 'remix' | 'translate'.
+ * @param params.language - For 'translate', the target language tag. Ignored for 'remix'.
+ * @returns The existing transformed quiz, or null.
+ */
+export async function findByParentAndType(params: {
+  parentQuizId: number;
+  creatorId: string;
+  transformationType: quizTransformationType;
+  language?: string;
+}): Promise<QUIZ | null> {
+  const conditions = [
+    eq(QUIZ.parent_quiz_id, params.parentQuizId),
+    eq(QUIZ.creator_id, params.creatorId),
+    eq(QUIZ.transformation_type, params.transformationType),
+  ];
+
+  if (params.transformationType === 'translate' && params.language !== undefined) {
+    conditions.push(eq(QUIZ.language, params.language));
+  }
+
+  const result = await db
+    .select()
+    .from(QUIZ)
+    .where(and(...conditions))
+    .limit(1);
+
+  return result[0] ?? null;
 }
 
 /**

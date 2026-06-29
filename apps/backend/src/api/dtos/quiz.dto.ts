@@ -21,6 +21,15 @@ const quizVisibilitySchema = z.enum(['private', 'unlisted', 'public']);
 const quizStatusSchema = z.enum(['draft', 'published']);
 /** Sort orders accepted by the public discover feed. */
 const quizSortSchema = z.enum(['newest', 'popular', 'alpha']);
+/** AI transformation lineage: a quiz created by AI from a parent quiz. */
+const quizTransformationTypeSchema = z.enum(['remix', 'translate']);
+/** BCP-47 language tag — defaults to English. Constrained to 2-10 chars to cover
+ *  simple (`en`, `es`) and compound (`zh-CN`, `pt-BR`) codes. */
+const quizLanguageSchema = z
+  .string()
+  .min(2, 'Language code must be at least 2 characters')
+  .max(10, 'Language code must be at most 10 characters')
+  .regex(/^[a-z]{2,3}(-[A-Z]{2,4})?$/, 'Language must be a BCP-47 tag (e.g. en, es, zh-CN)');
 
 /** Maximum length for the `correct_answer` text field. Sized to fit JSON-encoded payloads for Ordering and Matching. */
 const CORRECT_ANSWER_MAX = 5000;
@@ -268,6 +277,10 @@ const createQuizRequestSchema = z.object({
   visibility: quizVisibilitySchema.optional(),
   status: quizStatusSchema.optional(),
   questions: z.array(questionSchema).min(1, 'At least one question is required').max(100),
+  // ── AI transformation lineage (optional, set by AI remix/translate flows) ──
+  parent_quiz_id: z.coerce.number().int().positive().optional(),
+  transformation_type: quizTransformationTypeSchema.optional(),
+  language: quizLanguageSchema.optional(),
 });
 
 const updateQuizRequestSchema = z
@@ -337,6 +350,8 @@ export { questionTypeSchema as QuestionTypeSchema };
 export { quizVisibilitySchema as QuizVisibilitySchema };
 export { quizStatusSchema as QuizStatusSchema };
 export { quizSortSchema as QuizSortSchema };
+export { quizTransformationTypeSchema as QuizTransformationTypeSchema };
+export { quizLanguageSchema as QuizLanguageSchema };
 
 export {
   questionSchema as QuestionSchema,
@@ -356,6 +371,8 @@ export type QuestionType = z.infer<typeof questionTypeSchema>;
 export type QuizVisibility = z.infer<typeof quizVisibilitySchema>;
 export type QuizStatus = z.infer<typeof quizStatusSchema>;
 export type QuizSort = z.infer<typeof quizSortSchema>;
+export type QuizTransformationType = z.infer<typeof quizTransformationTypeSchema>;
+export type QuizLanguage = z.infer<typeof quizLanguageSchema>;
 export type DiscoverQuizzesQuery = z.infer<typeof discoverQuizzesQuerySchema>;
 export type DiscoverQuizSummary = z.infer<typeof discoverQuizSummarySchema>;
 export type DiscoverQuizzesResponse = z.infer<typeof discoverQuizzesResponseSchema>;
