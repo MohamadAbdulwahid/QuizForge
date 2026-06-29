@@ -75,6 +75,11 @@ export class DashboardShellComponent {
         icon: 'discover-quizzes',
       },
       {
+        label: 'Knowledge Map',
+        route: '/dashboard/knowledge-map',
+        icon: 'knowledge-map',
+      },
+      {
         label: 'Create Session',
         route: '/dashboard/create-session',
         icon: 'create-session',
@@ -140,6 +145,9 @@ export class DashboardShellComponent {
     // Admin — shield with check
     admin:
       'M9 12.75 11.25 15 15 9.75M21 12c0 5.523-4.477 10-10 10S1 17.523 1 12c0-1.708.428-3.314 1.181-4.717l1.732.866C3.317 9.296 2.875 10.61 2.875 12c0 4.486 3.639 8.125 8.125 8.125s8.125-3.639 8.125-8.125c0-1.39-.442-2.704-1.038-3.851l1.732-.866A10.04 10.04 0 0 1 21 12Z',
+    // Knowledge Map — connected nodes (brain network)
+    'knowledge-map':
+      'M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z',
   };
 
   protected closeMobileNav(): void {

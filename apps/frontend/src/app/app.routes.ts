@@ -129,6 +129,13 @@ export const appRoutes: Route[] = [
               ),
           },
           {
+            path: 'knowledge-map',
+            loadComponent: () =>
+              import(
+                './features/dashboard/knowledge-graph-page.component'
+              ).then((m) => m.KnowledgeGraphPageComponent),
+          },
+          {
             path: 'quizzes/:id',
             loadComponent: () =>
               import('./features/dashboard/quizzes/quiz-builder-page.component').then(

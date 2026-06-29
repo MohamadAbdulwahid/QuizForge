@@ -4,6 +4,7 @@ import { adminRouter } from './admin.routes';
 import { authRoutes } from './auth.routes';
 import { configRouter } from './config.routes';
 import { groupRouter } from './group.routes';
+import { knowledgeGraphRouter } from './knowledge-graph.routes';
 import { quizPublicRouter, quizRouter } from './quiz.routes';
 import { hostSessionRouter } from './host-session.routes';
 import { sessionRouter } from './session.routes';
@@ -27,6 +28,9 @@ export function registerRoutes(): Router {
   // Protected quiz/session routes.
   router.use('/groups', groupRouter);
   router.use('/quizzes', authMiddleware, quizRouter);
+
+  // Knowledge graph routes — require auth (per-user data)
+  router.use('/knowledge-graph', authMiddleware, knowledgeGraphRouter);
 
   // SSE must be registered before sessionRouter.
   // Otherwise sessionRouter's GET /:pin matches /events first and
